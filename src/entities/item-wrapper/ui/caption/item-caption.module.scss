@@ -1,0 +1,25 @@
+.container {
+    padding-inline: $space-6px;
+}
+
+.title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: text-decoration 0.3s ease;
+}
+
+@media screen and (any-hover: hover) {
+    .title:hover {
+        text-decoration: underline;
+    }
+}
+
+@media screen and (width <= 768px) {
+    .container {
+        max-width: 223px;
+    }
+}

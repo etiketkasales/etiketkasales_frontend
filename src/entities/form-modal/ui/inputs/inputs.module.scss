@@ -1,0 +1,40 @@
+.container {
+    .input {
+        background-color: $bg-gray;
+        padding: 14px $space-4;
+        width: 100%;
+        border-radius: $space-3;
+    }
+
+    .select {
+        gap: $space-6px;
+        padding: $space-2 $space-10px;
+    }
+}
+
+.options {
+    background-color: $bg-gray;
+    padding: $space-3;
+    border-radius: $space-3;
+}
+
+.selectedOption {
+    color: $black;
+    background-color: $white;
+}
+
+.option {
+    padding: $space-3 $space-2;
+    transition: background-color $transition;
+    border-radius: $space-2;
+
+    @media screen and (any-hover: hover) {
+        &:hover {
+            span {
+                color: $black;
+            }
+
+            background-color: $white;
+        }
+    }
+}

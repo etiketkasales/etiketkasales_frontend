@@ -1,0 +1,16 @@
+.container {
+    padding-inline: $space-5 * 3;
+    position: relative;
+};
+
+.subheader {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+
+.right_subheader {
+    left: unset;
+    right: 0;
+}

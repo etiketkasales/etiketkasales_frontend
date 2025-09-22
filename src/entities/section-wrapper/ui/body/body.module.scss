@@ -1,0 +1,6 @@
+.container {
+    max-width: 1192px;
+    overflow-x: hidden;
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+}

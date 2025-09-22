@@ -1,0 +1,11 @@
+.input {
+    width: 100%;
+    &::placeholder {
+        color: $gray-2;
+    }
+}
+
+.container {
+    width: 100%;
+    max-width: 457px;
+}

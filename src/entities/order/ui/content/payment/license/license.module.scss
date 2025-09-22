@@ -1,0 +1,8 @@
+.checkbox {
+    &::after {
+        position: absolute;
+        content: "";
+        inset: 0;
+        z-index: 0;;
+    }
+}

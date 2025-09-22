@@ -1,0 +1,45 @@
+.input_wrapper {
+    padding: 3px;
+    width: 24px;
+    height: 24px;
+}
+
+.input {
+    border-radius: 50%;
+    outline: 0.17rem solid $bg-gray;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: border .1s ease;
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        translate: -50% -50%;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background-color: $bg-gray;
+        transition: background-color .1s ease;
+    }
+}
+
+.checked {
+    &.yellow {
+        outline: 0.17rem solid $yellow;
+    }
+
+    &.green {
+        outline: 0.17rem solid $green;
+    }
+
+    &.yellow::after {
+        background-color: $yellow;
+    }
+
+    &.green::after {
+        background-color: $green;
+    }
+}

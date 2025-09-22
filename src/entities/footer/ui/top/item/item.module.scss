@@ -1,0 +1,22 @@
+.container {
+    grid-column: 4 span;
+}
+
+.button:hover {
+    span {
+        opacity: 1;
+    }
+}
+
+@media screen and (width <= 768px) {
+    .container:last-of-type {
+        grid-column: 8 span;
+    }
+}
+
+@media screen and (width <= 460px) {
+    .container {
+        grid-column: 12 span;
+        gap: $space-3;
+    }
+}

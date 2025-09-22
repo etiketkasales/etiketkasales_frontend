@@ -1,0 +1,12 @@
+.item {
+    grid-column: 4 span;
+}
+
+@media screen and (width <= 768px) {
+    .item {
+        grid-column: 6 span;
+        &:last-of-type {
+            display: none;
+        }
+    }
+}

@@ -1,0 +1,11 @@
+.container {
+    padding-block: 5px;
+    width: 100%;
+}
+
+.back_button {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}

@@ -1,0 +1,62 @@
+.button {
+    display: grid;
+    align-items: center;
+    transition: all $transition !important;
+    user-select: none;
+
+    cursor: pointer;
+
+    &.activeScale:active {
+        transform: scale(0.95);
+    }
+}
+
+.ghost {
+    background-color: transparent;
+    color: inherit;
+}
+
+.border-bg {
+    background-color: $white;
+    border: 1px solid $bg-gray;
+}
+
+.blue {
+    border-radius: $space-2;
+    background-color: $blue-500;
+
+    &:hover {
+        background-color: $light-blue;
+    }
+
+    &:active {
+        background-color: $dark-blue;
+    }
+}
+
+.green {
+    border-radius: $space-2;
+    background-color: $green;
+}
+
+.bg-gray {
+    background-color: $bg-gray;
+    opacity: 0.8;
+    border-radius: $space-3;
+}
+
+.gray-1 {
+    background-color: $gray-1;
+}
+
+.yellow {
+    background-color: $yellow-500;
+}
+
+.light-yellow {
+    background-color: $light-yellow;
+}
+
+.white {
+    background-color: $white;
+}

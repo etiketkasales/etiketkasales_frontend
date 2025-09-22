@@ -1,0 +1,16 @@
+.container {
+    width: 100%;
+    max-width: 862px;
+}
+
+@media screen and (width <= 1024px) {
+    .container {
+        max-width: unset;
+    }
+}
+
+@media screen and (width <=768px) {
+    .functional {
+        display: none;
+    }
+}

@@ -1,0 +1,14 @@
+@media screen and (width <= 1024px) {
+    .inner {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+@media screen and (width <= 768px) {
+    .container {
+        h1 {
+            display: none;
+        }
+    }
+}

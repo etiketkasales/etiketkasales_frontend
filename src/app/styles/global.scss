@@ -1,0 +1,272 @@
+.no-scroll {
+    overflow: hidden;
+}
+
+.wrapper {
+    max-width: $container-width;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.wrapper-header {
+    max-width: $container-width;
+    margin: 0 auto;
+}
+
+.header-container {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+    @media screen and (width <=460px) {
+        & {
+            gap: $space-3 !important;
+        }
+    }
+}
+
+.section-wrapper {
+    border-radius: $space-5;
+    background-color: $white;
+
+    padding-inline: $space-6;
+    padding-block: $space-4 $space-8;
+
+    @media screen and (width <=1024px) {
+        padding-inline: $space-2;
+    }
+}
+
+.relative {
+    position: relative;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.fixed {
+    position: fixed;
+}
+
+.svg-hover--black {
+    @media screen and (hover: hover) {
+        &:hover .svg-hover path {
+            fill: $black;
+        }
+    }
+}
+
+.scrollbar {
+    &::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(100, 100, 100, 0.4);
+        border-radius: 10px;
+        transition: background-color 0.2s ease;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(100, 100, 100, 0.6);
+    }
+
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 100, 100, 0.4) transparent;
+}
+
+.max-content {
+    width: max-content;
+}
+
+.cursor,
+.pointer {
+    cursor: pointer;
+}
+
+.no-select {
+    user-select: none;
+}
+
+//grid
+.grid {
+    display: grid;
+}
+
+.grid-row {
+    display: grid;
+    grid-auto-flow: row;
+}
+
+.grid-column {
+    display: grid;
+    grid-auto-flow: column;
+}
+
+.place-center {
+    display: grid;
+    place-content: center;
+}
+
+.grid-start {
+    align-items: start;
+}
+
+.grid-end {
+    align-items: end;
+}
+
+.grid-columns-12,
+.template-columns-12 {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+}
+
+//flex
+.flex {
+    display: flex;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-start {
+    align-items: flex-start;
+}
+
+.flex-end {
+    align-items: flex-end;
+}
+
+//align-items
+.align-center {
+    align-items: center;
+}
+
+//justify-content
+.center-element {
+    justify-content: center;
+}
+
+.right-element {
+    justify-content: end;
+}
+
+.left-element {
+    justify-content: start;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+//align-content
+.content-center {
+    align-content: center;
+}
+
+.content-start {
+    align-content: start;
+}
+
+// align-self
+.self-center {
+    align-self: center;
+}
+
+.self-end {
+    align-self: end;
+}
+
+.just-self-start {
+    justify-self: start;
+}
+
+//
+.gap-1 {
+    gap: $space-1;
+}
+
+.gap-2 {
+    gap: $space-2;
+}
+
+.gap-6px {
+    gap: $space-6px;
+}
+
+.gap-10px {
+    gap: $space-10px;
+}
+
+.gap-3 {
+    gap: $space-3;
+}
+
+.gap-3-4 {
+    column-gap: $space-3;
+    row-gap: $space-4;
+}
+
+.gap-4 {
+    gap: $space-4;
+}
+
+.gap-5 {
+    gap: $space-5;
+}
+
+.gap-6 {
+    gap: $space-6;
+}
+
+.gap-7 {
+    gap: $space-7;
+}
+
+.gap-30px {
+    gap: $space-30px;
+}
+
+.gap-8 {
+    gap: $space-8;
+}
+
+.gap-9 {
+    gap: $space-9;
+}
+
+.gap-10 {
+    gap: $space-10;
+}
+
+.gap-50 {
+    gap: $space-50px;
+}
+
+.gap-80 {
+    gap: $space-80px;
+}
+
+.gap-100 {
+    gap: $space-100px;
+}

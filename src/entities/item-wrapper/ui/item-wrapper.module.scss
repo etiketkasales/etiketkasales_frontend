@@ -1,0 +1,15 @@
+.container {
+    grid-column: 4 span;
+}
+
+@media screen and (width <= 1024px) {
+    .container {
+        grid-column: 5 span;
+    }
+}
+
+@media screen and (width <= 768px) {
+    .container {
+        grid-column: 10 span;
+    }
+}

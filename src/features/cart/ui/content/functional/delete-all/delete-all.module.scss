@@ -1,0 +1,10 @@
+.button {
+    &:hover {
+        span {
+            color: $black;
+        }
+        svg path {
+            fill: $red;
+        }
+    }
+}

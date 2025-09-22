@@ -1,0 +1,15 @@
+.dots {
+    width: 100%;
+    border-bottom: 1px dotted $gray-1;
+}
+
+.text {
+    width: max-content;
+    text-wrap: nowrap;
+}
+
+.item_skeleton {
+    width: 100%;
+    height: 22px;
+    border-radius: $space-4;
+}

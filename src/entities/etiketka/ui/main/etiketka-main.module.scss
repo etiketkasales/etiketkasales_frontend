@@ -1,0 +1,15 @@
+.container {
+    width: 100%;
+}
+
+@media screen and (width <= 1100px) {
+    .container {
+        grid-auto-flow: row;
+    }
+}
+
+@media screen and (width <= 768px) {
+    .container {
+        gap: $space-2;
+    }
+}

@@ -1,0 +1,18 @@
+.button {
+    transform: translate(0, 20px);
+}
+
+.image {
+    aspect-ratio: 1/1;
+}
+
+@media screen and (any-hover: hover) {
+    .button:hover {
+        rotate: 0deg;
+        filter: brightness(0.95);
+
+        svg {
+            rotate: 0deg;
+        }
+    }
+}

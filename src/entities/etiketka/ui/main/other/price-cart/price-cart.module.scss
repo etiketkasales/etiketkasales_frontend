@@ -1,0 +1,13 @@
+.container {
+    width: 100%;
+}
+
+.button {
+    width: 100%;
+}
+
+@media screen and (width <= 768px) {
+    .container {
+        display: none;
+    }
+}

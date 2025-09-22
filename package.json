@@ -1,0 +1,44 @@
+{
+  "name": "etitetka-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
+    "build:dev": "npm run prettier && npm run prettier"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.8.2",
+    "@svgr/webpack": "^8.1.0",
+    "axios": "^1.10.0",
+    "clsx": "^2.1.1",
+    "eslint-plugin-prettier": "^5.4.1",
+    "framer-motion": "^12.16.0",
+    "lodash": "^4.17.21",
+    "next": "15.3.3",
+    "next-redux-wrapper": "^8.1.0",
+    "prettier": "^3.5.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0",
+    "react-use": "^17.6.0",
+    "redux": "^5.0.1",
+    "redux-thunk": "^3.1.0",
+    "sass": "^1.89.1",
+    "swiper": "^11.2.8",
+    "webpack-cli": "^6.0.1"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@types/lodash": "^4.17.20",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.3",
+    "typescript": "^5"
+  }
+}

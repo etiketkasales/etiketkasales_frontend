@@ -1,0 +1,13 @@
+.container {
+    width: 360px;
+    min-height: 268px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@media screen and (width <= 460px) {
+    .container {
+        min-width: calc(100vw - $space-4 * 2);
+    }
+}

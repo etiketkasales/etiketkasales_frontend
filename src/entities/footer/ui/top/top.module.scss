@@ -1,0 +1,26 @@
+@media screen and (width <= 1240px) {
+    .container {
+        gap: $space-10;
+        flex-direction: column;
+        align-items: initial;
+        button {
+            align-self: flex-start;
+        }
+    }
+
+    .inner_container {
+        gap: 60px;
+    }
+}
+
+@media screen and (width <= 460px) {
+    .inner_container {
+        gap: $space-8;
+    }
+}
+
+@media screen and (width <= 360px) {
+    .inner_container {
+        gap: $space-6;
+    }
+}

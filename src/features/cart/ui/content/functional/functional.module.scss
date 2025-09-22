@@ -1,0 +1,16 @@
+@media screen and (width <= 768px) {
+    .container {
+        padding: 0;
+        flex-direction: row-reverse;
+
+        label,
+        span {
+            color: $black;
+        }
+    }
+
+    .checkbox {
+        flex-direction: row-reverse;
+        
+    }
+}

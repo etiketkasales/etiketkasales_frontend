@@ -1,0 +1,21 @@
+.container {
+    rotate: -15deg;
+    outline: 2px solid $neutral-100;
+    transform-origin: center;
+    .icon {
+        rotate: 15deg;
+    }
+}
+
+.active {
+    rotate: 0deg;
+    .icon {
+        rotate: 0deg;
+    }
+}
+
+@media screen and (width <= 460px) {
+    .container {
+        padding: 7px;
+    }
+}

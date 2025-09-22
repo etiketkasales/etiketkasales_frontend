@@ -1,0 +1,35 @@
+.container {
+    width: 20px;
+    height: 20px;
+    border-radius: $space-6px;
+    border: 1px solid $gray-1;
+    background-color: transparent;
+
+    &::after {
+        position: absolute;
+        z-index: 0;
+        inset: 0;
+    }
+}
+
+.icon {
+    position: absolute;
+    svg rect {
+        fill: transparent;
+    }
+}
+
+.checked {
+    background-color: $yellow;
+}
+
+.error {
+    border: 1px solid $red !important;
+}
+
+@media screen and (width <= 460px) {
+    .container {
+        width: 24px;
+        height: 24px;
+    }
+}

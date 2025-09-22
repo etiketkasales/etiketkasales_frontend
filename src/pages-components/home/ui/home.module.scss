@@ -1,0 +1,13 @@
+.container {
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 200px;
+    z-index: -1;
+}
+
+@media screen and (width <= 460px) {
+    .add {
+        max-width: calc(100vw - $space-4) !important;
+    }
+}

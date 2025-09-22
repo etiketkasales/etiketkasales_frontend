@@ -1,0 +1,19 @@
+.container {
+    right: 50%;
+    z-index: 10;
+    bottom: $space-2;
+    translate: 50% 0;
+};
+
+.button {
+    border-radius: 50%;
+    background-color: $white;
+    opacity: 0.7;
+    backdrop-filter: blur(10px);
+    width: 10px;
+    height: 10px;
+}
+
+.active {
+    opacity: 1;
+}

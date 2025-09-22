@@ -1,0 +1,39 @@
+.bottom {
+    display: none;
+}
+
+.checkbox_skeleton {
+    width: 20px;
+    height: 20px;
+}
+
+.image_skeleton {
+    width: 120px;
+    height: 120px;
+}
+
+@media screen and (width <=768px) {
+    .container {
+        gap: $space-3;
+    }
+    
+    .checkbox {
+        order: 1;
+    }
+
+    .bottom {
+        display: flex;
+    }
+
+    .checkbox_skeleton {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media screen and (width <= 460px) {
+    .image_skeleton {
+        width: 100px;
+        height: 100px;
+    }
+}

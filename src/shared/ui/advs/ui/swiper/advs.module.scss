@@ -1,0 +1,46 @@
+.swiper {
+    max-width: 1240px;
+    max-height: 400px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    opacity: 0.7;
+    backdrop-filter: blur(10px);
+    background-color: $white;
+}
+
+.link {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.active {
+    opacity: 1;
+}
+
+.skeleton {
+    height: 400px;
+    width: 1240px;
+    z-index: 20;
+    border-radius: $space-4;
+}
+
+@media screen and (width <=1240px) {
+    .swiper {
+        max-width: calc(100vw - $space-2);
+    };
+
+    .skeleton {
+        width: calc(100vw - $space-2);
+    };
+}
+
+@media screen and (width <= 768px) {
+    .skeleton {
+        height: 200px;
+    }
+}
+

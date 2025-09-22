@@ -1,0 +1,21 @@
+.options {
+    transition: opacity $transition, transform $transition;
+    will-change: transform;
+    transform-origin: top;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.active {
+    svg {
+        transform: rotate(180deg);
+    }
+}
+
+.error {
+    border: 1px solid $red;
+}
