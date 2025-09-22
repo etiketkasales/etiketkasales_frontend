@@ -45,7 +45,7 @@ export default function Tabs({ TabsButton }: Props) {
         }),
       );
     };
-  }, []);
+  }, [dispatch]);
 
   const getPadding = () => {
     if (cartItems.length > 0 || favouriteItems.length > 0) {

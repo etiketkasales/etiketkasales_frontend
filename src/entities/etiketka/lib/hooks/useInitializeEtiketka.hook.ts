@@ -43,5 +43,5 @@ export const useInitializeEtiketka = ({ etiketkaInfo }: Props) => {
       dispatch(setCart({ currentItem: undefined }));
       dispatch(setFavourites({ currentItem: undefined }));
     };
-  }, [etiketkaInfo]);
+  }, [etiketkaInfo, dispatch, needInitialize]);
 };

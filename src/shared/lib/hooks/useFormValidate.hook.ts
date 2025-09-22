@@ -15,21 +15,21 @@ export const useFormValidate = <T extends Record<string, any>>({
   const [error, setError] = useState<MessageI | null>(null);
   const [hasValidateError, setHasValidateErrors] = useState<boolean>(false);
 
-  const handleSetErrors = (
-    newError: MessageI | null,
-    field: keyof T,
-  ): boolean => {
-    if (newError) {
-      setError(newError);
-      setHasValidateErrors(true);
-      return true;
-    }
-    if (error?.field === field) {
-      setHasValidateErrors(false);
-      setError(null);
-    }
-    return false;
-  };
+  const handleSetErrors = useCallback(
+    (newError: MessageI | null, field: keyof T): boolean => {
+      if (newError) {
+        setError(newError);
+        setHasValidateErrors(true);
+        return true;
+      }
+      if (error?.field === field) {
+        setHasValidateErrors(false);
+        setError(null);
+      }
+      return false;
+    },
+    [error?.field],
+  );
 
   const handleIsError = useCallback((): boolean => {
     const newError = FormUtils.getFormError({
@@ -66,7 +66,7 @@ export const useFormValidate = <T extends Record<string, any>>({
       }
       return handleSetErrors(newError, field);
     },
-    [error, validateData],
+    [validateData, handleSetErrors],
   );
 
   useEffect(() => {
@@ -75,7 +75,7 @@ export const useFormValidate = <T extends Record<string, any>>({
     if (!FormUtils.checkIfValueEmpty(value) && !hasValidateError) {
       setError(null);
     }
-  }, [error, validateData]);
+  }, [error, validateData, hasValidateError]);
 
   return {
     error,

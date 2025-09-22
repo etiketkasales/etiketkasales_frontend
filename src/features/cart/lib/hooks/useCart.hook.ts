@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { selectCart, setCart } from "~/src/app/store/reducers/cart.slice";
 
@@ -9,21 +9,24 @@ export const useCart = () => {
   const { cartItems, selectedItems } = useAppSelector(selectCart);
   const [sellerItems, setSellerItems] = useState<Array<EtiketkaI[]>>([]);
 
-  const handleSelectItem = (id: number) => {
-    if (selectedItems.includes(id)) {
-      dispatch(
-        setCart({
-          selectedItems: selectedItems.filter((item) => item !== id),
-        }),
-      );
-    } else {
-      dispatch(
-        setCart({
-          selectedItems: [...selectedItems, id],
-        }),
-      );
-    }
-  };
+  const handleSelectItem = useCallback(
+    (id: number) => {
+      if (selectedItems.includes(id)) {
+        dispatch(
+          setCart({
+            selectedItems: selectedItems.filter((item) => item !== id),
+          }),
+        );
+      } else {
+        dispatch(
+          setCart({
+            selectedItems: [...selectedItems, id],
+          }),
+        );
+      }
+    },
+    [selectedItems, dispatch],
+  );
 
   useEffect(() => {
     if (selectedItems.length === cartItems.length) {
@@ -39,7 +42,7 @@ export const useCart = () => {
         }),
       );
     }
-  }, [selectedItems, cartItems]);
+  }, [selectedItems, cartItems, dispatch]);
 
   useEffect(() => {
     if (!cartItems.length) {
@@ -56,7 +59,7 @@ export const useCart = () => {
 
     dispatch(setCart({ selectedItems: selected }));
     setSellerItems(groupedBySeller);
-  }, [cartItems]); // группирует по продавцам
+  }, [cartItems, dispatch]); // группирует по продавцам
 
   return {
     selectedItems,

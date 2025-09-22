@@ -1,0 +1,31 @@
+1:"$Sreact.fragment"
+2:I[52001,["635","static/chunks/635-13d3069d0606a72d.js","3464","static/chunks/3464-82b5ad8ce7a48a14.js","2813","static/chunks/2813-ab2fc444ab13f541.js","7177","static/chunks/app/layout-2fde764a22f24d89.js"],"default"]
+3:I[87555,[],""]
+4:I[31295,[],""]
+5:I[75965,["635","static/chunks/635-13d3069d0606a72d.js","2292","static/chunks/2292-fa458acebf323cf0.js","3464","static/chunks/3464-82b5ad8ce7a48a14.js","9250","static/chunks/9250-4b5ab7b1ab3edf3b.js","8318","static/chunks/8318-c9c78b69b243827a.js","1943","static/chunks/1943-30beed2f730e55f3.js","8611","static/chunks/8611-4c6da95712789b28.js","8974","static/chunks/app/page-521ab365d3b465bb.js"],"default"]
+6:I[59665,[],"MetadataBoundary"]
+8:I[59665,[],"OutletBoundary"]
+b:I[74911,[],"AsyncMetadataOutlet"]
+d:I[59665,[],"ViewportBoundary"]
+f:I[26614,[],""]
+:HL["/_next/static/css/3bfa527f693d36a3.css","style"]
+:HL["/_next/static/css/b271585e0a2f9a30.css","style"]
+:HL["/_next/static/css/6044da06687934a8.css","style"]
+:HL["/_next/static/css/f75eb700310bc75e.css","style"]
+:HL["/_next/static/css/97e1eb9f5174a5dd.css","style"]
+:HL["/_next/static/css/e03a9cb9ef3f8094.css","style"]
+:HL["/_next/static/css/6ba12495981b3cd3.css","style"]
+:HL["/_next/static/css/1672af579af4e2fb.css","style"]
+:HL["/_next/static/css/f6cf0159d9b7fe95.css","style"]
+:HL["/_next/static/css/c46140e63e1651dc.css","style"]
+:HL["/_next/static/css/d7cf7cd8745420f7.css","style"]
+:HL["/_next/static/css/4f3c8569148c8f37.css","style"]
+0:{"P":null,"b":"ECHV15OWQfhMO3MxMdfMj","p":"","c":["",""],"i":false,"f":[[["",{"children":["__PAGE__",{}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/3bfa527f693d36a3.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"ru","children":["$","body",null,{"className":"flex-column space-between gap-5 page-wrapper relative","children":["$","$L2",null,{"children":["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L4",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]}]}]]}],{"children":["__PAGE__",["$","$1","c",{"children":[["$","$L5",null,{}],["$","$L6",null,{"children":"$L7"}],[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/b271585e0a2f9a30.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/css/6044da06687934a8.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","2",{"rel":"stylesheet","href":"/_next/static/css/f75eb700310bc75e.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","3",{"rel":"stylesheet","href":"/_next/static/css/97e1eb9f5174a5dd.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","4",{"rel":"stylesheet","href":"/_next/static/css/e03a9cb9ef3f8094.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","5",{"rel":"stylesheet","href":"/_next/static/css/6ba12495981b3cd3.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","6",{"rel":"stylesheet","href":"/_next/static/css/1672af579af4e2fb.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","7",{"rel":"stylesheet","href":"/_next/static/css/f6cf0159d9b7fe95.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","8",{"rel":"stylesheet","href":"/_next/static/css/c46140e63e1651dc.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","9",{"rel":"stylesheet","href":"/_next/static/css/d7cf7cd8745420f7.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","10",{"rel":"stylesheet","href":"/_next/static/css/4f3c8569148c8f37.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","$L8",null,{"children":["$L9","$La",["$","$Lb",null,{"promise":"$@c"}]]}]]}],{},null,false]},null,false],["$","$1","h",{"children":[null,["$","$1","-RGj2vj1vBpP8RN5R3BWN",{"children":[["$","$Ld",null,{"children":"$Le"}],null]}],null]}],false]],"m":"$undefined","G":["$f","$undefined"],"s":false,"S":true}
+10:"$Sreact.suspense"
+11:I[74911,[],"AsyncMetadata"]
+7:["$","$10",null,{"fallback":null,"children":["$","$L11",null,{"promise":"$@12"}]}]
+a:null
+e:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"}]]
+9:null
+12:{"metadata":[["$","title","0",{"children":"Этикетка"}],["$","meta","1",{"name":"description","content":"Маркетплейс самых разных товаров"}],["$","link","2",{"rel":"icon","href":"/logo.png"}]],"error":null,"digest":"$undefined"}
+c:{"metadata":"$12:metadata","error":null,"digest":"$undefined"}

@@ -19,7 +19,7 @@ export default function ItemWrapper({ item }: Props) {
 
   useEffect(() => {
     setGap(width <= 460 ? "gap-2" : "gap-4");
-  }, []);
+  }, [width]);
 
   return (
     <li

@@ -1,5 +1,5 @@
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   getEtiketkaByUrl,
   getSpecificationsById,
@@ -30,7 +30,7 @@ export const useEtiketka = () => {
     return;
   };
 
-  const handleGetEtiketka = async () => {
+  const handleGetEtiketka = useCallback(async () => {
     await promiseWrapper({
       setLoading,
       callback: async () => {
@@ -44,7 +44,7 @@ export const useEtiketka = () => {
       },
       setError,
     });
-  };
+  }, [url]);
 
   const handleGetSpecialities = async (item_id: number) => {
     await promiseWrapper({
@@ -60,7 +60,7 @@ export const useEtiketka = () => {
 
   useEffect(() => {
     handleGetEtiketka();
-  }, [url]);
+  }, [url, handleGetEtiketka]);
 
   useEffect(() => {
     if (!etiketkaInfo.id) return;

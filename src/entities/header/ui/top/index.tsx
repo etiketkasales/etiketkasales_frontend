@@ -31,7 +31,7 @@ export default function HeaderTop() {
         }),
       );
     }
-  }, [width]);
+  }, [width, dispatch]);
 
   return (
     <nav

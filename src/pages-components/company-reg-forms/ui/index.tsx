@@ -16,14 +16,14 @@ export default function CompanyRegistrationPage() {
       const route = `/company/registrate/${nextStage}`;
       prefetch(route);
     }
-  }, [nextStage]);
+  }, [nextStage, prefetch]);
 
   useEffect(() => {
     const currentRoute = `/company/registrate/${stage}`;
     if (window.location.pathname !== currentRoute) {
       push(currentRoute);
     }
-  }, [stage]);
+  }, [stage, push]);
 
   if (!stage) return null;
 

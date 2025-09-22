@@ -34,7 +34,7 @@ export default function Header() {
     if (isCartPage && width <= 768) {
       dispatch(setNavigation({ headerHeight: ref.current?.scrollHeight || 0 }));
     }
-  }, [isCartPage, width]);
+  }, [isCartPage, width, dispatch]);
 
   return (
     <header className={`header-container`}>

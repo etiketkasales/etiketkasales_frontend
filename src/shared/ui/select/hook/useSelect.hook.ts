@@ -19,7 +19,7 @@ export const useSelect = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [active]);
 
   return {
     active,

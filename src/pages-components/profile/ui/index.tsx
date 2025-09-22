@@ -14,7 +14,7 @@ export default function ProfilePage() {
   useEffect(() => {
     if (!userId) return;
     handleGetUser(userId);
-  }, [userId]);
+  }, [userId, handleGetUser]);
 
   return (
     <PageWrapper>

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useAppDispatch } from "~/src/app/store/hooks";
 import { clearCart, initializeCart } from "~/src/app/store/reducers/cart.slice";
 import {
@@ -15,7 +15,7 @@ export const useInitialize = () => {
   const userId = 10;
   const lastUser = useRef<number>(0);
 
-  const handleGetCities = async () => {
+  const handleGetCities = useCallback(async () => {
     try {
       const response = await getCities();
       if (!response) return;
@@ -23,12 +23,12 @@ export const useInitialize = () => {
     } catch (err) {
       console.error(err);
     }
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     handleGetCities();
     handleGetUser(userId.toString());
-  }, []);
+  }, [handleGetCities, handleGetUser]);
 
   useEffect(() => {
     if (lastUser.current !== userId && lastUser.current !== 0) {
@@ -39,5 +39,5 @@ export const useInitialize = () => {
     dispatch(initializeFavourites(userId));
 
     lastUser.current = userId;
-  }, [userId]);
+  }, [userId, dispatch]);
 };

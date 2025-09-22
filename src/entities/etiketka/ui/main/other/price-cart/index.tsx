@@ -17,12 +17,7 @@ export default function EtiketkaPriceCart({ item }: Props) {
     <EtiketkaMainContainer
       className={`flex-column gap-5 padding-16 ${classes.container}`}
     >
-      <Price
-        price={item.price}
-        old_price={item.old_price}
-        fontSizeDop="18"
-        fontSizeMain="30"
-      />
+      <Price price={item.price} old_price={item.old_price} />
       <div className="flex-row gap-10px align-center">
         <AddEtiketkaButton className={classes.button} />
         <AddToFavourites />

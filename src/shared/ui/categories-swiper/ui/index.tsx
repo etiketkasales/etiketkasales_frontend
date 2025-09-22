@@ -27,7 +27,7 @@ export default function CategoriesSwiper({ title }: Props) {
 
     const maxSlides = slides - Math.floor(width / ITEM_WIDTH);
     setMaxSlides(maxSlides);
-  }, []);
+  }, [swiperRef, categories]);
 
   return (
     <section

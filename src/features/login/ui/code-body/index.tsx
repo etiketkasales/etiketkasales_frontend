@@ -36,7 +36,7 @@ export default function LoginCodeBody({
     if (!phoneNumber) {
       push("/login");
     }
-  }, []);
+  }, [phoneNumber, push]);
 
   return (
     <>

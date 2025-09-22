@@ -32,7 +32,7 @@ export default function InCartButton({
 
   useEffect(() => {
     setIsInCart(cartItems.find((i) => i.id === item.id));
-  }, [cartItems]);
+  }, [cartItems, item.id]);
 
   return (
     <div

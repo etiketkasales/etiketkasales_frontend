@@ -27,7 +27,7 @@ export default function PageWrapper({
     const isHome = window.location.pathname === "/";
     if (currentFilter.length > 0 || isHome) return;
     dispatch(addFilter(categoryAll));
-  }, [currentFilter.length]);
+  }, [currentFilter.length, dispatch]);
 
   return (
     <>

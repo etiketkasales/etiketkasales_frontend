@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import SwiperCore from "swiper";
 
 interface Props {
@@ -11,11 +11,11 @@ export const useSwiperSlides = ({ slidesCount }: Props) => {
   const [first, setFirst] = useState<boolean>(false);
   const swiperRef = useRef<SwiperCore | null>(null);
 
-  const handleSlideChange = () => {
+  const handleSlideChange = useCallback(() => {
     if (swiperRef.current) {
       setCurrentSlide(swiperRef.current.activeIndex);
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (!swiperRef.current) return;
@@ -32,7 +32,7 @@ export const useSwiperSlides = ({ slidesCount }: Props) => {
       setFirst(false);
     }
     swiperRef.current.slideTo(currentSlide);
-  }, [currentSlide]);
+  }, [currentSlide, slidesCount]);
 
   return {
     swiperRef,

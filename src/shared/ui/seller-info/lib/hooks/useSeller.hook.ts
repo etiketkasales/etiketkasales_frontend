@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 import { getSeller } from "../api/seller.api";
 
@@ -13,7 +13,7 @@ export const useSeller = ({ sellerId }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
 
-  const handleGetSeller = async () => {
+  const handleGetSeller = useCallback(async () => {
     await promiseWrapper({
       setLoading,
       callback: async () => {
@@ -30,11 +30,11 @@ export const useSeller = ({ sellerId }: Props) => {
       },
       setErrBool: setError,
     });
-  };
+  }, [sellerId]);
 
   useEffect(() => {
     handleGetSeller();
-  }, [sellerId]);
+  }, [sellerId, handleGetSeller]);
 
   return {
     sellerInfo,

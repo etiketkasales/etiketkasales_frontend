@@ -16,7 +16,7 @@ export default function SectionWrapperBody({ arrayProducts }: Props) {
 
   useEffect(() => {
     setGap(width > 460 ? "gap-5" : "gap-3-4");
-  }, []);
+  }, [width]);
   return (
     <ul className={`${gap} ${classes.container}`}>
       {arrayProducts.slice(0, width > 768 ? 5 : 4).map((item, index) => {

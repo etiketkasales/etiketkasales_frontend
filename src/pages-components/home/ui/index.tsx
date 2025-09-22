@@ -21,7 +21,7 @@ export default function HomePage() {
 
   useEffect(() => {
     dispatch(clearFilters());
-  }, []);
+  }, [dispatch]);
 
   return (
     <PageWrapper>

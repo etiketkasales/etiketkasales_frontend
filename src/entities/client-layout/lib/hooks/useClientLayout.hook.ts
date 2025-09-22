@@ -15,5 +15,5 @@ export const useClientLayout = () => {
         loaded: true,
       }),
     );
-  }, []);
+  }, [dispatch]);
 };

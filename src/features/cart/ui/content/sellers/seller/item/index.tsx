@@ -29,7 +29,7 @@ export default function CartSellerItem({
     } else {
       setIsSelected(false);
     }
-  }, [selectedItems]);
+  }, [selectedItems, item.id]);
 
   return (
     <li className={`flex-column gap-3`}>

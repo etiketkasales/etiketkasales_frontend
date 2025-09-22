@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import {
@@ -14,7 +14,7 @@ export const useCategories = () => {
   const { categories } = useAppSelector(selectCategories);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleGetCategories = async () => {
+  const handleGetCategories = useCallback(async () => {
     await promiseWrapper({
       setLoading,
       callback: async () => {
@@ -23,12 +23,12 @@ export const useCategories = () => {
         dispatch(setCategories(response.data ?? []));
       },
     });
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     if (categories.length > 0) return;
     handleGetCategories();
-  }, [categories.length]);
+  }, [categories.length, handleGetCategories]);
 
   return {
     loading,

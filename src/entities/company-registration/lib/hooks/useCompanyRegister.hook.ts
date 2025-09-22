@@ -28,11 +28,11 @@ export const useCompanyRegister = ({ stage }: Props) => {
 
   const isPhoneError = useCallback(() => {
     return handleHasValidateError("phone");
-  }, [error, companyData.phone]);
+  }, [handleHasValidateError]);
 
   const isEmailError = useCallback(() => {
     return handleHasValidateError("email");
-  }, [error, companyData.email]);
+  }, [handleHasValidateError]);
 
   const hasErrors = useCallback(() => {
     return handleIsError() || isEmailError() || isPhoneError();

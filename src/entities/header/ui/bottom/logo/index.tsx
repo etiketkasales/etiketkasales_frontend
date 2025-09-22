@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
 import { useAppDispatch } from "~/src/app/store/hooks";
 import { setNavigation } from "~/src/app/store/reducers/navigation.slice";
 import { useWindowSize } from "react-use";
@@ -8,7 +7,6 @@ import { useWindowSize } from "react-use";
 import classes from "../bottom.module.scss";
 import ownClasses from "./logo.module.scss";
 import LogoSvg from "~/public/header/logo.svg";
-import Button from "~/src/shared/ui/button";
 import ImageContainer from "~/src/shared/ui/image-container";
 import HeaderBottomNavButton from "../business";
 import LinkContainer from "~/src/shared/ui/link-container/ui";
@@ -20,7 +18,6 @@ interface Props {
 export default function HeaderBottomLogo({ isCartPage }: Props) {
   const dispatch = useAppDispatch();
   const ref = useRef<HTMLDivElement>(null);
-  const { push } = useRouter();
   const { width } = useWindowSize();
 
   useEffect(() => {
@@ -33,7 +30,7 @@ export default function HeaderBottomLogo({ isCartPage }: Props) {
         }),
       );
     }
-  }, [width]);
+  }, [width, dispatch, isCartPage]);
 
   return (
     <div
