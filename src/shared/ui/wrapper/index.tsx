@@ -12,7 +12,7 @@ interface Props extends IWrapperProps {}
 
 export default function Wrapper({
   children,
-  color,
+  color = "neutral-100",
   padding,
   radius,
   className,

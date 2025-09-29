@@ -1,0 +1,13 @@
+.container {
+    gap: $space-5;
+    width: 100%;
+    max-width: 862px;
+}
+
+@media screen and (width <= 768px) {
+    .container {
+        max-width: initial;
+        gap: $space-3;
+        padding: $space-4 !important;
+    }
+}

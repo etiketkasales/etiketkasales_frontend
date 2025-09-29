@@ -22,17 +22,19 @@ export default function ForBussinessSection() {
           Зарегистрируйтесь прямо сейчас!
         </h2>
       </div>
-      <Link
-        href={"/company/registrate"}
-        rel="noopener noreferrer"
+
+      <Button
+        as={"a"}
+        href="/company/registrate"
         className={`${classes.link}`}
+        typeButton={"white"}
+        size="16-24"
+        radius={12}
       >
-        <Button as={"a"} typeButton={"white"} size="16-24" radius={12}>
-          <span className="text-18 black semibold second-family">
-            Стать продавцом
-          </span>
-        </Button>
-      </Link>
+        <span className="text-18 black semibold second-family">
+          Стать продавцом
+        </span>
+      </Button>
     </section>
   );
 }

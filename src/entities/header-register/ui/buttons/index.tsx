@@ -1,7 +1,6 @@
 import React from "react";
 
 import Button from "~/src/shared/ui/button";
-import Link from "next/link";
 
 interface ButtonI {
   title: string;
@@ -27,23 +26,18 @@ export default function HeaderRegisterButtons() {
     <nav className="flex-row gap-3 align-center">
       {buttons.map((item, index) => {
         return (
-          <Link
-            href={item.link}
-            rel="noopener noreferrer"
+          <Button
+            as="a"
             key={`${item.link}-${index}`}
+            typeButton={item.type}
+            size="12"
+            radius={12}
+            href={item.link}
           >
-            <Button
-              as="a"
-              key={`${item.link}-${index}`}
-              typeButton={item.type}
-              size="12"
-              radius={12}
-            >
-              <span className="text-16 black second-family semibold">
-                {item.title}
-              </span>
-            </Button>
-          </Link>
+            <span className="text-16 black second-family semibold">
+              {item.title}
+            </span>
+          </Button>
         );
       })}
     </nav>

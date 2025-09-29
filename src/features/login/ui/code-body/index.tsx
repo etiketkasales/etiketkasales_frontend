@@ -51,7 +51,7 @@ export default function LoginCodeBody({
         classNameInput={`${classes.input} padding-14-16 bg-gray-container radius-12`}
         className={classes.input_container}
       />
-      <TimerButton timer={timer} resendCode={resendCode} />
+      <TimerButton timer={timer} resendCode={resendCode} setTimer={setTimer} />
     </>
   );
 }

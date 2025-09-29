@@ -1,6 +1,8 @@
-import React from "react";
+"use client";
+import React, { ElementType, useEffect } from "react";
 
 import classes from "./button.module.scss";
+import { useRouter } from "next/navigation";
 
 export type ButtonTypeButtonT =
   | "ghost"
@@ -13,7 +15,8 @@ export type ButtonTypeButtonT =
   | "gray-1"
   | "border-bg";
 
-interface Props extends React.HTMLAttributes<HTMLButtonElement> {
+interface Props<T extends ElementType>
+  extends React.HTMLAttributes<HTMLButtonElement> {
   typeButton: ButtonTypeButtonT;
   size: string; //4-12 6-10 10; в пикселях
   radius?: number;
@@ -21,10 +24,11 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   className?: string;
   justifyCenter?: boolean;
   disabled?: boolean;
-  as?: string;
+  as?: T;
+  href?: string;
 }
 
-export default function Button({
+export default function Button<T extends ElementType>({
   typeButton,
   size,
   radius,
@@ -35,8 +39,17 @@ export default function Button({
   children,
   disabled,
   as,
+  href,
   ...rest
-}: Props) {
+}: Props<T>) {
+  const { prefetch } = useRouter();
+
+  useEffect(() => {
+    if (href) {
+      prefetch(href);
+    }
+  }, [href, prefetch]);
+
   const sizeRender = () => {
     return `padding-${size}`;
   };
@@ -45,21 +58,10 @@ export default function Button({
     return classes[typeButton];
   };
 
-  if (as === "a") {
-    return (
-      <div
-        className={`${className} ${justifyCenter && "center-element"} ${classes.button} ${needActiveScale ? classes.activeScale : ""} ${sizeRender()} ${typeButtonRender()}`}
-        style={{
-          borderRadius: `${radius}px`,
-        }}
-      >
-        {children}
-      </div>
-    );
-  }
+  const Tag = as || "button";
 
   return (
-    <button
+    <Tag
       onClick={onClick}
       className={`${className} ${justifyCenter && "center-element"} ${classes.button} ${needActiveScale ? classes.activeScale : ""} ${sizeRender()} ${typeButtonRender()}`}
       {...rest}
@@ -69,6 +71,6 @@ export default function Button({
       disabled={disabled}
     >
       {children}
-    </button>
+    </Tag>
   );
 }

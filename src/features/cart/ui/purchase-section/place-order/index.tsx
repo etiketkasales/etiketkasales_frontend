@@ -29,24 +29,19 @@ export default function CartPlaceOrder() {
     <div className="flex-column gap-10px">
       {buttons.map((item, index) => {
         return (
-          <Link
+          <Button
             key={`${item.title}-${index}`}
+            as="a"
+            typeButton={item.type}
+            size="12"
+            radius={12}
+            className={classes.button}
             href={item.link}
-            rel="noopener noreferrer"
-            passHref
           >
-            <Button
-              as="a"
-              typeButton={item.type}
-              size="12"
-              radius={12}
-              className={classes.button}
-            >
-              <span className="text-16 black second-family semibold">
-                {item.title}
-              </span>
-            </Button>
-          </Link>
+            <span className="text-16 black second-family semibold">
+              {item.title}
+            </span>
+          </Button>
         );
       })}
     </div>
