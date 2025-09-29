@@ -3,6 +3,7 @@ import React from "react";
 
 import classes from "./wrapper.module.scss";
 import LoginHeader from "../header";
+import Container from "~/src/shared/ui/container/ui";
 
 interface Props {
   children: React.ReactNode;
@@ -11,11 +12,12 @@ interface Props {
 
 export default function LoginWrapper({ children, title }: Props) {
   return (
-    <section
-      className={`absolute white-container padding-20 radius-20 flex-column gap-6 ${classes.container}`}
+    <Container
+      as="section"
+      className={`absolute padding-20 radius-20 flex-column gap-6 ${classes.container}`}
     >
       <LoginHeader title={title} />
       {children}
-    </section>
+    </Container>
   );
 }

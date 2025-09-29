@@ -4,6 +4,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    padding: var(--padding);
+    gap: var(--gap);
+    border-radius: $space-5;
 }
 
 .link {

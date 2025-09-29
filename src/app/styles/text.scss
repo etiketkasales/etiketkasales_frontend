@@ -1,7 +1,7 @@
 @use "app/styles/colors.scss" as *;
-$font-family: "Nunito Sans", sans-serif;
-$second-family: "Open Sans", sans-serif;
-$third-family: "Inter", sans-serif;
+$font-family: var(--nunito-font);
+$second-family: var(--openSans-font);
+$third-family: var(--inter-font);
 
 .second-family {
     font-family: $second-family;
@@ -47,42 +47,50 @@ $third-family: "Inter", sans-serif;
         line-height: 120%;
     }
 
-    &.h-1 {
+    &.h-1,
+    &.h1 {
         font-size: 52px;
         line-height: 138.462%;
     }
 
-    &.h-2 {
+    &.h-2,
+    &.h2 {
         font-size: 44px;
         line-height: 109.091%;
     }
 
-    &.h-3 {
+    &.h-3,
+    &.h3 {
         font-size: 32px;
         line-height: 112.5%;
     }
 
-    &.h-4 {
+    &.h-4,
+    &.h4 {
         font-size: 28px;
         line-height: 114.286%;
     }
 
-    &.h-5 {
+    &.h-5,
+    &.h5 {
         font-size: 24px;
         line-height: 116.667%;
     }
 
-    &.h-6 {
+    &.h-6,
+    &.h6 {
         font-size: 20px;
         line-height: 120%;
     }
 
-    &.h-7 {
+    &.h-7,
+    &.h7 {
         font-size: 16px;
         line-height: 125%;
     }
 
-    &.h-8 {
+    &.h-8,
+    &.h8 {
         font-size: 14px;
         line-height: 128.571%;
     }

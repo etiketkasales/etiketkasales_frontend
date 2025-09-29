@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Container from "~/src/shared/ui/container/ui";
 
 interface Props {
   children: React.ReactNode;
@@ -15,14 +16,14 @@ export default function CartWrapper({
   maxWidth,
 }: Props) {
   return (
-    <div
-      className={`padding-${padding} white-container radius-20 ${className}`}
+    <Container
+      className={`padding-${padding} radius-20 ${className}`}
       style={{
         width: "100%",
         maxWidth: maxWidth ? `${maxWidth}px` : "unset",
       }}
     >
       {children}
-    </div>
+    </Container>
   );
 }

@@ -2,6 +2,8 @@
     gap: $space-5;
     width: 100%;
     max-width: 862px;
+    padding: $space-5;
+    border-radius: $space-5;
 }
 
 @media screen and (width <= 768px) {

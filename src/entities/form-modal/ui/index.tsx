@@ -1,11 +1,11 @@
 "use client";
-import React from "react";
+import React, { CSSProperties } from "react";
 
 import classes from "./form-modal.module.scss";
-import ContainerShared from "~/src/shared/ui/container/ui";
 import FormModalHeader from "./header";
 import Button from "~/src/shared/ui/button";
 import FormModalInputs from "./inputs";
+import Container from "~/src/shared/ui/container/ui";
 import { FormModalInputI } from "../model/form-modal.interface";
 import { MessageI } from "~/src/shared/model/shared.interface";
 
@@ -45,15 +45,16 @@ export default function FormModal<T>({
   onBackButtonClick,
 }: Props<T>) {
   return (
-    <ContainerShared
-      radius={20}
-      padding={padding}
+    <Container
       className={classes.container}
-      gap={gap}
-      style={{
-        maxHeight: maxHeight ? `${maxHeight}px ` : "unset",
-        minHeight: minHeight ? `${minHeight}px ` : "unset",
-      }}
+      style={
+        {
+          maxHeight: maxHeight ? `${maxHeight}px ` : "unset",
+          minHeight: minHeight ? `${minHeight}px ` : "unset",
+          "--padding": `${padding}px`,
+          "--gap": `${gap}px`,
+        } as CSSProperties
+      }
     >
       <FormModalHeader
         text={headerText}
@@ -80,6 +81,6 @@ export default function FormModal<T>({
           {buttonText}
         </span>
       </Button>
-    </ContainerShared>
+    </Container>
   );
 }

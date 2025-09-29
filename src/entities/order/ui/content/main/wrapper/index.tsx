@@ -2,7 +2,7 @@
 import React from "react";
 
 import classes from "./wrapper.module.scss";
-import Wrapper from "~/src/shared/ui/wrapper";
+import Container from "~/src/shared/ui/container/ui";
 
 interface Props {
   children: React.ReactNode;
@@ -16,9 +16,9 @@ export default function OrderMainWrapper({
   title,
 }: Props) {
   return (
-    <Wrapper padding={"20px"} className={`${className} gap-5`}>
+    <Container className={`${className} ${classes.container} gap-5`}>
       <h3 className="black bold second-family text-20">{title}</h3>
       {children}
-    </Wrapper>
+    </Container>
   );
 }

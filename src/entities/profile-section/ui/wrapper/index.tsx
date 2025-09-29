@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Container from "~/src/shared/ui/container/ui";
 
 interface Props {
   children: React.ReactNode;
@@ -13,10 +14,11 @@ export default function ProfileWrapper({
   className,
 }: Props) {
   return (
-    <div
+    <Container
+      bgColor={"neutral-100"}
       className={`white-container radius-20 padding-${padding} ${className}`}
     >
       {children}
-    </div>
+    </Container>
   );
 }

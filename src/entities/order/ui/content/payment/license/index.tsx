@@ -1,9 +1,9 @@
 "use client";
-import Link from "next/link";
 import React from "react";
 
 import classes from "./license.module.scss";
 import CheckboxInput from "~/src/shared/ui/inputs/checkbox";
+import LinkContainer from "~/src/shared/ui/link-container/ui";
 
 interface Props {
   licenseAgreed: boolean;
@@ -25,21 +25,13 @@ export default function OrderLicenseAgree({
       />
       <p className="gray-2 text-16 second-family regular">
         Я принимаю{" "}
-        <Link
-          href={"/personal-data"}
-          rel="noopener norefferer"
-          className="blue-link"
-        >
+        <LinkContainer link={"/personal-data"} className="blue-link">
           Условия обработки персональных данных
-        </Link>
+        </LinkContainer>
         , а также{" "}
-        <Link
-          href={"/selling-terms"}
-          rel="noopener norefferer"
-          className="blue-link"
-        >
+        <LinkContainer link={"/selling-terms"} className="blue-link">
           Условия продажи
-        </Link>
+        </LinkContainer>
       </p>
     </div>
   );

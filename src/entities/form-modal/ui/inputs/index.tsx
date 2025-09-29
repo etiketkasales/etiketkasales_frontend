@@ -5,10 +5,10 @@ import { usePhoneInput } from "~/src/shared/ui/inputs/phone/hooks/usePhoneInput.
 import classes from "./inputs.module.scss";
 import TextInput from "~/src/shared/ui/inputs/text-input";
 import PhoneInput from "~/src/shared/ui/inputs/phone";
-import { FormModalInputI } from "~/src/entities/form-modal/model/form-modal.interface";
-import { MessageI } from "~/src/shared/model/shared.interface";
 import Select from "~/src/shared/ui/select/ui";
 import Button from "~/src/shared/ui/button";
+import { FormModalInputI } from "~/src/entities/form-modal/model/form-modal.interface";
+import { MessageI } from "~/src/shared/model/shared.interface";
 
 interface Props<T> {
   headerText: string;

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 
 import classes from "./header.module.scss";
@@ -13,14 +13,25 @@ interface Props {
 }
 
 export default function FormModalHeader({ text, subText, onBackClick }: Props) {
-  const { push } = useRouter();
+  const { push, prefetch } = useRouter();
+  const needPush: boolean = useMemo(
+    () => window.location.href.includes("company/registrate"),
+    [],
+  );
+
   const buttonClick = () => {
-    if (window.location.href.includes("company/registrate")) {
+    if (needPush) {
       push("/for-bussiness");
     } else {
       history.back();
     }
   };
+
+  useEffect(() => {
+    if (needPush) {
+      prefetch("/for-bussiness");
+    }
+  }, [needPush, prefetch]);
 
   return (
     <div className={`flex-row gap-5 center-element ${classes.container}`}>

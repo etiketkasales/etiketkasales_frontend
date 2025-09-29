@@ -1,18 +1,15 @@
 import React from "react";
 
 import classes from "./header-register.module.scss";
-import ContainerShared from "~/src/shared/ui/container/ui";
 import ImageContainer from "~/src/shared/ui/image-container";
 import HeaderRegisterButtons from "./buttons";
+import Container from "~/src/shared/ui/container/ui";
 
 export default function HeaderRegister() {
   return (
     <header className="header-container">
-      <ContainerShared
-        forRow
-        className={`${classes.container} align-center space-between wrapper-header`}
-        padding={"24"}
-        gap={3}
+      <Container
+        className={`${classes.container} flex-row align-center space-between wrapper-header`}
       >
         <ImageContainer
           src={"/header/logo.png"}
@@ -21,7 +18,7 @@ export default function HeaderRegister() {
           alt="logo"
         />
         <HeaderRegisterButtons />
-      </ContainerShared>
+      </Container>
     </header>
   );
 }

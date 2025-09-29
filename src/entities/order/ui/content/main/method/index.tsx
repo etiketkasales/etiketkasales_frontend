@@ -6,8 +6,6 @@ import OrderMainWrapper from "../wrapper";
 import RadioInput from "~/src/shared/ui/inputs/radio";
 import Button from "~/src/shared/ui/button";
 
-interface Props {}
-
 export default function OrderMethod() {
   const [value, setValue] = React.useState<string>("cdek");
   return (

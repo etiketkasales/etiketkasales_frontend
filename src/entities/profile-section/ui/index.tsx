@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { useProfile } from "../lib/hooks/useProfile.hook";
 
-import classes from "./profile-section.module.scss";
 import ProfileLeft from "./left";
 import ProfileRightSection from "./right";
 import { ProfileTabsT } from "~/src/entities/profile-section/model/profile.interface";

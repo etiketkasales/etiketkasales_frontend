@@ -1,15 +1,14 @@
 "use client";
 import React from "react";
-import clsx from "clsx";
 
 import classes from "./for-bussiness.module.scss";
-import Link from "next/link";
 import Button from "~/src/shared/ui/button";
+import classNames from "classnames";
 
 export default function ForBussinessSection() {
   return (
     <section
-      className={clsx(
+      className={classNames(
         `radius-20 flex-column gap-9 align-center center-element`,
         classes.container,
       )}
@@ -22,7 +21,6 @@ export default function ForBussinessSection() {
           Зарегистрируйтесь прямо сейчас!
         </h2>
       </div>
-
       <Button
         as={"a"}
         href="/company/registrate"

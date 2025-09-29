@@ -9,7 +9,7 @@
 }
 
 * {
-  font-family: $font-family;
+  font-family: var(--nunito-font);
   -webkit-tap-highlight-color: transparent;
   -webkit-appearance: none;
   appearance: none;

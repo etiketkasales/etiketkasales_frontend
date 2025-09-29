@@ -1,3 +1,9 @@
+import {
+  ComponentPropsWithoutRef,
+  ComponentPropsWithRef,
+  ElementType,
+} from "react";
+
 export interface PositionXYInterface {
   x: number;
   y: number;
@@ -37,3 +43,10 @@ export interface IJwtToken {
 export interface IJwtExpanded extends IJwtToken {
   isExpired: boolean;
 }
+
+export type PolymorphicProps<T extends ElementType, P = {}> = P & {
+  as?: T;
+} & Omit<ComponentPropsWithoutRef<T>, keyof P | "as">;
+
+export type PolymorphicRef<T extends ElementType> =
+  ComponentPropsWithRef<T>["ref"];

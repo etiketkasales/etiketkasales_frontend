@@ -1,35 +1,44 @@
-"use client";
-import React from "react";
+import React, { ElementType, forwardRef } from "react";
 
-interface Props {
-  children: React.ReactNode;
-  padding: string;
-  gap: number | string;
-  radius?: number;
-  color?: string;
-  forRow?: boolean;
-  className?: string;
-  style?: React.CSSProperties;
+import classNames from "classnames";
+import { PolymorphicProps } from "~/src/shared/model/shared.interface";
+
+interface ContainerOwnProps {
+  bgColor?: string;
 }
 
-// TO DO: убрать этот контейнер из компонентов
+type ContainerProps<T extends ElementType> = PolymorphicProps<
+  T,
+  ContainerOwnProps
+>;
 
-export default function ContainerShared({
-  children,
-  radius = 20,
-  padding,
-  color = "white",
-  gap,
-  forRow = false,
-  className,
-  style,
-}: Props) {
-  return (
-    <div
-      className={`${color}-container radius-${radius} padding-${padding} gap-${gap} ${className} ${forRow ? "flex-row" : "flex-column"}`}
-      style={style}
-    >
-      {children}
-    </div>
-  );
-}
+export const Container = forwardRef(
+  <T extends ElementType = "div">(
+    {
+      as,
+      bgColor = "neutral-100",
+      className,
+      children,
+      ...rest
+    }: ContainerProps<T>,
+    ref: React.Ref<React.ComponentPropsWithRef<T>["ref"]>,
+  ) => {
+    const Tag = as || "div";
+
+    return (
+      <Tag
+        ref={ref as React.Ref<any>}
+        className={classNames(className, {
+          [`container-${bgColor}`]: bgColor,
+        })}
+        {...rest}
+      >
+        {children}
+      </Tag>
+    );
+  },
+);
+
+Container.displayName = "Container";
+
+export default Container;

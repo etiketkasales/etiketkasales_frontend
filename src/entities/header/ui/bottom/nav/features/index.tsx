@@ -9,8 +9,7 @@ import HeartFill from "~/public/shared/heart-fill.svg";
 import Cart2 from "~/public/shared/cart2-fill.svg";
 import LinkContainer from "~/src/shared/ui/link-container/ui";
 import { HeaderBottomFeatureI } from "~/src/entities/header/model/header.interface";
-import ContainerShared from "~/src/shared/ui/container/ui";
-import Wrapper from "~/src/shared/ui/wrapper";
+import Container from "~/src/shared/ui/container/ui";
 
 export default function HeaderBottomFeatures() {
   const { cartItems } = useAppSelector(selectCart);
@@ -38,10 +37,8 @@ export default function HeaderBottomFeatures() {
           >
             <div className="flex-row gap-6px align-center">
               <item.Icon />
-              <Wrapper
-                color={"neutral-300"}
-                radius={8}
-                padding="2px 4px"
+              <Container
+                bgColor={"neutral-300"}
                 className={`place-center ${classes.container}`}
               >
                 <span
@@ -49,7 +46,7 @@ export default function HeaderBottomFeatures() {
                 >
                   {item.value}
                 </span>
-              </Wrapper>
+              </Container>
             </div>
           </LinkContainer>
         );

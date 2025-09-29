@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Container from "~/src/shared/ui/container/ui";
 
 interface Props {
   className?: string;
@@ -8,8 +9,8 @@ interface Props {
 
 export default function EtiketkaMainContainer({ children, className }: Props) {
   return (
-    <section className={`white-container radius-20 ${className}`}>
+    <Container bgColor={"neutral-100"} className={`radius-20 ${className}`}>
       {children}
-    </section>
+    </Container>
   );
 }
