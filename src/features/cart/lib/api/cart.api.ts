@@ -1,1 +1,1 @@
-import { apiClient } from "~/src/features/login/lib/api/login.api";
+import { apiClient } from "~/src/shared/lib/api/client.api";

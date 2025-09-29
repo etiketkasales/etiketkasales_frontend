@@ -7,7 +7,6 @@ import {
 } from "~/src/app/store/reducers/categories.slice";
 
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
-import { getCategoriesList } from "../api/categories.api";
 
 export const useCategories = () => {
   const dispatch = useAppDispatch();
@@ -18,9 +17,7 @@ export const useCategories = () => {
     await promiseWrapper({
       setLoading,
       callback: async () => {
-        const response = await getCategoriesList();
-        if (!response) return;
-        dispatch(setCategories(response.data ?? []));
+        dispatch(setCategories([]));
       },
     });
   }, [dispatch]);

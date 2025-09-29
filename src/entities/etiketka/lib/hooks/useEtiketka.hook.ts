@@ -1,9 +1,5 @@
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import {
-  getEtiketkaByUrl,
-  getSpecificationsById,
-} from "~/src/entities/etiketka/lib/api/etiketka.api";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 
 import {
@@ -12,7 +8,6 @@ import {
 } from "~/src/entities/etiketka/model/etiketka.interface";
 import { etiketkaSkeleton } from "~/src/entities/etiketka/model/etiketka.skeleton";
 import { MessageI } from "~/src/shared/model/shared.interface";
-import { useInitializeEtiketka } from "./useInitializeEtiketka.hook";
 
 export const useEtiketka = () => {
   const { url } = useParams();
@@ -35,12 +30,6 @@ export const useEtiketka = () => {
       setLoading,
       callback: async () => {
         if (!url) return;
-        const res = await getEtiketkaByUrl(url.toString());
-        if (!res) {
-          errorHandler("Этикетка не найдена", "global");
-          return;
-        }
-        setEtiketkaInfo(res);
       },
       setError,
     });
@@ -49,11 +38,7 @@ export const useEtiketka = () => {
   const handleGetSpecialities = async (item_id: number) => {
     await promiseWrapper({
       setLoading,
-      callback: async () => {
-        const response = await getSpecificationsById(item_id);
-        if (!response) return;
-        setSpec(response);
-      },
+      callback: async () => {},
       setError,
     });
   };

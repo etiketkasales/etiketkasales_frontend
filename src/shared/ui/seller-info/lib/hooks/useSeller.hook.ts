@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
-import { getSeller } from "../api/seller.api";
 
 import { SellerI } from "~/src/shared/ui/seller-info/model/seller.interface";
 
@@ -21,12 +20,6 @@ export const useSeller = ({ sellerId }: Props) => {
           setError(true);
           return;
         }
-        const response = await getSeller(sellerId);
-        if (!response) {
-          setError(true);
-          return;
-        }
-        setSellerInfo(response);
       },
       setErrBool: setError,
     });

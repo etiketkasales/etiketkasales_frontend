@@ -25,3 +25,15 @@ export interface ReponseInterface<T> {
   message: string;
   success: string;
 }
+
+export interface IJwtToken {
+  sub: number;
+  role: "buyer" | "seller" | "admin";
+  phone: string;
+  iat: number;
+  exp: number;
+}
+
+export interface IJwtExpanded extends IJwtToken {
+  isExpired: boolean;
+}

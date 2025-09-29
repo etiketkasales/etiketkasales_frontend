@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAppSelector } from "~/src/app/store/hooks";
 import { selectUser } from "~/src/app/store/reducers/user.slice";
-import { changeUserData } from "../api/profile.api";
+import { useGetUser } from "~/src/features/user/lib/hooks/useGetUser.hook";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 import FormUtils from "~/src/shared/lib/utils/form.util";
 import InputUtils from "~/src/shared/lib/utils/input.util";
@@ -9,10 +9,9 @@ import InputUtils from "~/src/shared/lib/utils/input.util";
 import { MessageI } from "~/src/shared/model/shared.interface";
 import { IChangeUserData } from "~/src/entities/profile-section/model/profile.interface";
 import { changeDataS } from "../../model/profile.const";
-import { useGetUser } from "~/src/features/user/lib/hooks/useGetUser.hook";
 
 export const useProfile = () => {
-  const { userInfo, userId } = useAppSelector(selectUser);
+  const { userInfo } = useAppSelector(selectUser);
   const { handleGetUser } = useGetUser();
   const [changeData, setChangeData] = useState<IChangeUserData>(changeDataS);
   const [loading, setLoading] = useState<boolean>(false);
@@ -48,8 +47,7 @@ export const useProfile = () => {
         setLoading(true);
         if (!validFields()) return;
         if (!userInfo.id) return;
-        await changeUserData(changeData, 1);
-        await handleGetUser(userId);
+        await handleGetUser();
       },
       setError,
     });

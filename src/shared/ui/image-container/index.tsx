@@ -2,6 +2,7 @@ import React from "react";
 
 import classes from "./image.module.scss";
 import NoSrcImage from "./no-src";
+import Image from "next/image";
 
 export type ImageRadiusT = 24 | 16 | 20 | 12 | "50%";
 
@@ -52,13 +53,13 @@ export default function ImageContainer(props: Props) {
       className={`${className} ${classes.container}`}
     >
       {src ? (
-        <img
+        <Image
           src={src}
           width={width}
           height={height}
           loading={loading}
           {...rest}
-          alt={alt ?? "Logo"}
+          alt={alt ?? " "}
           className={imgClassName}
           decoding="async"
         />

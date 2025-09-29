@@ -5,14 +5,16 @@ import { userInfoS } from "~/src/features/user/model/user.skeleton";
 interface InitialStateI {
   userInfo: UserInfoI;
   currentRole: "user" | "customer";
-  userId: string;
+  userId: number;
+  isLoggedIn: boolean;
   [key: string]: any;
 }
 
 const initialState: InitialStateI = {
   userInfo: userInfoS,
   currentRole: "user",
-  userId: "",
+  userId: 0,
+  isLoggedIn: false,
 };
 
 export const userSlice = createSlice({

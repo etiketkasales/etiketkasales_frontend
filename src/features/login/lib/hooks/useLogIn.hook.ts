@@ -5,7 +5,6 @@ import { selectLogIn } from "~/src/app/store/reducers/login.slice";
 import { usePhoneInput } from "~/src/shared/ui/inputs/phone/hooks/usePhoneInput.hook";
 
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
-import { sendCode, sendPhone } from "~/src/features/login/lib/api/login.api";
 
 import { MessageI } from "~/src/shared/model/shared.interface";
 import InputUtils from "~/src/shared/lib/utils/input.util";
@@ -38,7 +37,6 @@ export const useLogIn = ({ isCodePage }: { isCodePage: boolean }) => {
       setError: setMessage,
       callback: async () => {
         checkPhone(phoneNumber);
-        await sendPhone(formatForApi(phoneNumber), needRemember);
         setMessage(null);
       },
     });
@@ -46,11 +44,6 @@ export const useLogIn = ({ isCodePage }: { isCodePage: boolean }) => {
 
   const promiseCallback = async () => {
     if (isCodePage) {
-      const response = await sendCode(code, formatForApi(phoneNumber));
-      if (response.user_id) {
-        dispatch(setUser({ userId: response.user_id }));
-        push("/profile");
-      }
     } else {
       await handleSendPhone();
       push("/login/code");

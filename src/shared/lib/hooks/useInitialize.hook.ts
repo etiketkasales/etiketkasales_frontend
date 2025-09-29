@@ -5,9 +5,7 @@ import {
   clearFavourites,
   initializeFavourites,
 } from "~/src/app/store/reducers/favourites.slice";
-import { setNavigation } from "~/src/app/store/reducers/navigation.slice";
 import { useGetUser } from "~/src/features/user/lib/hooks/useGetUser.hook";
-import { getCities } from "~/src/shared/lib/api";
 
 export const useInitialize = () => {
   const dispatch = useAppDispatch();
@@ -17,17 +15,14 @@ export const useInitialize = () => {
 
   const handleGetCities = useCallback(async () => {
     try {
-      const response = await getCities();
-      if (!response) return;
-      dispatch(setNavigation({ cities: response.map((i) => i.name) }));
     } catch (err) {
       console.error(err);
     }
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     handleGetCities();
-    handleGetUser(userId.toString());
+    handleGetUser();
   }, [handleGetCities, handleGetUser]);
 
   useEffect(() => {

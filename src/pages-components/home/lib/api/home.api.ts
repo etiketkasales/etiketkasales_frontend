@@ -1,5 +1,5 @@
 import { EtiketkaI } from "~/src/entities/etiketka/model/etiketka.interface";
-import { apiClient } from "~/src/features/login/lib/api/login.api";
+import { apiClient } from "~/src/shared/lib/api/client.api";
 import { GetDataInterface } from "~/src/shared/model/shared.interface";
 
 export const getSectionItems = async (
