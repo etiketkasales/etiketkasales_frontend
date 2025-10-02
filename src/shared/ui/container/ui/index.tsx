@@ -1,44 +1,46 @@
 import React, { ElementType, forwardRef } from "react";
-
 import classNames from "classnames";
-import { PolymorphicProps } from "~/src/shared/model/shared.interface";
 
 interface ContainerOwnProps {
-  bgColor?: string;
+  bgColor?: string | null;
 }
 
-type ContainerProps<T extends ElementType> = PolymorphicProps<
-  T,
-  ContainerOwnProps
->;
+type PolymorphicProps<T extends ElementType, P> = P &
+  Omit<React.ComponentPropsWithoutRef<T>, keyof P | "as"> & {
+    as?: T;
+  };
 
-export const Container = forwardRef(
-  <T extends ElementType = "div">(
-    {
-      as,
-      bgColor = "neutral-100",
-      className,
-      children,
-      ...rest
-    }: ContainerProps<T>,
-    ref: React.Ref<React.ComponentPropsWithRef<T>["ref"]>,
-  ) => {
-    const Tag = as || "div";
+const ContainerBase = <T extends ElementType = "div">(
+  {
+    as,
+    bgColor = "neutral-100",
+    className,
+    children,
+    ...rest
+  }: PolymorphicProps<T, ContainerOwnProps>,
+  ref: React.Ref<Element>,
+) => {
+  const Tag = as || "div";
 
-    return (
-      <Tag
-        ref={ref as React.Ref<any>}
-        className={classNames(className, {
-          [`container-${bgColor}`]: bgColor,
-        })}
-        {...rest}
-      >
-        {children}
-      </Tag>
-    );
+  return (
+    <Tag
+      ref={ref as any}
+      className={classNames(className, {
+        [`container-${bgColor}`]: bgColor,
+      })}
+      {...rest}
+    >
+      {children}
+    </Tag>
+  );
+};
+
+export const Container = forwardRef(ContainerBase) as <
+  T extends ElementType = "div",
+>(
+  props: PolymorphicProps<T, ContainerOwnProps> & {
+    ref?: React.Ref<Element>;
   },
-);
-
-Container.displayName = "Container";
+) => React.ReactElement | null;
 
 export default Container;

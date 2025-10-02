@@ -1,0 +1,16 @@
+.swiper {
+    max-width: 1240px;
+    max-height: 464px;
+}
+
+@media screen and (width <=1240px) {
+    .swiper {
+        max-width: calc(100vw - $space-2);
+    };
+}
+
+@media screen and (width <=460px) {
+    .swiper {
+        max-height: 200px;
+    };
+}

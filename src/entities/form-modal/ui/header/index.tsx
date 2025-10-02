@@ -14,10 +14,12 @@ interface Props {
 
 export default function FormModalHeader({ text, subText, onBackClick }: Props) {
   const { push, prefetch } = useRouter();
-  const needPush: boolean = useMemo(
-    () => window.location.href.includes("company/registrate"),
-    [],
-  );
+  const needPush: boolean = useMemo(() => {
+    if (window) {
+      return window.location.href.includes("company/registrate");
+    }
+    return false;
+  }, []);
 
   const buttonClick = () => {
     if (needPush) {

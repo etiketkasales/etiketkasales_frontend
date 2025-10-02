@@ -3,31 +3,33 @@ import React, { Dispatch, SetStateAction } from "react";
 
 import classes from "./pagination.module.scss";
 import Button from "~/src/shared/ui/button";
+import Container from "~/src/shared/ui/container/ui";
 
 interface Props {
   slidesCount: number;
   currentSlide: number;
-  setCurrentSlide: Dispatch<SetStateAction<number>>;
+  goTo: (index: number) => void;
 }
 
 export default function AdvsBannerPagination({
   slidesCount,
   currentSlide,
-  setCurrentSlide,
+  goTo,
 }: Props) {
   const buttons = new Array(slidesCount).fill("");
 
   return (
-    <section
+    <Container
+      bgColor={null}
       className={`absolute ${classes.container} flex-row gap-2 align-center`}
     >
       {buttons.map((_, index) => {
         return (
           <Button
-            typeButton="ghost"
+            typeButton="white"
             size="0"
             onClick={() => {
-              setCurrentSlide(index);
+              goTo(index);
             }}
             className={`${classes.button} ${index === currentSlide ? classes.active : ""}`}
             needActiveScale={false}
@@ -35,6 +37,6 @@ export default function AdvsBannerPagination({
           />
         );
       })}
-    </section>
+    </Container>
   );
 }

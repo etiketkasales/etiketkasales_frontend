@@ -14,6 +14,8 @@ import HeaderTop from "./top";
 import HeaderBottom from "./bottom";
 import CartFunctional from "~/src/features/cart/ui/content/functional";
 
+// TO DO: переделать хедер. Сделать его универсальным, без всех этих тернарников
+
 export default function Header() {
   const dispatch = useAppDispatch();
   const { width } = useWindowSize();

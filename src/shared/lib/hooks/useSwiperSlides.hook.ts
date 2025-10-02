@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import SwiperCore from "swiper";
 
 interface Props {
@@ -13,25 +13,35 @@ export const useSwiperSlides = ({ slidesCount }: Props) => {
 
   const handleSlideChange = useCallback(() => {
     if (swiperRef.current) {
-      setCurrentSlide(swiperRef.current.activeIndex);
+      const idx = swiperRef.current.realIndex ?? swiperRef.current.activeIndex;
+      setCurrentSlide(idx);
     }
   }, []);
 
+  const goNext = useCallback(() => {
+    if (swiperRef.current && !last) {
+      swiperRef.current.slideNext();
+    }
+  }, [last]);
+
+  const goPrev = useCallback(() => {
+    if (swiperRef.current && !first) {
+      swiperRef.current.slidePrev();
+    }
+  }, [first]);
+
+  const goTo = useCallback(
+    (index: number) => {
+      if (swiperRef.current && index >= 0 && index < slidesCount) {
+        swiperRef.current.slideToLoop(index);
+      }
+    },
+    [slidesCount],
+  );
+
   useEffect(() => {
-    if (!swiperRef.current) return;
-    if (currentSlide >= slidesCount - 1) {
-      setCurrentSlide(slidesCount - 1);
-      setLast(true);
-    } else {
-      setLast(false);
-    }
-    if (currentSlide <= 0) {
-      setCurrentSlide(0);
-      setFirst(true);
-    } else {
-      setFirst(false);
-    }
-    swiperRef.current.slideTo(currentSlide);
+    setFirst(currentSlide === 0);
+    setLast(currentSlide === slidesCount - 1);
   }, [currentSlide, slidesCount]);
 
   return {
@@ -41,5 +51,8 @@ export const useSwiperSlides = ({ slidesCount }: Props) => {
     setCurrentSlide,
     first,
     last,
+    goTo,
+    goPrev,
+    goNext,
   };
 };

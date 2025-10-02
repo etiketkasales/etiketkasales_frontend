@@ -1,30 +1,19 @@
-"use client";
 import React from "react";
-import { useRouter } from "next/navigation";
 
-import Button from "~/src/shared/ui/button";
 import HeaderTopLocation from "../location";
+import LinkContainer from "~/src/shared/ui/link-container/ui";
 import { HeaderTopItemI } from "~/src/entities/header/model/header.interface";
 
 interface Props extends HeaderTopItemI {}
 
 export default function HeaderTopItem({ title, link, action }: Props) {
-  const { push } = useRouter();
-
   if (action) return <HeaderTopLocation action={action} />;
 
   return (
     <li>
-      <Button
-        typeButton="ghost"
-        size="0"
-        onClick={() => {
-          if (link) push(link);
-        }}
-        needActiveScale={false}
-      >
-        <span className="text-14 black semibold second-family">{title}</span>
-      </Button>
+      <LinkContainer link={link} className={`text-body m text-neutral-1000`}>
+        {title}
+      </LinkContainer>
     </li>
   );
 }

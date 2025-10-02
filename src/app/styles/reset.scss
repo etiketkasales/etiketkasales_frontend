@@ -25,7 +25,9 @@ h5,
 h6 {
   margin: 0;
   padding: 0;
-  transition: color $transition, opacity $transition;
+  transition:
+    color $transition,
+    opacity $transition;
 }
 
 svg,
@@ -41,6 +43,11 @@ html {
   scroll-behavior: smooth;
   &::-webkit-scrollbar {
     display: none;
+  }
+
+  &::selection {
+    background-color: $yellow-400;
+    color: $neutral-800;
   }
 }
 

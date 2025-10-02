@@ -59,6 +59,7 @@ export const useCompanyRegister = ({ stage }: Props) => {
   };
 
   return {
+    loading,
     error,
     companyData,
     handleChangeData,

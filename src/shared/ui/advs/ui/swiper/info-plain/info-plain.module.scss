@@ -2,8 +2,11 @@
     display: inline-flex;
     filter: opacity(0.6);
     top: 22px;
-    right: 22px;
+    right: $space-5;
     z-index: 100;
+    padding: $space-6px;
+    box-shadow: $shadow-100;
+    border-radius: $space-3;
 }
 
 .icon {
@@ -13,7 +16,7 @@
 
 @media screen and (width <= 460px) {
     .container {
-        top: $space-3;
-        right: $space-3;
+        top: $space-10px;
+        right: $space-10px;
     }
 }
