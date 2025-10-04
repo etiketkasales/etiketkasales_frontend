@@ -1,0 +1,7 @@
+.container {
+    &:hover {
+        svg path {
+            fill: $neutral-700;
+        }
+    }
+}

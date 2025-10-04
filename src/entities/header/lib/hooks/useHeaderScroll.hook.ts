@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { useWindowScroll } from "react-use";
+import { useWindowScroll, useWindowSize } from "react-use";
 import { useAppSelector } from "~/src/app/store/hooks";
 import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
 
-export const useHeaderScroll = (width: number) => {
+export const useHeaderScroll = () => {
+  const { width } = useWindowSize();
   const { y } = useWindowScroll();
   const { headerHeight: height } = useAppSelector(selectNavigation);
   const prevScroll = useRef<number>(0);
@@ -29,5 +30,5 @@ export const useHeaderScroll = (width: number) => {
     if (!delay) handleScroll();
   }, [y, height, delay, width]);
 
-  return { visible };
+  return { visible, width };
 };

@@ -11,6 +11,8 @@
 .wrapper-header {
     max-width: $container-width;
     margin: 0 auto;
+    border-radius: 0 0 $space-5 $space-5;
+    box-shadow: $shadow-100;
 }
 
 .header-container {

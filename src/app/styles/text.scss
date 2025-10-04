@@ -96,7 +96,8 @@ $third-family: var(--inter-font);
     }
 }
 
-.body-text {
+.body-text,
+.text-body {
     font-family: $font-family;
 
     &.xl {

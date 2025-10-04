@@ -11,6 +11,7 @@ import Tabs from "~/src/widgets/tabs/ui";
 import Header from "~/src/entities/header/ui";
 import Footer from "~/src/entities/footer/ui";
 import { categoryAll } from "~/src/shared/ui/categories-swiper/model/categories.const";
+import HeaderDefault from "../../header-default/ui";
 
 export default function PageWrapper({
   children,
@@ -31,7 +32,7 @@ export default function PageWrapper({
 
   return (
     <>
-      {CustomHeader ? CustomHeader : <Header />}
+      {CustomHeader ? CustomHeader : <HeaderDefault />}
       <main
         className={`wrapper flex-column gap-5`}
         style={{ marginBottom: "auto" }}

@@ -1,6 +1,7 @@
 import React, { Ref } from "react";
 
 import classes from "./input.module.scss";
+import classNames from "classnames";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -34,7 +35,7 @@ export default function Input({
   return (
     <label
       htmlFor={name}
-      className={`${classNameLabel} cursor no-select flex-column`}
+      className={classNames(`cursor no-select flex-column`, classNameLabel)}
     >
       <input
         {...rest}
@@ -45,7 +46,9 @@ export default function Input({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className={`${className} ${classes.input} ${errorText && classes.error}`}
+        className={classNames(`${classes.input}`, className, {
+          [classes.error]: errorText,
+        })}
       />
       {errorText && <p className="red text-14 regular">{errorText}</p>}
     </label>

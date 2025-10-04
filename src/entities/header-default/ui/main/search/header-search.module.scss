@@ -1,0 +1,14 @@
+.container {
+    border-radius: $space-3;
+    padding: $space-10px;
+    flex: 1 0 0;
+}
+
+.input {
+    color: $neutral-900;
+    width: 100%;
+}
+
+.icon {
+    cursor: pointer;
+}

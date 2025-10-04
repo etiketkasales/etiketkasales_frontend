@@ -1,0 +1,12 @@
+.container {
+    &:hover {
+        svg path {
+            fill: $neutral-700;
+        }
+    }
+}
+
+.countContainer {
+    padding: $space-0 $space-1;
+    border-radius: $space-2;
+}

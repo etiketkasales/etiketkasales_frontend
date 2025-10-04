@@ -18,9 +18,8 @@ import CartFunctional from "~/src/features/cart/ui/content/functional";
 
 export default function Header() {
   const dispatch = useAppDispatch();
-  const { width } = useWindowSize();
   const { headerHeight } = useAppSelector(selectNavigation);
-  const { visible } = useHeaderScroll(width);
+  const { visible, width } = useHeaderScroll();
   const [isCartPage, setIsCartPage] = React.useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
 

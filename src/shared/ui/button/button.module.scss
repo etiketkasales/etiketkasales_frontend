@@ -24,6 +24,7 @@
 .blue {
     border-radius: $space-2;
     background-color: $blue-500;
+    box-shadow: $shadow-100;
 
     &:hover {
         background-color: $light-blue;
