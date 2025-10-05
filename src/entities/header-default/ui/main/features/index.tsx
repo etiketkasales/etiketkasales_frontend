@@ -1,6 +1,6 @@
 import React from "react";
 
-import HeaderForBussiness from "./for-bussiness";
+import HeaderForBussiness from "../../for-bussiness";
 import HeaderFeaturesIcons from "./icons";
 import HeaderProfile from "./profile";
 

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import classes from "./header.module.scss";
@@ -14,11 +14,11 @@ interface Props {
 
 export default function FormModalHeader({ text, subText, onBackClick }: Props) {
   const { push, prefetch } = useRouter();
-  const needPush: boolean = useMemo(() => {
-    if (window) {
-      return window.location.href.includes("company/registrate");
-    }
-    return false;
+  const [needPush, setNeedPush] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!window) return;
+    setNeedPush(window.location.href.includes("company/registrate"));
   }, []);
 
   const buttonClick = () => {

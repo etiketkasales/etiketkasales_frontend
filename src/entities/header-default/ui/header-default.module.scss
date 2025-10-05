@@ -1,0 +1,6 @@
+.container {
+    @media screen and (width <= 768px) {
+        padding: $space-4;
+        gap: $space-4;
+    }
+}
