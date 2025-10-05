@@ -3,6 +3,7 @@ import React, { ElementType, useEffect } from "react";
 
 import classes from "./button.module.scss";
 import { useRouter } from "next/navigation";
+import classNames from "classnames";
 
 export type ButtonTypeButtonT =
   | "ghost"
@@ -52,13 +53,16 @@ export default function Button<T extends ElementType>({
     }
   }, [href, prefetch]);
 
-  const sizeRender = () => {
-    return `padding-${size}`;
-  };
-
-  const typeButtonRender = () => {
-    return classes[typeButton];
-  };
+  const classNameLocal = classNames(
+    className,
+    classes[typeButton],
+    classes.button,
+    `padding-${size}`,
+    {
+      [classes.activeScale]: needActiveScale,
+      [classes.justifyCenter]: justifyCenter,
+    },
+  );
 
   const Tag = as || "button";
 
@@ -70,7 +74,7 @@ export default function Button<T extends ElementType>({
           push(href);
         }
       }}
-      className={`${className} ${justifyCenter && "center-element"} ${classes.button} ${needActiveScale ? classes.activeScale : ""} ${sizeRender()} ${typeButtonRender()}`}
+      className={classNameLocal}
       {...rest}
       style={{
         borderRadius: radius ? `${radius}px` : undefined,

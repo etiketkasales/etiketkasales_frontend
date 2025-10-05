@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import HeaderWithText from "~/src/entities/header-with-text/ui";
 
 import OrderSection from "~/src/entities/order/ui";
 import PageWrapper from "~/src/entities/page-wrapper/ui";
@@ -17,7 +18,7 @@ export default function OrderPage() {
   }, []);
 
   return (
-    <PageWrapper>
+    <PageWrapper CustomHeader={<HeaderWithText text="Оформление заказа" />}>
       <OrderSection forCompany={forCompany} />
     </PageWrapper>
   );
