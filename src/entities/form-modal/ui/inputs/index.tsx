@@ -69,12 +69,10 @@ export default function FormModalInputs<T>({
             return (
               <Select
                 key={index}
-                currentOption={
+                activeOption={
                   formData[input.field] ? String(formData[input.field]) : ""
                 }
-                holder={input.placeholder}
-                selectOptions={input.selectOptions ? input.selectOptions : []}
-                doubledHeader
+                options={input.selectOptions ? input.selectOptions : []}
                 className={`${classes.input} ${classes.select}`}
                 optionsClassName={`${classes.options}`}
                 selectedOptionClassName={`${classes.selectedOption}`}

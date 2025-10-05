@@ -26,6 +26,7 @@ interface Props<T extends ElementType>
   disabled?: boolean;
   as?: T;
   href?: string;
+  ref?: React.Ref<HTMLButtonElement>;
 }
 
 export default function Button<T extends ElementType>({
@@ -40,9 +41,10 @@ export default function Button<T extends ElementType>({
   disabled,
   as,
   href,
+  ref,
   ...rest
 }: Props<T>) {
-  const { prefetch } = useRouter();
+  const { prefetch, push } = useRouter();
 
   useEffect(() => {
     if (href) {
@@ -62,13 +64,19 @@ export default function Button<T extends ElementType>({
 
   return (
     <Tag
-      onClick={onClick}
+      onClick={(e) => {
+        onClick?.(e);
+        if (href) {
+          push(href);
+        }
+      }}
       className={`${className} ${justifyCenter && "center-element"} ${classes.button} ${needActiveScale ? classes.activeScale : ""} ${sizeRender()} ${typeButtonRender()}`}
       {...rest}
       style={{
-        borderRadius: `${radius}px`,
+        borderRadius: radius ? `${radius}px` : undefined,
       }}
       disabled={disabled}
+      ref={ref}
     >
       {children}
     </Tag>

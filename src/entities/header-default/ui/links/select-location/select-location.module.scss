@@ -1,0 +1,13 @@
+.options {
+    background-color: $neutral-100;
+    box-shadow: $shadow-100;
+    border-radius: $space-3;
+    padding: $space-1 $space-3;
+    width: max-content;
+    gap: $space-3;
+
+    scrollbar-width: 0px;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}

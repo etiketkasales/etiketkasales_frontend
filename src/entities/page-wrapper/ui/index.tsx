@@ -8,7 +8,6 @@ import {
 import { useWindowSize } from "react-use";
 
 import Tabs from "~/src/widgets/tabs/ui";
-import Header from "~/src/entities/header/ui";
 import Footer from "~/src/entities/footer/ui";
 import { categoryAll } from "~/src/shared/ui/categories-swiper/model/categories.const";
 import HeaderDefault from "../../header-default/ui";

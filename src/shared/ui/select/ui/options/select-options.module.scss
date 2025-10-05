@@ -1,0 +1,16 @@
+.options {
+    transition: opacity $transition, transform $transition;
+    will-change: transform;
+    transform-origin: top;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    max-height: 200px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    scrollbar-width: none;
+}
