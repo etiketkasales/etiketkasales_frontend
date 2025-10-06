@@ -1,7 +1,7 @@
 import React from "react";
 
 import classes from "./header-with-text.module.scss";
-import HeaderWithBack from "../../header-with-back/ui";
+import HeaderWithBack from "~/src/entities/header-with-back/ui";
 
 interface Props {
   text: string;

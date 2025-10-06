@@ -1,0 +1,7 @@
+.container {
+    transition: transform 0.4s ease;
+
+    &.translated {
+        transform: translateY(var(--translate-value));
+    }
+}

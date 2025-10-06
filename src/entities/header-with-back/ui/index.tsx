@@ -28,6 +28,7 @@ export default function HeaderWithBack({
           {children}
         </HeaderWithBackMedia>
       }
+      needTranslate={false}
     />
   );
 }
