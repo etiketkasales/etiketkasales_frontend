@@ -50,3 +50,10 @@ export type PolymorphicProps<T extends ElementType, P = {}> = P & {
 
 export type PolymorphicRef<T extends ElementType> =
   ComponentPropsWithRef<T>["ref"];
+
+// new API
+export interface IGetData<T> {
+  data: T;
+  success: boolean;
+  message?: string;
+}

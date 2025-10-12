@@ -1,4 +1,4 @@
-import { EtiketkaI } from "./etiketka.interface";
+import { EtiketkaI, IEtiketka } from "./etiketka.interface";
 
 export const etiketkaSkeleton: EtiketkaI = {
   id: 0,
@@ -10,4 +10,20 @@ export const etiketkaSkeleton: EtiketkaI = {
   images: [],
   price: 0,
   old_price: 0,
+};
+
+export const productSkeleton: IEtiketka = {
+  id: 0,
+  name: "",
+  slug: "",
+  description: "",
+  price: "",
+  old_price: "",
+  images: [],
+  specifications: [],
+  seller_id: 0,
+  seller_name: "",
+  company_name: "",
+  category_id: 0,
+  category_name: "",
 };

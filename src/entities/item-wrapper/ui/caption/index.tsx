@@ -5,8 +5,8 @@ import classes from "./item-caption.module.scss";
 import Price from "~/src/shared/ui/price/ui";
 
 interface Props {
-  price: number;
-  discountPrice?: number;
+  price: string;
+  discountPrice?: string;
   title: string;
 }
 

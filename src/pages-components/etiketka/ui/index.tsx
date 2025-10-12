@@ -1,12 +1,18 @@
 "use client";
 import React from "react";
+
 import EtiketkaSection from "~/src/entities/etiketka/ui";
 import PageWrapper from "~/src/entities/page-wrapper/ui";
+import { IEtiketka } from "~/src/entities/etiketka/model/etiketka.interface";
 
-export default function EtiketkaPage() {
+interface Props {
+  initProductInfo: IEtiketka;
+}
+
+export default function EtiketkaPage({ initProductInfo }: Props) {
   return (
     <PageWrapper>
-      <EtiketkaSection />
+      <EtiketkaSection initProductInfo={initProductInfo} />
     </PageWrapper>
   );
 }

@@ -5,11 +5,11 @@ import { useWindowSize } from "react-use";
 import classes from "./item-wrapper-top.module.scss";
 import ImageContainer from "~/src/shared/ui/image-container";
 import InCartButton from "~/src/shared/ui/in-cart-button/ui";
-import { EtiketkaI } from "~/src/entities/etiketka/model/etiketka.interface";
+import { IEtiketka } from "~/src/entities/etiketka/model/etiketka.interface";
 
 interface Props {
   image: string;
-  item: EtiketkaI;
+  item: IEtiketka;
 }
 
 export default function ItemWrapperTop({ image, item }: Props) {
@@ -25,12 +25,7 @@ export default function ItemWrapperTop({ image, item }: Props) {
         radius={16}
         className={classes.image}
       />
-      <InCartButton
-        bottom={0}
-        right={12}
-        className={classes.button}
-        item={item}
-      />
+      <InCartButton bottom={0} right={12} className={classes.button} />
     </div>
   );
 }

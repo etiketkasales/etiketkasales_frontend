@@ -6,10 +6,10 @@ import EtiketkaMainContainer from "../../../container";
 import Price from "~/src/shared/ui/price/ui";
 import AddEtiketkaButton from "~/src/shared/ui/add-etiketka-button/ui";
 import AddToFavourites from "~/src/shared/ui/add-to-favourites/ui";
-import { EtiketkaI } from "~/src/entities/etiketka/model/etiketka.interface";
+import { IEtiketka } from "~/src/entities/etiketka/model/etiketka.interface";
 
 interface Props {
-  item: EtiketkaI;
+  item: IEtiketka;
 }
 
 export default function EtiketkaPriceCart({ item }: Props) {

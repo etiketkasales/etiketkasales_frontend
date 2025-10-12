@@ -1,4 +1,8 @@
 .container {
+    p {
+        white-space: nowrap;
+    }
+
     @media screen and (width <= 460px) {
         gap: $space-2;
     }

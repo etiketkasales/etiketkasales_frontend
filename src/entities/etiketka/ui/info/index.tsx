@@ -5,9 +5,13 @@ import classes from "./info.module.scss";
 import EtiketkaMainContainer from "~/src/entities/etiketka/ui/container";
 import EtiketkaInfoButtons from "./buttons";
 import EtiketkaInfoContent from "./content";
-import { CurrentIndexI } from "../../model/etiketka.interface";
+import { CurrentIndexI, IEtiketka } from "../../model/etiketka.interface";
 
-export default function EtiketkaInfo() {
+interface Props {
+  initProductInfo: IEtiketka;
+}
+
+export default function EtiketkaInfo({ initProductInfo }: Props) {
   const [currentIndex, setCurrentIndex] = useState<CurrentIndexI>("descr");
 
   return (
@@ -18,7 +22,10 @@ export default function EtiketkaInfo() {
         currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
       />
-      <EtiketkaInfoContent currentIndex={currentIndex} />
+      <EtiketkaInfoContent
+        currentIndex={currentIndex}
+        initProductInfo={initProductInfo}
+      />
     </EtiketkaMainContainer>
   );
 }

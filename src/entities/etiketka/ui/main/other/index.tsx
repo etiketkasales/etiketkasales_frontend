@@ -4,11 +4,11 @@ import React from "react";
 import classes from "./other.module.scss";
 import EtiketkaSeller from "./seller";
 import EtiketkaPriceCart from "./price-cart";
-import { EtiketkaI } from "~/src/entities/etiketka/model/etiketka.interface";
+import { IEtiketka } from "~/src/entities/etiketka/model/etiketka.interface";
 
 interface Props {
   sellerId: number;
-  item: EtiketkaI;
+  item: IEtiketka;
 }
 
 export default function EtiketkaOther({ sellerId, item }: Props) {

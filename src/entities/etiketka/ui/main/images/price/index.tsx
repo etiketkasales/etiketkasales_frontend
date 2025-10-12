@@ -6,8 +6,8 @@ import EtiketkaMainContainer from "~/src/entities/etiketka/ui/container";
 import Price from "~/src/shared/ui/price/ui";
 
 interface Props {
-  price: number;
-  old_price?: number;
+  price: string;
+  old_price?: string;
 }
 
 export default function EtiketkaImagesPrice({ price, old_price }: Props) {

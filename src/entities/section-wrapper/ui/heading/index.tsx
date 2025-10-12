@@ -6,7 +6,7 @@ import ViewAllButton from "~/src/shared/ui/view-all-button/ui";
 
 interface Props {
   title: string;
-  categoryId: string;
+  categoryId: number;
 }
 
 export default function SectionWrapperHeading({ title, categoryId }: Props) {

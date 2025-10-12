@@ -13,8 +13,8 @@ import SkeletonWrapper from "~/src/shared/ui/skeleton/ui";
 
 interface Props {
   images_urls: string[];
-  price: number;
-  old_price?: number;
+  price: string;
+  old_price?: string;
 }
 
 export default function EtiketkaImages({

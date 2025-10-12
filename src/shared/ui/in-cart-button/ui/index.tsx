@@ -15,7 +15,7 @@ interface Props {
   right?: number;
   bottom?: number;
   className?: string;
-  item: EtiketkaI;
+  item?: EtiketkaI;
 }
 
 export default function InCartButton({
@@ -30,9 +30,9 @@ export default function InCartButton({
   const { handleAddEtiketka, handleDeleteEtiketka } = useCartItems({ item });
   const [isInCart, setIsInCart] = useState<EtiketkaI | undefined>(undefined);
 
-  useEffect(() => {
-    setIsInCart(cartItems.find((i) => i.id === item.id));
-  }, [cartItems, item.id]);
+  // useEffect(() => {
+  //   setIsInCart(cartItems.find((i) => i.id === item.id));
+  // }, [cartItems, item.id]);
 
   return (
     <div

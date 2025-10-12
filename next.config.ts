@@ -20,6 +20,17 @@ const nextConfig: NextConfig = {
     `,
   },
 
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "api.etiketkasales.ru",
+        port: "",
+        pathname: "/**",
+      },
+    ],
+  },
+
   output: "standalone",
 };
 

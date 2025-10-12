@@ -6,10 +6,10 @@ import { useWindowSize } from "react-use";
 import classes from "./item-wrapper.module.scss";
 import ItemWrapperTop from "./top";
 import ItemWrapperCaption from "./caption";
-import { EtiketkaI } from "../../etiketka/model/etiketka.interface";
+import { IEtiketka } from "../../etiketka/model/etiketka.interface";
 
 interface Props {
-  item: EtiketkaI;
+  item: IEtiketka;
 }
 
 export default function ItemWrapper({ item }: Props) {
@@ -24,11 +24,11 @@ export default function ItemWrapper({ item }: Props) {
   return (
     <li
       className={`${classes.container} flex-column ${gap} cursor flex-start`}
-      onClick={() => push(`/etiketka/${item.url}`)}
+      onClick={() => push(`/etiketka/${item.slug}/${item.id}`)}
     >
-      <ItemWrapperTop item={item} image={item.cover_image} />
+      <ItemWrapperTop item={item} image={item.images[0]} />
       <ItemWrapperCaption
-        title={item.title}
+        title={item.name}
         price={item.price}
         discountPrice={item.old_price}
       />

@@ -3,12 +3,12 @@ import React from "react";
 
 import SectionWrapperBody from "./body";
 import SectionWrapperHeading from "./heading";
-import { EtiketkaI } from "~/src/entities/etiketka/model/etiketka.interface";
+import { IEtiketka } from "~/src/entities/etiketka/model/etiketka.interface";
 
 interface Props {
-  arrayProducts: Array<EtiketkaI>;
+  arrayProducts: Array<IEtiketka>;
   title: string;
-  categoryId: string;
+  categoryId: number;
   className?: string;
   loading: boolean;
 }
