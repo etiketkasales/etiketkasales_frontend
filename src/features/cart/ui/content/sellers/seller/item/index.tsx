@@ -4,13 +4,13 @@ import { useWindowSize } from "react-use";
 
 import classes from "./item.module.scss";
 import CheckboxInput from "~/src/shared/ui/inputs/checkbox";
-import ImageContainer from "~/src/shared/ui/image-container";
+import ImageContainer from "~/src/shared/ui/image-container/ui";
 import CartItemInfo from "./info";
 import CartItemInfoBottom from "./info/bottom";
-import { EtiketkaI } from "~/src/entities/etiketka/model/etiketka.interface";
+import { ICartItem } from "~/src/features/cart/model/cart.interface";
 
 interface Props {
-  item: EtiketkaI;
+  item: ICartItem;
   selectedItems: number[];
   selectItem: (id: number) => void;
 }
@@ -41,8 +41,8 @@ export default function CartSellerItem({
           />
         </div>
         <ImageContainer
-          src={item.cover_image}
-          alt={item.title}
+          src={item.images[0]}
+          alt={item.name}
           width={width > 460 ? 120 : 100}
           height={width > 460 ? 120 : 100}
           radius={20}

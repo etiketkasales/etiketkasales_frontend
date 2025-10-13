@@ -9,18 +9,13 @@ import {
 
 interface Props {
   currentIndex: CurrentIndexI;
-  initProductInfo: IEtiketka;
+  item: IEtiketka;
 }
 
-export default function EtiketkaInfoContent({
-  currentIndex,
-  initProductInfo,
-}: Props) {
+export default function EtiketkaInfoContent({ currentIndex, item }: Props) {
   switch (currentIndex) {
     default:
     case "descr":
-      return (
-        <EtiketkaInfoDescription description={initProductInfo.description} />
-      );
+      return <EtiketkaInfoDescription description={item.description} />;
   }
 }

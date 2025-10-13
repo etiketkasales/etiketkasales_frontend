@@ -4,10 +4,10 @@ import React from "react";
 import classes from "./content.module.scss";
 import CartFunctional from "./functional";
 import CartSellers from "./sellers";
-import { EtiketkaI } from "~/src/entities/etiketka/model/etiketka.interface";
+import { ICartItem } from "../../model/cart.interface";
 
 interface Props {
-  sellersItems: Array<EtiketkaI[]>;
+  sellersItems: Array<ICartItem[]>;
   selectedItems: number[];
   selectItem: (id: number) => void;
 }

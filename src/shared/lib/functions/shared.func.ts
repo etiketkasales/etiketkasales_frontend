@@ -1,19 +1,23 @@
 import { Dispatch, SetStateAction } from "react";
 import { MessageI } from "~/src/shared/model/shared.interface";
 
-export async function promiseWrapper({
-  setLoading,
-  setError,
-  needLoad = true,
-  callback,
-  setErrBool,
-}: {
+interface PromiseWrapperProps {
   setLoading: Dispatch<SetStateAction<boolean>>;
   callback: (...args: any) => Promise<void>;
   setError?: Dispatch<SetStateAction<MessageI | null>>;
+  errorMessage?: string;
   setErrBool?: Dispatch<SetStateAction<boolean>>;
   needLoad?: boolean;
-}) {
+}
+
+export async function promiseWrapper({
+  setLoading,
+  setError,
+  errorMessage,
+  needLoad = true,
+  callback,
+  setErrBool,
+}: PromiseWrapperProps) {
   try {
     if (needLoad) {
       setLoading(true);
@@ -23,7 +27,7 @@ export async function promiseWrapper({
   } catch (err) {
     console.error(err);
     setError?.({
-      message: "Произошла какая-то ошибка",
+      message: errorMessage || "Произошла ошибка сервера",
       type: "error",
     });
     setErrBool?.(true);

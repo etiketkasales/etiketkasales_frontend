@@ -5,7 +5,7 @@ import { useAppSelector } from "~/src/app/store/hooks";
 import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
 
 import classes from "./images.module.scss";
-import ImageContainer from "~/src/shared/ui/image-container";
+import ImageContainer from "~/src/shared/ui/image-container/ui";
 import ImagesCarousel from "./carousel";
 import EtiketkaMainContainer from "~/src/entities/etiketka/ui/container";
 import EtiketkaImagesPrice from "./price";

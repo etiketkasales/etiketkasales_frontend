@@ -7,14 +7,14 @@ import Link from "next/link";
 
 interface Props {
   title: string;
-  price: number;
-  url: string;
-  old_price?: number;
+  price: string;
+  old_price?: string;
+  href: string;
 }
 
 export default function CartItemInfoTop({
   title,
-  url,
+  href,
   price,
   old_price,
 }: Props) {
@@ -23,7 +23,7 @@ export default function CartItemInfoTop({
       className={`flex-row space-between gap-10 flex-start ${classes.container}`}
     >
       <Link
-        href={`/etiketka/${url}`}
+        href={href}
         rel="noopener noreferrer"
         className={`black text-18 semibold second-family ${classes.title}`}
       >

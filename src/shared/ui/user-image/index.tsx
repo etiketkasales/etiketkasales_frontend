@@ -3,7 +3,7 @@ import React from "react";
 
 import classes from "./user-image.module.scss";
 import Person from "~/public/profile/person-fill.svg";
-import ImageContainer from "../image-container";
+import ImageContainer from "../image-container/ui";
 
 interface Props {
   src: string;

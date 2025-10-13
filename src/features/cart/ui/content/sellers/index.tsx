@@ -2,10 +2,10 @@
 import React from "react";
 
 import CartSellerItems from "./seller";
-import { EtiketkaI } from "~/src/entities/etiketka/model/etiketka.interface";
+import { ICartItem } from "../../../model/cart.interface";
 
 interface Props {
-  sellersItems: Array<EtiketkaI[]>;
+  sellersItems: Array<ICartItem[]>;
   selectedItems: number[];
   selectItem: (id: number) => void;
 }

@@ -1,5 +1,12 @@
 .container {
+    position: relative;
     grid-column: 4 span;
+}
+
+.link {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
 }
 
 @media screen and (width <= 1024px) {

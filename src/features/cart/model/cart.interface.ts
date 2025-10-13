@@ -1,5 +1,6 @@
 export interface IGetCart {
   items: ICartItem[];
+  total: ICartTotal;
 }
 
 export interface ICartItem {
@@ -7,7 +8,9 @@ export interface ICartItem {
   product_id: number;
   quantity: number;
   price: string;
+  old_price: string;
   name: string;
+  slug: string;
   images: string[];
   seller_id: number;
   seller_name: string;

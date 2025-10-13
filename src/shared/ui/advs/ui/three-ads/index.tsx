@@ -5,7 +5,7 @@ import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
 import { useAdvs } from "~/src/shared/ui/advs/lib/hooks/useAdvs.hook";
 
 import classes from "./three-ads.module.scss";
-import ImageContainer from "~/src/shared/ui/image-container";
+import ImageContainer from "~/src/shared/ui/image-container/ui";
 
 export default function ThreeAds() {
   const { loaded } = useAppSelector(selectNavigation);

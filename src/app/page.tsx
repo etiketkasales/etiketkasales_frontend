@@ -1,6 +1,7 @@
 import { getRandomCategories } from "../features/categories/api/categories.api";
-import { IGetRandomCategories } from "../features/categories/model/categories.interface";
+
 import HomePage from "../pages-components/home/ui";
+import { IGetRandomCategories } from "../features/categories/model/categories.interface";
 
 export default async function Home() {
   let initialSections: IGetRandomCategories[] = [];

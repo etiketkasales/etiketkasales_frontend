@@ -5,10 +5,10 @@ import classes from "./seller.module.scss";
 import CartWrapper from "~/src/features/cart/ui/wrapper";
 import SellerInfoContainer from "~/src/shared/ui/seller-info/ui";
 import CartSellerItem from "./item";
-import { EtiketkaI } from "~/src/entities/etiketka/model/etiketka.interface";
+import { ICartItem } from "~/src/features/cart/model/cart.interface";
 
 interface Props {
-  items: EtiketkaI[];
+  items: ICartItem[];
   selectedItems: number[];
   selectItem: (id: number) => void;
 }

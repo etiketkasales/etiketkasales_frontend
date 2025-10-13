@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 
 import classes from "./price.module.scss";
 
@@ -30,7 +31,10 @@ export default function Price({
 
   return (
     <div
-      className={`flex-row gap-6px${alignCenter ? " align-center" : " flex-end"} ${className}`}
+      className={classNames(
+        `flex-row gap-6px ${alignCenter ? "align-center" : "flex-end"}`,
+        className,
+      )}
     >
       <p
         className={`${old_price ? "text-green-700" : "text-neutral-700"} heading h6 text`}

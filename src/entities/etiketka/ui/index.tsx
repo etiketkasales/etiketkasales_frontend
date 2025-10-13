@@ -14,10 +14,12 @@ interface Props {
 }
 
 export default function EtiketkaSection({ initProductInfo }: Props) {
-  const { etiketkaInfo, loading, error, handleGetEtiketka, specs } =
-    useEtiketka();
+  const { loading, error, productInfo, updateInfo } = useEtiketka({
+    initProductInfo,
+  });
 
   const commonProps = {
+    updateInfo,
     loading,
     error,
   };
@@ -27,8 +29,8 @@ export default function EtiketkaSection({ initProductInfo }: Props) {
 
   return (
     <section className={`flex-column gap-5 ${classes.container}`}>
-      <EtiketkaMain {...commonProps} item={initProductInfo} />
-      <EtiketkaInfo initProductInfo={initProductInfo} />
+      <EtiketkaMain {...commonProps} item={productInfo} />
+      <EtiketkaInfo item={productInfo} />
     </section>
   );
 }

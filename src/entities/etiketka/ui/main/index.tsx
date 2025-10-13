@@ -12,9 +12,15 @@ interface Props {
   item: IEtiketka;
   loading: boolean;
   error: MessageI | null;
+  updateInfo: () => void;
 }
 
-export default function EtiketkaMain({ item, loading, error }: Props) {
+export default function EtiketkaMain({
+  item,
+  loading,
+  error,
+  updateInfo,
+}: Props) {
   return (
     <section className={`flex-row gap-5 align-start ${classes.container}`}>
       <EtiketkaImages
@@ -23,7 +29,11 @@ export default function EtiketkaMain({ item, loading, error }: Props) {
         old_price={item.old_price}
       />
       <EtiketkaGeneral name={item.name} characteristics={item.specifications} />
-      <EtiketkaOther sellerId={item.seller_id} item={item} />
+      <EtiketkaOther
+        sellerId={item.seller_id}
+        item={item}
+        updateInfo={updateInfo}
+      />
     </section>
   );
 }

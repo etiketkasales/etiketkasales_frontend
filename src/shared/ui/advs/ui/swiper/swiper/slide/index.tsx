@@ -2,7 +2,7 @@
 import React from "react";
 import { useWindowSize } from "react-use";
 
-import ImageContainer from "~/src/shared/ui/image-container";
+import ImageContainer from "~/src/shared/ui/image-container/ui";
 import LinkContainer from "~/src/shared/ui/link-container/ui";
 import { IAdv } from "~/src/shared/ui/advs/model/advs.interface";
 

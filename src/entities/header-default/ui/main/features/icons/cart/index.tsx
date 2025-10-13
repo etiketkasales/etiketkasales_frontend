@@ -7,11 +7,11 @@ import Icon from "~/public/header/cart.svg";
 import HeaderFeaturesItem from "../item";
 
 export default function FeaturesCartItem() {
-  const { cartItems } = useAppSelector(selectCart);
+  const { items } = useAppSelector(selectCart);
 
   return (
     <HeaderFeaturesItem
-      itemsCount={cartItems.length}
+      itemsCount={items?.length || 0}
       Icon={Icon}
       href="/cart"
     />

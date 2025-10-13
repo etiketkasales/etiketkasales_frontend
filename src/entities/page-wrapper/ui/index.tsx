@@ -9,15 +9,17 @@ import { useWindowSize } from "react-use";
 
 import Tabs from "~/src/widgets/tabs/ui";
 import Footer from "~/src/entities/footer/ui";
-import { categoryAll } from "~/src/shared/ui/categories-swiper/model/categories.const";
 import HeaderDefault from "../../header-default/ui";
+import { categoryAll } from "~/src/shared/ui/categories-swiper/model/categories.const";
 
 export default function PageWrapper({
   children,
   CustomHeader,
+  TabsButton,
 }: {
   children: React.ReactNode;
   CustomHeader?: React.ReactNode;
+  TabsButton?: React.ReactNode;
 }) {
   const dispatch = useAppDispatch();
   const { currentFilter } = useAppSelector(selectCategories);
@@ -39,7 +41,7 @@ export default function PageWrapper({
         {children}
       </main>
       <Footer />
-      {width <= 768 ? <Tabs /> : null}
+      {width <= 768 ? <Tabs TabsButton={TabsButton} /> : null}
     </>
   );
 }

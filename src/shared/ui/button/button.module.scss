@@ -31,11 +31,11 @@
   box-shadow: $shadow-100;
 
   &:hover {
-    background-color: $light-blue;
+    background-color: $blue-400;
   }
 
   &:active {
-    background-color: $dark-blue;
+    background-color: $blue-700;
   }
 }
 
@@ -56,6 +56,22 @@
 
 .yellow {
   background-color: $yellow-500;
+  box-shadow: $shadow-100;
+
+  &:hover {
+    background-color: $yellow-300;
+  }
+
+  &:active {
+    background-color: $yellow-600;
+  }
+
+  &:disabled {
+    background-color: $yellow-100;
+    span {
+      color: $yellow-200;
+    }
+  }
 }
 
 .light-yellow {

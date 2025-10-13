@@ -2,68 +2,71 @@ import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { selectCart, setCart } from "~/src/app/store/reducers/cart.slice";
 
-import { EtiketkaI } from "~/src/entities/etiketka/model/etiketka.interface";
+import { ICartItem } from "../../model/cart.interface";
+import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
+import { getCart } from "../api/cart.api";
 
 export const useCart = () => {
   const dispatch = useAppDispatch();
-  const { cartItems, selectedItems } = useAppSelector(selectCart);
-  const [sellerItems, setSellerItems] = useState<Array<EtiketkaI[]>>([]);
+  const { items, selectedItems } = useAppSelector(selectCart);
+  const [sellerItems, setSellerItems] = useState<Array<ICartItem[]>>([]);
 
   const handleSelectItem = useCallback(
     (id: number) => {
-      if (selectedItems.includes(id)) {
-        dispatch(
-          setCart({
-            selectedItems: selectedItems.filter((item) => item !== id),
-          }),
-        );
-      } else {
-        dispatch(
-          setCart({
-            selectedItems: [...selectedItems, id],
-          }),
-        );
-      }
+      dispatch(
+        setCart({
+          selectedItems: selectedItems.includes(id)
+            ? selectedItems.filter((item) => item !== id)
+            : [...selectedItems, id],
+        }),
+      );
     },
     [selectedItems, dispatch],
   );
 
   useEffect(() => {
-    if (selectedItems.length === cartItems.length) {
-      dispatch(
-        setCart({
-          isAllSelected: true,
-        }),
-      );
-    } else {
-      dispatch(
-        setCart({
-          isAllSelected: false,
-        }),
-      );
-    }
-  }, [selectedItems, cartItems, dispatch]);
+    dispatch(
+      setCart({
+        isAllSelected: selectedItems.length === items.length,
+      }),
+    );
+  }, [selectedItems, items, dispatch]);
 
+  const updateCart = useCallback(async () => {
+    try {
+      const res = await getCart();
+      dispatch(
+        setCart({
+          items: res.items,
+        }),
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  }, [dispatch]);
+
+  // группирует по продавцам
   useEffect(() => {
-    if (!cartItems.length) {
+    if (!items.length) {
       dispatch(setCart({ selectedItems: [] }));
       setSellerItems([]);
       return;
     }
 
-    const selected = cartItems.map((item) => item.id);
-    const sellerIdList = [...new Set(cartItems.map((item) => item.seller_id))];
+    const selected = items.map((item) => item.product_id);
+    const sellerIdList = [...new Set(items.map((item) => item.seller_id))];
     const groupedBySeller = sellerIdList.map((id) =>
-      cartItems.filter((item) => item.seller_id === id),
+      items.filter((item) => item.seller_id === id),
     );
 
     dispatch(setCart({ selectedItems: selected }));
     setSellerItems(groupedBySeller);
-  }, [cartItems, dispatch]); // группирует по продавцам
+  }, [items, dispatch]);
 
   return {
     selectedItems,
     sellerItems,
     handleSelectItem,
+    updateCart,
   };
 };

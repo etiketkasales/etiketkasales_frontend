@@ -1,7 +1,7 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 export const apiClient = axios.create({
-  baseURL: process.env.SERVER_API_URL,
+  baseURL: process.env.SERVER_API_URL ?? process.env.NEXT_PUBLIC_API_URL,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",

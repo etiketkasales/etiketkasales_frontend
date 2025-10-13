@@ -1,49 +1,53 @@
-import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
+import { useCallback, useMemo, useState } from "react";
+import { useCart } from "./useCart.hook";
 import {
-  addEtiketka,
-  removeEtiketka,
-  selectCart,
-} from "~/src/app/store/reducers/cart.slice";
-import { EtiketkaI } from "~/src/entities/etiketka/model/etiketka.interface";
+  CartButton,
+  deleteProductFromCart,
+  updateProductCount,
+} from "../api/cart.api";
 
 interface Props {
-  item?: EtiketkaI;
+  itemId: number;
 }
 
-export const useCartItems = ({ item }: Props) => {
-  const dispatch = useAppDispatch();
-  const { currentItem, cartItems } = useAppSelector(selectCart);
-  const [isInCart, setIsInCart] = useState<number>(0);
+export const useCartItems = ({ itemId }: Props) => {
+  const { updateCart } = useCart();
 
-  useEffect(() => {
-    const itemInCart = cartItems.find(
-      (i) => i.id === (currentItem?.id ?? item?.id),
-    );
-    setIsInCart(itemInCart?.in_cart_count || 0);
-  }, [currentItem, cartItems, item]);
-
-  const handleAddEtiketka = () => {
-    if (item) {
-      dispatch(addEtiketka(item));
-      return;
+  const functionWrapper = useCallback(async (callback: () => any) => {
+    try {
+      await callback();
+    } catch (err) {
+      console.error(err);
     }
-    if (!currentItem) return;
-    dispatch(addEtiketka(currentItem));
-  };
+  }, []);
 
-  const handleDeleteEtiketka = (id?: number) => {
-    if (id) {
-      dispatch(removeEtiketka(id));
-      return;
-    }
-    if (!currentItem) return;
-    dispatch(removeEtiketka(currentItem.id));
-  };
+  const handleAddEtiketka = useCallback(async () => {
+    await functionWrapper(async () => {
+      await CartButton(itemId, 1);
+      await updateCart();
+    });
+  }, [functionWrapper, updateCart, itemId]);
+
+  const handleUpdateEtiketka = useCallback(
+    async (quantity: number) => {
+      await functionWrapper(async () => {
+        await updateProductCount(itemId, quantity);
+        await updateCart();
+      });
+    },
+    [functionWrapper, updateCart, itemId],
+  );
+
+  const handleDeleteEtiketka = useCallback(async () => {
+    await functionWrapper(async () => {
+      await deleteProductFromCart(itemId);
+      await updateCart();
+    });
+  }, [functionWrapper, updateCart, itemId]);
 
   return {
     handleAddEtiketka,
+    handleUpdateEtiketka,
     handleDeleteEtiketka,
-    isInCart,
   };
 };

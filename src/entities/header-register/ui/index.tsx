@@ -1,7 +1,7 @@
 import React from "react";
 
 import classes from "./header-register.module.scss";
-import ImageContainer from "~/src/shared/ui/image-container";
+import ImageContainer from "~/src/shared/ui/image-container/ui";
 import HeaderRegisterButtons from "./buttons";
 import Container from "~/src/shared/ui/container/ui";
 import LinkContainer from "~/src/shared/ui/link-container/ui";

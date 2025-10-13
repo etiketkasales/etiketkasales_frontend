@@ -4,18 +4,18 @@ import React from "react";
 import classes from "./info.module.scss";
 import CartItemInfoTop from "./top";
 import CartItemInfoBottom from "./bottom";
-import { EtiketkaI } from "~/src/entities/etiketka/model/etiketka.interface";
+import { ICartItem } from "~/src/features/cart/model/cart.interface";
 
 interface Props {
-  item: EtiketkaI;
+  item: ICartItem;
 }
 
 export default function CartItemInfo({ item }: Props) {
   return (
     <div className={`flex-column gap-5 space-between ${classes.container}`}>
       <CartItemInfoTop
-        url={item.url}
-        title={item.title}
+        href={`/etiketka/${item.slug}/${item.id}`}
+        title={item.name}
         price={item.price}
         old_price={item.old_price}
       />

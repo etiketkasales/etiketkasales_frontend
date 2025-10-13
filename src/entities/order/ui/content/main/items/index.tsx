@@ -2,33 +2,35 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "~/src/app/store/hooks";
-import { selectCart } from "~/src/app/store/reducers/cart.slice";
 import StringUtils from "~/src/shared/lib/utils/string.util";
 
 import classes from "./items.module.scss";
 import OrderMainWrapper from "../wrapper";
-import ImageContainer from "~/src/shared/ui/image-container";
+import ImageContainer from "~/src/shared/ui/image-container/ui";
+import { selectCart } from "~/src/app/store/reducers/cart.slice";
 
 interface ItemI {
   link: string;
   image: string;
 }
 
+// TO DO: переписать под новый апи корзины, сейчас неправильно
+
 export default function OrderMainItems() {
   const { push } = useRouter();
-  const { selectedItems, cartItems } = useAppSelector(selectCart);
+  const { selectedItems, items } = useAppSelector(selectCart);
   const [itemsToMap, setItemsToMap] = useState<ItemI[]>([]);
 
   useEffect(() => {
-    const items = selectedItems.map((id) => {
-      const item = cartItems.find((item) => item.id === id);
+    const newItems = selectedItems.map((id) => {
+      const item = items.find((item) => item.id === id);
       return {
-        link: item?.url || "",
-        image: item?.cover_image || "",
+        link: item?.slug || "",
+        image: item?.images[0] || "",
       };
     });
-    setItemsToMap(items);
-  }, [selectedItems, cartItems]);
+    setItemsToMap(newItems);
+  }, [selectedItems, items]);
   return (
     <OrderMainWrapper
       title={StringUtils.pluralizeWords(

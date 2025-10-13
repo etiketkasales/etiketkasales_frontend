@@ -1,18 +1,16 @@
-import { useParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
+
+import { IEtiketka } from "~/src/entities/etiketka/model/etiketka.interface";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
-
-import {
-  CharacterI,
-  EtiketkaI,
-} from "~/src/entities/etiketka/model/etiketka.interface";
-import { etiketkaSkeleton } from "~/src/entities/etiketka/model/etiketka.skeleton";
 import { MessageI } from "~/src/shared/model/shared.interface";
+import { getProductById } from "../api/etiketka.api";
 
-export const useEtiketka = () => {
-  const { url } = useParams();
-  const [etiketkaInfo, setEtiketkaInfo] = useState<EtiketkaI>(etiketkaSkeleton);
-  const [specs, setSpec] = useState<CharacterI[]>([]);
+interface Props {
+  initProductInfo: IEtiketka;
+}
+
+export const useEtiketka = ({ initProductInfo }: Props) => {
+  const [productInfo, setProductInfo] = useState<IEtiketka>(initProductInfo);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<MessageI | null>(null);
 
@@ -25,38 +23,20 @@ export const useEtiketka = () => {
     return;
   };
 
-  const handleGetEtiketka = useCallback(async () => {
+  const updateInfo = useCallback(async () => {
     await promiseWrapper({
       setLoading,
       callback: async () => {
-        if (!url) return;
+        const res = await getProductById(productInfo.id);
+        setProductInfo(res);
       },
-      setError,
     });
-  }, [url]);
-
-  const handleGetSpecialities = async (item_id: number) => {
-    await promiseWrapper({
-      setLoading,
-      callback: async () => {},
-      setError,
-    });
-  };
-
-  useEffect(() => {
-    handleGetEtiketka();
-  }, [url, handleGetEtiketka]);
-
-  useEffect(() => {
-    if (!etiketkaInfo.id) return;
-    handleGetSpecialities(etiketkaInfo.id);
-  }, [etiketkaInfo.id]);
+  }, [productInfo.id]);
 
   return {
-    etiketkaInfo,
     loading,
     error,
-    handleGetEtiketka,
-    specs,
+    productInfo,
+    updateInfo,
   };
 };

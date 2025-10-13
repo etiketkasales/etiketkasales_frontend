@@ -16,6 +16,7 @@ export const productSkeleton: IEtiketka = {
   id: 0,
   name: "",
   slug: "",
+  quantity: 0,
   description: "",
   price: "",
   old_price: "",

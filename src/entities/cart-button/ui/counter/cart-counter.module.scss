@@ -1,0 +1,11 @@
+.container {
+    gap: $space-3;
+    align-items: center;
+    
+    border-radius: $space-3;
+    padding: $space-10px;
+}
+
+.count {
+    min-width: 38px;
+}

@@ -4,20 +4,13 @@ import { useRouter } from "next/navigation";
 import classes from "./item.module.scss";
 import Button from "~/src/shared/ui/button";
 import { TabsItemI } from "~/src/widgets/tabs/model/tabs.interface";
-import { EtiketkaI } from "~/src/entities/etiketka/model/etiketka.interface";
+import { ICartItem } from "~/src/features/cart/model/cart.interface";
 
 interface Props extends TabsItemI {
-  cartItems: EtiketkaI[];
-  favouriteItems: EtiketkaI[];
+  cartItems: ICartItem[];
 }
 
-export default function TabsItem({
-  Icon,
-  link,
-  needDop,
-  cartItems,
-  favouriteItems,
-}: Props) {
+export default function TabsItem({ Icon, link, needDop, cartItems }: Props) {
   const { push } = useRouter();
 
   const getActiveForm = () => {
@@ -39,7 +32,7 @@ export default function TabsItem({
       case "cart":
         return getBool(cartItems);
       case "favourites":
-        return getBool(favouriteItems);
+        return getBool(cartItems);
     }
   };
 
@@ -58,7 +51,7 @@ export default function TabsItem({
         <span
           className={`text-14 semibold yellow-dark-2 second-family text-center ${classes.dop}`}
         >
-          {needDop === "cart" ? cartItems.length : favouriteItems.length}
+          {needDop === "cart" ? cartItems?.length : cartItems?.length}
         </span>
       )}
     </Button>

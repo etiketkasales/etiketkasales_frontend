@@ -8,10 +8,10 @@ import EtiketkaInfoContent from "./content";
 import { CurrentIndexI, IEtiketka } from "../../model/etiketka.interface";
 
 interface Props {
-  initProductInfo: IEtiketka;
+  item: IEtiketka;
 }
 
-export default function EtiketkaInfo({ initProductInfo }: Props) {
+export default function EtiketkaInfo({ item }: Props) {
   const [currentIndex, setCurrentIndex] = useState<CurrentIndexI>("descr");
 
   return (
@@ -22,10 +22,7 @@ export default function EtiketkaInfo({ initProductInfo }: Props) {
         currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
       />
-      <EtiketkaInfoContent
-        currentIndex={currentIndex}
-        initProductInfo={initProductInfo}
-      />
+      <EtiketkaInfoContent currentIndex={currentIndex} item={item} />
     </EtiketkaMainContainer>
   );
 }

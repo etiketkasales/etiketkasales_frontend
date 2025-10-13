@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import { useWindowSize } from "react-use";
 
 import classes from "./carousel.module.scss";
-import ImageContainer from "~/src/shared/ui/image-container";
+import ImageContainer from "~/src/shared/ui/image-container/ui";
 import Button from "~/src/shared/ui/button";
 import SkeletonWrapper from "~/src/shared/ui/skeleton/ui";
 

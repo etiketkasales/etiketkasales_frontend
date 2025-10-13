@@ -1,5 +1,9 @@
 .button {
-    transform: translate(0, 20px);
+    position: absolute;
+    z-index: 2;
+    right: $space-10px;
+    bottom: -$space-4;
+    cursor: pointer;
 }
 
 .image {

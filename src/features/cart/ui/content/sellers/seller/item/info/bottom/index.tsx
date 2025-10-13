@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useCartItems } from "~/src/features/cart/lib/hooks/useCartItems.hook";
-import { useFavourites } from "~/src/shared/ui/add-to-favourites/lib/useFavourites.hook";
+import { useWindowSize } from "react-use";
 
 import classes from "./bottom.module.scss";
 import HeartMedia from "~/public/cart/heart-fill-media.svg";
@@ -10,39 +10,28 @@ import Heart from "~/public/cart/heart-fill.svg";
 import Trash from "~/public/cart/trash2-fill.svg";
 import Button from "~/src/shared/ui/button";
 import CartItemCounter from "./counter";
-import { EtiketkaI } from "~/src/entities/etiketka/model/etiketka.interface";
-import { useWindowSize } from "react-use";
+import { ICartItem } from "~/src/features/cart/model/cart.interface";
 
 interface Props {
-  item: EtiketkaI;
+  item: ICartItem;
   className?: string;
 }
 
 export default function CartItemInfoBottom({ item, className }: Props) {
-  const { handleDeleteEtiketka, handleAddEtiketka } = useCartItems({ item });
-  const {
-    isInFavourites,
-    handleAddEtiketka: addFav,
-    handleDeleteEtiketka: removeFav,
-  } = useFavourites({ item });
+  const { handleDeleteEtiketka, handleAddEtiketka, handleUpdateEtiketka } =
+    useCartItems({ itemId: item.id });
   const { width } = useWindowSize();
 
   const buttons = [
     {
-      title: isInFavourites ? "Убрать из избранного" : "В избранное",
+      title: "В избранное",
       icon: width <= 768 ? HeartMedia : Heart,
-      onClick: () => {
-        if (isInFavourites) {
-          removeFav();
-        } else {
-          addFav();
-        }
-      },
+      onClick: () => {},
     },
     {
       title: "Удалить",
       icon: width <= 768 ? TrashMedia : Trash,
-      onClick: () => handleDeleteEtiketka(item.id),
+      onClick: () => handleDeleteEtiketka(),
     },
   ];
   return (
@@ -60,9 +49,7 @@ export default function CartItemInfoBottom({ item, className }: Props) {
               className={classes.button}
             >
               <div className="flex-row gap-6px align-center">
-                <item.icon
-                  className={index == 0 && isInFavourites ? classes.heart : ""}
-                />
+                <item.icon className={index == 0 ? classes.heart : ""} />
                 <span className="gray-2 text-14 regular second-family">
                   {item.title}
                 </span>
@@ -73,8 +60,8 @@ export default function CartItemInfoBottom({ item, className }: Props) {
       </div>
       <CartItemCounter
         removeFromCart={handleDeleteEtiketka}
-        addToCart={handleAddEtiketka}
-        inCartCount={item.in_cart_count}
+        CartButton={handleAddEtiketka}
+        inCartCount={item.quantity}
         itemId={item.id}
       />
     </div>

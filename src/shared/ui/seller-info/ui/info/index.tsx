@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import classes from "./info.module.scss";
 import ChevronRight from "~/public/etiketka-page/chevron-compact-right.svg";
 import Star from "~/public/etiketka-page/star-fill.svg";
-import ImageContainer from "~/src/shared/ui/image-container";
+import ImageContainer from "~/src/shared/ui/image-container/ui";
 import SkeletonWrapper from "~/src/shared/ui/skeleton/ui";
 import { SellerI } from "~/src/shared/ui/seller-info/model/seller.interface";
 

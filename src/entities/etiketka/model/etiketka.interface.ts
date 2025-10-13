@@ -6,6 +6,7 @@ export interface IEtiketka {
   description: string;
   price: string;
   old_price?: string;
+  quantity: number;
   images: string[];
   specifications: ISpecification[];
   seller_id: number;

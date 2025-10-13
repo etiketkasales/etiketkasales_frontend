@@ -1,14 +1,13 @@
 import React from "react";
 import TabsItem from "./item";
 import { tabsItems } from "~/src//widgets/tabs/model/tabs.const";
-import { EtiketkaI } from "~/src/entities/etiketka/model/etiketka.interface";
+import { ICartItem } from "~/src/features/cart/model/cart.interface";
 
 interface Props {
-  cartItems: EtiketkaI[];
-  favouriteItems: EtiketkaI[];
+  cartItems: ICartItem[];
 }
 
-export default function TabsList({ cartItems, favouriteItems }: Props) {
+export default function TabsList({ cartItems }: Props) {
   return (
     <section className="flex-row space-between padding-0-20 align-center">
       {tabsItems.map((item, index) => {
@@ -17,7 +16,6 @@ export default function TabsList({ cartItems, favouriteItems }: Props) {
             key={`${item.link}-${index}`}
             {...item}
             cartItems={cartItems}
-            favouriteItems={favouriteItems}
           />
         );
       })}

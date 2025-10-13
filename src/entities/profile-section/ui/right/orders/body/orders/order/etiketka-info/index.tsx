@@ -3,7 +3,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 
 import classes from "./etiketka-info.module.scss";
-import ImageContainer from "~/src/shared/ui/image-container";
+import ImageContainer from "~/src/shared/ui/image-container/ui";
 
 interface Props {
   orderPrice: number;

@@ -9,7 +9,7 @@ import {
 
 import classes from "./swiper-item.module.scss";
 import ItemWrapper from "../item-wrapper";
-import ImageContainer from "~/src/shared/ui/image-container";
+import ImageContainer from "~/src/shared/ui/image-container/ui";
 import { CategoryItemInterface } from "~/src/shared/ui/categories-swiper/model/categories.interface";
 
 interface Props {

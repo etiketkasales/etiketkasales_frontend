@@ -1,10 +1,10 @@
+"use client";
 import React from "react";
+import { useImageContainer } from "../lib/hooks/useImageContainer.hook";
 
 import classes from "./image.module.scss";
 import NoSrcImage from "./no-src";
 import Image from "next/image";
-
-export type ImageRadiusT = 24 | 16 | 20 | 12 | "50%";
 
 interface Props {
   width: number;
@@ -14,7 +14,7 @@ interface Props {
   imgClassName?: string;
   alt?: string;
   loading?: "lazy" | "eager";
-  radius?: ImageRadiusT;
+  radius?: string | number;
   fixedSize?: boolean;
 }
 
@@ -27,32 +27,28 @@ export default function ImageContainer(props: Props) {
     imgClassName,
     alt,
     loading,
-    radius,
+    radius = 0,
     fixedSize,
     ...rest
   } = props;
 
-  const getRadius = () => {
-    if (!radius) return "unset";
-
-    if (typeof radius === "number") {
-      return `${radius}px`;
-    }
-    return radius;
-  };
+  const { getRadius, canLoad } = useImageContainer({
+    radius,
+    src,
+  });
 
   return (
     <div
       style={{
         maxWidth: !fixedSize ? `${width}px` : "",
         maxHeight: !fixedSize ? `${height}px` : "",
-        borderRadius: getRadius(),
+        borderRadius: `${getRadius()}`,
         height: fixedSize ? `${height}px` : "auto",
         width: fixedSize ? `${width}px` : "100%",
       }}
       className={`${className} ${classes.container}`}
     >
-      {src ? (
+      {canLoad ? (
         <Image
           src={src}
           width={width}

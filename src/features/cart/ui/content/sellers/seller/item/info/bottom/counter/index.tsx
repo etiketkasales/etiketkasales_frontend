@@ -8,14 +8,14 @@ import Button from "~/src/shared/ui/button";
 
 interface Props {
   removeFromCart: (id: number) => void;
-  addToCart: () => void;
+  CartButton: () => void;
   inCartCount?: number;
   itemId: number;
 }
 
 export default function CartItemCounter({
   removeFromCart,
-  addToCart,
+  CartButton,
   inCartCount,
   itemId,
 }: Props) {
@@ -45,7 +45,7 @@ export default function CartItemCounter({
         onClick={() => {
           if (!inCartCount) return;
           if (inCartCount < MAX_COUNT) {
-            addToCart();
+            CartButton();
           }
         }}
       >
