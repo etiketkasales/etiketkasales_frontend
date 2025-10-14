@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
-import { useImageContainer } from "../lib/hooks/useImageContainer.hook";
+import classNames from "classnames";
+import { useImageContainer } from "~/src/shared/ui/image-container/lib/hooks/useImageContainer.hook";
 
 import classes from "./image.module.scss";
 import NoSrcImage from "./no-src";
@@ -16,6 +17,7 @@ interface Props {
   loading?: "lazy" | "eager";
   radius?: string | number;
   fixedSize?: boolean;
+  children?: React.ReactNode;
 }
 
 export default function ImageContainer(props: Props) {
@@ -29,6 +31,7 @@ export default function ImageContainer(props: Props) {
     loading,
     radius = 0,
     fixedSize,
+    children,
     ...rest
   } = props;
 
@@ -40,13 +43,13 @@ export default function ImageContainer(props: Props) {
   return (
     <div
       style={{
-        maxWidth: !fixedSize ? `${width}px` : "",
-        maxHeight: !fixedSize ? `${height}px` : "",
+        maxWidth: !fixedSize ? `${width}px` : undefined,
+        maxHeight: !fixedSize ? `${height}px` : undefined,
         borderRadius: `${getRadius()}`,
         height: fixedSize ? `${height}px` : "auto",
         width: fixedSize ? `${width}px` : "100%",
       }}
-      className={`${className} ${classes.container}`}
+      className={classNames(classes.container, className)}
     >
       {canLoad ? (
         <Image
@@ -62,6 +65,7 @@ export default function ImageContainer(props: Props) {
       ) : (
         <NoSrcImage width={width} height={height} radius={getRadius()} />
       )}
+      {children}
     </div>
   );
 }

@@ -11,7 +11,7 @@ import { useSwiperSlides } from "~/src/shared/lib/hooks/useSwiperSlides.hook";
 import { useAdvs } from "~/src/shared/ui/advs/lib/hooks/useAdvs.hook";
 
 import classes from "./advs.module.scss";
-import InfoPlain from "./info-plain";
+import InfoPlain from "../info-plain";
 import AddsBannerPagination from "~/src/shared/ui/advs/ui/swiper/pagination";
 import SkeletonWrapper from "~/src/shared/ui/skeleton/ui";
 import AdvsSwiper from "./swiper";
@@ -45,7 +45,7 @@ export default function AdvsBanner({ className }: Props) {
               goTo={goTo}
               slidesCount={advs.length}
             />
-            <InfoPlain />
+            <InfoPlain className={classes.infoPlain} />
           </>
         )}
       </div>

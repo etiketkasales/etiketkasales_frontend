@@ -1,0 +1,11 @@
+.container {
+    width: 104px;
+    min-height: 83px;
+    background: transparent;
+}
+
+@media screen and (width <= 768px) {
+    .container {
+        width: 90px;
+    }
+}

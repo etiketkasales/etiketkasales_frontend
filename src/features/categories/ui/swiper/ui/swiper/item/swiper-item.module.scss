@@ -1,0 +1,35 @@
+.icon {
+    width: 56px;
+    height: 56px;
+    padding: $space-4;
+    border-radius: $space-4;
+
+    img {
+        filter: brightness(1);
+        transition: filter $transition;
+    }
+}
+
+.text {
+    color: $gray-2;
+}
+
+.active {
+    .icon {
+        background-color: $yellow !important;
+
+        img {
+            filter: brightness(0);
+        }
+    }
+
+    .text {
+        color: $neutral-900;
+    }
+}
+
+@media screen and (width <=768px) {
+    .container {
+        width: 90px;
+    }
+}

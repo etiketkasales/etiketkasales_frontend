@@ -1,5 +1,21 @@
 .item {
     grid-column: 4 span;
+
+    img {
+        transition: transform $transition;
+    }
+
+    &:hover {
+        img {
+            transform: scale(1.1);
+        }
+    }
+}
+
+.infoPlain {
+    top: $space-10px;
+    right: $space-10px;
+    z-index: 1;
 }
 
 @media screen and (width <= 768px) {

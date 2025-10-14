@@ -23,3 +23,5 @@ export interface IGetRandomCategories {
   category: ICategory;
   products: IEtiketka[];
 }
+
+export type CategorySwiperT = "home" | "catalogue";

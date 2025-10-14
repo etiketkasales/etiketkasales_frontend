@@ -1,4 +1,4 @@
-import { getRandomCategories } from "../features/categories/api/categories.api";
+import { getRandomCategories } from "~/src/features/categories/lib/api/categories.api";
 
 import HomePage from "../pages-components/home/ui";
 import { IGetRandomCategories } from "../features/categories/model/categories.interface";

@@ -5,6 +5,11 @@
     border-radius: $space-4;
 }
 
+.infoPlain {
+    top: 22px;
+    right: $space-5;
+}
+
 @media screen and (width <=1240px) {
     .skeleton {
         width: calc(100vw - $space-2);
