@@ -8,7 +8,7 @@ export interface ICommonCartButton {
   product_id: number;
   quantity: number;
   className?: string;
-  updateInfo?: () => void;
+  updateInfo?: () => Promise<void>;
 }
 
 interface Props extends ICommonCartButton {

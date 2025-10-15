@@ -1,6 +1,16 @@
 .container {
     max-width: 1192px;
     overflow-x: hidden;
-    display: grid;
-    grid-template-columns: repeat(20, 1fr);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: $space-5;
+}
+
+@media screen and (width <= 460px) {
+    .container {
+        row-gap: $space-3;
+        column-gap: $space-4;
+    }
 }

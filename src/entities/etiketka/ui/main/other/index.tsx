@@ -9,7 +9,7 @@ import { IEtiketka } from "~/src/entities/etiketka/model/etiketka.interface";
 interface Props {
   sellerId: number;
   item: IEtiketka;
-  updateInfo: () => void;
+  updateInfo: () => Promise<void>;
 }
 
 export default function EtiketkaOther({ sellerId, item, updateInfo }: Props) {

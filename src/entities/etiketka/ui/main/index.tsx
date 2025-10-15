@@ -12,7 +12,7 @@ interface Props {
   item: IEtiketka;
   loading: boolean;
   error: MessageI | null;
-  updateInfo: () => void;
+  updateInfo: () => Promise<void>;
 }
 
 export default function EtiketkaMain({

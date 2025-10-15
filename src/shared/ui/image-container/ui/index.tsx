@@ -18,6 +18,7 @@ interface Props {
   radius?: string | number;
   fixedSize?: boolean;
   children?: React.ReactNode;
+  priority?: boolean;
 }
 
 export default function ImageContainer(props: Props) {

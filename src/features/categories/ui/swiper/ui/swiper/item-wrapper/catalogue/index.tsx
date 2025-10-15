@@ -25,7 +25,13 @@ export default function CatalogueItemWrapper({
         classes.container,
         className,
       )}
-      onClick={() => updateParams({ key: "category_id", value: itemId })}
+      onClick={() =>
+        updateParams({
+          key: "category_id",
+          value: itemId,
+          initialPathname: "/catalogue",
+        })
+      }
     >
       {children}
     </Container>

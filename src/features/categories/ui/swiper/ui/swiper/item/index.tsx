@@ -4,8 +4,8 @@ import { useSearchParams } from "next/navigation";
 
 import classes from "./swiper-item.module.scss";
 import ItemWrapper from "../item-wrapper";
-import ImageContainer from "~/src/shared/ui/image-container/ui";
-import Container from "~/src/shared/ui/container/ui";
+import ItemWrapperText from "./name";
+import ItemWrapperIcon from "./icon";
 import {
   CategorySwiperT,
   ICategory,
@@ -23,27 +23,12 @@ export default function CategoryItem({ item, type }: Props) {
 
   return (
     <ItemWrapper
-      className={currentCategory?.includes(`${id}`) ? classes.active : ""}
+      className={currentCategory === id.toString() ? classes.active : ""}
       itemId={item.id.toString()}
       type={type}
     >
-      <Container
-        bgColor="neutral-300"
-        className={`${classes.icon} padding-16 radius-16`}
-      >
-        <ImageContainer
-          src={image}
-          width={24}
-          height={24}
-          alt={name}
-          className="radius-16"
-        />
-      </Container>
-      <p
-        className={`body-text m text-neutral-700 no-select text-center ${classes.text}`}
-      >
-        {name}
-      </p>
+      <ItemWrapperIcon image={image} name={name} />
+      <ItemWrapperText text={name} />
     </ItemWrapper>
   );
 }

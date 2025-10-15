@@ -12,7 +12,7 @@ interface Props {
   type: "plus" | "minus";
   quantity: number;
   product_id: number;
-  updateInfo?: () => void;
+  updateInfo?: () => Promise<void>;
 }
 
 const icons = {

@@ -20,7 +20,7 @@ export const deleteCart = async () => {
   return res;
 };
 
-export const CartButton = async (product_id: number, quantity: number) => {
+export const addToCart = async (product_id: number, quantity: number) => {
   const res = await tryCatch(async () => {
     const response = await apiClient.post(`/cart/add`, {
       product_id,

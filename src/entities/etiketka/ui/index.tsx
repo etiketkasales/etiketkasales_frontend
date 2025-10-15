@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import { useEtiketka } from "~/src/entities/etiketka/lib/hooks/useEtiketka.hook";
+import ObjectUtils from "~/src/shared/lib/utils/object.utils";
 
 import classes from "./etiketka.module.scss";
 import EtiketkaMain from "./main";
 import EtiketkaInfo from "./info";
-import ObjectUtils from "~/src/shared/lib/utils/object.utils";
 import { productSkeleton } from "../model/etiketka.skeleton";
 import { IEtiketka } from "../model/etiketka.interface";
 

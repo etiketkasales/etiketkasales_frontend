@@ -3,7 +3,8 @@ import { useCallback } from "react";
 
 interface UpdateParamsProps {
   key: string;
-  value: string;
+  value: string | null;
+  initialPathname?: string;
 }
 
 export const useUpdateSearchParams = () => {
@@ -11,7 +12,13 @@ export const useUpdateSearchParams = () => {
   const { push } = useRouter();
 
   const updateSearchParams = useCallback(
-    ({ key, value }: UpdateParamsProps) => {
+    ({ key, value, initialPathname }: UpdateParamsProps) => {
+      if (!value) {
+        if (initialPathname) {
+          push(initialPathname, { scroll: false });
+        }
+        return;
+      }
       const params = new URLSearchParams(searchParams.toString());
       params.set(key, value);
 

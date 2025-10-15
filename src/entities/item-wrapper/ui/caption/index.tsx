@@ -16,11 +16,11 @@ export default function ItemWrapperCaption({
   title,
 }: Props) {
   return (
-    <section className={`flex-column gap-1 flex-start ${classes.container}`}>
+    <div className={`flex-column gap-1 flex-start ${classes.container}`}>
       <Price price={price} old_price={discountPrice} />
       <p className={`text-16 semibold black second-family ${classes.title}`}>
         {title}
       </p>
-    </section>
+    </div>
   );
 }

@@ -18,6 +18,7 @@ export default function AdvsSlide({ image_url, link }: Props) {
         width={1240}
         height={width <= 360 ? 200 : 464}
         alt="Рекламный баннер"
+        priority
       />
     </LinkContainer>
   );

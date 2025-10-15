@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React, { CSSProperties, useRef } from "react";
 import { useWindowSize } from "react-use";
 import SwiperCore from "swiper";
 import { FreeMode } from "swiper/modules";
@@ -15,6 +15,7 @@ import {
   ICategory,
 } from "~/src/features/categories/model/categories.interface";
 import CategoriesSwiperNoData from "./no-data";
+import AllCategories from "./all-categories";
 
 interface Props {
   swiperRef: React.RefObject<SwiperCore | null>;
@@ -23,6 +24,16 @@ interface Props {
   loading: boolean;
   type: CategorySwiperT;
 }
+
+interface ISlideConfig {
+  style: CSSProperties;
+  className: string;
+}
+
+const sharedSlideConfig: ISlideConfig = {
+  style: { width: "max-content" },
+  className: classes.slide,
+};
 
 export default function CategoriesCustomSwiper({
   swiperRef,
@@ -53,14 +64,13 @@ export default function CategoriesCustomSwiper({
         paddingRight: `${gradientRef.current?.clientWidth}px`,
       }}
     >
+      <SwiperSlide {...sharedSlideConfig}>
+        <AllCategories type={type} />
+      </SwiperSlide>
       {loading ? (
         skeletons.map((_, index) => {
           return (
-            <SwiperSlide
-              key={index}
-              className={classes.slide}
-              style={{ width: "max-content" }}
-            >
+            <SwiperSlide key={index} {...sharedSlideConfig}>
               <ItemSkeleton />
             </SwiperSlide>
           );
@@ -68,11 +78,7 @@ export default function CategoriesCustomSwiper({
       ) : Array.isArray(categories) ? (
         categories.map((item, index) => {
           return (
-            <SwiperSlide
-              key={index}
-              className={classes.slide}
-              style={{ width: "max-content" }}
-            >
+            <SwiperSlide key={index} {...sharedSlideConfig}>
               <CategoryItem item={item} type={type} />
             </SwiperSlide>
           );

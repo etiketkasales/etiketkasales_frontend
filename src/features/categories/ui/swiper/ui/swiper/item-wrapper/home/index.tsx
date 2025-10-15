@@ -22,7 +22,7 @@ export default function HomeItemWrapper({
         className,
       )}
       rel={"noopener norefferer"}
-      href={`/catalogue?category_id=${itemId}`}
+      href={`/catalogue${itemId ? `?category_id=${itemId},` : ""}`}
     >
       {children}
     </Container>

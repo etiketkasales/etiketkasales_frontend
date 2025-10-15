@@ -22,7 +22,7 @@ export default function HeaderLogo({
           height: `${height}px`,
         }}
       >
-        <Image src={imageSrc} width={242} height={46} alt="logo" />
+        <Image src={imageSrc} width={242} height={46} alt="logo" priority />
       </div>
     </LinkContainer>
   );

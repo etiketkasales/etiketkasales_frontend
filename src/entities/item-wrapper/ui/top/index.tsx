@@ -10,7 +10,7 @@ import { IEtiketka } from "~/src/entities/etiketka/model/etiketka.interface";
 interface Props {
   image: string;
   item: IEtiketka;
-  updateInfo: () => void;
+  updateInfo: () => Promise<void>;
 }
 
 export default function ItemWrapperTop({ image, updateInfo, item }: Props) {
@@ -21,7 +21,7 @@ export default function ItemWrapperTop({ image, updateInfo, item }: Props) {
       <ImageContainer
         src={image ? image : "/best-offers/test.png"}
         width={222}
-        height={width <= 460 ? 168 : 222}
+        height={width <= 520 ? 168 : 222}
         alt="Картинка товара"
         radius={16}
         className={classes.image}
@@ -31,6 +31,7 @@ export default function ItemWrapperTop({ image, updateInfo, item }: Props) {
         type="with_icon"
         product_id={item.id}
         quantity={item.quantity}
+        updateInfo={updateInfo}
       />
     </div>
   );

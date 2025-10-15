@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import classNames from "classnames";
 
 import SectionWrapperBody from "./body";
 import SectionWrapperHeading from "./heading";
@@ -20,9 +21,11 @@ export default function SectionWrapper({
   className,
   loading,
 }: Props) {
-  if (!arrayProducts || !arrayProducts.length) return null;
+  if (!Array.isArray(arrayProducts)) return null;
   return (
-    <section className={`section-wrapper flex-column gap-6 ${className}`}>
+    <section
+      className={classNames(`section-wrapper flex-column gap-6`, className)}
+    >
       <SectionWrapperHeading title={title} categoryId={categoryId} />
       <SectionWrapperBody arrayProducts={arrayProducts} />
     </section>

@@ -1,12 +1,12 @@
 interface Props {
-  updateInfo?: () => void;
+  updateInfo?: () => Promise<void>;
 }
 
 export const useCartButton = ({ updateInfo }: Props) => {
   const handleButtonClick = async (callback: () => Promise<void>) => {
     try {
       await callback();
-      updateInfo?.();
+      await updateInfo?.();
     } catch (err) {
       console.error(err);
     }

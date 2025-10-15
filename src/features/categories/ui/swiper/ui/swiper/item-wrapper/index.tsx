@@ -6,7 +6,7 @@ import HomeItemWrapper from "./home";
 import { CategorySwiperT } from "~/src/features/categories/model/categories.interface";
 
 export interface IBaseWrapperProps {
-  itemId: string;
+  itemId: string | null;
   children: React.ReactNode;
   className?: string;
 }

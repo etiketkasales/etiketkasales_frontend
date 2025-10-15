@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { Suspense } from "react";
 import classNames from "classnames";
 import { useSwiperSlides } from "~/src/shared/lib/hooks/useSwiperSlides.hook";
 import { useCategoriesSwiper } from "~/src/features/categories/lib/hooks/useCategoriesSwiper.hook";
@@ -23,21 +23,23 @@ export default function CategoriesSwiper({ title, type }: Props) {
   });
 
   return (
-    <Container
-      as="section"
-      className={classNames(`wrapper flex-column`, classes.container)}
-    >
-      <div className="flex-row space-between gap-6 align-center">
-        <p className="text-neutral-1000 heading h6">{title}</p>
-        <CategoriesSwiperButtons goPrev={goPrev} goNext={goNext} />
-      </div>
-      <CategoriesCustomSwiper
-        swiperRef={swiperRef}
-        handleSlideChange={handleSlideChange}
-        categories={categories}
-        loading={loading}
-        type={type}
-      />
-    </Container>
+    <Suspense>
+      <Container
+        as="section"
+        className={classNames(`wrapper flex-column`, classes.container)}
+      >
+        <div className="flex-row space-between gap-6 align-center">
+          <p className="text-neutral-1000 heading h6">{title}</p>
+          <CategoriesSwiperButtons goPrev={goPrev} goNext={goNext} />
+        </div>
+        <CategoriesCustomSwiper
+          swiperRef={swiperRef}
+          handleSlideChange={handleSlideChange}
+          categories={categories}
+          loading={loading}
+          type={type}
+        />
+      </Container>
+    </Suspense>
   );
 }

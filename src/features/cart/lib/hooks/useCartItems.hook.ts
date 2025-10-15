@@ -1,7 +1,7 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback } from "react";
 import { useCart } from "./useCart.hook";
 import {
-  CartButton,
+  addToCart,
   deleteProductFromCart,
   updateProductCount,
 } from "../api/cart.api";
@@ -15,15 +15,15 @@ export const useCartItems = ({ itemId }: Props) => {
 
   const functionWrapper = useCallback(async (callback: () => any) => {
     try {
-      await callback();
+      return await callback();
     } catch (err) {
       console.error(err);
     }
   }, []);
 
   const handleAddEtiketka = useCallback(async () => {
-    await functionWrapper(async () => {
-      await CartButton(itemId, 1);
+    return await functionWrapper(async () => {
+      await addToCart(itemId, 1);
       await updateCart();
     });
   }, [functionWrapper, updateCart, itemId]);
