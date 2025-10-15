@@ -42,6 +42,7 @@ export default function CartCounterPlusMinus({
       className={classNames({
         [classes.disabled]: isMinus && quantity === 1,
       })}
+      disabled={isMinus && quantity === 1}
     >
       <Icon />
     </Button>

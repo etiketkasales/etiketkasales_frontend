@@ -9,7 +9,7 @@ import TrashMedia from "~/public/cart/trash2-fill-media.svg";
 import Heart from "~/public/cart/heart-fill.svg";
 import Trash from "~/public/cart/trash2-fill.svg";
 import Button from "~/src/shared/ui/button";
-import CartItemCounter from "./counter";
+import CartButton from "~/src/entities/cart-button/ui";
 import { ICartItem } from "~/src/features/cart/model/cart.interface";
 
 interface Props {
@@ -18,8 +18,7 @@ interface Props {
 }
 
 export default function CartItemInfoBottom({ item, className }: Props) {
-  const { handleDeleteEtiketka, handleAddEtiketka, handleUpdateEtiketka } =
-    useCartItems({ itemId: item.id });
+  const { handleDeleteEtiketka } = useCartItems({ itemId: item.id });
   const { width } = useWindowSize();
 
   const buttons = [
@@ -38,7 +37,7 @@ export default function CartItemInfoBottom({ item, className }: Props) {
     <div
       className={`flex-row space-between gap-5 align-center ${classes.container} ${className}`}
     >
-      <div className="flex-row gap-5 align-cen">
+      <div className="flex-row gap-5 align-center">
         {buttons.map((item, index) => {
           return (
             <Button
@@ -58,11 +57,10 @@ export default function CartItemInfoBottom({ item, className }: Props) {
           );
         })}
       </div>
-      <CartItemCounter
-        removeFromCart={handleDeleteEtiketka}
-        CartButton={handleAddEtiketka}
-        inCartCount={item.quantity}
-        itemId={item.id}
+      <CartButton
+        product_id={item.product_id}
+        quantity={item.quantity}
+        type="counter"
       />
     </div>
   );
