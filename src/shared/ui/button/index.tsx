@@ -1,9 +1,9 @@
 "use client";
 import React, { ElementType, useEffect } from "react";
-
-import classes from "./button.module.scss";
 import { useRouter } from "next/navigation";
 import classNames from "classnames";
+
+import classes from "./button.module.scss";
 
 export type ButtonTypeButtonT =
   | "ghost"

@@ -1,6 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { useWindowSize } from "react-use";
+import React from "react";
 import { useItemWrapper } from "../lib/hooks/useItemWrapper.hook";
 
 import classes from "./item-wrapper.module.scss";
@@ -14,17 +13,11 @@ interface Props {
 }
 
 export default function ItemWrapper({ item }: Props) {
-  const { width } = useWindowSize();
   const { itemInfo, updateInfo } = useItemWrapper({ initInfo: item });
-  const [gap, setGap] = useState<string>("");
   const link = `/etiketka/${item.slug}/${item.id}`;
 
-  useEffect(() => {
-    setGap(width <= 460 ? "gap-2" : "gap-4");
-  }, [width]);
-
   return (
-    <li className={`${classes.container} flex-column ${gap} cursor flex-start`}>
+    <li className={`${classes.container} flex-column cursor flex-start`}>
       <ItemWrapperTop
         item={itemInfo}
         image={itemInfo.images[0]}

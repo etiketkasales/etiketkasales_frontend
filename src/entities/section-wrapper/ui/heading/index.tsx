@@ -16,7 +16,7 @@ export default function SectionWrapperHeading({ title, categoryId }: Props) {
       className={`flex-row align-center ${width <= 768 ? "space-between" : ""} gap-6`}
     >
       <h2 className="text-20 bold second-family uppercase">{title}</h2>
-      <ViewAllButton />
+      <ViewAllButton categoryId={categoryId} />
     </section>
   );
 }

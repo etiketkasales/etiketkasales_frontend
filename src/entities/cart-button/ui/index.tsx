@@ -5,7 +5,7 @@ import CartCounter from "./counter";
 import CartButtonWithText from "./with-text";
 
 export interface ICommonCartButton {
-  product_id: number;
+  itemId: number;
   quantity: number;
   className?: string;
   updateInfo?: () => Promise<void>;

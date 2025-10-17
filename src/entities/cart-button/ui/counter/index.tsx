@@ -9,13 +9,13 @@ import { ICommonCartButton } from "..";
 interface Props extends ICommonCartButton {}
 
 export default function CartCounter({
-  product_id,
+  itemId,
   quantity,
   className,
   updateInfo,
 }: Props) {
   const sharedProps = {
-    product_id,
+    itemId,
     quantity,
     updateInfo,
   };

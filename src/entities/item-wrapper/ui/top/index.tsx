@@ -8,12 +8,12 @@ import CartButton from "~/src/entities/cart-button/ui";
 import { IEtiketka } from "~/src/entities/etiketka/model/etiketka.interface";
 
 interface Props {
-  image: string;
   item: IEtiketka;
+  image: string;
   updateInfo: () => Promise<void>;
 }
 
-export default function ItemWrapperTop({ image, updateInfo, item }: Props) {
+export default function ItemWrapperTop({ updateInfo, item, image }: Props) {
   const { width } = useWindowSize();
 
   return (
@@ -29,7 +29,7 @@ export default function ItemWrapperTop({ image, updateInfo, item }: Props) {
       <CartButton
         className={classes.button}
         type="with_icon"
-        product_id={item.id}
+        itemId={item.id}
         quantity={item.quantity}
         updateInfo={updateInfo}
       />

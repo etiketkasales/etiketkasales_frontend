@@ -24,7 +24,7 @@ export default function AllCategories({ type }: Props) {
       itemId={allCategory.itemId}
       type={type}
       className={classNames(itemClasses.container, {
-        [swiperItemClasses.active]: !categoryId,
+        [swiperItemClasses.active]: !categoryId && type !== "home",
       })}
     >
       <ItemWrapperIcon image={allCategory.image} name={allCategory.name} />

@@ -14,6 +14,7 @@ export interface IEtiketka {
   company_name: string;
   category_id: number;
   category_name: string;
+  cart_quantity: number;
 }
 
 export interface ISpecification {

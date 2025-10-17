@@ -13,7 +13,7 @@ interface Props {
 export const useCartItems = ({ itemId }: Props) => {
   const { updateCart } = useCart();
 
-  const functionWrapper = useCallback(async (callback: () => any) => {
+  const functionWrapper = useCallback(async (callback: () => Promise<void>) => {
     try {
       return await callback();
     } catch (err) {

@@ -20,10 +20,11 @@ export default function CategoryItem({ item, type }: Props) {
   const { id, name, image } = item;
   const searchParams = useSearchParams();
   const currentCategory = searchParams.get("category_id");
+  const ids = currentCategory?.split(",") || [];
 
   return (
     <ItemWrapper
-      className={currentCategory === id.toString() ? classes.active : ""}
+      className={ids.includes(id.toString()) ? classes.active : ""}
       itemId={item.id.toString()}
       type={type}
     >

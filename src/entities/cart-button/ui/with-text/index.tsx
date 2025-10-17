@@ -8,11 +8,11 @@ import { ICommonCartButton } from "..";
 interface Props extends ICommonCartButton {}
 
 export default function CartButtonWithText({
-  product_id,
+  itemId,
   className,
   updateInfo,
 }: Props) {
-  const { handleAddEtiketka } = useCartItems({ itemId: product_id });
+  const { handleAddEtiketka } = useCartItems({ itemId });
   const { handleButtonClick } = useCartButton({ updateInfo });
 
   return (

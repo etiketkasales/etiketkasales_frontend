@@ -57,11 +57,7 @@ export default function CartItemInfoBottom({ item, className }: Props) {
           );
         })}
       </div>
-      <CartButton
-        product_id={item.product_id}
-        quantity={item.quantity}
-        type="counter"
-      />
+      <CartButton itemId={item.id} quantity={item.quantity} type="counter" />
     </div>
   );
 }

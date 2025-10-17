@@ -1,30 +1,42 @@
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useCallback } from "react";
 
 interface UpdateParamsProps {
   key: string;
   value: string | null;
-  initialPathname?: string;
+  replace?: boolean; // чтобы можно было выбирать push или replace
 }
 
 export const useUpdateSearchParams = () => {
+  const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { push } = useRouter();
 
   const updateSearchParams = useCallback(
-    ({ key, value, initialPathname }: UpdateParamsProps) => {
-      if (!value) {
-        if (initialPathname) {
-          push(initialPathname, { scroll: false });
-        }
-        return;
-      }
+    ({ key, value, replace = false }: UpdateParamsProps) => {
       const params = new URLSearchParams(searchParams.toString());
-      params.set(key, value);
 
-      push(`?${params.toString()}`, { scroll: false });
+      if (!value) {
+        params.delete(key);
+      } else {
+        const prevValue = params.get(key);
+        if (prevValue) {
+          const items = new Set(prevValue.split(","));
+          items.add(value);
+          params.set(key, Array.from(items).join(","));
+        } else {
+          params.set(key, value);
+        }
+      }
+
+      const newUrl = `${pathname}?${params.toString()}`;
+      if (replace) {
+        router.replace(newUrl, { scroll: false });
+      } else {
+        router.push(newUrl, { scroll: false });
+      }
     },
-    [searchParams, push],
+    [pathname, searchParams, router],
   );
 
   return updateSearchParams;

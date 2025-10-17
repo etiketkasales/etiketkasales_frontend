@@ -1,33 +1,35 @@
 .container {
-    max-width: 1192px;
+  max-width: 1192px;
 }
 
 .slide {
-    flex-shrink: 0;
+  flex-shrink: 0;
+  order: var(--order, 1);
+  width: 104px;
 
-    &:last-of-type {
-        z-index: 100;
-    }
+  &.firstSlide {
+    order: 0;
+  }
 }
 
 .gradient {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 10;
-    height: 100%;
-    pointer-events: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+  height: 100%;
+  pointer-events: none;
 }
 
 @media screen and (width <= 1192px) {
-    .container {
-        max-width: calc(100vw - $space-6 * 2);
-    }
+  .container {
+    max-width: calc(100vw - $space-6 * 2);
+  }
 }
 
 @media screen and (width <= 460px) {
-    .container {
-        max-width: calc(100vw - $space-4 * 2);
-    }
+  .container {
+    max-width: calc(100vw - $space-4 * 2);
+  }
 }

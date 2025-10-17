@@ -8,6 +8,10 @@
         filter: brightness(1);
         transition: filter $transition;
     }
+    img,
+    div {
+        background-color: transparent;
+    }
 }
 
 .text {

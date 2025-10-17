@@ -29,7 +29,7 @@ export default function CatalogueItemWrapper({
         updateParams({
           key: "category_id",
           value: itemId,
-          initialPathname: "/catalogue",
+          replace: true,
         })
       }
     >

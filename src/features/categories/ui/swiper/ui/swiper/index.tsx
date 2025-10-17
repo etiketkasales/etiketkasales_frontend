@@ -16,6 +16,7 @@ import {
 } from "~/src/features/categories/model/categories.interface";
 import CategoriesSwiperNoData from "./no-data";
 import AllCategories from "./all-categories";
+import classNames from "classnames";
 
 interface Props {
   swiperRef: React.RefObject<SwiperCore | null>;
@@ -64,7 +65,10 @@ export default function CategoriesCustomSwiper({
         paddingRight: `${gradientRef.current?.clientWidth}px`,
       }}
     >
-      <SwiperSlide {...sharedSlideConfig}>
+      <SwiperSlide
+        {...sharedSlideConfig}
+        className={classNames(classes.firstSlide, classes.slide)}
+      >
         <AllCategories type={type} />
       </SwiperSlide>
       {loading ? (
@@ -78,7 +82,16 @@ export default function CategoriesCustomSwiper({
       ) : Array.isArray(categories) ? (
         categories.map((item, index) => {
           return (
-            <SwiperSlide key={index} {...sharedSlideConfig}>
+            <SwiperSlide
+              key={index}
+              {...sharedSlideConfig}
+              className={classes.slide}
+              style={
+                {
+                  "--order": item.sort_order || 1,
+                } as CSSProperties
+              }
+            >
               <CategoryItem item={item} type={type} />
             </SwiperSlide>
           );

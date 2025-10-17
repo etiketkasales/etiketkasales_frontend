@@ -20,7 +20,7 @@ export default function EtiketkaPriceCart({ item, updateInfo }: Props) {
       <Price price={item.price} old_price={item.old_price} />
       <div className="flex-row gap-10px align-center">
         <CartButton
-          product_id={item.id}
+          itemId={item.id}
           quantity={item.quantity}
           type="with_text"
           className={classes.button}

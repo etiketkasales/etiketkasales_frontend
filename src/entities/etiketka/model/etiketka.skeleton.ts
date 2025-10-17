@@ -27,4 +27,5 @@ export const productSkeleton: IEtiketka = {
   company_name: "",
   category_id: 0,
   category_name: "",
+  cart_quantity: 0,
 };
