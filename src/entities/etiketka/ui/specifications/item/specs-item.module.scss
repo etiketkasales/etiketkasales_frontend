@@ -1,0 +1,10 @@
+.text {
+    width: max-content;
+    white-space: nowrap;
+}
+
+.dots {
+    width: 100%;
+    border-bottom: 1px dotted $neutral-400;
+    transform: translateY(-30%);
+}

@@ -2,6 +2,8 @@
 import React from "react";
 
 import EtiketkaInfoDescription from "./description";
+import EtiketkaInDev from "./in-dev";
+import EtiketkaInfoSpecs from "./specs";
 import {
   CurrentIndexI,
   IEtiketka,
@@ -15,7 +17,10 @@ interface Props {
 export default function EtiketkaInfoContent({ currentIndex, item }: Props) {
   switch (currentIndex) {
     default:
+      return <EtiketkaInDev />;
     case "descr":
       return <EtiketkaInfoDescription description={item.description} />;
+    case "specs":
+      return <EtiketkaInfoSpecs specs={item.specifications} />;
   }
 }

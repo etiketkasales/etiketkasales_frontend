@@ -19,9 +19,7 @@ export default function ViewAllButton({ categoryId }: Props) {
       href={`/catalogue?category_id=${encodeURIComponent(categoryId)}`}
     >
       <div className="flex-row align-center gap-1">
-        <span className="gray-2 text-16 regular second-family nowrap-text">
-          Смотреть все
-        </span>
+        <span className="text-neutral-800 text-body xl">Смотреть все</span>
         <ArrowRightShort />
       </div>
     </Button>

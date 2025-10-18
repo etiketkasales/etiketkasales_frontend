@@ -2,7 +2,7 @@
 import React from "react";
 import { useWindowSize } from "react-use";
 
-import ViewAllButton from "~/src/shared/ui/view-all-button/ui";
+import ViewAllButton from "~/src/entities/view-all-button/ui";
 
 interface Props {
   title: string;

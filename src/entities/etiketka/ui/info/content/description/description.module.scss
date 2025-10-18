@@ -1,6 +1,7 @@
 .container {
+    max-width: 600px;
     p {
-        white-space: nowrap;
+        white-space: pre-wrap;
     }
 
     @media screen and (width <= 460px) {

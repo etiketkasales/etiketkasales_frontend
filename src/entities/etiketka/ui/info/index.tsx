@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import classNames from "classnames";
 
 import classes from "./info.module.scss";
 import EtiketkaMainContainer from "~/src/entities/etiketka/ui/container";
@@ -12,11 +13,18 @@ interface Props {
 }
 
 export default function EtiketkaInfo({ item }: Props) {
+  const [isInDev, setIsInDev] = useState<boolean>(false);
   const [currentIndex, setCurrentIndex] = useState<CurrentIndexI>("descr");
+
+  useEffect(() => {
+    setIsInDev(currentIndex === "seller" || currentIndex === "sertificates");
+  }, [currentIndex]);
 
   return (
     <EtiketkaMainContainer
-      className={`padding-40 flex-start flex-row gap-100 ${classes.container}`}
+      className={classNames(`flex-start flex-row`, classes.container, {
+        [classes.inDev]: isInDev,
+      })}
     >
       <EtiketkaInfoButtons
         currentIndex={currentIndex}

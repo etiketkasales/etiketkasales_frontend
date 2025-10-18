@@ -1,10 +1,8 @@
-"use client";
 import React from "react";
-import { useWindowSize } from "react-use";
 
 import Tabs from "~/src/widgets/tabs/ui";
 import Footer from "~/src/entities/footer/ui";
-import HeaderDefault from "../../header-default/ui";
+import HeaderDefault from "~/src/entities/header-default/ui";
 
 export default function PageWrapper({
   children,
@@ -15,8 +13,6 @@ export default function PageWrapper({
   CustomHeader?: React.ReactNode;
   TabsButton?: React.ReactNode;
 }) {
-  const { width } = useWindowSize();
-
   return (
     <>
       {CustomHeader ? CustomHeader : <HeaderDefault />}
@@ -27,7 +23,7 @@ export default function PageWrapper({
         {children}
       </main>
       <Footer />
-      {width <= 768 ? <Tabs TabsButton={TabsButton} /> : null}
+      <Tabs TabsButton={TabsButton} />
     </>
   );
 }

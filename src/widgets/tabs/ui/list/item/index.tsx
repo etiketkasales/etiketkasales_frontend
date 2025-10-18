@@ -1,5 +1,7 @@
+"use client";
 import React from "react";
-import { useRouter } from "next/navigation";
+import classNames from "classnames";
+import { useTabsItem } from "~/src/widgets/tabs/lib/hooks/useTabsItem.hook";
 
 import classes from "./item.module.scss";
 import Button from "~/src/shared/ui/button";
@@ -11,45 +13,22 @@ interface Props extends TabsItemI {
 }
 
 export default function TabsItem({ Icon, link, needDop, cartItems }: Props) {
-  const { push } = useRouter();
-
-  const getActiveForm = () => {
-    if (window.location.pathname === link) {
-      return classes.active;
-    }
-  };
-
-  const getBool = (items: any[]) => {
-    if (items.length > 0) {
-      return true;
-    }
-    return false;
-  };
-
-  const getDop = (needDop: "cart" | "favourites") => {
-    switch (needDop) {
-      default:
-      case "cart":
-        return getBool(cartItems);
-      case "favourites":
-        return getBool(cartItems);
-    }
-  };
+  const { isActive, buttonClick, getDop } = useTabsItem(link, cartItems);
 
   return (
     <Button
       typeButton="ghost"
       size="0"
-      className={`${classes.container} ${getActiveForm()}`}
-      onClick={() => {
-        push(link);
-      }}
+      className={classNames(classes.button, {
+        [classes.active]: isActive,
+      })}
+      onClick={buttonClick}
       needActiveScale={false}
     >
       <Icon />
       {needDop && getDop(needDop) && (
         <span
-          className={`text-14 semibold yellow-dark-2 second-family text-center ${classes.dop}`}
+          className={`text-14 semibold text-yellow-1000 second-family text-center ${classes.dop}`}
         >
           {needDop === "cart" ? cartItems?.length : cartItems?.length}
         </span>

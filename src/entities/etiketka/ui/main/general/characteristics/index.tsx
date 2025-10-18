@@ -3,10 +3,11 @@ import React, { useState } from "react";
 
 import classes from "./characteristics.module.scss";
 import CharacteristicsButton from "./button";
-import { CharacterI } from "~/src/entities/etiketka/model/etiketka.interface";
+import { ISpecification } from "~/src/entities/etiketka/model/etiketka.interface";
+import Specifications from "../../../specifications";
 
 interface Props {
-  characteristics: CharacterI[];
+  characteristics: ISpecification[];
   loaded: boolean;
 }
 
@@ -15,30 +16,9 @@ export default function CharacteristicsSection({ characteristics }: Props) {
 
   return (
     <div className={`flex-column gap-3 ${classes.container}`}>
-      <ul className="flex-column gap-3">
-        {characteristics
-          .slice(0, viewAll ? characteristics.length : 5)
-          .map((item, index) => {
-            return (
-              <li
-                key={index}
-                className={`flex-row gap-1 space-between ${classes.item}`}
-              >
-                <p
-                  className={`text-16 regular second-family gray-2 ${classes.text}`}
-                >
-                  {item.title}
-                </p>
-                <span className={classes.dots}></span>
-                <p
-                  className={`text-16 regular second-family black ${classes.text}`}
-                >
-                  {item.value}
-                </p>
-              </li>
-            );
-          })}
-      </ul>
+      <Specifications
+        specs={characteristics.slice(0, viewAll ? characteristics.length : 5)}
+      />
       {characteristics.length > 5 && (
         <CharacteristicsButton viewAll={viewAll} setViewAll={setViewAll} />
       )}

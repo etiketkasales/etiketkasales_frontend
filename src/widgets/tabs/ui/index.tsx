@@ -1,6 +1,7 @@
 "use client";
 import React, { ReactNode } from "react";
 import { useTabs } from "~/src/widgets/tabs/lib/hooks/useTabs.hook";
+import { useWindowSize } from "react-use";
 
 import classes from "./tabs.module.scss";
 import TabsList from "./list";
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export default function Tabs({ TabsButton }: Props) {
+  const { width } = useWindowSize();
   const { ref, cartItems } = useTabs();
 
   const getPadding = () => {
@@ -18,6 +20,8 @@ export default function Tabs({ TabsButton }: Props) {
     }
     return "padding-8";
   };
+
+  if (width <= 768) return null;
 
   return (
     <section
