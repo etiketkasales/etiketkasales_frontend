@@ -1,0 +1,14 @@
+.icon {
+    width: 20px;
+    height: 20px;
+}
+
+.text {
+    width: 30px;
+    height: 16px;
+}
+
+.icon,
+.text {
+    border-radius: $space-3;
+}

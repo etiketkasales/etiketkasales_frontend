@@ -1,10 +1,11 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import { useWindowSize } from "react-use";
 
 import classes from "./checkbox.module.scss";
 import ChecboxChecked from "~/public/shared/checkbox-checked.svg";
 import CheckboxChecked24 from "~/public/shared/checkbox-checked-24.svg";
+import classNames from "classnames";
 
 interface Props {
   onChange: (e: boolean) => void;
@@ -13,6 +14,7 @@ interface Props {
   label?: string;
   name?: string;
   className?: string;
+  classNameLabel?: string;
   error?: boolean;
 }
 
@@ -23,6 +25,7 @@ export default function CheckboxInput({
   name,
   checked,
   className,
+  classNameLabel,
   error = false,
 }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -31,21 +34,25 @@ export default function CheckboxInput({
   return (
     <label
       htmlFor={name}
-      className={`relative no-select cursor${label ? " align-center" : ""} flex-row${gap ? ` gap-${gap}` : ""} ${className}`}
+      className={classNames(
+        `relative no-select cursor${label ? " align-center" : ""} flex-row${gap ? ` gap-${gap}` : ""}`,
+        className,
+      )}
     >
       <input
         ref={inputRef}
         type="checkbox"
-        className={`${classes.container} ${checked ? classes.checked : ""} ${error && classes.error} cursor`}
+        className={classNames(`cursor`, classes.container, {
+          [classes.checked]: checked,
+          [classes.error]: error,
+        })}
         onChange={() => {
           onChange(!checked);
         }}
         checked={checked}
         name={name}
       />
-      {label && (
-        <span className="text-16 regular second-family gray-2">{label}</span>
-      )}
+      {label && <span className={classNameLabel}>{label}</span>}
       {checked &&
         (width > 460 ? (
           <ChecboxChecked

@@ -1,0 +1,15 @@
+.arrow {
+  transform: none;
+
+  &.open {
+    transform: rotate(180deg);
+  }
+}
+
+.container {
+  transition: gap 0.4s ease-in-out;
+
+  &.containerClosed {
+    gap: 0px !important;
+  }
+}
