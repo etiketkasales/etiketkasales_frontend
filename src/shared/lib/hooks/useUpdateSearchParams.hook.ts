@@ -11,8 +11,8 @@ type Action = "add" | "remove" | "set" | "clear" | "toggle";
 
 interface UpdateParamsProps {
   key: string;
-  value?: string | null;
-  replace?: boolean;
+  value?: string | string[] | null;
+  routerReplace?: boolean;
   action?: Action;
 }
 
@@ -35,19 +35,20 @@ export const useUpdateSearchParams = () => {
     ({
       key,
       value = null,
-      replace = false,
+      routerReplace = false,
       action = "add",
     }: UpdateParamsProps) => {
       const params = new URLSearchParams(searchParams.toString());
       const prev = params.get(key);
       const prevItems = splitValues(prev);
+      const updateValue = Array.isArray(value) ? joinValues(value) : value;
 
       let nextItems: string[] = prevItems.slice(); // copy
 
       switch (action) {
         case "add":
           if (value) {
-            const toAddItems = splitValues(value);
+            const toAddItems = splitValues(updateValue);
             toAddItems.forEach((v) => {
               if (!nextItems.includes(v)) nextItems.push(v);
             });
@@ -56,14 +57,14 @@ export const useUpdateSearchParams = () => {
 
         case "remove":
           if (value) {
-            const toRemoveItems = splitValues(value);
+            const toRemoveItems = splitValues(updateValue);
             nextItems = nextItems.filter((v) => !toRemoveItems.includes(v));
           }
           break;
 
         case "toggle":
           if (value) {
-            const toToggleItems = splitValues(value);
+            const toToggleItems = splitValues(updateValue);
             toToggleItems.forEach((v) => {
               if (nextItems.includes(v)) {
                 nextItems = nextItems.filter((x) => x !== v);
@@ -76,7 +77,7 @@ export const useUpdateSearchParams = () => {
 
         case "set":
           // set replaces whole param with `value` (if value null/empty => delete)
-          nextItems = value ? splitValues(value) : [];
+          nextItems = value ? splitValues(updateValue) : [];
           break;
 
         case "clear":
@@ -93,7 +94,7 @@ export const useUpdateSearchParams = () => {
       const qs = params.toString();
       const newUrl = qs ? `${pathname}?${qs}` : pathname;
 
-      if (replace) {
+      if (routerReplace) {
         router.replace(newUrl, { scroll: false });
       } else {
         router.push(newUrl, { scroll: false });

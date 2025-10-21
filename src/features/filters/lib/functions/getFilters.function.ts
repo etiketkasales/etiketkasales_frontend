@@ -1,6 +1,6 @@
 import { getProductsFilters } from "~/src/features/filters/lib/api";
 
-import { IFilters } from "~/src/features/filters/model/filters.interface";
+import { IFilters } from "~/src/features/filters/model";
 
 export const handleGetProductsFilters = async () => {
   let filters: IFilters = {};

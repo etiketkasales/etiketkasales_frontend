@@ -13,6 +13,7 @@ interface Props<T extends HTMLElement> {
   clickRef?: RefObject<T | null>;
   className?: string;
   classNameTitle?: string;
+  classNameChildren?: string;
   clickOutsideControl?: boolean;
 }
 
@@ -23,6 +24,7 @@ export default function Accordeon<T extends HTMLElement>({
   clickRef,
   classNameTitle,
   clickOutsideControl = true,
+  classNameChildren,
 }: Props<T>) {
   const { open, handleClick, ref } = useAccordeon(
     clickRef,
@@ -58,6 +60,7 @@ export default function Accordeon<T extends HTMLElement>({
             exit={{ height: 0, opacity: 0, scaleY: 0.6 }}
             transition={{ ease: "easeInOut", duration: 0.4 }}
             style={{ transformOrigin: "top center" }}
+            className={classNameChildren}
           >
             {children}
           </motion.div>

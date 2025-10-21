@@ -16,6 +16,8 @@ export interface InputProps
   ref?: Ref<HTMLInputElement>;
   label?: string;
   errorText?: string;
+  classNameError?: string;
+  borderType?: "label" | "input";
 }
 
 export default function Input({
@@ -30,12 +32,16 @@ export default function Input({
   ref,
   label,
   errorText = "",
+  classNameError,
+  borderType = "input",
   ...rest
 }: InputProps) {
   return (
     <label
-      htmlFor={name}
-      className={classNames(`cursor no-select flex-column`, classNameLabel)}
+      htmlFor={rest.id}
+      className={classNames(`cursor no-select flex-column`, classNameLabel, {
+        [classes.error]: errorText && borderType === "label",
+      })}
     >
       <input
         {...rest}
@@ -47,10 +53,14 @@ export default function Input({
         value={value}
         onChange={onChange}
         className={classNames(`${classes.input}`, className, {
-          [classes.error]: errorText,
+          [classes.error]: errorText && borderType === "input",
         })}
       />
-      {errorText && <p className="red text-14 regular">{errorText}</p>}
+      {errorText && (
+        <p className={classNames(`red text-14 regular`, classNameError)}>
+          {errorText}
+        </p>
+      )}
     </label>
   );
 }

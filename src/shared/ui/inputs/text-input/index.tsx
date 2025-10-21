@@ -1,7 +1,8 @@
 import React from "react";
+import classNames from "classnames";
 
-import Input, { InputProps } from "~/src/shared/ui/input";
 import Button from "~/src/shared/ui/button";
+import Input, { InputProps } from "~/src/shared/ui/input";
 
 interface Props extends InputProps {
   className?: string;
@@ -37,8 +38,8 @@ export default function TextInput({
 }: Props) {
   if (RightIcon) {
     return (
-      <section
-        className={`flex-row space-between ${className}`}
+      <div
+        className={classNames(`flex-row space-between`, className)}
         style={{ gap: `${gap}px` }}
       >
         <Input
@@ -63,7 +64,7 @@ export default function TextInput({
             <RightIcon />
           </Button>
         ) : null}
-      </section>
+      </div>
     );
   }
   return (

@@ -9,6 +9,7 @@ export interface IBaseWrapperProps {
   itemId: string | null;
   children: React.ReactNode;
   className?: string;
+  clickAction?: "toggle" | "clear";
 }
 interface Props extends IBaseWrapperProps {
   type: CategorySwiperT;
@@ -19,6 +20,7 @@ export default function ItemWrapper({
   itemId,
   type,
   className,
+  clickAction,
 }: Props) {
   switch (type) {
     default:
@@ -30,7 +32,11 @@ export default function ItemWrapper({
       );
     case "catalogue":
       return (
-        <CatalogueItemWrapper itemId={itemId} className={className}>
+        <CatalogueItemWrapper
+          itemId={itemId}
+          className={className}
+          clickAction={clickAction}
+        >
           {children}
         </CatalogueItemWrapper>
       );

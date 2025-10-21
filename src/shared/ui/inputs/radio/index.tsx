@@ -13,6 +13,7 @@ interface Props {
   checked?: boolean;
   className?: string;
   type?: "yellow" | "green";
+  classNameText?: string;
 }
 
 export default function RadioInput({
@@ -24,6 +25,7 @@ export default function RadioInput({
   checked,
   className,
   type = "green",
+  classNameText = "text-body m text-neutral-700",
 }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -31,7 +33,7 @@ export default function RadioInput({
     <label
       htmlFor={name}
       className={`no-select cursor${label ? " align-center" : ""} flex-row${gap ? ` gap-${gap}` : ""} ${className}`}
-      onClick={() => [inputRef.current?.click()]}
+      onClick={() => inputRef.current?.click()}
     >
       <div className={classes.input_wrapper}>
         <input
@@ -46,9 +48,7 @@ export default function RadioInput({
           name={name}
         />
       </div>
-      {label && (
-        <span className="text-16 regular second-family gray-2">{label}</span>
-      )}
+      {label && <span className={classNameText}>{label}</span>}
     </label>
   );
 }
