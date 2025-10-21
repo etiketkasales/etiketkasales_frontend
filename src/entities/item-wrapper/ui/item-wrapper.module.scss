@@ -1,6 +1,7 @@
 .container {
     position: relative;
     flex: 1 0;
+    max-width: 222px;
     gap: $space-5;
     justify-self: flex-start;
     @media screen and (width <= 460px) {
