@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-import { IEtiketka } from "~/src/entities/etiketka/model/etiketka.interface";
+import { IEtiketka } from "~/src/entities/etiketka/model";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 import { MessageI } from "~/src/shared/model/shared.interface";
 import { getProductById } from "../api/etiketka.api";

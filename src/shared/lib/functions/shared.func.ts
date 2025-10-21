@@ -8,14 +8,16 @@ interface PromiseWrapperProps {
   errorMessage?: string;
   setErrBool?: Dispatch<SetStateAction<boolean>>;
   needLoad?: boolean;
+  fallback?: () => void;
 }
 
 export async function promiseWrapper({
   setLoading,
+  callback,
   setError,
   errorMessage,
   needLoad = true,
-  callback,
+  fallback,
   setErrBool,
 }: PromiseWrapperProps) {
   try {

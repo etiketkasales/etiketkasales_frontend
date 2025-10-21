@@ -14,8 +14,8 @@ export default function NoSrcImage({ width, height, radius }: Props) {
     <div
       className={classes.container}
       style={{
-        width: `${width}px`,
-        height: `${height}px`,
+        maxWidth: `${width}px`,
+        maxHeight: `${height}px`,
         borderRadius: radius,
       }}
     ></div>

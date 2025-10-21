@@ -4,7 +4,6 @@ export const productSkeleton: IEtiketka = {
   id: 0,
   name: "",
   slug: "",
-  quantity: 0,
   description: "",
   price: "",
   old_price: "",
@@ -16,4 +15,5 @@ export const productSkeleton: IEtiketka = {
   category_id: 0,
   category_name: "",
   cart_quantity: 0,
+  min_order_quantity: 0,
 };

@@ -42,7 +42,7 @@ export default function Accordeon<T extends HTMLElement>({
         role="button"
         onClick={handleClick}
         className={classNames(
-          "flex-row space-between align-center pointer no-select",
+          "flex-row space-between align-center pointer no-select gap-5",
         )}
       >
         <p className={classNames(classNameTitle)}>{title}</p>
@@ -55,9 +55,9 @@ export default function Accordeon<T extends HTMLElement>({
       <AnimatePresence initial={false}>
         {open && (
           <motion.div
-            initial={{ height: 0, opacity: 0, scaleY: 0.6 }}
+            initial={{ height: 0, opacity: 0, scaleY: 0 }}
             animate={{ height: "auto", opacity: 1, scaleY: 1 }}
-            exit={{ height: 0, opacity: 0, scaleY: 0.6 }}
+            exit={{ height: 0, opacity: 0, scaleY: 0 }}
             transition={{ ease: "easeInOut", duration: 0.4 }}
             style={{ transformOrigin: "top center" }}
             className={classNameChildren}

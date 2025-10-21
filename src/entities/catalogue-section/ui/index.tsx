@@ -2,12 +2,17 @@
 import React from "react";
 
 import classes from "./catalogue-section.module.scss";
-import CatalogueFilters from "./catalogue-filters";
+import CatalogueSuspenseWrapper from "./suspense-wrapper";
+import CatalogueProducts from "./products";
+import ProductsSkeleton from "./products/skeleton";
+import Container from "~/src/shared/ui/container/ui";
 
 export default function CatalogueSection() {
   return (
-    <section className={`${classes.container} flex-row gap-5 align-start`}>
-      <CatalogueFilters />
-    </section>
+    <Container as="section" className={`${classes.container} flex-column`}>
+      <CatalogueSuspenseWrapper fallback={<ProductsSkeleton />}>
+        <CatalogueProducts />
+      </CatalogueSuspenseWrapper>
+    </Container>
   );
 }

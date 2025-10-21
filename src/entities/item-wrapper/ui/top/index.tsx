@@ -1,11 +1,9 @@
-"use client";
 import React from "react";
-import { useWindowSize } from "react-use";
+import { IEtiketka } from "~/src/entities/etiketka/model";
 
 import classes from "./item-wrapper-top.module.scss";
-import ImageContainer from "~/src/shared/ui/image-container/ui";
 import CartButton from "~/src/entities/cart-button/ui";
-import { IEtiketka } from "~/src/entities/etiketka/model/etiketka.interface";
+import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
 
 interface Props {
   item: IEtiketka;
@@ -14,23 +12,21 @@ interface Props {
 }
 
 export default function ItemWrapperTop({ updateInfo, item, image }: Props) {
-  const { width } = useWindowSize();
-
   return (
-    <div className="relative">
-      <ImageContainer
-        src={image ? image : "/best-offers/test.png"}
+    <div className={`relative ${classes.container}`}>
+      <ImageWrapper
+        src={image ? image : ""}
         width={222}
-        height={width <= 520 ? 168 : 222}
-        alt="Картинка товара"
-        radius={16}
+        height={222}
+        alt=""
         className={classes.image}
       />
       <CartButton
         className={classes.button}
         type="with_icon"
         itemId={item.id}
-        quantity={item.quantity}
+        quantity={item.cart_quantity}
+        minQuantity={item.min_order_quantity}
         updateInfo={updateInfo}
       />
     </div>

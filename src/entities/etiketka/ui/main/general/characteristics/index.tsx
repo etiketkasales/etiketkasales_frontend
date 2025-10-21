@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 import classes from "./characteristics.module.scss";
 import CharacteristicsButton from "./button";
-import { ISpecification } from "~/src/entities/etiketka/model/etiketka.interface";
+import { ISpecification } from "~/src/entities/etiketka/model";
 import Specifications from "../../../specifications";
 
 interface Props {

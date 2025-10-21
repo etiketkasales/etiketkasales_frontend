@@ -7,6 +7,7 @@ export interface ICartItem {
   id: number;
   product_id: number;
   quantity: number;
+  min_order_quantity: number;
   price: string;
   old_price: string;
   name: string;

@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 
 import { getProductById } from "~/src/entities/etiketka/lib/api/etiketka.api";
-import { IEtiketka } from "~/src/entities/etiketka/model/etiketka.interface";
+import { IEtiketka } from "~/src/entities/etiketka/model";
 
 interface Props {
   initInfo: IEtiketka;

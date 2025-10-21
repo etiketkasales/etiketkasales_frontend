@@ -4,10 +4,7 @@ import React from "react";
 import EtiketkaInfoDescription from "./description";
 import EtiketkaInDev from "./in-dev";
 import EtiketkaInfoSpecs from "./specs";
-import {
-  CurrentIndexI,
-  IEtiketka,
-} from "~/src/entities/etiketka/model/etiketka.interface";
+import { CurrentIndexI, IEtiketka } from "~/src/entities/etiketka/model";
 
 interface Props {
   currentIndex: CurrentIndexI;

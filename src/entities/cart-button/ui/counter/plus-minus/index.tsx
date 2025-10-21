@@ -11,6 +11,7 @@ import Button from "~/src/shared/ui/button";
 interface Props {
   type: "plus" | "minus";
   quantity: number;
+  min: number;
   itemId: number;
   updateInfo?: () => Promise<void>;
 }
@@ -23,26 +24,27 @@ const icons = {
 export default function CartCounterPlusMinus({
   type,
   quantity,
+  min,
   itemId,
   updateInfo,
 }: Props) {
   const { handleUpdateEtiketka } = useCartItems({ itemId });
-  const { handleButtonClick } = useCartButton({ updateInfo });
+  const { handleButtonClick, loading } = useCartButton({ updateInfo });
   const Icon = icons[type];
   const isMinus = type === "minus";
   return (
     <Button
       typeButton="ghost"
       size="0"
-      onClick={async () =>
+      onClick={async () => {
         await handleButtonClick(
           async () => await handleUpdateEtiketka(quantity + (isMinus ? -1 : 1)),
-        )
-      }
+        );
+      }}
       className={classNames({
         [classes.disabled]: isMinus && quantity === 1,
       })}
-      disabled={isMinus && quantity === 1}
+      disabled={(isMinus && (quantity === 1 || quantity === min)) || loading}
     >
       <Icon />
     </Button>

@@ -1,23 +1,30 @@
 "use client";
 import React from "react";
+import classNames from "classnames";
 import { useItemWrapper } from "../lib/hooks/useItemWrapper.hook";
 
 import classes from "./item-wrapper.module.scss";
 import ItemWrapperTop from "./top";
 import ItemWrapperCaption from "./caption";
 import LinkContainer from "~/src/shared/ui/link-container/ui";
-import { IEtiketka } from "../../etiketka/model/etiketka.interface";
+import { IEtiketka } from "~/src/entities/etiketka/model";
 
 interface Props {
   item: IEtiketka;
+  className?: string;
 }
 
-export default function ItemWrapper({ item }: Props) {
+export default function ItemWrapper({ item, className }: Props) {
   const { itemInfo, updateInfo } = useItemWrapper({ initInfo: item });
   const link = `/etiketka/${item.slug}/${item.id}`;
 
   return (
-    <li className={`${classes.container} flex-column cursor flex-start`}>
+    <li
+      className={classNames(
+        `${classes.container} flex-column cursor flex-start`,
+        className,
+      )}
+    >
       <ItemWrapperTop
         item={itemInfo}
         image={itemInfo.images[0]}

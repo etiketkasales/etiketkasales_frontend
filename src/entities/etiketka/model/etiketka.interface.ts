@@ -6,7 +6,6 @@ export interface IEtiketka {
   description: string;
   price: string;
   old_price?: string;
-  quantity: number;
   images: string[];
   specifications: ISpecification[];
   seller_id: number;
@@ -15,6 +14,7 @@ export interface IEtiketka {
   category_id: number;
   category_name: string;
   cart_quantity: number;
+  min_order_quantity: number;
 }
 
 export interface ISpecification {

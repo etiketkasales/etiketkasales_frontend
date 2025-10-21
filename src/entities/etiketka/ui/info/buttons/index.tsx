@@ -3,7 +3,7 @@ import React from "react";
 
 import classes from "./buttons.module.scss";
 import Button from "~/src/shared/ui/button";
-import { CurrentIndexI } from "~/src/entities/etiketka/model/etiketka.interface";
+import { CurrentIndexI } from "~/src/entities/etiketka/model";
 import { etiketkaButtonsC } from "~/src/entities/etiketka/model/etiketka.const";
 
 interface Props {

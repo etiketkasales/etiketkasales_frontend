@@ -1,21 +1,28 @@
 .container {
-    display: grid;
-    place-content: center;
-    border: 2px solid $neutral-100;
-    border-radius: $space-4;
-    padding: $space-10px;
-    transform: rotate(15deg);
+  display: grid;
+  place-content: center;
+  border: 2px solid $neutral-100;
+  border-radius: $space-4;
+  padding: $space-10px;
+  transform: rotate(15deg);
 
-    transition: transform $transition;
-    z-index: 1;
-    cursor: pointer;
+  transition: transform $transition;
+  z-index: 1;
+  cursor: pointer;
 
-    svg {
-        transform: rotate(-15deg);
+  .icon {
+    position: absolute;
+    transform: rotate(-15deg);
+    opacity: 0;
+    &.active {
+      position: relative;
+      opacity: 1;
     }
-
+  }
+  @media screen and (any-hover: hover) {
     &:hover,
-    &:hover svg {
-        transform: rotate(0);
+    &:hover .icon {
+      transform: rotate(0);
     }
+  }
 }

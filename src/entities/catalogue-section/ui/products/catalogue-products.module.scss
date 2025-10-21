@@ -1,0 +1,14 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: $space-5;
+  row-gap: $space-8;
+  padding: $space-4;
+  border-radius: $space-5;
+}
+
+.item {
+    grid-column: span 3;
+    height: 100%;
+    max-height: 307px;
+}

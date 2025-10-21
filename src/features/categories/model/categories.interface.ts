@@ -1,4 +1,4 @@
-import { IEtiketka } from "~/src/entities/etiketka/model/etiketka.interface";
+import { IEtiketka } from "~/src/entities/etiketka/model";
 
 export interface ICategory {
   id: number;

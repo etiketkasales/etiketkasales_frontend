@@ -3,7 +3,7 @@ import React from "react";
 
 import EtiketkaSection from "~/src/entities/etiketka/ui";
 import PageWrapper from "~/src/entities/page-wrapper/ui";
-import { IEtiketka } from "~/src/entities/etiketka/model/etiketka.interface";
+import { IEtiketka } from "~/src/entities/etiketka/model";
 
 interface Props {
   initProductInfo: IEtiketka;

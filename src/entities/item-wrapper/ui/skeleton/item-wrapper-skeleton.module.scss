@@ -1,0 +1,15 @@
+.container {
+    gap: $space-5;
+    justify-self: flex-start;
+    @media screen and (width <= 560px) {
+        gap: $space-4;
+    }
+
+    @media screen and (any-hover: hover) {
+        &:hover {
+            img {
+                transform: scale(1.05);
+            }
+        }
+    }
+}

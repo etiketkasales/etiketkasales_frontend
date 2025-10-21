@@ -6,7 +6,7 @@ import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
 import classes from "./general.module.scss";
 import CharacteristicsSection from "./characteristics";
 import EtiketkaMainContainer from "../../container";
-import { ISpecification } from "~/src/entities/etiketka/model/etiketka.interface";
+import { ISpecification } from "~/src/entities/etiketka/model";
 
 interface Props {
   name: string;

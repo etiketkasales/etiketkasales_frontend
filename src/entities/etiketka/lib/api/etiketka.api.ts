@@ -5,40 +5,40 @@ import {
   IGetProductsBySlug,
   ISearchEtiketkaByInput,
   ISearchEtiketkaResponse,
-  ISearchParameters,
-} from "../../model/etiketka.interface";
+} from "~/src/entities/etiketka/model";
 
 export const getProductById = async (id: number) => {
-  try {
+  return await tryCatch(async () => {
     const response = await apiClient.get<IGetData<IEtiketka>>(
       `/products/${id}`,
     );
     return response.data.data;
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
+  });
 };
 
-export const getProductsBySearch = async (query: ISearchParameters) => {
-  await tryCatch(async () => {
+interface IParams {
+  [key: string]: string;
+}
+
+export const getProductsByFilters = async (query: IParams) => {
+  return await tryCatch(async () => {
     const response = await apiClient.get<IGetData<ISearchEtiketkaResponse>>(
       `/products`,
       {
         params: {
-          page: query.page || 1,
-          per_page: query.per_page || 20,
+          page: query.page || "1",
+          per_page: query.per_page || "20",
           ...query,
         },
       },
     );
 
-    return response.data.data;
+    return response.data.data.products;
   });
 };
 
 export const searchProductsByInput = async (q: string, page?: number) => {
-  await tryCatch(async () => {
+  return await tryCatch(async () => {
     const res = await apiClient.get<IGetData<ISearchEtiketkaByInput>>(
       `/products/search`,
       {
@@ -54,7 +54,7 @@ export const searchProductsByInput = async (q: string, page?: number) => {
 };
 
 export const getProductsBySlug = async (slug: string) => {
-  await tryCatch(async () => {
+  return await tryCatch(async () => {
     const response = await apiClient.get<IGetData<IGetProductsBySlug>>(
       `/products/category/${slug}`,
     );

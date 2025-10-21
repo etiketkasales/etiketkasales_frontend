@@ -1,5 +1,6 @@
 "use client";
 import React, { CSSProperties, useRef } from "react";
+import classNames from "classnames";
 import { useWindowSize } from "react-use";
 import SwiperCore from "swiper";
 import { FreeMode } from "swiper/modules";
@@ -10,13 +11,12 @@ import Gradient from "~/public/categories/gradient.svg";
 import GradientMedia from "~/public/categories/gradient-media.svg";
 import CategoryItem from "./item";
 import ItemSkeleton from "./item-skeleton";
+import CategoriesSwiperNoData from "./no-data";
+import AllCategories from "./all-categories";
 import {
   CategorySwiperT,
   ICategory,
 } from "~/src/features/categories/model/categories.interface";
-import CategoriesSwiperNoData from "./no-data";
-import AllCategories from "./all-categories";
-import classNames from "classnames";
 
 interface Props {
   swiperRef: React.RefObject<SwiperCore | null>;

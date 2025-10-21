@@ -1,0 +1,9 @@
+.container {
+    width: 100%;
+    border-radius: $space-5;
+    gap: $space-5;
+
+    @media screen and (width <= 560px) {
+        gap: $space-3;
+    }
+}

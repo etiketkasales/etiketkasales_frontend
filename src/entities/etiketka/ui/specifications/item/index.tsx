@@ -1,7 +1,7 @@
 import React from "react";
 
 import classes from "./specs-item.module.scss";
-import { ISpecification } from "~/src/entities/etiketka/model/etiketka.interface";
+import { ISpecification } from "~/src/entities/etiketka/model";
 
 interface Props extends ISpecification {}
 

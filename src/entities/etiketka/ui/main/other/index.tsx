@@ -4,7 +4,7 @@ import React from "react";
 import classes from "./other.module.scss";
 import EtiketkaSeller from "./seller";
 import EtiketkaPriceCart from "./price-cart";
-import { IEtiketka } from "~/src/entities/etiketka/model/etiketka.interface";
+import { IEtiketka } from "~/src/entities/etiketka/model";
 
 interface Props {
   sellerId: number;

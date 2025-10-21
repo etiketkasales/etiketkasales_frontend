@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 
 import SpecsItem from "./item";
-import { ISpecification } from "~/src/entities/etiketka/model/etiketka.interface";
+import { ISpecification } from "~/src/entities/etiketka/model";
 
 interface Props {
   specs: ISpecification[];

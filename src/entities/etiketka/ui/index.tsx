@@ -7,7 +7,7 @@ import classes from "./etiketka.module.scss";
 import EtiketkaMain from "./main";
 import EtiketkaInfo from "./info";
 import { productSkeleton } from "../model/etiketka.skeleton";
-import { IEtiketka } from "../model/etiketka.interface";
+import { IEtiketka } from "../model";
 
 interface Props {
   initProductInfo: IEtiketka;

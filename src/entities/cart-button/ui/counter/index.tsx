@@ -11,12 +11,14 @@ interface Props extends ICommonCartButton {}
 export default function CartCounter({
   itemId,
   quantity,
+  minQuantity,
   className,
   updateInfo,
 }: Props) {
   const sharedProps = {
     itemId,
     quantity,
+    min: minQuantity,
     updateInfo,
   };
 

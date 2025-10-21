@@ -9,12 +9,16 @@ export const apiClient = axios.create({
   withCredentials: true,
 });
 
-export const tryCatch = async <T>(func: () => Promise<T>) => {
+export const tryCatch = async <T>(
+  func: () => Promise<T>,
+  fallback?: () => void,
+) => {
   try {
     const res = await func();
     return res;
   } catch (err) {
     console.error(err);
+    fallback?.();
     throw err;
   }
 };

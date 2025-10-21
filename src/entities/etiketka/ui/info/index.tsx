@@ -6,7 +6,7 @@ import classes from "./info.module.scss";
 import EtiketkaMainContainer from "~/src/entities/etiketka/ui/container";
 import EtiketkaInfoButtons from "./buttons";
 import EtiketkaInfoContent from "./content";
-import { CurrentIndexI, IEtiketka } from "../../model/etiketka.interface";
+import { CurrentIndexI, IEtiketka } from "../../model";
 
 interface Props {
   item: IEtiketka;

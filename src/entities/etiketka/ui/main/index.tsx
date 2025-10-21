@@ -5,7 +5,7 @@ import classes from "./etiketka-main.module.scss";
 import EtiketkaImages from "./images";
 import EtiketkaGeneral from "./general";
 import EtiketkaOther from "./other";
-import { IEtiketka } from "~/src/entities/etiketka/model/etiketka.interface";
+import { IEtiketka } from "~/src/entities/etiketka/model";
 import { MessageI } from "~/src/shared/model/shared.interface";
 
 interface Props {

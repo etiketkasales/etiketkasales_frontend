@@ -7,6 +7,7 @@ import CartButtonWithText from "./with-text";
 export interface ICommonCartButton {
   itemId: number;
   quantity: number;
+  minQuantity: number;
   className?: string;
   updateInfo?: () => Promise<void>;
 }

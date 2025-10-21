@@ -1,42 +1,31 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CatalogueAllFiltersI } from "~/src/entities/catalogue-section/model/catalogue.interface";
+import { IFilters } from "~/src/features/filters/model";
 
 interface InitialStateI {
-  allFilters: CatalogueAllFiltersI;
-  [key: string]: any;
+  catalogueFilters: IFilters;
+  catalogueFiltersKeys: string[];
 }
 
 const initialState: InitialStateI = {
-  allFilters: {},
+  catalogueFilters: {},
+  catalogueFiltersKeys: [],
 };
 
 export const catalogueSlice = createSlice({
   name: "catalogue",
   initialState,
   reducers: {
-    setCatalogue: (
+    setCatalogueFilters: (
       state: InitialStateI,
-      action: PayloadAction<Partial<InitialStateI>>,
+      action: PayloadAction<IFilters>,
     ) => {
-      try {
-        let key: keyof InitialStateI;
-        const valueArg = action.payload;
-        for (key in valueArg) {
-          if (
-            Object.hasOwnProperty.call(state, key) &&
-            Object.hasOwnProperty.call(valueArg, key)
-          ) {
-            state[key] = valueArg[key];
-          }
-        }
-      } catch (error) {
-        console.error(error);
-      }
+      state.catalogueFilters = action.payload;
+      state.catalogueFiltersKeys = Object.keys(action.payload);
     },
   },
 });
 
-export const { setCatalogue } = catalogueSlice.actions;
+export const { setCatalogueFilters } = catalogueSlice.actions;
 export const selectCatalogue = (state: { catalogue: InitialStateI }) =>
   state.catalogue;
 export default catalogueSlice.reducer;

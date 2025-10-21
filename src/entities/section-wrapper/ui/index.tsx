@@ -4,7 +4,7 @@ import classNames from "classnames";
 
 import SectionWrapperBody from "./body";
 import SectionWrapperHeading from "./heading";
-import { IEtiketka } from "~/src/entities/etiketka/model/etiketka.interface";
+import { IEtiketka } from "~/src/entities/etiketka/model";
 
 interface Props {
   arrayProducts: Array<IEtiketka>;

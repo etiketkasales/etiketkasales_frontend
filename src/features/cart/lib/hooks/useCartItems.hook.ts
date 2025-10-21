@@ -21,12 +21,15 @@ export const useCartItems = ({ itemId }: Props) => {
     }
   }, []);
 
-  const handleAddEtiketka = useCallback(async () => {
-    return await functionWrapper(async () => {
-      await addToCart(itemId, 1);
-      await updateCart();
-    });
-  }, [functionWrapper, updateCart, itemId]);
+  const handleAddEtiketka = useCallback(
+    async (minQuantity: number) => {
+      return await functionWrapper(async () => {
+        await addToCart(itemId, minQuantity);
+        await updateCart();
+      });
+    },
+    [functionWrapper, updateCart, itemId],
+  );
 
   const handleUpdateEtiketka = useCallback(
     async (quantity: number) => {

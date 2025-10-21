@@ -4,7 +4,7 @@ import { useWindowSize } from "react-use";
 
 import classes from "./body.module.scss";
 import ItemWrapper from "~/src/entities/item-wrapper/ui";
-import { IEtiketka } from "~/src/entities/etiketka/model/etiketka.interface";
+import { IEtiketka } from "~/src/entities/etiketka/model";
 
 interface Props {
   arrayProducts: Array<IEtiketka>;
