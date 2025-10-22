@@ -16,6 +16,10 @@ export const useCategoryItem = (id: number, name: string) => {
       initialized.current = true;
       dispatch(setCatalogueActiveCategories(name));
     }
+
+    return () => {
+      initialized.current = false;
+    }
   }, [isActive, name, dispatch]);
 
   const onItemClick = useCallback(() => {
