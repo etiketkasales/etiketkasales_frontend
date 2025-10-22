@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
-import { useSearchParams } from "next/navigation";
+import classNames from "classnames";
+import { useCategoryItem } from "~/src/features/categories/lib/hooks/useCategoryItem.hook";
 
 import classes from "./swiper-item.module.scss";
 import ItemWrapper from "../item-wrapper";
@@ -18,17 +19,18 @@ interface Props {
 
 export default function CategoryItem({ item, type }: Props) {
   const { id, name, image } = item;
-  const searchParams = useSearchParams();
-  const currentCategory = searchParams.get("category_id");
-  const ids = currentCategory?.split(",") || [];
+  const { isActive, onItemClick } = useCategoryItem(id, name);
 
   return (
     <ItemWrapper
-      className={ids.includes(id.toString()) ? classes.active : ""}
+      className={classNames(classes.container, {
+        [classes.active]: isActive,
+      })}
       itemId={item.id.toString()}
       type={type}
+      onClick={onItemClick}
     >
-      <ItemWrapperIcon image={image} name={name} />
+      <ItemWrapperIcon image={image} />
       <ItemWrapperText text={name} />
     </ItemWrapper>
   );

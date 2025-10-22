@@ -14,6 +14,7 @@ export default function CatalogueItemWrapper({
   itemId,
   className,
   clickAction = "toggle",
+  onClick,
 }: Props) {
   const updateParams = useUpdateSearchParams();
 
@@ -26,14 +27,15 @@ export default function CatalogueItemWrapper({
         classes.container,
         className,
       )}
-      onClick={() =>
+      onClick={() => {
         updateParams({
           key: "category_id",
           value: itemId,
           action: clickAction,
           routerReplace: true,
-        })
-      }
+        });
+        onClick?.();
+      }}
     >
       {children}
     </Container>

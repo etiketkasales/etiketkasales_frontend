@@ -2,6 +2,7 @@
     width: 100%;
     border-radius: $space-5;
     gap: $space-5;
+    flex: 1 1;
 
     @media screen and (width <= 560px) {
         gap: $space-3;

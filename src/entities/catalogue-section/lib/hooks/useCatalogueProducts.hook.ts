@@ -1,35 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import { useAppSelector } from "~/src/app/store/hooks";
-import { selectCatalogue } from "~/src/app/store/reducers/catalogue.slice";
+import { useGetFilters } from "./useGetFIlters.hook";
 import { getProductsByFilters } from "~/src/entities/etiketka/lib/api/etiketka.api";
 
 import { ISearchEtiketka } from "~/src/entities/etiketka/model";
 
 interface ISearchParams {
-  [key: string]: string;
+  [key: string]: string | undefined;
 }
 
 export const useCatalogueProducts = () => {
-  const searchParams = useSearchParams();
-  const { catalogueFiltersKeys } = useAppSelector(selectCatalogue);
-  const [params, setParams] = useState<ISearchParams>({});
-
-  useEffect(() => {
-    const params: ISearchParams = {};
-    catalogueFiltersKeys.forEach((key) => {
-      const value = searchParams.get(key);
-      if (value) {
-        params[key] = value;
-      }
-    });
-    const categoryId = searchParams.get("category_id");
-    params["category_id"] = categoryId || "";
-    if (params) {
-      setParams(params);
-    }
-  }, [searchParams, catalogueFiltersKeys]);
-
+  const { params } = useGetFilters();
   const [products, setProducts] = useState<ISearchEtiketka[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -47,7 +27,6 @@ export const useCatalogueProducts = () => {
   }, []);
 
   useEffect(() => {
-    console.log(params);
     getCatalogueProducts(params);
   }, [getCatalogueProducts, params]);
 

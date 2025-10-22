@@ -6,15 +6,20 @@ import FiltersItem from "~/src/features/filters/ui/item";
 import FiltersCheckbox from "./checkbox";
 import FiltersCheckAll from "./check-all";
 import { IFiltersItemDefault } from "~/src/features/filters/model/filters.interface";
+import { IInitializedFilter } from "..";
 
 interface Props extends IFiltersItemDefault {
   filterName: string;
+  setFilterForCatalogue: React.Dispatch<
+    React.SetStateAction<IInitializedFilter[]>
+  >;
 }
 
 export default function FiltersCheckboxItem({
   filters,
   title,
   filterName,
+  setFilterForCatalogue,
 }: Props) {
   const {
     isAllActive,
@@ -23,7 +28,12 @@ export default function FiltersCheckboxItem({
     removeCertainFilter,
     addAllExceptOne,
     clearAllFilters,
-  } = useFiltersCheckbox({ filterName, filtersArray: filters });
+  } = useFiltersCheckbox({
+    filterName,
+    filtersArray: filters,
+    filterTitle: title,
+    setFilterForCatalogue,
+  });
 
   return (
     <FiltersItem title={title} className={classes.container}>

@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 
-import classes from "./item-wrapper-skeleton.module.scss";
+import classes from "../item-wrapper.module.scss";
 import ItemSkeletonTop from "./top";
 import ItemWrapperCaptionSkeleton from "./caption";
 

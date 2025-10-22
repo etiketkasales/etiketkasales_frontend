@@ -11,6 +11,7 @@ export default function HomeItemWrapper({
   className,
   itemId,
   children,
+  onClick,
 }: Props) {
   return (
     <Container
@@ -22,7 +23,8 @@ export default function HomeItemWrapper({
         className,
       )}
       rel={"noopener norefferer"}
-      href={`/catalogue${itemId ? `?category_id=${itemId},` : ""}`}
+      href={`/catalogue${itemId ? `?category_id=${itemId}` : ""}`}
+      onClick={onClick}
     >
       {children}
     </Container>

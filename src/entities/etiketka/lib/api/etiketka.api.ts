@@ -17,7 +17,7 @@ export const getProductById = async (id: number) => {
 };
 
 interface IParams {
-  [key: string]: string;
+  [key: string]: string | undefined;
 }
 
 export const getProductsByFilters = async (query: IParams) => {

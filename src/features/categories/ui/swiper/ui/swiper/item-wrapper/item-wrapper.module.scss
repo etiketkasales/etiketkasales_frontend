@@ -2,6 +2,17 @@
     width: 104px;
     min-height: 83px;
     background: transparent;
+
+    @media screen and (any-hover: hover) {
+        &:hover {
+            img {
+                filter: brightness(0)
+            }
+            p {
+                color: $neutral-900;
+            }
+        }
+    }
 }
 
 @media screen and (width <= 768px) {

@@ -28,7 +28,7 @@ export default function AllCategories({ type }: Props) {
       })}
       clickAction="clear"
     >
-      <ItemWrapperIcon image={allCategory.image} name={allCategory.name} />
+      <ItemWrapperIcon image={allCategory.image} />
       <ItemWrapperText text={allCategory.name} />
     </ItemWrapper>
   );

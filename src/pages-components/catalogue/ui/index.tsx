@@ -14,7 +14,7 @@ export default function CataloguePage({ initFilters }: Props) {
   return (
     <PageWrapper>
       <CategoriesSwiper title={`Каталог этикеток`} type="catalogue" />
-      <div className={`grid-column gap-5 grid-start`}>
+      <div className={`flex-row gap-5 flex-start`}>
         <ProductsFilters initFilters={initFilters} />
         <CatalogueSection />
       </div>

@@ -1,16 +1,21 @@
 "use client";
 import React from "react";
+import classNames from "classnames";
 
 import classes from "./loader-circle.module.scss";
 
 interface Props {
   radius: number;
+  className?: string;
 }
 
-export default function LoaderCircle({ radius }: Props) {
+export default function LoaderCircle({ radius, className }: Props) {
   return (
     <div
-      className={`absolute place-center ${classes.container}`}
+      className={classNames(
+        `absolute place-center ${classes.container}`,
+        className,
+      )}
       style={{
         borderRadius: `${radius}px`,
       }}
