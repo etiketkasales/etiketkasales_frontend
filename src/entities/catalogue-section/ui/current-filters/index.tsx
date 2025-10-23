@@ -6,6 +6,7 @@ import classes from "./current-filters.module.scss";
 import CurrentFiltersItem from "./filter";
 import CurrentCategories from "./categories";
 import ClearAllFilters from "./clear-filters";
+import Sort from "./sort";
 
 export default function CatalogueFilters() {
   const { activeCategories, activeFilters, needClearButton } =
@@ -13,6 +14,7 @@ export default function CatalogueFilters() {
 
   return (
     <div className={`flex-row ${classes.container}`}>
+      <Sort />
       <CurrentCategories categories={activeCategories} />
       {activeFilters &&
         activeFilters.map((item, index) => {

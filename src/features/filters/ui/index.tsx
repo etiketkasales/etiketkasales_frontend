@@ -12,6 +12,7 @@ import { IFilters } from "~/src/features/filters/model";
 
 interface Props {
   initFilters: IFilters;
+  className?: string;
 }
 
 export interface IInitializedFilter {
@@ -20,7 +21,7 @@ export interface IInitializedFilter {
   filters: string[];
 }
 
-export default function ProductsFilters({ initFilters }: Props) {
+export default function ProductsFilters({ initFilters, className }: Props) {
   const dispatch = useAppDispatch();
   const ref = useRef<HTMLDivElement>(null);
   const parsedFilters = useFiltersParse({ filters: initFilters });
@@ -35,7 +36,7 @@ export default function ProductsFilters({ initFilters }: Props) {
   return (
     <Container
       ref={ref}
-      className={classNames(classes.container, `flex-column`)}
+      className={classNames(classes.container, `flex-column`, className)}
     >
       {parsedFilters.map((item, index) => {
         return (

@@ -1,3 +1,4 @@
+"use client";
 import React, { Dispatch, SetStateAction, Suspense } from "react";
 
 import classes from "../filters.module.scss";

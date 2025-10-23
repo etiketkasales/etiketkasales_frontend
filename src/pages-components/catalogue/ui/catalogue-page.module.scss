@@ -1,0 +1,21 @@
+@media screen and (width <= 1024px) {
+  .filters {
+    display: none;
+  }
+
+  .categories {
+    position: relative;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 10%;
+      left: 0;
+      right: 0;
+      height: 100%;
+      background-color: $neutral-100;
+      transform: translateY(-100%);
+      pointer-events: none;
+      z-index: -1;
+    }
+  }
+}

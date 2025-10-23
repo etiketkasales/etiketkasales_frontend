@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { useFiltersCheckbox } from "~/src/features/filters/lib/hooks/useFiltersCheckbox.hook";
 

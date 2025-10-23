@@ -2,3 +2,18 @@
     gap: $space-3;
     flex-wrap: wrap;
 }
+
+@media screen and (width <= 1024px) {
+    .container {
+        max-width: 100vw;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-left: $space-10px;
+        scroll-margin-left: $space-10px;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        scrollbar-width: 0px;
+    }
+}

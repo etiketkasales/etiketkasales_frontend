@@ -1,5 +1,5 @@
 "use client";
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 
 import ChevronCompactLeft from "~/public/categories/chevron-compact-left.svg";
 import ChevronCompactRight from "~/public/categories/chevron-compact-right.svg";

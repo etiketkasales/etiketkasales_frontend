@@ -6,7 +6,7 @@
   padding: $space-10px;
   transform: rotate(15deg);
 
-  transition: transform $transition;
+  transition: transform $transition, background-color $transition;
   z-index: 1;
   cursor: pointer;
 
@@ -24,5 +24,9 @@
     &:hover .icon {
       transform: rotate(0);
     }
+  }
+
+  &.loading {
+    background-color: $yellow-400;
   }
 }

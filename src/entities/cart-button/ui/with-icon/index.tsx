@@ -23,7 +23,9 @@ export default function CartButtonWithIcon({
   return (
     <Container
       bgColor={"yellow-500"}
-      className={classNames(classes.container, className)}
+      className={classNames(classes.container, className, {
+        [classes.loading]: loading,
+      })}
       as="button"
       onClick={async () =>
         await handleButtonClick(() => handleAddEtiketka(minQuantity || 1))

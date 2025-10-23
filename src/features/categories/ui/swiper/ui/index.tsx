@@ -14,9 +14,10 @@ import { CategorySwiperT } from "~/src/features/categories/model/categories.inte
 interface Props {
   title: string;
   type: CategorySwiperT;
+  className?: string;
 }
 
-export default function CategoriesSwiper({ title, type }: Props) {
+export default function CategoriesSwiper({ title, type, className }: Props) {
   const { categories, loading, error } = useCategoriesSwiper();
   const { goPrev, goNext, swiperRef, handleSlideChange } = useSwiperSlides({
     slidesCount: categories.length,
@@ -26,7 +27,11 @@ export default function CategoriesSwiper({ title, type }: Props) {
     <Suspense>
       <Container
         as="section"
-        className={classNames(`wrapper flex-column`, classes.container)}
+        className={classNames(
+          `wrapper flex-column`,
+          classes.container,
+          className,
+        )}
       >
         <div className="flex-row space-between gap-6 align-center">
           <p className="text-neutral-1000 heading h6">{title}</p>

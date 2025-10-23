@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { useAppSelector } from "~/src/app/store/hooks";
 import { selectCart } from "~/src/app/store/reducers/cart.slice";

@@ -1,5 +1,6 @@
 import React from "react";
 
+import classes from "./catalogue-page.module.scss";
 import PageWrapper from "~/src/entities/page-wrapper/ui";
 import CategoriesSwiper from "~/src/features/categories/ui/swiper/ui";
 import ProductsFilters from "~/src/features/filters/ui";
@@ -13,9 +14,16 @@ interface Props {
 export default function CataloguePage({ initFilters }: Props) {
   return (
     <PageWrapper>
-      <CategoriesSwiper title={`Каталог этикеток`} type="catalogue" />
+      <CategoriesSwiper
+        title={`Каталог этикеток`}
+        type="catalogue"
+        className={classes.categories}
+      />
       <div className={`flex-row gap-5 flex-start`}>
-        <ProductsFilters initFilters={initFilters} />
+        <ProductsFilters
+          initFilters={initFilters}
+          className={classes.filters}
+        />
         <CatalogueSection />
       </div>
     </PageWrapper>

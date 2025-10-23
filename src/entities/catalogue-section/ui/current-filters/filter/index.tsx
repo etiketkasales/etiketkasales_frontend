@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { useUpdateSearchParams } from "~/src/shared/lib/hooks/useUpdateSearchParams.hook";
 

@@ -1,7 +1,7 @@
 import React from "react";
 
-import { IHeaderLink } from "~/src/entities/header-default/model/header-default.interface";
 import LinkContainer from "~/src/shared/ui/link-container/ui";
+import { IHeaderLink } from "~/src/entities/header-default/model/header-default.interface";
 
 interface Props extends IHeaderLink {}
 

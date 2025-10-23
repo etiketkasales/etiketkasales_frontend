@@ -14,6 +14,7 @@ export default function ClearAllFilters() {
   return (
     <FilterWrapperWithIcon
       type="neutral"
+      className="relative"
       classNameButton={classes.button}
       classNameIcon={classes.icon}
       onButtonClick={() => {

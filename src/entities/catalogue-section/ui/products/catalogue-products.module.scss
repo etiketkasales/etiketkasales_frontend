@@ -14,6 +14,11 @@
   &.loading {
     min-height: 200px;
   }
+
+  @media screen and (width <= 768px) {
+    column-gap: $space-2;
+    row-gap: $space-4;
+  }
 }
 
 .item {
@@ -24,8 +29,7 @@
       grid-column: span 4;
     }
 
-    @media screen and (width <= 560px) {
+    @media screen and (width <= 460px) {
       grid-column: span 6;
-      max-height: 240px;
     }
 }
