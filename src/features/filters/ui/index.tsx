@@ -2,13 +2,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import { useFiltersParse } from "~/src/features/filters/lib/hooks/useFiltersParse.hook";
+import { useAppDispatch } from "~/src/app/store/hooks";
+import { setCatalogueActiveFilters } from "~/src/app/store/reducers/catalogue.slice";
 
 import classes from "./filters.module.scss";
 import Container from "~/src/shared/ui/container/ui";
 import FiltersSeparator from "./separator";
 import { IFilters } from "~/src/features/filters/model";
-import { useAppDispatch } from "~/src/app/store/hooks";
-import { setCatalogueActiveFilters } from "~/src/app/store/reducers/catalogue.slice";
 
 interface Props {
   initFilters: IFilters;

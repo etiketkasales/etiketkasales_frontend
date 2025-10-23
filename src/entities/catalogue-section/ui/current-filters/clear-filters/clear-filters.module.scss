@@ -1,0 +1,19 @@
+.button {
+  .icon {
+    path {
+      fill: $neutral-600;
+    }
+  }
+
+  @media screen and (any-hover: hover) {
+    &:hover {
+        color: $neutral-900;
+
+        .icon {
+            path {
+                fill: $neutral-900;
+            }
+        }
+    }
+  }
+}

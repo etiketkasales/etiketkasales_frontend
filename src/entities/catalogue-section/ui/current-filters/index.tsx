@@ -1,13 +1,16 @@
+"use client";
 import React from "react";
-import { useAppSelector } from "~/src/app/store/hooks";
-import { selectCatalogue } from "~/src/app/store/reducers/catalogue.slice";
+import { useCurrentFilters } from "~/src/entities/catalogue-section/lib/hooks/useCurrentFIlters.hook";
 
 import classes from "./current-filters.module.scss";
 import CurrentFiltersItem from "./filter";
 import CurrentCategories from "./categories";
+import ClearAllFilters from "./clear-filters";
 
 export default function CatalogueFilters() {
-  const { activeFilters, activeCategories } = useAppSelector(selectCatalogue);
+  const { activeCategories, activeFilters, needClearButton } =
+    useCurrentFilters();
+
   return (
     <div className={`flex-row ${classes.container}`}>
       <CurrentCategories categories={activeCategories} />
@@ -26,6 +29,7 @@ export default function CatalogueFilters() {
             />
           );
         })}
+      {needClearButton ? <ClearAllFilters /> : null}
     </div>
   );
 }

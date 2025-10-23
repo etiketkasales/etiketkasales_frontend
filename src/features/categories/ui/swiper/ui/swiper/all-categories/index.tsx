@@ -2,6 +2,7 @@
 import React from "react";
 import classNames from "classnames";
 import { useSearchParams } from "next/navigation";
+import { useCategoryItem } from "~/src/features/categories/lib/hooks/useCategoryItem.hook";
 
 import itemClasses from "../item-wrapper/item-wrapper.module.scss";
 import swiperItemClasses from "../item/swiper-item.module.scss";
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export default function AllCategories({ type }: Props) {
+  const { onItemClick } = useCategoryItem(-1, null);
   const searchParams = useSearchParams();
   const categoryId = searchParams.get("category_id");
 
@@ -27,6 +29,7 @@ export default function AllCategories({ type }: Props) {
         [swiperItemClasses.active]: !categoryId && type !== "home",
       })}
       clickAction="clear"
+      onClick={onItemClick}
     >
       <ItemWrapperIcon image={allCategory.image} />
       <ItemWrapperText text={allCategory.name} />
