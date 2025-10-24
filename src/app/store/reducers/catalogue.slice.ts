@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { isNull } from "lodash";
 import { IFilters } from "~/src/features/filters/model";
 
 interface IActiveFilter {

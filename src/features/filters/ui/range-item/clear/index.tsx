@@ -1,21 +1,24 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 
 import RadioButton from "~/src/shared/ui/radio-button/ui";
 
 interface Props {
   isActive: boolean;
-  setIsActive: Dispatch<SetStateAction<boolean>>;
+  onClick: () => void;
 }
 
-export default function FilterRangeClear({ isActive, setIsActive }: Props) {
+export default function FilterRangeClear({ isActive, onClick }: Props) {
   return (
     <RadioButton
       isActive={isActive}
       onClick={() => {
-        setIsActive(true);
+        if (!isActive) {
+          onClick();
+        }
       }}
       className={`flex-row align-center gap-10px`}
       classNameText="text-body l text-neutral-700"
+      text="Не имеет значения"
     />
   );
 }

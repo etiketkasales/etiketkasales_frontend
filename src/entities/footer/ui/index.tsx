@@ -17,7 +17,7 @@ export default function Footer() {
         bgColor="neutral-900"
         className={`wrapper padding-32-24 flex-column gap-50 ${classes.container}`}
         style={{
-          paddingBottom: tabsHeight ? `${tabsHeight + 24}px` : "0",
+          paddingBottom: tabsHeight ? `${tabsHeight + 24}px` : undefined,
         }}
       >
         <FooterTop />
