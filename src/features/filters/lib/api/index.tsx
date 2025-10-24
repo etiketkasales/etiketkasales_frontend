@@ -1,5 +1,5 @@
 import { apiClient, tryCatch } from "~/src/shared/lib/api/client.api";
-import { IGetData } from "~/src/shared/model/shared.interface";
+import { IGetData } from "~/src/shared/model";
 import { IFilters } from "~/src/features/filters/model";
 
 export const getProductsFilters = async () => {

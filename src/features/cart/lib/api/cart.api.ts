@@ -1,5 +1,5 @@
 import { apiClient, tryCatch } from "~/src/shared/lib/api/client.api";
-import { IGetData } from "~/src/shared/model/shared.interface";
+import { IGetData } from "~/src/shared/model";
 import { IGetCart, IValidateCart } from "../../model/cart.interface";
 
 export const getCart = async () => {

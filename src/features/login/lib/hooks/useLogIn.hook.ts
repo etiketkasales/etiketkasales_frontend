@@ -1,17 +1,16 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
+import { useAppSelector } from "~/src/app/store/hooks";
 import { selectLogIn } from "~/src/app/store/reducers/login.slice";
 import { usePhoneInput } from "~/src/shared/ui/inputs/phone/hooks/usePhoneInput.hook";
+import { sendCode, verifyCode } from "../api/login.api";
+import InputUtils from "~/src/shared/lib/utils/input.util";
 
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 
-import { MessageI } from "~/src/shared/model/shared.interface";
-import InputUtils from "~/src/shared/lib/utils/input.util";
-import { setUser } from "~/src/app/store/reducers/user.slice";
+import { MessageI } from "~/src/shared/model";
 
 export const useLogIn = ({ isCodePage }: { isCodePage: boolean }) => {
-  const dispatch = useAppDispatch();
   const { push } = useRouter();
   const { phoneNumber } = useAppSelector(selectLogIn);
   const [code, setCode] = useState<string>("");
@@ -31,25 +30,46 @@ export const useLogIn = ({ isCodePage }: { isCodePage: boolean }) => {
     }
   };
 
-  const handleSendPhone = async () => {
+  const handleSendPhone = useCallback(async () => {
     await promiseWrapper({
       setLoading,
       setError: setMessage,
       callback: async () => {
         checkPhone(phoneNumber);
-        setMessage(null);
+        const res = await sendCode(formatForApi(phoneNumber));
+        setMessage({
+          type: "success",
+          message: res?.message || "Код отправлен",
+        });
       },
     });
-  };
+  }, [phoneNumber, formatForApi]);
 
-  const promiseCallback = async () => {
+  const handleSendCode = useCallback(async () => {
+    await promiseWrapper({
+      setLoading,
+      setError: setMessage,
+      callback: async () => {
+        checkPhone(phoneNumber);
+        const res = await verifyCode(formatForApi(phoneNumber), code);
+        setMessage({
+          type: "success",
+          message: res?.message || "Код отправлен",
+        });
+      },
+    });
+  }, [code, phoneNumber, formatForApi]);
+
+  const promiseCallback = useCallback(async () => {
     if (isCodePage) {
+      await handleSendCode();
+      push("/");
     } else {
       await handleSendPhone();
       push("/login/code");
     }
     setMessage(null);
-  };
+  }, [isCodePage, handleSendPhone, push]);
 
   const handleSendData = async () => {
     await promiseWrapper({

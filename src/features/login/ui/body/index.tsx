@@ -7,7 +7,7 @@ import { usePhoneInput } from "~/src/shared/ui/inputs/phone/hooks/usePhoneInput.
 import classes from "./body.module.scss";
 import PhoneInput from "~/src/shared/ui/inputs/phone";
 import CheckboxInput from "~/src/shared/ui/inputs/checkbox";
-import { MessageI } from "~/src/shared/model/shared.interface";
+import { MessageI } from "~/src/shared/model";
 
 interface Props {
   phone: string;

@@ -1,4 +1,4 @@
-import { IGetData } from "~/src/shared/model/shared.interface";
+import { IGetData } from "~/src/shared/model";
 import {
   ICategory,
   IGetRandomCategories,

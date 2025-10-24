@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { MessageI } from "~/src/shared/model/shared.interface";
+import { MessageI } from "~/src/shared/model";
 
 interface PromiseWrapperProps {
   setLoading: Dispatch<SetStateAction<boolean>>;

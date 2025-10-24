@@ -8,7 +8,7 @@ import PhoneInput from "~/src/shared/ui/inputs/phone";
 import Select from "~/src/shared/ui/select/ui";
 import Button from "~/src/shared/ui/button";
 import { FormModalInputI } from "~/src/entities/form-modal/model/form-modal.interface";
-import { MessageI } from "~/src/shared/model/shared.interface";
+import { MessageI } from "~/src/shared/model";
 
 interface Props<T> {
   headerText: string;

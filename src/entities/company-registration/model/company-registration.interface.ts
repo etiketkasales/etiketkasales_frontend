@@ -1,5 +1,5 @@
 import { CompanyI } from "~/src/features/company/model/company.interface";
-import { MessageI } from "~/src/shared/model/shared.interface";
+import { MessageI } from "~/src/shared/model";
 
 export type RegistrationStageT = "personal" | "status" | "name" | "city";
 

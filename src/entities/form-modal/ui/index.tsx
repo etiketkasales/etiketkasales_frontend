@@ -7,7 +7,7 @@ import Button from "~/src/shared/ui/button";
 import FormModalInputs from "./inputs";
 import Container from "~/src/shared/ui/container/ui";
 import { FormModalInputI } from "../model/form-modal.interface";
-import { MessageI } from "~/src/shared/model/shared.interface";
+import { MessageI } from "~/src/shared/model";
 
 interface Props<T> {
   formData: T;

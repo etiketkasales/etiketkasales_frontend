@@ -4,7 +4,7 @@ import React from "react";
 import ChevronCompactLeft from "~/public/categories/chevron-compact-left.svg";
 import ChevronCompactRight from "~/public/categories/chevron-compact-right.svg";
 import Button from "~/src/shared/ui/button";
-import { SimpleIconButton } from "~/src/shared/model/shared.interface";
+import { SimpleIconButton } from "~/src/shared/model";
 
 interface Props {
   goPrev: () => void;

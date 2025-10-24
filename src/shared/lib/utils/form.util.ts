@@ -1,4 +1,4 @@
-import { MessageI } from "~/src/shared/model/shared.interface";
+import { MessageI } from "~/src/shared/model";
 import InputUtils from "./input.util";
 
 class FormUtils {

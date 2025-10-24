@@ -6,7 +6,7 @@ import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 import FormUtils from "~/src/shared/lib/utils/form.util";
 import InputUtils from "~/src/shared/lib/utils/input.util";
 
-import { MessageI } from "~/src/shared/model/shared.interface";
+import { MessageI } from "~/src/shared/model";
 import { IChangeUserData } from "~/src/entities/profile-section/model/profile.interface";
 import { changeDataS } from "../../model/profile.const";
 

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import FormUtils from "~/src/shared/lib/utils/form.util";
 
-import { MessageI } from "~/src/shared/model/shared.interface";
+import { MessageI } from "~/src/shared/model";
 
 interface Props<T extends Record<string, any>> {
   validateData: T;

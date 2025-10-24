@@ -6,7 +6,7 @@ import EtiketkaImages from "./images";
 import EtiketkaGeneral from "./general";
 import EtiketkaOther from "./other";
 import { IEtiketka } from "~/src/entities/etiketka/model";
-import { MessageI } from "~/src/shared/model/shared.interface";
+import { MessageI } from "~/src/shared/model";
 
 interface Props {
   item: IEtiketka;
