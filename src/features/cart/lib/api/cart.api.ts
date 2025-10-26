@@ -38,7 +38,7 @@ export const updateProductCount = async (
   quantity: number
 ) => {
   const res = await tryCatch(async () => {
-    const response = await apiClient.put(`/cart/${product_id}`, {
+    const response = await apiClient.put(`/cart/${product_id}/`, {
       quantity,
     });
     return response.data;
@@ -49,7 +49,7 @@ export const updateProductCount = async (
 
 export const deleteProductFromCart = async (product_id: number) => {
   const res = await tryCatch(async () => {
-    const response = await apiClient.delete(`/cart/${product_id}`);
+    const response = await apiClient.delete(`/cart/${product_id}/`);
 
     return response.data;
   });
@@ -60,7 +60,7 @@ export const deleteProductFromCart = async (product_id: number) => {
 export const validateCart = async () => {
   const res = await tryCatch(async () => {
     const response =
-      await apiClient.post<IGetData<IValidateCart>>(`/cart/validate`);
+      await apiClient.post<IGetData<IValidateCart>>(`/cart/validate/`);
 
     return response.data.data;
   });
@@ -69,7 +69,7 @@ export const validateCart = async () => {
 
 export const mergeCart = async () => {
   const res = await tryCatch(async () => {
-    const response = await apiClient.post(`/cart/merge`);
+    const response = await apiClient.post(`/cart/merge/`);
 
     return response.data;
   });
