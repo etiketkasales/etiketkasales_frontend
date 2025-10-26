@@ -13,7 +13,7 @@ export const getCart = async () => {
 
 export const deleteCart = async () => {
   const res = await tryCatch(async () => {
-    const response = await apiClient.delete(`/cart`);
+    const response = await apiClient.delete(`/cart/`);
     return response.data;
   });
 
@@ -22,7 +22,7 @@ export const deleteCart = async () => {
 
 export const addToCart = async (product_id: number, quantity: number) => {
   const res = await tryCatch(async () => {
-    const response = await apiClient.post(`/cart/add`, {
+    const response = await apiClient.post(`/cart/add/`, {
       product_id,
       quantity,
     });

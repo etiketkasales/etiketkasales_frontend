@@ -9,7 +9,7 @@ interface IResponse {
 
 export const getProductsFilters = async () => {
   return await tryCatch(async () => {
-    const res = await apiClient.get<IGetData<IResponse>>(`/products/filters`);
+    const res = await apiClient.get<IGetData<IResponse>>(`/products/filters/`);
     return res.data.data;
   });
 };

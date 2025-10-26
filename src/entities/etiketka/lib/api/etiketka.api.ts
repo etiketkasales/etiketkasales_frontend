@@ -10,7 +10,7 @@ import {
 export const getProductById = async (id: number) => {
   return await tryCatch(async () => {
     const response = await apiClient.get<IGetData<IEtiketka>>(
-      `/products/${id}`,
+      `/products/${id}/`,
     );
     return response.data.data;
   });
@@ -23,7 +23,7 @@ interface IParams {
 export const getProductsByFilters = async (query: IParams) => {
   return await tryCatch(async () => {
     const response = await apiClient.get<IGetData<ISearchEtiketkaResponse>>(
-      `/products`,
+      `/products/`,
       {
         params: {
           page: query.page || "1",
@@ -40,7 +40,7 @@ export const getProductsByFilters = async (query: IParams) => {
 export const searchProductsByInput = async (q: string, page?: number) => {
   return await tryCatch(async () => {
     const res = await apiClient.get<IGetData<ISearchEtiketkaByInput>>(
-      `/products/search`,
+      `/products/search/`,
       {
         params: {
           q,
@@ -56,7 +56,7 @@ export const searchProductsByInput = async (q: string, page?: number) => {
 export const getProductsBySlug = async (slug: string) => {
   return await tryCatch(async () => {
     const response = await apiClient.get<IGetData<IGetProductsBySlug>>(
-      `/products/category/${slug}`,
+      `/products/category/${slug}/`,
     );
 
     return response.data.data;
@@ -70,7 +70,7 @@ export const getRecommendedProducts = async (
 ) => {
   return await tryCatch(async () => {
     const res = await apiClient.get<IGetData<IEtiketka[]>>(
-      `/products/recommended`,
+      `/products/recommended/`,
       {
         params: {
           category_id,

@@ -40,7 +40,7 @@ export const verifyCode = async (phone: string, code: string) => {
 
 export const loginByPassword = async (phone: string, password: string) => {
   try {
-    const res = await apiClient.post<IVerifyCode>(`/auth/login`, {
+    const res = await apiClient.post<IVerifyCode>(`/auth/login/`, {
       phone,
       password,
     });
