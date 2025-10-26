@@ -6,10 +6,10 @@ import UserImage from "~/src/shared/ui/user-image";
 
 interface Props {
   id: number;
-  avatar: string;
+  avatar: string | null;
   registration_date: string;
-  name: string;
-  second_name: string;
+  name: string | null;
+  second_name: string | null;
 }
 
 export default function ProfilePersonalInfo({

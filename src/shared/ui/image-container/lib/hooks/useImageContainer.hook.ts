@@ -21,10 +21,14 @@ export const useImageContainer = ({ radius, src }: Props) => {
     async (signal: AbortSignal): Promise<boolean> => {
       if (!src) return false;
       if (!src.startsWith("http")) return true;
+
+      if (signal.aborted) return false;
+
       try {
         const res = await fetch(src, { signal });
         return res.ok;
       } catch (err) {
+        if (signal.aborted) return false;
         return false;
       }
     },

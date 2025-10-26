@@ -16,6 +16,7 @@ export default function FiltersRangeItem({
   max,
   title,
   filterName,
+  order,
 }: Props) {
   const { rangeValue, isImportant, onInputChange, clearRange } =
     useFiltersRange({
@@ -29,12 +30,14 @@ export default function FiltersRangeItem({
     <FiltersItem
       title={title}
       classNameChildren={`flex-column ${classes.container}`}
+      order={order}
     >
       <FiltersRange
         value={rangeValue}
         onInputChange={onInputChange}
         min={min}
         max={max}
+        filterName={filterName}
       />
       <FilterRangeClear isActive={!isImportant} onClick={clearRange} />
     </FiltersItem>

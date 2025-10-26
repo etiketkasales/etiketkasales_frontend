@@ -3,13 +3,13 @@ import React, { useCallback, useMemo } from "react";
 import { useFiltersCheckbox } from "~/src/features/filters/lib/hooks/useFiltersCheckbox.hook";
 
 import FiltersItem from "~/src/features/filters/ui/item";
+import FiltersCheckAll from "../check-all";
+import FiltersCheckbox from "../checkbox";
 import {
   IDeliveryCheckbox,
   IFIltersDeliveryInput,
 } from "~/src/features/filters/model/filters.interface";
 import { IInitializedFilter } from "../..";
-import FiltersCheckAll from "../check-all";
-import FiltersCheckbox from "../checkbox";
 
 interface Props extends IDeliveryCheckbox {
   setFilterForCatalogue: React.Dispatch<
@@ -24,6 +24,7 @@ export default function FiltersDeliveryItem({
   title,
   filterName,
   setFilterForCatalogue,
+  order,
 }: Props) {
   const filtersArray = useMemo(
     () => filters.map((item) => item.id.toString()),
@@ -44,33 +45,40 @@ export default function FiltersDeliveryItem({
   });
 
   const getName = useCallback((item: IFIltersDeliveryInput) => {
-    const name = item.name ? `${item.name},` : "";
-    const timestamp = item.delivery_time ? `${item.delivery_time},` : "";
-    const cost = item.cost ? `${item.cost}` : "";
-    return `${name} ${timestamp} ${cost}`;
+    const name = item.name ? `${item.name}` : "";
+    const timestamp = item.delivery_time ? `, ${item.delivery_time}` : "";
+    const cost = item.cost ? `, ${item.cost}₽` : "";
+    return `${name}${timestamp}${cost}`;
   }, []);
 
   return (
-    <FiltersItem title={title}>
-      <FiltersCheckAll checked={isAllActive} onChange={clearAllFilters} />
-      {filters.map((item) => {
-        const isActive = activeFilters.includes(item.id.toString());
-        const filterValue = getName(item);
-        return (
-          <FiltersCheckbox
-            key={item.id}
-            isActiveFilter={isActive}
-            onClick={
-              isAllActive
-                ? addAllExceptOne
-                : isActive
-                  ? removeCertainFilter
-                  : addCertainFilter
-            }
-            filterValue={filterValue}
-          />
-        );
-      })}
+    <FiltersItem title={title} order={order}>
+      {filters && (
+        <>
+          <FiltersCheckAll checked={isAllActive} onChange={clearAllFilters} />
+          {filters.map((item) => {
+            const isActive = activeFilters.includes(item.id.toString());
+            const filterValue = getName(item);
+            return (
+              <FiltersCheckbox
+                key={item.id}
+                isActiveFilter={isActive}
+                onClick={() => {
+                  const itemId = item.id.toString();
+                  if (isAllActive) {
+                    addAllExceptOne(itemId);
+                  } else if (isActive) {
+                    removeCertainFilter(itemId);
+                  } else {
+                    addCertainFilter(itemId);
+                  }
+                }}
+                filterValue={filterValue}
+              />
+            );
+          })}
+        </>
+      )}
     </FiltersItem>
   );
 }

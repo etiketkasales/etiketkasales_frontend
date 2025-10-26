@@ -15,6 +15,7 @@ interface Props<T extends HTMLElement> {
   classNameTitle?: string;
   classNameChildren?: string;
   clickOutsideControl?: boolean;
+  style?: React.CSSProperties;
 }
 
 export default function Accordeon<T extends HTMLElement>({
@@ -25,6 +26,7 @@ export default function Accordeon<T extends HTMLElement>({
   classNameTitle,
   clickOutsideControl = true,
   classNameChildren,
+  style,
 }: Props<T>) {
   const { open, handleClick, ref } = useAccordeon(
     clickRef,
@@ -37,6 +39,7 @@ export default function Accordeon<T extends HTMLElement>({
       className={classNames(className, classes.container, `flex-column`, {
         [classes.containerClosed]: !open,
       })}
+      style={style}
     >
       <div
         role="button"

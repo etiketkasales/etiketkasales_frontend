@@ -6,22 +6,15 @@ import { usePhoneInput } from "~/src/shared/ui/inputs/phone/hooks/usePhoneInput.
 
 import classes from "./body.module.scss";
 import PhoneInput from "~/src/shared/ui/inputs/phone";
-import CheckboxInput from "~/src/shared/ui/inputs/checkbox";
+import NeedRememberCheckbox from "./need-remember";
 import { MessageI } from "~/src/shared/model";
 
 interface Props {
   phone: string;
-  setNeedRemember: React.Dispatch<React.SetStateAction<boolean>>;
-  needRemember: boolean;
   message: MessageI | null;
 }
 
-export default function LoginMainBody({
-  phone,
-  setNeedRemember,
-  needRemember,
-  message,
-}: Props) {
+export default function LoginMainBody({ phone, message }: Props) {
   const { formatInput } = usePhoneInput();
   const dispatch = useAppDispatch();
   return (
@@ -39,14 +32,7 @@ export default function LoginMainBody({
         />
         {message && <p className="red text-14 regular">{message.message}</p>}
       </div>
-      <CheckboxInput
-        checked={needRemember}
-        onChange={() => {
-          setNeedRemember(!needRemember);
-        }}
-        label="Запомнить меня"
-        gap="10px"
-      />
+      <NeedRememberCheckbox />
     </>
   );
 }

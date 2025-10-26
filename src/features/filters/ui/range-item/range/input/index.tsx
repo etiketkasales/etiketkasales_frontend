@@ -9,6 +9,7 @@ interface Props {
   type: RangeInputType;
   onChange: (type: RangeInputType, value: string) => void;
   placeholder: string;
+  filterName: string;
 }
 
 export default function FiltersRangeInput({
@@ -16,14 +17,17 @@ export default function FiltersRangeInput({
   type,
   onChange,
   placeholder,
+  filterName,
 }: Props) {
   return (
     <TextInput
+      id={filterName + "_" + type}
       value={value}
       onChange={(e) => onChange(type, e.target.value)}
-      className={`${classes.container}`}
+      classNameLabel={`${classes.container}`}
       classNameInput={`${classes.input} text-body l `}
       placeholder={placeholder}
+      name={filterName + "_" + type}
     />
   );
 }

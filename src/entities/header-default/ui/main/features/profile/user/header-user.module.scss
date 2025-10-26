@@ -1,0 +1,27 @@
+.container {
+    @media screen and (any-hover: hover) {
+        &:hover {
+            .text {
+                color: $neutral-900;
+            }
+        }
+    }
+}
+
+.image,
+.noAvatar {
+    border-radius: 50%;
+    max-width: 24px;
+    max-height: 24px;
+}
+
+.noAvatar {
+    box-shadow: $shadow-100;
+    padding: $space-1;
+}
+
+.text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

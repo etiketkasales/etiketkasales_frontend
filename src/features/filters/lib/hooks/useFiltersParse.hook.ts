@@ -37,6 +37,8 @@ export const useFiltersParse = ({ filters }: Props) => {
         }
       } else if ("min" in value && "max" in value) {
         type = "range";
+      } else if ("key" in value) {
+        type = "";
       } else {
         type = "default";
       }

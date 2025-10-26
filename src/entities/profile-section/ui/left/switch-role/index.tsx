@@ -16,13 +16,13 @@ export default function ProfileSwitchRole() {
       padding="16"
       className={`flex-column gap-3 align-center cursor ${classes.container}`}
     >
-      {currentRole === "user" ? (
+      {currentRole === "buyer" ? (
         <Shop style={{ maxWidth: "28px", maxHeight: "28px" }} />
       ) : (
         <Person style={{ maxWidth: "28px", maxHeight: "28px" }} />
       )}
       <p className="gray-2 text-16 semibold second-family">
-        Войти как {currentRole === "user" ? "продавец" : "покупатель"}
+        Войти как {currentRole === "buyer" ? "продавец" : "покупатель"}
       </p>
     </ProfileWrapper>
   );

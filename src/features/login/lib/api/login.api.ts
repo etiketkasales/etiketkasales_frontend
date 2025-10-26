@@ -26,13 +26,29 @@ export const verifyCode = async (phone: string, code: string) => {
       phone,
       code,
     });
-    CookieUtils.setCookieWithToken("auth_token", res.data.token);
+    CookieUtils.setCookieWithToken("auth_token", res.data.access_token);
+    CookieUtils.setCookieWithToken("refresh_token", res.data.refresh_token);
     return res.data;
   } catch (err) {
-    const error = err as AxiosError<ISendCode>;
+    const error = err as AxiosError<IVerifyCode>;
     if (error.response) {
       return error.response.data;
     }
+    console.error(err);
+  }
+};
+
+export const loginByPassword = async (phone: string, password: string) => {
+  try {
+    const res = await apiClient.post<IVerifyCode>(`/auth/login`, {
+      phone,
+      password,
+    });
+    CookieUtils.setCookieWithToken("auth_token", res.data.access_token);
+    CookieUtils.setCookieWithToken("refresh_token", res.data.refresh_token);
+
+    return res.data.user || res.data;
+  } catch (err) {
     console.error(err);
   }
 };

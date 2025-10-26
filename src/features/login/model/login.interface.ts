@@ -18,6 +18,7 @@ interface IUser {
   created_at: string;
 }
 export interface IVerifyCode extends ICodeBase {
-  token: string;
+  access_token: string;
+  refresh_token: string;
   user: IUser;
 }

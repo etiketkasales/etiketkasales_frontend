@@ -1,3 +1,11 @@
-import { GetDataInterface } from "~/src/shared/model";
-import { UserInfoI } from "~/src/features/user/model/user.interface";
-import { apiClient } from "~/src/shared/lib/api/client.api";
+import { apiClient, tryCatch } from "~/src/shared/lib/api/client.api";
+
+import { IProfile } from "~/src/features/user/model/user.interface";
+
+export const getProfile = async () => {
+  return await tryCatch(async () => {
+    const res = await apiClient.get<{ user: IProfile }>(`/users/profile`);
+
+    return res.data;
+  });
+};

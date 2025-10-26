@@ -62,3 +62,23 @@ export const getProductsBySlug = async (slug: string) => {
     return response.data.data;
   });
 };
+
+export const getRecommendedProducts = async (
+  category_id: number,
+  exclude_product_id: number,
+  limit?: number,
+) => {
+  return await tryCatch(async () => {
+    const res = await apiClient.get<IGetData<IEtiketka[]>>(
+      `/products/recommended`,
+      {
+        params: {
+          category_id,
+          exclude_product_id,
+          limit,
+        },
+      },
+    );
+    return res.data.data;
+  });
+};

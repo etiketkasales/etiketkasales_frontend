@@ -46,16 +46,16 @@ export const useFiltersRange = ({ filterName, minLimit, maxLimit }: Props) => {
       setIsImportant(true);
       setRangeValue((prev) => ({
         ...prev,
-        [type]: numValue.toString(),
+        [type]: value.toString(),
       }));
 
-      if (type === "min" && minTimeout.current) {
-        minTimeout.current = null;
+      if (type === "min") {
+        if (minTimeout.current) clearTimeout(minTimeout.current);
         minTimeout.current = setTimeout(() => {
           updateParamsLocal(type, value);
         }, 200);
-      } else if (type === "max" && maxTimeout.current) {
-        maxTimeout.current = null;
+      } else if (type === "max") {
+        if (maxTimeout.current) clearTimeout(maxTimeout.current);
         maxTimeout.current = setTimeout(() => {
           updateParamsLocal(type, value);
         }, 200);
@@ -73,14 +73,29 @@ export const useFiltersRange = ({ filterName, minLimit, maxLimit }: Props) => {
     const minParam = searchParams.get(`min_${filterName}`);
     const maxParam = searchParams.get(`max_${filterName}`);
 
-    const [numMax, numMin] = [Number(minParam), Number(maxParam)];
+    const [numMax, numMin] = [Number(maxParam), Number(minParam)];
 
     const newValue: IRange = {
-      min: isNaN(numMin) ? "" : numMin.toString(),
-      max: isNaN(numMax) ? "" : numMax.toString(),
+      min: isNaN(numMin) || numMin <= 0 ? "" : numMin.toString(),
+      max: isNaN(numMax) || numMax <= 0 ? "" : numMax.toString(),
     };
     setRangeValue(newValue);
   }, [searchParams, minLimit, maxLimit, filterName]);
+
+  useEffect(() => {
+    if (!rangeValue.min && !rangeValue.max) {
+      setIsImportant(false);
+    } else {
+      setIsImportant(true);
+    }
+  }, [rangeValue]);
+
+  useEffect(() => {
+    return () => {
+      if (maxTimeout.current) clearTimeout(maxTimeout.current);
+      if (minTimeout.current) clearTimeout(minTimeout.current);
+    };
+  }, []);
 
   return {
     rangeValue,

@@ -15,16 +15,8 @@ export default function LoginMain() {
   const { loaded } = useAppSelector(selectNavigation);
   const { phoneNumber } = useAppSelector(selectLogIn);
   const [isCodePage, setIsCodePage] = useState<boolean>(false);
-  const {
-    setNeedRemember,
-    needRemember,
-    handleSendData,
-    handleSendPhone,
-    loading,
-    message,
-    code,
-    setCode,
-  } = useLogIn({ isCodePage });
+  const { handleSendData, handleSendPhone, loading, message, code, setCode } =
+    useLogIn({ isCodePage });
 
   useEffect(() => {
     if (window.location.pathname.includes("code")) {
@@ -45,12 +37,7 @@ export default function LoginMain() {
           resendCode={handleSendPhone}
         />
       ) : (
-        <LoginMainBody
-          phone={phoneNumber}
-          setNeedRemember={setNeedRemember}
-          needRemember={needRemember}
-          message={message}
-        />
+        <LoginMainBody phone={phoneNumber} message={message} />
       )}
       <LoginBottom
         buttonText={isCodePage ? "Подтвердить" : "Продолжить"}

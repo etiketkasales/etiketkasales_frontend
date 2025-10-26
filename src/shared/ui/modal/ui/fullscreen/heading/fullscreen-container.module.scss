@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  justify-content: flex-end;
+  padding: $space-4;
+  padding-bottom: $space-3;
+}
+
+.title {
+  position: relative;
+  color: $neutral-900;
+  text-align: center;
+  font-family: $second-family;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.close {
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+
+    @media screen and (any-hover: hover) {
+        &:hover {
+            svg path {
+                fill: $neutral-900;
+            }
+        }
+    }
+}

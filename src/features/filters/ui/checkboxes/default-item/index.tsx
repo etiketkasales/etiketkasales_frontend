@@ -3,10 +3,10 @@ import React from "react";
 import { useFiltersCheckbox } from "~/src/features/filters/lib/hooks/useFiltersCheckbox.hook";
 
 import FiltersItem from "~/src/features/filters/ui/item";
-import { IFiltersItemDefault } from "~/src/features/filters/model/filters.interface";
-import { IInitializedFilter } from "../..";
 import FiltersCheckAll from "../check-all";
 import FiltersCheckbox from "../checkbox";
+import { IFiltersItemDefault } from "~/src/features/filters/model/filters.interface";
+import { IInitializedFilter } from "~/src/features/filters/ui";
 
 interface Props extends IFiltersItemDefault {
   filterName: string;
@@ -20,6 +20,7 @@ export default function FiltersCheckboxItem({
   title,
   filterName,
   setFilterForCatalogue,
+  order,
 }: Props) {
   const {
     isAllActive,
@@ -36,25 +37,29 @@ export default function FiltersCheckboxItem({
   });
 
   return (
-    <FiltersItem title={title}>
-      <FiltersCheckAll checked={isAllActive} onChange={clearAllFilters} />
-      {filters.map((item, index) => {
-        const isActive = activeFilters.includes(item);
-        return (
-          <FiltersCheckbox
-            key={index + item}
-            isActiveFilter={isActive}
-            onClick={
-              isAllActive
-                ? addAllExceptOne
-                : isActive
-                  ? removeCertainFilter
-                  : addCertainFilter
-            }
-            filterValue={item}
-          />
-        );
-      })}
+    <FiltersItem title={title} order={order}>
+      {filters && (
+        <>
+          <FiltersCheckAll checked={isAllActive} onChange={clearAllFilters} />
+          {filters.map((item, index) => {
+            const isActive = activeFilters.includes(item);
+            return (
+              <FiltersCheckbox
+                key={index + item}
+                isActiveFilter={isActive}
+                onClick={
+                  isAllActive
+                    ? addAllExceptOne
+                    : isActive
+                      ? removeCertainFilter
+                      : addCertainFilter
+                }
+                filterValue={item}
+              />
+            );
+          })}
+        </>
+      )}
     </FiltersItem>
   );
 }

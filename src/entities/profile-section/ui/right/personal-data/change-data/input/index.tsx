@@ -9,11 +9,11 @@ import {
   ProfileInputI,
 } from "~/src/entities/profile-section/model/profile.interface";
 import { usePhoneInput } from "~/src/shared/ui/inputs/phone/hooks/usePhoneInput.hook";
-import { UserInfoI } from "~/src/features/user/model/user.interface";
+import { IProfile } from "~/src/features/user/model/user.interface";
 
 interface Props extends ProfileInputI {
   changeUserData: IChangeUserData;
-  currentUserInfo: UserInfoI;
+  currentUserInfo: IProfile;
   handleChangeData: (v: string, field: keyof IChangeUserData) => void;
 }
 

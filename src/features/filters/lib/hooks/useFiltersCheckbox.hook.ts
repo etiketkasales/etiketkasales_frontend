@@ -60,7 +60,7 @@ export const useFiltersCheckbox = ({
       const newFilters = [...activeFilters, v];
       setActiveFilters(newFilters);
       updateGlobalFilter(newFilters);
-      if (newFilters.length === filtersArray.length) {
+      if (newFilters.length === filtersArray?.length) {
         clearAllFilters();
         return;
       }
@@ -69,7 +69,7 @@ export const useFiltersCheckbox = ({
     [
       updateParams,
       activeFilters,
-      filtersArray.length,
+      filtersArray?.length,
       clearAllFilters,
       updateGlobalFilter,
     ],
@@ -111,8 +111,8 @@ export const useFiltersCheckbox = ({
     if (activeFilters?.length === filtersArray?.length) {
       setIsAllActive(true);
     } else if (
-      activeFilters.length < filtersArray.length &&
-      activeFilters.length > 0
+      activeFilters?.length < filtersArray?.length &&
+      activeFilters?.length > 0
     ) {
       setIsAllActive(false);
     }
@@ -126,7 +126,7 @@ export const useFiltersCheckbox = ({
     setActiveFilters(searchFilters || filtersArray);
 
     const filtersToSet =
-      searchFilters?.length === filtersArray.length ? [] : searchFilters;
+      searchFilters?.length === filtersArray?.length ? [] : searchFilters;
     updateGlobalFilter(filtersToSet || []);
   }, [searchParams, filterName, filtersArray, updateGlobalFilter]);
 

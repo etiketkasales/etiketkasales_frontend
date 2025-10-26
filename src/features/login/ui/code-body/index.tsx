@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import classes from "./code-body.module.scss";
 import TextInput from "~/src/shared/ui/inputs/text-input";
 import TimerButton from "./timer-button";
+import OtpInputCustom from "~/src/shared/ui/inputs/otp";
 
 interface Props {
   phoneNumber: string;
@@ -43,13 +44,12 @@ export default function LoginCodeBody({
       <p className="black text-16 semibold second-family">
         На номер {phoneNumber} отправлено сообщение
       </p>
-      <TextInput
+      <OtpInputCustom
         value={code}
-        onChange={(e) => setCode(e.target.value)}
-        placeholder="Код подтверждения"
-        onKeyDown={(e) => e.key === "Enter" && e.preventDefault()}
-        classNameInput={`${classes.input} padding-14-16 bg-gray-container radius-12`}
-        className={classes.input_container}
+        numInputs={4}
+        onChange={(e) => setCode(e)}
+        classNameInput={`${classes.input} heading h5 text-neutral-1000`}
+        classNameContainer={`flex-row gap-3`}
       />
       <TimerButton timer={timer} resendCode={resendCode} setTimer={setTimer} />
     </>

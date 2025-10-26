@@ -7,11 +7,11 @@ import {
   IChangeUserData,
   ProfileTabsT,
 } from "~/src/entities/profile-section/model/profile.interface";
-import { UserInfoI } from "~/src/features/user/model/user.interface";
+import { IProfile } from "~/src/features/user/model/user.interface";
 
 interface Props {
   currentTab: ProfileTabsT;
-  userInfo: UserInfoI;
+  userInfo: IProfile;
   changeData: IChangeUserData;
   handleChangeData: (...args: any) => void;
   handleButtonClick: () => Promise<void>;

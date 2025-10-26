@@ -52,7 +52,7 @@ export interface IFiltersItemHookProps {
   filterName: string;
 }
 
-export type FilterType = "default" | "range" | "delivery";
+export type FilterType = "default" | "range" | "delivery" | "";
 
 export interface ParsedFilter<T extends IFiltersItem = IFiltersItem> {
   name: string;

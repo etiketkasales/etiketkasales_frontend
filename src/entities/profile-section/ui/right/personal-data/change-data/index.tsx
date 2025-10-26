@@ -5,12 +5,12 @@ import classes from "./change-data.module.scss";
 import ProfileChangeDataInput from "./input";
 import ProfileChangeButton from "./confirm-button";
 import { profileInputsC } from "~/src/entities/profile-section/model/profile.const";
-import { UserInfoI } from "~/src/features/user/model/user.interface";
+import { IProfile } from "~/src/features/user/model/user.interface";
 import { IChangeUserData } from "~/src/entities/profile-section/model/profile.interface";
 
 interface Props {
   changeData: IChangeUserData;
-  currentUserInfo: UserInfoI;
+  currentUserInfo: IProfile;
   handleChangeData: (v: string, field: keyof IChangeUserData) => void;
   handleButtonClick: () => Promise<void>;
 }

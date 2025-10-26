@@ -1,19 +1,23 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { UserInfoI } from "~/src/features/user/model/user.interface";
-import { userInfoS } from "~/src/features/user/model/user.skeleton";
+import {
+  IProfile,
+  UserRoleType,
+} from "~/src/features/user/model/user.interface";
+import { SProfile } from "~/src/features/user/model/user.skeleton";
 
 interface InitialStateI {
-  userInfo: UserInfoI;
-  currentRole: "user" | "customer";
-  userId: number;
+  userInfo: IProfile;
+  currentRole: UserRoleType;
   isLoggedIn: boolean;
+  needRemember: boolean;
   [key: string]: any;
 }
 
 const initialState: InitialStateI = {
-  userInfo: userInfoS,
-  currentRole: "user",
+  userInfo: SProfile,
+  currentRole: "customer",
   userId: 0,
+  needRemember: true,
   isLoggedIn: false,
 };
 
@@ -40,9 +44,15 @@ export const userSlice = createSlice({
         console.error(err);
       }
     },
+    setNeedRemember: (state, action: PayloadAction<boolean>) => {
+      state.needRemember = action.payload;
+      if (typeof window !== "undefined") {
+        localStorage.setItem("needRemember", String(action.payload));
+      }
+    },
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, setNeedRemember } = userSlice.actions;
 export const selectUser = (state: { user: InitialStateI }) => state.user;
 export default userSlice.reducer;

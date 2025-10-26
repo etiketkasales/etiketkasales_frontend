@@ -6,7 +6,7 @@ import Person from "~/public/profile/person-fill.svg";
 import ImageContainer from "../image-container/ui";
 
 interface Props {
-  src: string;
+  src: string | null;
   width: number;
   height: number;
 }
