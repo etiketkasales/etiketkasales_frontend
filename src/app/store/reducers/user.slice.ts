@@ -15,7 +15,7 @@ interface InitialStateI {
 
 const initialState: InitialStateI = {
   userInfo: SProfile,
-  currentRole: "customer",
+  currentRole: "buyer",
   userId: 0,
   needRemember: true,
   isLoggedIn: false,

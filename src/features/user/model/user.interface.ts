@@ -28,4 +28,4 @@ export interface IProfile {
   updated_at?: string; //2025-01-07T12:00:00Z
 }
 
-export type UserRoleType = "buyer" | "customer";
+export type UserRoleType = "buyer" | "seller";
