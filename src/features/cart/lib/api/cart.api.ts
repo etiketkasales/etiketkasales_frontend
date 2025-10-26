@@ -4,7 +4,7 @@ import { IGetCart, IValidateCart } from "../../model/cart.interface";
 
 export const getCart = async () => {
   const res = await tryCatch(async () => {
-    const response = await apiClient.get<IGetData<IGetCart>>(`/cart`);
+    const response = await apiClient.get<IGetData<IGetCart>>(`/cart/`);
 
     return response.data.data;
   });
@@ -35,7 +35,7 @@ export const addToCart = async (product_id: number, quantity: number) => {
 
 export const updateProductCount = async (
   product_id: number,
-  quantity: number,
+  quantity: number
 ) => {
   const res = await tryCatch(async () => {
     const response = await apiClient.put(`/cart/${product_id}`, {
