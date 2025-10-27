@@ -1,7 +1,5 @@
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useAppSelector } from "~/src/app/store/hooks";
-import { selectCatalogue } from "~/src/app/store/reducers/catalogue.slice";
+import { useMemo } from "react";
 
 interface ISearchParams {
   [key: string]: string | undefined;
@@ -9,25 +7,22 @@ interface ISearchParams {
 
 export const useGetFilters = () => {
   const searchParams = useSearchParams();
-  const { catalogueFiltersKeys } = useAppSelector(selectCatalogue);
-  const [params, setParams] = useState<ISearchParams>({});
 
-  useEffect(() => {
-    const params: ISearchParams = {};
-    catalogueFiltersKeys.forEach((key) => {
+  const params = useMemo(() => {
+    const paramsQuery = Object.fromEntries(searchParams.entries());
+    const result: ISearchParams = {};
+    for (const key in paramsQuery) {
       const value = searchParams.get(key);
       if (value) {
-        params[key] = value;
+        result[key] = value;
       }
-    });
+    }
 
     const categoryId = searchParams.get("category_id");
-    params["category_id"] = categoryId || undefined;
+    result["category_id"] = categoryId || undefined;
 
-    if (params) {
-      setParams(params);
-    }
-  }, [searchParams, catalogueFiltersKeys]);
+    return result;
+  }, [searchParams]);
 
   return {
     params,

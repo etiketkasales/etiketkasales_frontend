@@ -23,7 +23,7 @@ interface IParams {
 export const getProductsByFilters = async (query: IParams) => {
   return await tryCatch(async () => {
     const response = await apiClient.get<IGetData<ISearchEtiketkaResponse>>(
-      `/products/`,
+      `/products`,
       {
         params: {
           page: query.page || "1",

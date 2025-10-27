@@ -1,6 +1,4 @@
-import { useEffect, useMemo } from "react";
-import { useAppDispatch } from "~/src/app/store/hooks";
-import { setCatalogueFilters } from "~/src/app/store/reducers/catalogue.slice";
+import { useMemo } from "react";
 import {
   FilterType,
   IFilters,
@@ -13,13 +11,6 @@ interface Props {
 }
 
 export const useFiltersParse = ({ filters }: Props) => {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (!filters) return;
-    dispatch(setCatalogueFilters(filters));
-  }, [filters, dispatch]);
-
   return useMemo(() => {
     if (!filters) return [];
 

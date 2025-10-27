@@ -28,11 +28,18 @@ export const useFiltersRange = ({ filterName, minLimit, maxLimit }: Props) => {
   const updateSearchParams = useUpdateSearchParams();
 
   const updateParamsLocal = useCallback(
-    (type: RangeInputType, value: string | null) => {
+    (
+      type: RangeInputType | RangeInputType[],
+      value: string | undefined,
+      action?: "multiClear" | "set",
+    ) => {
+      const key = Array.isArray(type)
+        ? type.map((t) => t + "_" + filterName)
+        : type + "_" + filterName;
       updateSearchParams({
-        key: `${type}_${filterName}`,
+        key,
         value,
-        action: "set",
+        action: action || "set",
         routerReplace: true,
       });
     },
@@ -65,8 +72,7 @@ export const useFiltersRange = ({ filterName, minLimit, maxLimit }: Props) => {
   );
 
   const clearRange = useCallback(() => {
-    updateParamsLocal("min", null);
-    updateParamsLocal("max", null);
+    updateParamsLocal(["max", "min"], "", "multiClear");
   }, [updateParamsLocal]);
 
   useEffect(() => {
@@ -79,7 +85,10 @@ export const useFiltersRange = ({ filterName, minLimit, maxLimit }: Props) => {
       min: isNaN(numMin) || numMin <= 0 ? "" : numMin.toString(),
       max: isNaN(numMax) || numMax <= 0 ? "" : numMax.toString(),
     };
-    setRangeValue(newValue);
+    setRangeValue((prev) => {
+      if (prev.min === newValue.min && prev.max === newValue.max) return prev;
+      return newValue;
+    });
   }, [searchParams, minLimit, maxLimit, filterName]);
 
   useEffect(() => {

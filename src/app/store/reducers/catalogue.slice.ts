@@ -9,7 +9,6 @@ interface IActiveFilter {
 
 interface InitialStateI {
   catalogueFilters: IFilters;
-  catalogueFiltersKeys: string[];
   activeFilters: IActiveFilter[];
   activeCategories: string[];
   [key: string]: any;
@@ -17,7 +16,6 @@ interface InitialStateI {
 
 const initialState: InitialStateI = {
   catalogueFilters: {},
-  catalogueFiltersKeys: [],
   activeFilters: [],
   activeCategories: [],
 };
@@ -31,7 +29,6 @@ export const catalogueSlice = createSlice({
       action: PayloadAction<IFilters>,
     ) => {
       state.catalogueFilters = action.payload;
-      state.catalogueFiltersKeys = Object.keys(action.payload);
     },
     setCatalogueActiveFilters: (
       state: InitialStateI,

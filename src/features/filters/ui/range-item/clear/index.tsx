@@ -11,11 +11,7 @@ export default function FilterRangeClear({ isActive, onClick }: Props) {
   return (
     <RadioButton
       isActive={isActive}
-      onClick={() => {
-        if (!isActive) {
-          onClick();
-        }
-      }}
+      onClick={onClick}
       className={`grid-column align-center gap-10px left-element`}
       classNameText="text-body l text-neutral-700"
       text="Не имеет значения"
