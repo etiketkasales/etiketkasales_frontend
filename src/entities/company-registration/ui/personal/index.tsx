@@ -25,7 +25,7 @@ export default function CompanyPersonal({
       onButtonClick={() => buttonClick("status")}
       inputsHeaderText="Ваши контактные данные"
       inputs={personalInputs}
-      gap={"6"}
+      gap={"24"}
       headerText="Регистрация продавца"
       onInputChange={onInputChange}
       error={error}

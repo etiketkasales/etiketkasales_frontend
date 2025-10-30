@@ -8,6 +8,7 @@ import FormModalInputs from "./inputs";
 import Container from "~/src/shared/ui/container/ui";
 import { FormModalInputI } from "../model/form-modal.interface";
 import { MessageI } from "~/src/shared/model";
+import classNames from "classnames";
 
 interface Props<T> {
   formData: T;
@@ -25,6 +26,7 @@ interface Props<T> {
   onBackButtonClick?: () => void;
   children?: React.ReactNode;
   padding?: string;
+  classNameContainer?: string;
 }
 
 export default function FormModal<T>({
@@ -43,10 +45,15 @@ export default function FormModal<T>({
   minHeight,
   padding = "20",
   onBackButtonClick,
+  classNameContainer,
 }: Props<T>) {
   return (
     <Container
-      className={classes.container}
+      className={classNames(
+        classes.container,
+        classNameContainer,
+        "flex-column",
+      )}
       style={
         {
           maxHeight: maxHeight ? `${maxHeight}px ` : "unset",

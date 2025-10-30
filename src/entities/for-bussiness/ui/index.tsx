@@ -14,10 +14,10 @@ export default function ForBussinessSection() {
       )}
     >
       <div className="flex-column gap-7 align-center">
-        <h1 className="black text-center second-family text-40 xbold">
+        <h1 className="heading h2 text-center text-yellow-1000">
           Предложите свои этикетки пользователям нашей платформы
         </h1>
-        <h2 className="text-22 text-center regular yellow-dark-2 second-family">
+        <h2 className="text-body xl text-center text-yellow-1000">
           Зарегистрируйтесь прямо сейчас!
         </h2>
       </div>
@@ -26,7 +26,6 @@ export default function ForBussinessSection() {
         href="/company/registrate"
         className={`${classes.link}`}
         typeButton={"white"}
-        size="16-24"
         radius={12}
       >
         <span className="text-18 black semibold second-family">

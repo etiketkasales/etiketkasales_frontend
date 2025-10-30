@@ -19,7 +19,7 @@ export type ButtonTypeButtonT =
 interface Props<T extends ElementType>
   extends React.HTMLAttributes<HTMLButtonElement> {
   typeButton: ButtonTypeButtonT;
-  size: string; //4-12 6-10 10; в пикселях
+  size?: string; //4-12 6-10 10; в пикселях
   radius?: number;
   needActiveScale?: boolean;
   className?: string;
@@ -57,8 +57,8 @@ export default function Button<T extends ElementType>({
     className,
     classes[typeButton],
     classes.button,
-    `padding-${size}`,
     {
+      [`padding-${size}`]: size,
       [classes.activeScale]: needActiveScale,
       [classes.justifyCenter]: justifyCenter,
     },
