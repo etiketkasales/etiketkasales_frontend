@@ -52,14 +52,17 @@ export default function FiltersDeliveryItem({
     return itemTime;
   }, []);
 
-  const getName = useCallback((item: IFIltersDeliveryInput) => {
-    const name = item.name ? `${item.name}` : "";
-    const timestamp = item.delivery_time
-      ? `, ${getTiming(item.delivery_time)}`
-      : "";
-    const cost = item.cost ? `, ${item.cost}₽` : "";
-    return `${name}${timestamp}${cost}`;
-  }, [getTiming]);
+  const getName = useCallback(
+    (item: IFIltersDeliveryInput) => {
+      const name = item.name ? `${item.name}` : "";
+      const timestamp = item.delivery_time
+        ? `, ${getTiming(item.delivery_time)}`
+        : "";
+      const cost = item.cost ? `, ${item.cost}₽` : "";
+      return `${name}${timestamp}${cost}`;
+    },
+    [getTiming],
+  );
 
   return (
     <FiltersItem title={title} order={order}>
