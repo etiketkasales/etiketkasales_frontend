@@ -10,6 +10,7 @@ import {
   IFIltersDeliveryInput,
 } from "~/src/features/filters/model/filters.interface";
 import { IInitializedFilter } from "../..";
+import StringUtils from "~/src/shared/lib/utils/string.util";
 
 interface Props extends IDeliveryCheckbox {
   setFilterForCatalogue: React.Dispatch<
@@ -44,12 +45,21 @@ export default function FiltersDeliveryItem({
     setFilterForCatalogue,
   });
 
+  const getTiming = useCallback((itemTime: string | number) => {
+    if (typeof itemTime === "number") {
+      return StringUtils.pluralizeWords(["день", "дня", "дней"], itemTime);
+    }
+    return itemTime;
+  }, []);
+
   const getName = useCallback((item: IFIltersDeliveryInput) => {
     const name = item.name ? `${item.name}` : "";
-    const timestamp = item.delivery_time ? `, ${item.delivery_time}` : "";
+    const timestamp = item.delivery_time
+      ? `, ${getTiming(item.delivery_time)}`
+      : "";
     const cost = item.cost ? `, ${item.cost}₽` : "";
     return `${name}${timestamp}${cost}`;
-  }, []);
+  }, [getTiming]);
 
   return (
     <FiltersItem title={title} order={order}>
