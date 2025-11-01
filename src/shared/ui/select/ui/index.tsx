@@ -6,6 +6,7 @@ import classes from "./select.module.scss";
 import Icon from "~/public/select/icon.svg";
 import Button from "~/src/shared/ui/button";
 import SelectOptions from "./options";
+import SkeletonWrapper from "../../skeleton/ui";
 
 interface Props<T> {
   activeOption: string;
@@ -23,6 +24,7 @@ interface Props<T> {
   optionHolder?: string;
   error?: string | null;
   HeadingIconLeft?: React.ReactNode;
+  loading?: boolean;
 }
 
 // TO DO: добавить обработку двойного хедера у кнопки
@@ -43,6 +45,7 @@ export default function Select<T>(props: Props<T>) {
     optionHolder,
     optionsFromBottom = false,
     HeadingIconLeft = null,
+    loading = false,
   } = props;
   const { active, setActive, contentRef, buttonRef } = useSelect();
 
@@ -62,8 +65,9 @@ export default function Select<T>(props: Props<T>) {
         }}
       >
         {HeadingIconLeft}
+
         <span className={`${selectedOptionClassName}`}>
-          {activeOption ?? optionHolder}
+          {activeOption || optionHolder}
         </span>
         <Icon className={active ? classes.active : ""} />
       </Button>

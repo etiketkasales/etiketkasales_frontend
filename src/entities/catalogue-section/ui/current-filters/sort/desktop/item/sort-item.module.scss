@@ -1,0 +1,22 @@
+.container {
+  max-width: 198px;
+  padding: $space-2 $space-10px;
+  border-radius: $space-4;
+  order: 1;
+  cursor: pointer;
+  transition: background-color $transition;
+  flex: 1 0;
+
+  &.active {
+    order: 0;
+  }
+
+  @media screen and (any-hover: hover) {
+    &:hover {
+      background-color: $yellow-100;
+    }
+    &.active:hover {
+        background-color: $yellow-200;
+    }
+  }
+}

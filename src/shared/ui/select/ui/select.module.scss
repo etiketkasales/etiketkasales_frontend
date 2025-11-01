@@ -5,3 +5,9 @@
 .error {
   border: 1px solid $red;
 }
+
+.textSkeleton {
+  width: 50px;
+  height: 15px;
+  border-radius: $space-3;
+}

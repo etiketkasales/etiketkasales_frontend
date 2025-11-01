@@ -33,13 +33,9 @@ export const useUpdateSearchParams = () => {
       action = "add",
     }: UpdateParamsProps) => {
       const params = new URLSearchParams(searchParams.toString());
+      const keys = Array.isArray(key) ? key : [key];
 
-      // 🔹 Отдельно обрабатываем multiClear
-      if (action === "multiClear" && Array.isArray(key)) {
-        key.forEach((k) => params.delete(k));
-      } else {
-        // 🔹 Для остальных действий гарантируем, что key — string
-        const keyStr = Array.isArray(key) ? key[0] : key;
+      keys.forEach((keyStr) => {
         const prev = params.get(keyStr);
         const prevItems = splitValues(prev);
         const updateValue = Array.isArray(value)
@@ -48,6 +44,11 @@ export const useUpdateSearchParams = () => {
         let nextItems: string[] = prevItems.slice();
 
         switch (action) {
+          case "multiClear":
+          case "clear":
+            nextItems = [];
+            break;
+
           case "add":
             if (value) {
               const toAddItems = splitValues(updateValue);
@@ -80,10 +81,6 @@ export const useUpdateSearchParams = () => {
           case "set":
             nextItems = value ? splitValues(updateValue) : [];
             break;
-
-          case "clear":
-            nextItems = [];
-            break;
         }
 
         if (nextItems.length === 0) {
@@ -91,7 +88,7 @@ export const useUpdateSearchParams = () => {
         } else {
           params.set(keyStr, joinValues(nextItems));
         }
-      }
+      });
 
       const qs = params.toString();
       const newUrl = qs ? `${pathname}?${qs}` : pathname;

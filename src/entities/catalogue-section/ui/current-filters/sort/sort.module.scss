@@ -1,9 +1,0 @@
-.mobile {
-    display: none;
-    width: 44px;
-    height: 44px;
-    @media screen and (width <= 1024px) {
-        display: grid;
-        place-content: center;
-    }
-}

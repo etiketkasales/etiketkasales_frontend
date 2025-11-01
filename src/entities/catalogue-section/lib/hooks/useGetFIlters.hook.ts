@@ -1,5 +1,6 @@
-import { useSearchParams } from "next/navigation";
 import { useMemo } from "react";
+import { useSearchParams } from "next/navigation";
+import { useDecodeSortParam } from "./useDecodeSortParam.hook";
 
 interface ISearchParams {
   [key: string]: string | undefined;
@@ -7,6 +8,7 @@ interface ISearchParams {
 
 export const useGetFilters = () => {
   const searchParams = useSearchParams();
+  const decodeSortParam = useDecodeSortParam();
 
   const params = useMemo(() => {
     const paramsQuery = Object.fromEntries(searchParams.entries());
@@ -14,7 +16,13 @@ export const useGetFilters = () => {
     for (const key in paramsQuery) {
       const value = searchParams.get(key);
       if (value) {
-        result[key] = value;
+        if (key === "sort") {
+          const { sortBy, sortOrder } = decodeSortParam(value);
+          result["sort_by"] = sortBy;
+          result["sort_order"] = sortOrder;
+        } else {
+          result[key] = value;
+        }
       }
     }
 
@@ -22,7 +30,7 @@ export const useGetFilters = () => {
     result["category_id"] = categoryId || undefined;
 
     return result;
-  }, [searchParams]);
+  }, [searchParams, decodeSortParam]);
 
   return {
     params,
