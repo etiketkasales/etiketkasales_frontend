@@ -21,7 +21,7 @@ export default function Tabs({ TabsButton }: Props) {
     return "padding-8";
   };
 
-  if (width <= 768) return null;
+  if (width > 768) return null;
 
   return (
     <section
