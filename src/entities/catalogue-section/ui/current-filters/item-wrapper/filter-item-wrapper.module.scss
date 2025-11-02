@@ -2,7 +2,7 @@
     max-height: 44px;
     border-radius: $space-3;
     padding: $space-3;
-    @media screen and (width <= 768px) {
+    @media screen and (width <= 1024px) {
         scroll-snap-align: center;
         width: max-content;
         white-space: nowrap;

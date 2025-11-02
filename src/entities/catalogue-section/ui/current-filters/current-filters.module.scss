@@ -3,13 +3,18 @@
     flex-wrap: wrap;
 }
 
+.buttonsContainer {
+    @media screen and (width <= 1024px) {
+        padding-left: $space-3;
+    }
+}
+
 @media screen and (width <= 1024px) {
     .container {
         max-width: 100vw;
         flex-wrap: nowrap;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
-        padding-left: $space-10px;
         scroll-margin-left: $space-10px;
         &::-webkit-scrollbar {
             display: none;

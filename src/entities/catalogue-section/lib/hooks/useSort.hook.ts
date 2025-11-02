@@ -19,7 +19,6 @@ export const useSort = ({ sortOptions }: Props) => {
 
   const decodeSortParam = useDecodeSortParam();
 
-  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const [activeSortOption, setActiveSortOption] = useState(sortOptionFallback);
 
   useEffect(() => {
@@ -50,8 +49,6 @@ export const useSort = ({ sortOptions }: Props) => {
   );
 
   return {
-    isOptionsOpen,
-    setIsOptionsOpen,
     activeSortOption,
     setActiveSortOption,
     onItemClick,

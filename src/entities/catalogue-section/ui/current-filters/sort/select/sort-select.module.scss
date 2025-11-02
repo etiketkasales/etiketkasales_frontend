@@ -13,8 +13,14 @@
     background-color: $neutral-100;
 }
 
-.container {
+.activeOption {
     @media screen and (width <= 1024px) {
+        display: none;
+    }
+}
+
+.icon {
+    @media screen and (width > 1024px) {
         display: none;
     }
 }

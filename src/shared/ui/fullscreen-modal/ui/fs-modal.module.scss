@@ -16,7 +16,7 @@
     z-index: 10;
 
     padding: $space-3;
-    padding-bottom: calc(var(--safe-area-inset-bottom) + $space-3);
+    padding-bottom: calc(var(--safe-area-inset-bottom, 0px) + $space-3);
 
     border-radius: $space-5 $space-5 0 0;
     border: 1px solid $neutral-300;

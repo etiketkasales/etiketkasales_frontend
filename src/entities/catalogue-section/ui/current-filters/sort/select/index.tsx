@@ -1,23 +1,26 @@
+"use client";
 import React from "react";
-import { ISortOption } from "~/src/entities/catalogue-section/model";
+import { useWindowSize } from "react-use";
 
-import classes from "./desktop-sort.module.scss";
+import classes from "./sort-select.module.scss";
+import Icon from "~/public/catalogue/sort.svg";
 import Select from "~/src/shared/ui/select/ui";
 import SortItem from "./item";
+import { ISortOption } from "~/src/entities/catalogue-section/model";
 
 interface Props {
   options: ISortOption[];
   activeOption: string;
   onItemClick: (sb: string, so: string) => void;
-  loading: boolean;
 }
 
-export default function SortDesktop({
+export default function SortSelect({
   options,
   activeOption,
   onItemClick,
-  loading,
 }: Props) {
+  const { width } = useWindowSize();
+
   return (
     <Select
       options={options}
@@ -39,7 +42,10 @@ export default function SortDesktop({
         });
       }}
       optionHolder="Способ сортировки"
-      loading={loading}
+      HeadingIconRight={
+        width <= 1024 ? <Icon className={classes.icon} /> : null
+      }
+      selectedOptionClassName={classes.activeOption}
     />
   );
 }

@@ -19,26 +19,32 @@ export default function CatalogueFilters({ initFilters }: Props) {
     useCurrentFilters();
 
   return (
-    <div className={`flex-row ${classes.container}`}>
-      <Sort />
-      <CatalogueFiltersModal initFilters={initFilters} />
-      <CurrentCategories categories={activeCategories} />
-      {activeFilters &&
-        activeFilters.map((item, index) => {
-          const value = item.filters[0];
-          const lastCount = item.filters.length - 1 || 0;
-          if (!value) return null;
-          return (
-            <CurrentFiltersItem
-              key={index + item.filterName}
-              title={item.title}
-              filterName={item.filterName}
-              value={value}
-              lastCount={lastCount}
-            />
-          );
-        })}
-      {needClearButton ? <ClearAllFilters /> : null}
+    <div className="flex-row gap-3 align-center">
+      <div
+        className={`flex-row gap-3 align-center ${classes.buttonsContainer}`}
+      >
+        <Sort />
+        <CatalogueFiltersModal initFilters={initFilters} />
+      </div>
+      <div className={`flex-row ${classes.container}`}>
+        <CurrentCategories categories={activeCategories} />
+        {activeFilters &&
+          activeFilters.map((item, index) => {
+            const value = item.filters[0];
+            const lastCount = item.filters.length - 1 || 0;
+            if (!value) return null;
+            return (
+              <CurrentFiltersItem
+                key={index + item.filterName}
+                title={item.title}
+                filterName={item.filterName}
+                value={value}
+                lastCount={lastCount}
+              />
+            );
+          })}
+        {needClearButton ? <ClearAllFilters /> : null}
+      </div>
     </div>
   );
 }
