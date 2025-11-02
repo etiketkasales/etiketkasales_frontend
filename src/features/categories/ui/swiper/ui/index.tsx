@@ -33,7 +33,9 @@ export default function CategoriesSwiper({ title, type, className }: Props) {
           className,
         )}
       >
-        <div className="flex-row space-between gap-6 align-center">
+        <div
+          className={classNames(`flex-row space-between gap-6 align-center`)}
+        >
           <p className="text-neutral-1000 heading h6">{title}</p>
           <CategoriesSwiperButtons goPrev={goPrev} goNext={goNext} />
         </div>

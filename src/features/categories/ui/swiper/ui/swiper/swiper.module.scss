@@ -28,8 +28,18 @@
   }
 }
 
+@media screen and (width <= 768px) {
+  .slide {
+    width: 90px;
+  }
+}
+
 @media screen and (width <= 460px) {
   .container {
     max-width: calc(100vw - $space-4 * 2);
+  }
+
+  .slide {
+    width: 84px;
   }
 }

@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 
+import classes from "./swiper-buttons.module.scss";
 import ChevronCompactLeft from "~/public/categories/chevron-compact-left.svg";
 import ChevronCompactRight from "~/public/categories/chevron-compact-right.svg";
 import Button from "~/src/shared/ui/button";
@@ -24,7 +25,7 @@ export default function CategoriesSwiperButtons({ goPrev, goNext }: Props) {
   ];
 
   return (
-    <div className="flex-row gap-3 align-center">
+    <div className={`flex-row gap-3 align-center ${classes.container}`}>
       {buttons.map((item, index) => {
         return (
           <Button
