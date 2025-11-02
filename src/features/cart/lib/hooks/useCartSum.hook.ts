@@ -24,9 +24,9 @@ export const useCartSum = () => {
       const item = items.find((item) => item.id === id);
       if (!item) return;
 
-      const count = item.quantity ?? 1;
-      const price = Number(item.price.split(".")[0]);
-      const oldPrice = Number(item.old_price.split(".")[0]);
+      const count = item.quantity || 1;
+      const price = Number(item.price?.split(".")[0] || 0);
+      const oldPrice = Number(item.old_price?.split(".")[0] || 0);
 
       if (oldPrice) {
         sum += count * oldPrice;

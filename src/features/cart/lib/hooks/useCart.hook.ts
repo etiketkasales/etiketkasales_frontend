@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { selectCart, setCart } from "~/src/app/store/reducers/cart.slice";
 
 import { ICartItem } from "../../model/cart.interface";
-import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 import { getCart } from "../api/cart.api";
 
 export const useCart = () => {
