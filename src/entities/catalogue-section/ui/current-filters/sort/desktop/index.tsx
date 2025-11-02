@@ -23,6 +23,7 @@ export default function SortDesktop({
       options={options}
       activeOption={activeOption}
       optionsPosTop={8}
+      className={classes.container}
       selectButtonClassName={`grid-column align-center gap-6px space between ${classes.sortButton}`}
       optionsClassName={`flex-column ${classes.sortOptions}`}
       renderItem={(itemParent, _) => {

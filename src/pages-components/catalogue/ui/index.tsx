@@ -24,7 +24,7 @@ export default function CataloguePage({ initFilters }: Props) {
           initFilters={initFilters}
           className={classes.filters}
         />
-        <CatalogueSection />
+        <CatalogueSection initFilters={initFilters} />
       </div>
     </PageWrapper>
   );

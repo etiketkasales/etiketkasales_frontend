@@ -1,0 +1,23 @@
+.wrapper {
+    position: fixed;
+    z-index: 999;
+    inset: 0;
+}
+
+.childrenContainer {
+    overflow-y: auto;
+}
+
+.bottomContainer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+
+    padding: $space-3;
+    padding-bottom: calc(var(--safe-area-inset-bottom) + $space-3);
+
+    border-radius: $space-5 $space-5 0 0;
+    border: 1px solid $neutral-300;
+}

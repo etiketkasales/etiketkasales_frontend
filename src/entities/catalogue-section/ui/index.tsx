@@ -6,12 +6,17 @@ import CatalogueProducts from "./products";
 import ProductsSkeleton from "./products/skeleton";
 import CatalogueFilters from "./current-filters";
 import CatalogueFiltersSkeleton from "./current-filters/skeleton";
+import { IFilters } from "~/src/features/filters/model";
 
-export default function CatalogueSection() {
+interface Props {
+  initFilters: IFilters;
+}
+
+export default function CatalogueSection({ initFilters }: Props) {
   return (
     <section className={`${classes.container} flex-column`}>
       <Suspense fallback={<CatalogueFiltersSkeleton />}>
-        <CatalogueFilters />
+        <CatalogueFilters initFilters={initFilters} />
       </Suspense>
       <Suspense fallback={<ProductsSkeleton />}>
         <CatalogueProducts />

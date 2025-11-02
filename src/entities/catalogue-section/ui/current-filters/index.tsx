@@ -7,14 +7,21 @@ import CurrentFiltersItem from "./filter";
 import CurrentCategories from "./categories";
 import ClearAllFilters from "./clear-filters";
 import Sort from "./sort";
+import CatalogueFiltersModal from "./filters-modal";
+import { IFilters } from "~/src/features/filters/model";
 
-export default function CatalogueFilters() {
+interface Props {
+  initFilters: IFilters;
+}
+
+export default function CatalogueFilters({ initFilters }: Props) {
   const { activeCategories, activeFilters, needClearButton } =
     useCurrentFilters();
 
   return (
     <div className={`flex-row ${classes.container}`}>
       <Sort />
+      <CatalogueFiltersModal initFilters={initFilters} />
       <CurrentCategories categories={activeCategories} />
       {activeFilters &&
         activeFilters.map((item, index) => {

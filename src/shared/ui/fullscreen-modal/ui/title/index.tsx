@@ -1,35 +1,35 @@
 import React from "react";
 import classNames from "classnames";
 
-import classes from "./fullscreen-container.module.scss";
-import CloseIcon from "~/public/modal/chevron-compact-left.svg";
+import classes from "./fs-modal-title.module.scss";
+import Icon from "~/public/modal/chevron-compact-left.svg";
 import Container from "~/src/shared/ui/container/ui";
 import Button from "~/src/shared/ui/button";
 
 interface Props {
-  classNameTitle: string;
   title: string;
   onClose: () => void;
+  className?: string;
 }
 
 export default function FullscreenModalTitle({
-  classNameTitle,
   title,
   onClose,
+  className,
 }: Props) {
   return (
-    <Container className={classNames(classes.container)}>
-      <h3 className={classes.title}>
-        {title}
+    <Container className={classNames(className, classes.container)}>
+      <div className={`relative ${classes.content}`}>
+        <h2 className="heading h6 text-center text-neutral-900">{title}</h2>
         <Button
           typeButton="ghost"
           size="0"
           onClick={onClose}
-          className={classes.close}
+          className={classes.button}
         >
-          <CloseIcon />
+          <Icon />
         </Button>
-      </h3>
+      </div>
     </Container>
   );
 }

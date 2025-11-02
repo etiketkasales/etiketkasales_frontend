@@ -28,7 +28,7 @@ export const useSort = ({ sortOptions }: Props) => {
     if (sortBy && sortOrder) {
       const newOption = sortOptions.find((option) => option.key === sortBy);
       const optionSortOrder = newOption?.orders.find(
-        (order) => order.key === sortOrder
+        (order) => order.key === sortOrder,
       );
 
       setActiveSortOption(optionSortOrder?.name || sortOptionFallback);
@@ -46,7 +46,7 @@ export const useSort = ({ sortOptions }: Props) => {
         routerReplace: true,
       });
     },
-    [updateParams]
+    [updateParams],
   );
 
   return {

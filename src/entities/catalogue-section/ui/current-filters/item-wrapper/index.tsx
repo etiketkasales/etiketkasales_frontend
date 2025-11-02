@@ -9,7 +9,7 @@ interface Props {
   children: React.ReactNode;
   className?: string;
   as?: React.ElementType;
-  onClick?: () => {};
+  onClick?: () => void;
 }
 
 export default function CurrentFiltersItemWrapper({

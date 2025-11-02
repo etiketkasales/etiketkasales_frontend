@@ -57,3 +57,9 @@ export interface IGetData<T> {
   success: boolean;
   message?: string;
 }
+
+export interface IModalBaseProps {
+  isOpen: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+}
