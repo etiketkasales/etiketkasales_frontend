@@ -52,3 +52,14 @@ export const loginByPassword = async (phone: string, password: string) => {
     console.error(err);
   }
 };
+
+export const logout = async () => {
+  try {
+    await apiClient.post(`/auth/logout/`);
+    CookieUtils.deleteCookie("auth_token");
+    CookieUtils.deleteCookie("refresh_token");
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

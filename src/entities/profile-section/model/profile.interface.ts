@@ -1,14 +1,3 @@
-export type ProfileTabsT =
-  | "personal"
-  | "purchases"
-  | "as-legal-entity"
-  | "log-out";
-
-export interface ProfileTabsI {
-  title: string;
-  action: ProfileTabsT;
-}
-
 export interface ProfileInputI {
   holder: string;
   field: keyof IChangeUserData;
@@ -43,4 +32,28 @@ export interface IChangeUserData {
   surname: string;
   email: string;
   phone: string;
+}
+
+export type BuyerSectionType =
+  | "personal"
+  | "orders"
+  | "addresses"
+  | "as-legal"
+  | "logout";
+
+export type SellerSectionType =
+  | "profile"
+  | "reviews"
+  | "orders"
+  | "products"
+  | "promotion"
+  | "accounting"
+  | "statistics"
+  | "delete";
+
+export type ProfileActionType = BuyerSectionType | SellerSectionType;
+
+export interface IAsideItem {
+  title: string;
+  action: ProfileActionType;
 }

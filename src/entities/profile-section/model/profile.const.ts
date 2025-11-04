@@ -1,27 +1,62 @@
 import {
+  IAsideItem,
   IChangeUserData,
   ProfileInputI,
   ProfileLegalEntityI,
   ProfileOrderI,
-  ProfileTabsI,
 } from "./profile.interface";
 
-export const profileTabsC: ProfileTabsI[] = [
+export const buyerTabs: IAsideItem[] = [
   {
     title: "Личные данные",
     action: "personal",
   },
   {
     title: "Мои заказы",
-    action: "purchases",
+    action: "orders",
   },
   {
     title: "Покупать как юр. лицо",
-    action: "as-legal-entity",
+    action: "as-legal",
   },
   {
     title: "Выйти",
-    action: "log-out",
+    action: "logout",
+  },
+];
+
+export const sellerTabs: IAsideItem[] = [
+  {
+    title: "Профиль магазина",
+    action: "profile",
+  },
+  {
+    title: "Отзывы",
+    action: "reviews",
+  },
+  {
+    title: "Заказы",
+    action: "orders",
+  },
+  {
+    title: "Карточки товаров",
+    action: "products",
+  },
+  {
+    title: "Продвижение товаров",
+    action: "promotion",
+  },
+  {
+    title: "Бухгалтерия",
+    action: "accounting",
+  },
+  {
+    title: "Статистика продаж",
+    action: "statistics",
+  },
+  {
+    title: "Удалить магазин",
+    action: "delete",
   },
 ];
 

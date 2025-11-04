@@ -52,10 +52,13 @@ export type PolymorphicRef<T extends ElementType> =
   ComponentPropsWithRef<T>["ref"];
 
 // new API
-export interface IGetData<T> {
-  data: T;
+export interface IGetDataBase {
   success: boolean;
   message?: string;
+}
+
+export interface IGetData<T> extends IGetDataBase {
+  data: T;
 }
 
 export interface IModalBaseProps {

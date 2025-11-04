@@ -1,0 +1,14 @@
+.container {
+    padding: $space-4;
+    width: 100%;
+
+    gap: $space-3;
+    justify-content: center;
+    transition: background-color $transition;
+
+    @media screen and (any-hover: hover) {
+        &:hover {
+            background-color: $yellow-100;
+        }
+    }
+}

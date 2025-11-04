@@ -1,24 +1,25 @@
 "use client";
-import React, { useState } from "react";
-import { useProfile } from "../lib/hooks/useProfile.hook";
+import React from "react";
+import { useProfileSections } from "../lib/hooks/useProfileSections.hook";
 
-import ProfileLeft from "./left";
-import ProfileRightSection from "./right";
-import { ProfileTabsT } from "~/src/entities/profile-section/model/profile.interface";
+import classes from "./profile.module.scss";
+import ProfileAside from "./aside";
+import { UserRoleType } from "~/src/features/user/model/user.interface";
 
-export default function ProfileSection() {
-  const { userInfo, changeData, handleChangeData, handleButtonClick } =
-    useProfile();
-  const [currentTab, setCurrentTab] = useState<ProfileTabsT>("personal");
+interface Props {
+  userRole: UserRoleType;
+}
+
+export default function ProfileSection({ userRole }: Props) {
+  const { activeSection, onItemClick, exitSection } = useProfileSections({
+    defaultSection: userRole === "buyer" ? "personal" : "profile",
+  });
   return (
-    <div className="flex-row flex-start gap-5">
-      <ProfileLeft currentTab={currentTab} setCurrentTab={setCurrentTab} />
-      <ProfileRightSection
-        currentTab={currentTab}
-        userInfo={userInfo}
-        changeData={changeData}
-        handleChangeData={handleChangeData}
-        handleButtonClick={handleButtonClick}
+    <div className={`flex-row ${classes.container}`}>
+      <ProfileAside
+        userRole={userRole}
+        activeSection={activeSection}
+        onItemClick={onItemClick}
       />
     </div>
   );

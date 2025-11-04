@@ -1,20 +1,19 @@
 "use client";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+import { redirect } from "next/navigation";
+import { useAppSelector } from "~/src/app/store/hooks";
+import { selectUser } from "~/src/app/store/reducers/user.slice";
 import { useGetUser } from "~/src/features/user/lib/hooks/useGetUser.hook";
-
-import PageWrapper from "~/src/entities/page-wrapper/ui";
-import ProfileSection from "~/src/entities/profile-section/ui";
 
 export default function ProfilePage() {
   const { handleGetUser } = useGetUser();
+  const { currentRole, isLoggedIn } = useAppSelector(selectUser);
 
   useEffect(() => {
     handleGetUser();
   }, [handleGetUser]);
 
-  return (
-    <PageWrapper>
-      <ProfileSection />
-    </PageWrapper>
-  );
+  if (!isLoggedIn) redirect("/login");
+
+  return redirect(`/profile/${currentRole}`);
 }
