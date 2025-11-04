@@ -1,16 +1,9 @@
-export interface ProfileInputI {
-  holder: string;
-  field: keyof IChangeUserData;
-  type: "string" | "phone";
-}
+import { IProfile } from "~/src/features/user/model";
 
-export interface ProfileLegalEntityI {
-  id: number;
-  title: string;
-  adress: string;
-  inn: number;
-  ogrn: number;
-  kpp: number;
+export interface IProfileInput {
+  holder: string;
+  field: keyof IProfile;
+  type: "string" | "phone" | "email";
 }
 
 export interface ProfileOrderI {
@@ -27,21 +20,15 @@ export interface ProfileOrderI {
   has_review: boolean;
 }
 
-export interface IChangeUserData {
-  name: string;
-  surname: string;
-  email: string;
-  phone: string;
-}
-
 export type BuyerSectionType =
   | "personal"
   | "orders"
   | "addresses"
-  | "as-legal"
+  | "as_legal"
   | "logout";
 
 export type SellerSectionType =
+  | "quote"
   | "profile"
   | "reviews"
   | "orders"
@@ -56,4 +43,33 @@ export type ProfileActionType = BuyerSectionType | SellerSectionType;
 export interface IAsideItem {
   title: string;
   action: ProfileActionType;
+}
+
+export interface IChangeableProfile {
+  email: string | null;
+  name: string | null;
+  surname: string | null;
+  avatar: string | null;
+  company_name: string | null;
+  company_type: string | null;
+  shop_name: string | null;
+  inn: string | null;
+  kpp: string | null;
+  ogrn: string | null;
+  legal_address: string | null;
+  actual_address: string | null;
+  storage_city: string | null;
+  company_address: string | null;
+  bank_account: string | null;
+  bank_bik: string | null;
+  correspondent_account: string | null;
+  bank_name: string | null;
+  director_surname: string | null;
+  director_name: string | null;
+  director_patronymic: string | null;
+  accountant_is_director: boolean;
+  accountant_surname: string | null;
+  accountant_name: string | null;
+  accountant_patronymic: string | null;
+  agreement_accepted: boolean;
 }

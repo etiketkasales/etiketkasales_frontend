@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useWindowSize } from "react-use";
 import { useUpdateSearchParams } from "~/src/shared/lib/hooks/useUpdateSearchParams.hook";
+import { ProfileActionType } from "../../model/profile.interface";
 
 const paramKey = "active_section";
 
@@ -11,9 +11,10 @@ interface Props {
 
 export const useProfileSections = ({ defaultSection }: Props) => {
   const searchParams = useSearchParams();
-  const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [activeSection, setActiveSection] = useState<ProfileActionType | null>(
+    null,
+  );
   const updateParam = useUpdateSearchParams();
-  const { width } = useWindowSize();
 
   const updateParamLocal = useCallback(
     (value: string | null) => {
@@ -42,20 +43,12 @@ export const useProfileSections = ({ defaultSection }: Props) => {
     const sectionParam = searchParams.get(paramKey);
 
     if (sectionParam) {
-      setActiveSection(sectionParam);
+      const activeSectionParam = sectionParam as ProfileActionType;
+      setActiveSection(activeSectionParam);
     } else {
       setActiveSection(null);
     }
   }, [activeSection, searchParams]);
-
-  useEffect(() => {
-    if (width <= 768) {
-      updateParamLocal(null);
-    } else {
-      if (activeSection) return;
-      updateParamLocal(defaultSection);
-    }
-  }, [width, activeSection, defaultSection, updateParamLocal]);
 
   return {
     activeSection,

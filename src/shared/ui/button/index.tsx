@@ -1,5 +1,5 @@
 "use client";
-import React, { ElementType, useEffect } from "react";
+import React, { ElementType, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import classNames from "classnames";
 
@@ -53,15 +53,14 @@ export default function Button<T extends ElementType>({
     }
   }, [href, prefetch]);
 
-  const classNameLocal = classNames(
-    className,
-    classes[typeButton],
-    classes.button,
-    {
-      [`padding-${size}`]: size,
-      [classes.activeScale]: needActiveScale,
-      [classes.justifyCenter]: justifyCenter,
-    },
+  const classNameLocal = useMemo(
+    () =>
+      classNames(className, classes[typeButton], classes.button, {
+        [`padding-${size}`]: size,
+        [classes.activeScale]: needActiveScale,
+        [classes.justifyCenter]: justifyCenter,
+      }),
+    [className, size, needActiveScale, justifyCenter, typeButton],
   );
 
   const Tag = as || "button";

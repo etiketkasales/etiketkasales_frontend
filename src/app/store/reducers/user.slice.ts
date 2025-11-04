@@ -1,12 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-  IProfile,
-  UserRoleType,
-} from "~/src/features/user/model/user.interface";
-import { SProfile } from "~/src/features/user/model/user.skeleton";
+import { IChangeableProfile } from "~/src/entities/profile-section/model";
+import { IProfile, UserRoleType } from "~/src/features/user/model";
+import { SProfile } from "~/src/features/user/model";
 
 interface InitialStateI {
   userInfo: IProfile;
+  changeableUserInfo: IChangeableProfile | null;
   currentRole: UserRoleType;
   isLoggedIn: boolean;
   needRemember: boolean;
@@ -16,6 +15,7 @@ interface InitialStateI {
 const initialState: InitialStateI = {
   userInfo: SProfile,
   currentRole: "buyer",
+  changeableUserInfo: null,
   userId: 0,
   needRemember: true,
   isLoggedIn: false,

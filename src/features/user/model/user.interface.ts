@@ -13,19 +13,40 @@ export interface UserInfoI {
 export interface IProfile {
   id: number;
   phone: string;
-  avatar: string | null;
   email: string | null;
   name: string | null;
   surname: string | null;
-  company_name?: string;
-  inn: string | number | null;
-  kpp: string | number | null;
-  ogrn: string | number | null;
+  avatar: string | null;
+  company_name: string | null;
+  company_type: string | null;
+  shop_name: string | null;
+  inn: string | null;
+  kpp: string | null;
+  ogrn: string | null;
+  legal_address: string | null;
+  actual_address: string | null;
+  storage_city: string | null;
   company_address: string | null;
+  bank_account: string | null;
+  bank_bik: string | null;
+  correspondent_account: string | null;
+  bank_name: string | null;
+  director_surname: string | null;
+  director_name: string | null;
+  director_patronymic: string | null;
+  accountant_is_director: boolean;
+  accountant_surname: string | null;
+  accountant_name: string | null;
+  accountant_patronymic: string | null;
+  seller_status: string;
+  seller_rejection_reason: null;
+  seller_approved_at: string | null; //2025-01-29T10:00:00Z
+  agreement_accepted: boolean;
+  agreement_accepted_at: string | null; //2025-01-29T10:00:00Z
   role: UserRoleType;
   is_active: boolean;
-  created_at: string; //2025-01-07T12:00:00Z
-  updated_at?: string; //2025-01-07T12:00:00Z
+  created_at: string | null; //2025-01-29T10:00:00Z
+  updated_at: string | null; //2025-01-29T10:00:00Z
 }
 
 export type UserRoleType = "buyer" | "seller";

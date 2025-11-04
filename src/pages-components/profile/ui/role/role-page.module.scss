@@ -1,0 +1,14 @@
+.active {
+    display: grid;
+}
+
+.disabled {
+    display: none !important;
+}
+
+.container {
+    @media screen and (width <= 1024px) {
+        padding: $space-3 $space-4;
+        padding-top: $space-8;
+    }
+}

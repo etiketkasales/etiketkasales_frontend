@@ -13,7 +13,7 @@ export default function ProfilePage() {
     handleGetUser();
   }, [handleGetUser]);
 
-  if (!isLoggedIn) redirect("/login");
+  // if (!isLoggedIn) redirect("/login");
 
-  return redirect(`/profile/${currentRole}`);
+  return redirect(`/profile/buyer`);
 }

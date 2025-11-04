@@ -1,13 +1,14 @@
+"use client";
 import React from "react";
 import classNames from "classnames";
-import { useSwitchRole } from "~/src/entities/profile-section/lib/hooks/useSwitchRole.hook";
+import { useSwitchRole } from "~/src/entities/profile-section/lib/hooks";
 
 import classes from "./switch-role.module.scss";
 import Shop from "~/public/profile/shop-window.svg";
 import Person from "~/public/profile/person-fill.svg";
 import ProfileContainer from "~/src/entities/profile-section/ui/container";
 import LoaderCircle from "~/src/shared/ui/loader-circle";
-import { UserRoleType } from "~/src/features/user/model/user.interface";
+import { UserRoleType } from "~/src/features/user/model";
 
 interface Props {
   userRole: UserRoleType;

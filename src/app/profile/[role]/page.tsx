@@ -1,5 +1,5 @@
 import ProfileRolePage from "~/src/pages-components/profile/ui/role";
-import { UserRoleType } from "~/src/features/user/model/user.interface";
+import { UserRoleType } from "~/src/features/user/model";
 
 interface Props {
   params: Promise<{ role: UserRoleType }>;

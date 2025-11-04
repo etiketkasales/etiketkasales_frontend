@@ -15,6 +15,13 @@ class StringUtils {
 
     return `${count} ${form}`;
   }
+
+  static formatDateFromApi(d: string): string {
+    const [date, _] = d.split("T");
+    const [year, month, day] = date.split("-");
+
+    return `${day}.${month}.${year}`;
+  }
 }
 
 export default StringUtils;

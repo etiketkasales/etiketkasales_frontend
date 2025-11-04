@@ -1,9 +1,8 @@
 import {
   IAsideItem,
-  IChangeUserData,
-  ProfileInputI,
-  ProfileLegalEntityI,
-  ProfileOrderI,
+  IChangeableProfile,
+  IProfileInput,
+  ProfileActionType,
 } from "./profile.interface";
 
 export const buyerTabs: IAsideItem[] = [
@@ -12,12 +11,16 @@ export const buyerTabs: IAsideItem[] = [
     action: "personal",
   },
   {
+    title: "Адреса доставки",
+    action: "addresses",
+  },
+  {
     title: "Мои заказы",
     action: "orders",
   },
   {
     title: "Покупать как юр. лицо",
-    action: "as-legal",
+    action: "as_legal",
   },
   {
     title: "Выйти",
@@ -60,7 +63,33 @@ export const sellerTabs: IAsideItem[] = [
   },
 ];
 
-export const profileInputsC: ProfileInputI[] = [
+export const profileTitlesMap: Record<ProfileActionType, string> = {
+  personal: "Личные данные",
+  orders: "Мои заказы",
+  as_legal: "Покупать как юр. лицо",
+  addresses: "Адреса",
+  quote: "Заявка на активацию магазина",
+  profile: "Профиль магазина",
+  reviews: "Отзывы",
+  products: "Карточки товаров",
+  promotion: "Продвижение товаров",
+  accounting: "Бухгалтерия",
+  statistics: "Статистика продаж",
+  delete: "Вы действительно хотите удалить свой магазин?",
+  logout: "Вы действительно хотите выйти?",
+};
+
+export const profileDangerousActions: ProfileActionType[] = [
+  "delete",
+  "logout",
+];
+export const profileModalActions: ProfileActionType[] = [
+  "addresses",
+  "delete",
+  "logout",
+];
+
+export const profilePersonalInputs: IProfileInput[] = [
   {
     holder: "Имя",
     field: "name",
@@ -79,50 +108,6 @@ export const profileInputsC: ProfileInputI[] = [
   {
     holder: "Почта",
     field: "email",
-    type: "string",
-  },
-];
-
-export const changeDataS: IChangeUserData = {
-  name: "",
-  surname: "",
-  email: "",
-  phone: "",
-};
-
-export const profileLegalEntity: ProfileLegalEntityI = {
-  id: 0,
-  title: "Название организации 1",
-  adress: "г. Краснодар, ул. Гимназическая, д. 65, помещ. 40",
-  inn: 123456789,
-  ogrn: 123456789,
-  kpp: 123456789,
-};
-
-export const profileOrdersTestC: ProfileOrderI[] = [
-  {
-    id: 1274823,
-    price: 100,
-    date_ordered: "14.08.2025",
-    status: "Заказ принят и ожидает отправки",
-    order_bill_url: "",
-    order_delivery_date: "13 мая",
-    when_delivered: "14 мая",
-    etiketka_url: "sofnbe",
-    etiketka_image_url: "/best-offers/test2.png",
-    order_finished: false,
-    has_review: false,
-  },
-  {
-    id: 1274823,
-    price: 100,
-    date_ordered: "14.08.2025",
-    status: "Заказ принят и ожидает отправки",
-    order_bill_url: "sbkvs",
-    order_delivery_date: "13 мая",
-    etiketka_url: "sofbn",
-    etiketka_image_url: "/best-offers/test2.png",
-    order_finished: true,
-    has_review: true,
+    type: "email",
   },
 ];

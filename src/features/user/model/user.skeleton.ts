@@ -1,3 +1,4 @@
+import { IChangeableProfile } from "~/src/entities/profile-section/model";
 import { IProfile, UserInfoI } from "./user.interface";
 
 export const userInfoS: UserInfoI = {
@@ -26,4 +27,27 @@ export const SProfile: IProfile = {
   ogrn: null,
   company_address: null,
   kpp: null,
+  legal_address: null,
+  actual_address: null,
+  storage_city: null,
+  company_name: null,
+  company_type: null,
+  shop_name: null,
+  bank_account: null,
+  bank_bik: null,
+  correspondent_account: null,
+  bank_name: null,
+  director_surname: null,
+  director_name: null,
+  director_patronymic: null,
+  accountant_is_director: false,
+  accountant_surname: null,
+  accountant_name: null,
+  accountant_patronymic: null,
+  seller_status: "approved",
+  seller_approved_at: null,
+  seller_rejection_reason: null,
+  agreement_accepted: false,
+  agreement_accepted_at: null,
+  updated_at: null,
 };

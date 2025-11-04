@@ -1,9 +1,6 @@
 import { apiClient, tryCatch } from "~/src/shared/lib/api/client.api";
 
-import {
-  IProfile,
-  UserRoleType,
-} from "~/src/features/user/model/user.interface";
+import { IProfile, UserRoleType } from "~/src/features/user/model";
 import { IGetDataBase } from "~/src/shared/model";
 import CookieUtils from "~/src/shared/lib/utils/cookies.utils";
 import { AxiosError } from "axios";

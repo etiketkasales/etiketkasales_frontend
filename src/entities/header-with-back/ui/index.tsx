@@ -1,34 +1,33 @@
 import React from "react";
-import classNames from "classnames";
 
-import classes from "./header-with-back.module.scss";
-import HeaderDefault from "../../header-default/ui";
 import HeaderWithBackMedia from "./media";
+import HeaderDefault, { IHeaderDefaultProps } from "../../header-default/ui";
 
-interface Props {
+interface Props extends IHeaderDefaultProps {
   children: React.ReactNode;
   classNameBackButton?: string;
-  className?: string;
-  flexDirection?: "row" | "column";
+  onBackClick?: () => void;
 }
 
 export default function HeaderWithBack({
   children,
   classNameBackButton,
-  className,
-  flexDirection,
+  onBackClick,
+  ...rest
 }: Props) {
   return (
     <HeaderDefault
-      flexDirection={flexDirection}
-      className={classNames(className, classes.container)}
       mediaBgColor="neutral-100"
       CustomMediaHeader={
-        <HeaderWithBackMedia classNameBackButton={classNameBackButton}>
+        <HeaderWithBackMedia
+          classNameBackButton={classNameBackButton}
+          onBackClick={onBackClick}
+        >
           {children}
         </HeaderWithBackMedia>
       }
       needTranslate={false}
+      {...rest}
     />
   );
 }

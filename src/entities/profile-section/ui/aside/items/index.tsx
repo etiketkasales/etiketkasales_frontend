@@ -1,11 +1,14 @@
+"use client";
 import React, { useMemo } from "react";
 
 import classes from "./aside-items.module.scss";
 import ProfileContainer from "~/src/entities/profile-section/ui/container";
 import ProfileAsideItem from "./item";
-import { UserRoleType } from "~/src/features/user/model/user.interface";
+import { UserRoleType } from "~/src/features/user/model";
 import {
   buyerTabs,
+  profileDangerousActions,
+  profileModalActions,
   sellerTabs,
 } from "~/src/entities/profile-section/model/profile.const";
 import { ProfileActionType } from "~/src/entities/profile-section/model/profile.interface";
@@ -14,12 +17,14 @@ interface Props {
   userRole: UserRoleType;
   activeSection: string | null;
   onItemClick: (section: string) => void;
+  setModalActive: (type: ProfileActionType) => void;
 }
 
 export default function ProfileAsideItems({
   userRole,
   activeSection,
   onItemClick,
+  setModalActive,
 }: Props) {
   const itemsToMap = useMemo(() => {
     return userRole === "buyer" ? buyerTabs : sellerTabs;
@@ -31,15 +36,21 @@ export default function ProfileAsideItems({
       bgColor="neutral-100"
     >
       {itemsToMap.map((item, index) => {
-        const dangerousActions: ProfileActionType[] = ["delete", "logout"];
         const action = item.action;
-        const onClick = () => onItemClick(action);
+        const onClickDefault = () => onItemClick(action);
         const isActive = action === activeSection;
-        const isDangerous = dangerousActions.includes(action);
+        const isDangerous = profileDangerousActions.includes(action);
+        const isModal = profileModalActions.includes(action);
         return (
           <ProfileAsideItem
             key={index + action}
-            onClick={onClick}
+            onClick={() => {
+              if (isModal) {
+                setModalActive(item.action);
+              } else {
+                onClickDefault();
+              }
+            }}
             isActive={isActive}
             isDangerous={isDangerous}
             title={item.title}

@@ -11,11 +11,15 @@ import HeaderDefaultMain from "./main";
 import HeaderMedia from "./media";
 import HeaderLinks from "./links";
 
-interface Props {
+export interface IHeaderDefaultProps {
+  className?: string;
+  customMediaWidth?: number;
+  flexDirection?: "row" | "column";
+}
+
+interface Props extends IHeaderDefaultProps {
   mediaBgColor?: string;
   CustomMediaHeader?: React.ReactNode;
-  className?: string;
-  flexDirection?: "row" | "column";
   customRefMedia?: React.RefObject<HTMLDivElement | null>;
   needTranslate?: boolean;
 }
@@ -27,14 +31,15 @@ export default function HeaderDefault({
   flexDirection = "column",
   customRefMedia,
   needTranslate = true,
+  customMediaWidth,
 }: Props) {
   const { width } = useWindowSize();
   const { loaded } = useAppSelector(selectNavigation);
   const heightRef = useRef<HTMLDivElement>(null);
   const heightRefMedia = useRef<HTMLDivElement>(null);
   const isMobile = useMemo(() => {
-    return width <= 768;
-  }, [width]);
+    return width <= (customMediaWidth || 768);
+  }, [width, customMediaWidth]);
 
   return (
     <HeaderContainer

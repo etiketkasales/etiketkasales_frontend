@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { useAppDispatch } from "~/src/app/store/hooks";
 import { setUser } from "~/src/app/store/reducers/user.slice";
 import { switchRole } from "~/src/features/user/lib/api/user.api";
-import { UserRoleType } from "~/src/features/user/model/user.interface";
+import { UserRoleType } from "~/src/features/user/model";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 
 export const useSwitchRole = () => {
