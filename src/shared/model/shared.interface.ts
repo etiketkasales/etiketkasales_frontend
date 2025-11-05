@@ -53,7 +53,7 @@ export type PolymorphicRef<T extends ElementType> =
 
 // new API
 export interface IGetDataBase {
-  success: boolean;
+  success?: boolean;
   message?: string;
 }
 

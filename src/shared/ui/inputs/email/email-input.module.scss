@@ -1,0 +1,20 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.input {
+  width: 100%;
+}
+
+.error {
+  border: 1px solid $red-400;
+}
+
+.errorText {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  transform: translateY($space-1);
+}

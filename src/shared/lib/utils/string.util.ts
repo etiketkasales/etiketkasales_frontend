@@ -22,6 +22,12 @@ class StringUtils {
 
     return `${day}.${month}.${year}`;
   }
+
+  static formatPhone(p: string): string {
+    return p
+      .toString()
+      .replace(/(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})/, "+7 ($2) $3-$4-$5");
+  }
 }
 
 export default StringUtils;

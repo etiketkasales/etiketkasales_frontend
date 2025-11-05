@@ -25,12 +25,12 @@ export async function promiseWrapper({
       setLoading(true);
     }
     await callback();
-    setError?.(null);
   } catch (err) {
     console.error(err);
     setError?.({
       message: errorMessage || "Произошла ошибка сервера",
       type: "error",
+      field: "global",
     });
     setErrBool?.(true);
     fallback?.();

@@ -1,0 +1,11 @@
+.container {
+    padding: 0 $space-3;
+    padding-top: 5px;
+    border-radius: $space-3;
+    height: 52px;
+    grid-column: 6 span;
+
+    @media screen and (width <= 768px) {
+        grid-column: 12 span;
+    }
+}

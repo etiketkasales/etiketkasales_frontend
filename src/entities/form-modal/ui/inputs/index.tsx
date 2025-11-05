@@ -31,38 +31,32 @@ export default function FormModalInputs<T>({
     <div className={`flex-column gap-3 ${classes.container}`}>
       <p className="text-16 gray-2 second-family regular">{headerText}</p>
       {inputs.map((input, index) => {
+        const commonProps = {
+          value: formData[input.field] ? String(formData[input.field]) : "",
+          placeholder: input.placeholder,
+          inputClassName: classes.input,
+          errorText: error?.field === input.field ? error.message : "",
+          name: `etiketka-${String(input.field)}`,
+        };
         switch (input.type) {
           default:
           case "text":
             return (
               <TextInput
-                key={index}
-                value={
-                  formData[input.field] ? String(formData[input.field]) : ""
-                }
+                key={index + input.field.toString()}
                 onChange={(e) => onChange(e.target.value, input.field)}
-                placeholder={input.placeholder}
-                classNameInput={classes.input}
-                errorText={error?.field === input.field ? error.message : ""}
-                name={`etiketka-${String(input.field)}`}
+                {...commonProps}
               />
             );
           case "phone":
             return (
               <PhoneInput
                 key={index}
-                value={
-                  formData[input.field]
-                    ? formatInput(String(formData[input.field]))
-                    : ""
-                }
                 onChange={(e) =>
                   onChange(formatForApi(e.target.value), input.field)
                 }
-                placeholder={input.placeholder}
                 className={classes.input}
-                errorText={error?.field === input.field ? error.message : ""}
-                name={`etiketka-${String(input.field)}`}
+                {...commonProps}
               />
             );
           case "select":

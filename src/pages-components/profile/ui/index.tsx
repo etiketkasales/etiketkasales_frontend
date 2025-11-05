@@ -3,10 +3,10 @@ import { useEffect } from "react";
 import { redirect } from "next/navigation";
 import { useAppSelector } from "~/src/app/store/hooks";
 import { selectUser } from "~/src/app/store/reducers/user.slice";
-import { useGetUser } from "~/src/features/user/lib/hooks/useGetUser.hook";
+import { useUser } from "~/src/features/user/lib/hooks/useUser.hook";
 
 export default function ProfilePage() {
-  const { handleGetUser } = useGetUser();
+  const { handleGetUser } = useUser();
   const { currentRole, isLoggedIn } = useAppSelector(selectUser);
 
   useEffect(() => {

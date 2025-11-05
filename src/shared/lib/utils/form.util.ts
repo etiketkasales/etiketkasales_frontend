@@ -1,5 +1,5 @@
-import { MessageI } from "~/src/shared/model";
 import InputUtils from "./input.util";
+import { MessageI } from "~/src/shared/model";
 
 class FormUtils {
   static checkIfValueEmpty(value: any): boolean {
@@ -18,23 +18,23 @@ class FormUtils {
   }: {
     requiredFields: (keyof T)[];
     checkData: T;
-    currentError: MessageI | null;
+    currentError?: MessageI | null;
   }): MessageI | null {
     for (const field of requiredFields) {
       const value = checkData[field as keyof T];
 
       if (FormUtils.checkIfValueEmpty(value)) {
-        if (currentError?.field !== field) {
-          const newError: MessageI = {
+        if (!currentError || currentError.field !== field) {
+          return {
             message: "Это поле обязательно",
             type: "error",
             field: String(field),
           };
-          return newError;
         }
         return currentError;
       }
     }
+
     return null;
   }
 

@@ -18,6 +18,8 @@ export interface InputProps
   errorText?: string;
   classNameError?: string;
   borderType?: "label" | "input";
+  separatedPlaceholder?: boolean;
+  separatedPlaceholderClassName?: string;
 }
 
 export default function Input({
@@ -34,14 +36,21 @@ export default function Input({
   errorText = "",
   classNameError,
   borderType = "input",
+  separatedPlaceholder,
+  separatedPlaceholderClassName,
   ...rest
 }: InputProps) {
   return (
     <label
       htmlFor={rest.id}
-      className={classNames(`cursor no-select flex-column`, classNameLabel, {
-        [classes.error]: errorText && borderType === "label",
-      })}
+      className={classNames(
+        `cursor no-select flex-column ${classes.label}`,
+        classNameLabel,
+        {
+          [classes.error]: errorText && borderType === "label",
+          ["relative"]: separatedPlaceholder,
+        },
+      )}
     >
       <input
         {...rest}
@@ -49,13 +58,16 @@ export default function Input({
         name={name ?? ""}
         type={type ?? "text"}
         disabled={disabled}
-        placeholder={placeholder}
+        placeholder={separatedPlaceholder ? undefined : placeholder}
         value={value}
         onChange={onChange}
         className={classNames(`${classes.input}`, className, {
           [classes.error]: errorText && borderType === "input",
         })}
       />
+      {separatedPlaceholder && (
+        <p className={separatedPlaceholderClassName}>{placeholder}</p>
+      )}
       {errorText && (
         <p className={classNames(`red text-14 regular`, classNameError)}>
           {errorText}

@@ -2,13 +2,13 @@ import { useCallback, useEffect } from "react";
 import { useAppDispatch } from "~/src/app/store/hooks";
 import { setUser } from "~/src/app/store/reducers/user.slice";
 import { useCart } from "~/src/features/cart/lib/hooks/useCart.hook";
-import { useGetUser } from "~/src/features/user/lib/hooks/useGetUser.hook";
+import { useUser } from "~/src/features/user/lib/hooks/useUser.hook";
 import CookieUtils from "../utils/cookies.utils";
 import JwtUtils from "../utils/jwt.utils";
 
 export const useInitialize = () => {
   const dispatch = useAppDispatch();
-  const { handleGetUser } = useGetUser();
+  const { handleGetUser } = useUser();
   const { updateCart } = useCart();
 
   const handleGetCities = useCallback(async () => {

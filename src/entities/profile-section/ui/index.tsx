@@ -4,7 +4,7 @@ import React from "react";
 import classes from "./profile.module.scss";
 import ProfileAside from "./aside";
 import ProfileContent from "./content";
-import { UserRoleType } from "~/src/features/user/model";
+import { IProfile, UserRoleType } from "~/src/features/user/model";
 import { ProfileActionType } from "~/src/entities/profile-section/model";
 
 interface Props {
@@ -13,6 +13,7 @@ interface Props {
   onItemClick: (s: string) => void;
   setModalActive: (type: ProfileActionType) => void;
   loaded: boolean;
+  userInfo: IProfile;
 }
 
 export default function ProfileSection({
@@ -21,6 +22,7 @@ export default function ProfileSection({
   onItemClick,
   setModalActive,
   loaded,
+  userInfo,
 }: Props) {
   return (
     <div className={`flex-row ${classes.container}`}>
@@ -30,7 +32,11 @@ export default function ProfileSection({
         onItemClick={onItemClick}
         setModalActive={setModalActive}
       />
-      <ProfileContent activeSection={activeSection} loaded={loaded} />
+      <ProfileContent
+        activeSection={activeSection}
+        loaded={loaded}
+        userInfo={userInfo}
+      />
     </div>
   );
 }

@@ -1,6 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import { useProfileSections } from "~/src/entities/profile-section/lib/hooks";
+import { useAppSelector } from "~/src/app/store/hooks";
+import { selectUser } from "~/src/app/store/reducers/user.slice";
+import { redirect } from "next/navigation";
 
 import classes from "./role-page.module.scss";
 import PageWrapper from "~/src/entities/page-wrapper/ui";
@@ -17,11 +20,14 @@ interface Props {
 }
 
 export default function ProfileRolePage({ userRole }: Props) {
+  const { userInfo, isLoggedIn, loadingData } = useAppSelector(selectUser);
   const { activeSection, onItemClick, exitSection, loaded } =
     useProfileSections({
       defaultSection: userRole === "buyer" ? "personal" : "profile",
     });
   const [modalType, setModalType] = useState<ProfileActionType | null>(null);
+
+  if (!isLoggedIn) return redirect("/login");
 
   return (
     <PageWrapper
@@ -41,11 +47,12 @@ export default function ProfileRolePage({ userRole }: Props) {
       }
     >
       <ProfileSection
+        userInfo={userInfo}
         userRole={userRole}
         activeSection={activeSection}
         onItemClick={onItemClick}
         setModalActive={(t) => setModalType(t)}
-        loaded={loaded}
+        loaded={!loadingData && loaded}
       />
     </PageWrapper>
   );

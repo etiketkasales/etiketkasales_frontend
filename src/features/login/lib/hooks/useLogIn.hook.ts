@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { selectLogIn } from "~/src/app/store/reducers/login.slice";
-import { setUser } from "~/src/app/store/reducers/user.slice";
+import { useUser } from "~/src/features/user/lib/hooks/useUser.hook";
 import { usePhoneInput } from "~/src/shared/ui/inputs/phone/hooks/usePhoneInput.hook";
 import { sendCode, verifyCode } from "../api/login.api";
 import InputUtils from "~/src/shared/lib/utils/input.util";
@@ -10,9 +10,11 @@ import InputUtils from "~/src/shared/lib/utils/input.util";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 
 import { MessageI } from "~/src/shared/model";
+import { setUser } from "~/src/app/store/reducers/user.slice";
 
 export const useLogIn = ({ isCodePage }: { isCodePage: boolean }) => {
   const dispatch = useAppDispatch();
+  const { setUserData } = useUser();
   const { push } = useRouter();
   const { phoneNumber, prevHref } = useAppSelector(selectLogIn);
   const [code, setCode] = useState<string>("");
@@ -69,11 +71,21 @@ export const useLogIn = ({ isCodePage }: { isCodePage: boolean }) => {
               isLoggedIn: true,
             }),
           );
+          setUserData(res.user);
           push(prevHref);
         }
       },
     });
-  }, [code, phoneNumber, formatForApi, checkPhone, push, dispatch, prevHref]);
+  }, [
+    code,
+    phoneNumber,
+    formatForApi,
+    checkPhone,
+    push,
+    dispatch,
+    prevHref,
+    setUserData,
+  ]);
 
   const promiseCallback = useCallback(async () => {
     if (isCodePage) {

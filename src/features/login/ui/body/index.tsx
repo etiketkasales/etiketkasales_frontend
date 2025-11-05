@@ -28,7 +28,7 @@ export default function LoginMainBody({ phone, message }: Props) {
           }}
           value={phone}
           onKeyDown={(e) => e.key === "Enter" && e.preventDefault()}
-          classNameInput={`padding-14 bg-gray-container padding-14-16 radius-12 ${classes.input} ${message && classes.error}`}
+          inputClassName={`padding-14 bg-gray-container padding-14-16 radius-12 ${classes.input} ${message && classes.error}`}
         />
         {message && <p className="red text-14 regular">{message.message}</p>}
       </div>

@@ -1,5 +1,8 @@
 import ProfileRolePage from "~/src/pages-components/profile/ui/role";
+
 import { UserRoleType } from "~/src/features/user/model";
+
+export { profileMetadata as metadata } from "~/src/shared/config/metadata/profile.metadata";
 
 interface Props {
   params: Promise<{ role: UserRoleType }>;

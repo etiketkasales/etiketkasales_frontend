@@ -1,4 +1,4 @@
-import { IProfile, UserInfoI } from "./user.interface";
+import { IChangeableProfile, IProfile, UserInfoI } from "./user.interface";
 
 export const userInfoS: UserInfoI = {
   id: 0,
@@ -49,4 +49,33 @@ export const SProfile: IProfile = {
   agreement_accepted: false,
   agreement_accepted_at: null,
   updated_at: null,
+};
+
+export const SChangeableProfile: IChangeableProfile = {
+  name: "",
+  surname: "",
+  email: "",
+  avatar: "",
+  inn: null,
+  ogrn: null,
+  company_address: null,
+  kpp: null,
+  legal_address: null,
+  actual_address: null,
+  storage_city: null,
+  company_name: null,
+  company_type: null,
+  shop_name: null,
+  bank_account: null,
+  bank_bik: null,
+  correspondent_account: null,
+  bank_name: null,
+  director_surname: null,
+  director_name: null,
+  director_patronymic: null,
+  accountant_is_director: false,
+  accountant_surname: null,
+  accountant_name: null,
+  accountant_patronymic: null,
+  agreement_accepted: false,
 };

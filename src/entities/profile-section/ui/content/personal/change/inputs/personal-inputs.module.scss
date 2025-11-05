@@ -1,0 +1,32 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: $space-2;
+}
+
+.inputContainer {
+    background-color: $neutral-300;
+    padding: $space-6px $space-3;
+    border-radius: $space-3;
+    max-height: 52px;
+    grid-column: 6 span;
+
+    .holder {
+        order: 0;
+    }
+
+    .input {
+        order: 1;
+    }
+}
+
+.input {
+    background-color: transparent;
+}
+
+@media screen and (width <= 560px) {
+    .container {
+        flex-direction: column !important;
+        flex-wrap: initial;
+    }
+}

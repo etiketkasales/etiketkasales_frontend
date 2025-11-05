@@ -6,8 +6,15 @@ import { getProfile } from "~/src/features/user/lib/api/user.api";
 import { profileChangeableFields } from "~/src/features/user/model/user.const";
 import { IChangeableProfile, IProfile } from "~/src/features/user/model";
 
-export const useGetUser = () => {
+export const useUser = () => {
   const dispatch = useAppDispatch();
+
+  const setLoading = useCallback(
+    (loading: boolean) => {
+      dispatch(setUser({ loadingData: loading }));
+    },
+    [dispatch],
+  );
 
   const setEditableData = useCallback(
     (data: IProfile) => {
@@ -23,23 +30,30 @@ export const useGetUser = () => {
     [dispatch],
   );
 
+  const setUserData = useCallback(
+    (data: IProfile) => {
+      dispatch(setUser({ userInfo: data }));
+      setEditableData(data);
+    },
+    [dispatch, setEditableData],
+  );
+
   const handleGetUser = useCallback(async () => {
     try {
+      setLoading(true);
       const res = await getProfile();
       if (res.user) {
-        dispatch(
-          setUser({
-            userInfo: res.user,
-          }),
-        );
-        setEditableData(res.user);
+        setUserData(res.user);
       }
     } catch (err) {
       console.error(err);
+    } finally {
+      setLoading(false);
     }
-  }, [dispatch, setEditableData]);
+  }, [setLoading, setUserData]);
 
   return {
     handleGetUser,
+    setUserData,
   };
 };

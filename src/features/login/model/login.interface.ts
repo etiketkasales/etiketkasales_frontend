@@ -1,3 +1,5 @@
+import { IProfile } from "../../user/model";
+
 interface ICodeBase {
   success: boolean;
   message: string;
@@ -20,5 +22,5 @@ interface IUser {
 export interface IVerifyCode extends ICodeBase {
   access_token: string;
   refresh_token: string;
-  user: IUser;
+  user: IProfile;
 }

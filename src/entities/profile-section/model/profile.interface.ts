@@ -1,23 +1,23 @@
-import { IProfile } from "~/src/features/user/model";
+import { IChangeableProfile } from "~/src/features/user/model";
 
 export interface IProfileInput {
   holder: string;
-  field: keyof IProfile;
+  field: keyof IChangeableProfile | "phone";
   type: "string" | "phone" | "email";
 }
 
-export interface ProfileOrderI {
+export interface IOrder {
   id: number;
-  price: number;
-  date_ordered: string;
-  status: string; //Оплатите счет до 18 июня, Заказ принят и ожидает отправки
-  order_bill_url?: string;
-  order_delivery_date: string; //10 июля
-  when_delivered?: string; //10 мая
-  etiketka_url: string;
-  etiketka_image_url: string;
-  order_finished: boolean;
-  has_review: boolean;
+  user_id: number;
+  order_number: string;
+  status: string;
+  total_amount: string;
+  delivery_method: string;
+  delivery_address: string;
+  created_at: string; //2025-01-07T12:00:00Z
+  updated_at: string; //2025-01-07T12:00:00Z
+  user_name: string;
+  user_surname: string;
 }
 
 export type BuyerSectionType =
