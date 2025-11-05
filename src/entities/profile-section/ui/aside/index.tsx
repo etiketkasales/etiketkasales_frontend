@@ -21,7 +21,14 @@ export default function ProfileAside({
   setModalActive,
 }: Props) {
   return (
-    <div className={`${classes.container} flex-column`}>
+    <div
+      className={`${classes.container} flex-column`}
+      style={
+        {
+          "--display": activeSection ? "none" : "flex",
+        } as React.CSSProperties
+      }
+    >
       <ProfileAsideItems
         userRole={userRole}
         activeSection={activeSection}

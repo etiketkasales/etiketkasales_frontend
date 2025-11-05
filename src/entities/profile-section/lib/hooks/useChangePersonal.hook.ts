@@ -34,7 +34,7 @@ export const useChangePersonal = (userInfo: IProfile) => {
       }
       return true;
     },
-    [error?.field]
+    [error?.field],
   );
 
   const isValidFields = useCallback((): boolean => {
@@ -74,10 +74,10 @@ export const useChangePersonal = (userInfo: IProfile) => {
             ...changeableUserInfo,
             [field]: updatedValue,
           } as IChangeableProfile,
-        })
+        }),
       );
     },
-    [dispatch, userInfo, changeableUserInfo, error, isValidFields]
+    [dispatch, userInfo, changeableUserInfo, error, isValidFields],
   );
 
   const onSave = useCallback(async () => {
@@ -104,7 +104,7 @@ export const useChangePersonal = (userInfo: IProfile) => {
         onSave();
       }
     },
-    [onSave]
+    [onSave],
   );
 
   useEffect(() => {

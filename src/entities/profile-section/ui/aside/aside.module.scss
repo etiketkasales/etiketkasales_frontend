@@ -1,12 +1,12 @@
 .container {
     flex: 1 0;
     max-width: 252px;
-
     gap: $space-5;
 }
 
 @media screen and (width <= 1024px) {
     .container {
         max-width: initial;
+        display: var(--display) !important;
     }
 }
