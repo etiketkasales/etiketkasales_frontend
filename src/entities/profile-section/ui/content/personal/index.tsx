@@ -28,7 +28,7 @@ export default function ProfilePersonal({ userInfo }: Props) {
 
   return (
     <ProfileContentContainer className={`${classes.container} flex-column`}>
-      <h1 className="heading h4 text-neutral-1000">
+      <h1 className={`heading h4 text-neutral-1000 ${classes.heading}`}>
         {profileTitlesMap.personal}
       </h1>
       <ProfileUserPreview

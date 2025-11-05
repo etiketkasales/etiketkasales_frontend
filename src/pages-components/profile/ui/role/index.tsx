@@ -40,9 +40,9 @@ export default function ProfileRolePage({ userRole }: Props) {
           className={classes.container}
           onBackClick={exitSection}
         >
-          <h1 className="heading h2 text-neutral-900 text-center">
+          <h2 className="heading h2 text-neutral-900 text-center">
             {activeSection ? profileTitlesMap[activeSection] : "Профиль"}
-          </h1>
+          </h2>
         </HeaderWithBack>
       }
     >

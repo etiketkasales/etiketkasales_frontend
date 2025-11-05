@@ -1,9 +1,19 @@
 .container {
-    gap: $space-8;
+  gap: $space-8;
+}
+
+@media screen and (width <= 1024px) {
+  .heading {
+    display: none;
+  }
+
+  .container {
+    gap: $space-4;
+  }
 }
 
 @media screen and (width <= 768px) {
-    .container {
-        gap: $space-4;
-    }
+  .container {
+    gap: $space-4;
+  }
 }
