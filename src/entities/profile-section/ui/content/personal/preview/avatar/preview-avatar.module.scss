@@ -2,6 +2,11 @@
   display: grid;
   place-content: center;
   border-radius: 50%;
-  width: clamp(3.125rem, 2.245rem + 3.06vw, 5rem);
-  height: clamp(3.125rem, 2.245rem + 3.06vw, 5rem);
+  width: 80px;
+  height: 80px;
+
+  @media screen and (width <= 560px) {
+    width: 50px;
+    height: 50px;
+  }
 }
