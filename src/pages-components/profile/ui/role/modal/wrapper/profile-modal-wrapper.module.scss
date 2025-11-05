@@ -1,0 +1,12 @@
+.container {
+    border-radius: $space-5;
+    padding: $space-5;
+    width: 360px;
+    gap: $space-6;
+}
+
+@media screen and (width <= 768px) {
+    .container {
+        width: calc(100vw - $space-3 * 2);
+    }
+}

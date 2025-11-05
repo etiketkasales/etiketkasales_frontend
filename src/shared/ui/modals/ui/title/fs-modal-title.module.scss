@@ -2,11 +2,6 @@
     display: flex;
     align-items: flex-end;
 
-    padding: $space-4;
-    padding-top: $space-8;
-    padding-bottom: $space-3;
-    border-radius: 0 0 $space-5 $space-5;
-
     .content {
         flex: 1 0;
     }
@@ -14,7 +9,8 @@
     .button {
         position: absolute;
         left: 0;
-        top: -1px;
+        top: 50%;
+        transform: translate(0, -50%);
         width: 28px;
         height: 28px;
     }

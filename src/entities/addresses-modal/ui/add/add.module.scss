@@ -1,0 +1,31 @@
+.container {
+  position: absolute;
+  inset: 0;
+  transition:
+    transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
+  transform: translate(0, -100%);
+
+  &.active {
+    transform: translate(0, 0);
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  &.hidden {
+    transform: translate(100%, 0);
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.button {
+    padding: $space-3;
+}
+
+.inputWrapper {
+    border-radius: $space-3;
+    padding: $space-10px $space-3;
+    background-color: $neutral-300;
+    max-height: 50px;
+}

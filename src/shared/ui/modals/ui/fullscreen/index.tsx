@@ -1,14 +1,13 @@
 import React from "react";
 import classNames from "classnames";
-import { useModal } from "~/src/shared/lib/hooks/useModal.hook";
+import { useModal } from "~/src/shared/ui/modals/lib/hooks";
 
 import classes from "./fs-modal.module.scss";
 import { AnimatePresence, motion } from "framer-motion";
-import FullscreenModalTitle from "./title";
-import { IModalBaseProps } from "~/src/shared/model";
+import ModalTitle from "../title";
+import { IModalBaseProps } from "~/src/shared/ui/modals/model";
 
 interface Props extends IModalBaseProps {
-  title: string;
   classNameWrapper?: string;
   classNameTitle?: string;
   bottomChild?: React.ReactNode;
@@ -41,10 +40,10 @@ export default function FullscreenModal({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <FullscreenModalTitle
+          <ModalTitle
             title={title}
             onClose={onClose}
-            className={classNameTitle}
+            className={classNames(classNameTitle, classes.title)}
           />
           {children}
           {bottomChild && (

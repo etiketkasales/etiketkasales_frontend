@@ -1,5 +1,6 @@
 import React from "react";
 
+import classes from "./profile-content.module.scss";
 import ProfilePersonal from "./personal";
 import ProfileContentContainer from "./container";
 import LoaderCircle from "~/src/shared/ui/loader-circle";
@@ -19,7 +20,7 @@ export default function ProfileContent({
 }: Props) {
   if (!loaded) {
     return (
-      <ProfileContentContainer className="relative">
+      <ProfileContentContainer className={`relative ${classes.loader}`}>
         <LoaderCircle radius={20} />
       </ProfileContentContainer>
     );

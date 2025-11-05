@@ -60,9 +60,3 @@ export interface IGetDataBase {
 export interface IGetData<T> extends IGetDataBase {
   data: T;
 }
-
-export interface IModalBaseProps {
-  isOpen: boolean;
-  onClose: () => void;
-  children: React.ReactNode;
-}

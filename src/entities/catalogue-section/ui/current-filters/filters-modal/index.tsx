@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import classes from "./filters-modal.module.scss";
 import Icon from "~/public/catalogue/filters.svg";
 import CurrentFiltersItemWrapper from "../item-wrapper";
-import FullscreenModal from "~/src/shared/ui/fullscreen-modal/ui";
+import FullscreenModal from "~/src/shared/ui/modals/ui/fullscreen";
 import ProductsFilters from "~/src/features/filters/ui";
 import { IFilters } from "~/src/features/filters/model";
 import FitlersModalButtons from "./buttons";

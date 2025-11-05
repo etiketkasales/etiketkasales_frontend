@@ -14,6 +14,7 @@ import {
   ProfileActionType,
   profileTitlesMap,
 } from "~/src/entities/profile-section/model";
+import ProfileModal from "./modal";
 
 interface Props {
   userRole: UserRoleType;
@@ -54,6 +55,12 @@ export default function ProfileRolePage({ userRole }: Props) {
         setModalActive={(t) => setModalType(t)}
         loaded={!loadingData && loaded}
       />
+      {modalType !== null && (
+        <ProfileModal
+          modalType={modalType}
+          onClose={() => setModalType(null)}
+        />
+      )}
     </PageWrapper>
   );
 }
