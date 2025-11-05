@@ -1,7 +1,6 @@
 import React from "react";
 import classNames from "classnames";
 import { appFonts } from "~/src/shared/config/fonts/fonts";
-export { layoutMetadata as metadata, viewport } from "~/src/shared/config";
 
 import ClientRootLayout from "./client-layout";
 

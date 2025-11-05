@@ -1,4 +1,5 @@
 import { getRandomCategories } from "~/src/features/categories/lib/api/categories.api";
+export { layoutMetadata as metadata, viewport } from "~/src/shared/config";
 
 import HomePage from "../pages-components/home/ui";
 import { IGetRandomCategories } from "../features/categories/model/categories.interface";
