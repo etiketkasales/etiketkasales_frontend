@@ -9,6 +9,14 @@
     }
 }
 
+.sort {
+    display: flex;
+}
+
+.sortMedia {
+    display: none;
+}
+
 @media screen and (width <= 1024px) {
     .container {
         max-width: 100vw;
@@ -20,5 +28,13 @@
             display: none;
         }
         scrollbar-width: 0px;
+    }
+
+    .sort {
+        display: none;
+    }
+
+    .sortMedia {
+        display: flex;
     }
 }

@@ -37,7 +37,11 @@ export default function FiltersCheckboxItem({
   });
 
   return (
-    <FiltersItem title={title} order={order}>
+    <FiltersItem
+      title={title}
+      order={order}
+      classNameChildren={"flex-column gap-3"}
+    >
       {filters && (
         <>
           <FiltersCheckAll checked={isAllActive} onChange={clearAllFilters} />

@@ -1,6 +1,5 @@
 import {
   IAsideItem,
-  IChangeableProfile,
   IProfileInput,
   ProfileActionType,
 } from "./profile.interface";

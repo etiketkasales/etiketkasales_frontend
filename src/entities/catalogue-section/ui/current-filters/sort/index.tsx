@@ -5,7 +5,11 @@ import { useSort } from "~/src/entities/catalogue-section/lib/hooks/useSort.hook
 
 import SortSelect from "./select";
 
-export default function Sort() {
+interface Props {
+  className?: string;
+}
+
+export default function Sort({ className }: Props) {
   const { sortOptions } = useGetSortOptions();
   const { activeSortOption, onItemClick } = useSort({ sortOptions });
 
@@ -14,6 +18,7 @@ export default function Sort() {
       options={sortOptions}
       activeOption={activeSortOption}
       onItemClick={onItemClick}
+      className={className}
     />
   );
 }

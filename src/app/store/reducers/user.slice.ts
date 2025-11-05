@@ -1,6 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IChangeableProfile } from "~/src/entities/profile-section/model";
-import { IProfile, UserRoleType } from "~/src/features/user/model";
+import {
+  IChangeableProfile,
+  IProfile,
+  UserRoleType,
+} from "~/src/features/user/model";
 import { SProfile } from "~/src/features/user/model";
 
 interface InitialStateI {

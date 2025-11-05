@@ -1,7 +1,6 @@
 import { apiClient, tryCatch } from "~/src/shared/lib/api/client.api";
-import { IChangeableProfile } from "../../model";
 import { IGetDataBase } from "~/src/shared/model";
-import { IProfile } from "~/src/features/user/model";
+import { IChangeableProfile, IProfile } from "~/src/features/user/model";
 
 interface IResponse extends IGetDataBase {
   user: IProfile;

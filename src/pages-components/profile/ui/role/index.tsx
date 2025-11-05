@@ -17,9 +17,10 @@ interface Props {
 }
 
 export default function ProfileRolePage({ userRole }: Props) {
-  const { activeSection, onItemClick, exitSection } = useProfileSections({
-    defaultSection: userRole === "buyer" ? "personal" : "profile",
-  });
+  const { activeSection, onItemClick, exitSection, loaded } =
+    useProfileSections({
+      defaultSection: userRole === "buyer" ? "personal" : "profile",
+    });
   const [modalType, setModalType] = useState<ProfileActionType | null>(null);
 
   return (
@@ -44,6 +45,7 @@ export default function ProfileRolePage({ userRole }: Props) {
         activeSection={activeSection}
         onItemClick={onItemClick}
         setModalActive={(t) => setModalType(t)}
+        loaded={loaded}
       />
     </PageWrapper>
   );

@@ -1,4 +1,3 @@
-import { IChangeableProfile } from "~/src/entities/profile-section/model";
 import { IProfile, UserInfoI } from "./user.interface";
 
 export const userInfoS: UserInfoI = {

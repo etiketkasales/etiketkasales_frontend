@@ -55,15 +55,9 @@ export default function CheckboxInput({
       {label && <span className={classNameLabel}>{label}</span>}
       {checked &&
         (width > 460 ? (
-          <ChecboxChecked
-            className={classes.icon}
-            onClick={() => inputRef.current?.click()}
-          />
+          <ChecboxChecked className={classes.icon} />
         ) : (
-          <CheckboxChecked24
-            className={classes.icon}
-            onClick={() => inputRef.current?.click()}
-          />
+          <CheckboxChecked24 className={classes.icon} />
         ))}
     </label>
   );

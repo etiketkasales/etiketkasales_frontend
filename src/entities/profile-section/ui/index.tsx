@@ -12,6 +12,7 @@ interface Props {
   activeSection: ProfileActionType | null;
   onItemClick: (s: string) => void;
   setModalActive: (type: ProfileActionType) => void;
+  loaded: boolean;
 }
 
 export default function ProfileSection({
@@ -19,6 +20,7 @@ export default function ProfileSection({
   activeSection,
   onItemClick,
   setModalActive,
+  loaded,
 }: Props) {
   return (
     <div className={`flex-row ${classes.container}`}>
@@ -28,7 +30,7 @@ export default function ProfileSection({
         onItemClick={onItemClick}
         setModalActive={setModalActive}
       />
-      <ProfileContent activeSection={activeSection} />
+      <ProfileContent activeSection={activeSection} loaded={loaded} />
     </div>
   );
 }

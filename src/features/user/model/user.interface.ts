@@ -10,9 +10,7 @@ export interface UserInfoI {
   in_favourites_ids: number[];
 }
 
-export interface IProfile {
-  id: number;
-  phone: string;
+export interface IChangeableProfile {
   email: string | null;
   name: string | null;
   surname: string | null;
@@ -38,10 +36,15 @@ export interface IProfile {
   accountant_surname: string | null;
   accountant_name: string | null;
   accountant_patronymic: string | null;
+  agreement_accepted: boolean;
+}
+
+export interface IProfile extends IChangeableProfile {
+  id: number;
+  phone: string;
   seller_status: string;
   seller_rejection_reason: null;
   seller_approved_at: string | null; //2025-01-29T10:00:00Z
-  agreement_accepted: boolean;
   agreement_accepted_at: string | null; //2025-01-29T10:00:00Z
   role: UserRoleType;
   is_active: boolean;

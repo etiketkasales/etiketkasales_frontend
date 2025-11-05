@@ -23,10 +23,11 @@ export default function CatalogueFilters({ initFilters }: Props) {
       <div
         className={`flex-row gap-3 align-center ${classes.buttonsContainer}`}
       >
-        <Sort />
+        <Sort className={classes.sortMedia} />
         <CatalogueFiltersModal initFilters={initFilters} />
       </div>
       <div className={`flex-row ${classes.container}`}>
+        <Sort className={classes.sort} />
         <CurrentCategories categories={activeCategories} />
         {activeFilters &&
           activeFilters.map((item, index) => {

@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useWindowSize } from "react-use";
+import classNames from "classnames";
 
 import classes from "./sort-select.module.scss";
 import Icon from "~/public/catalogue/sort.svg";
@@ -12,12 +13,14 @@ interface Props {
   options: ISortOption[];
   activeOption: string;
   onItemClick: (sb: string, so: string) => void;
+  className?: string;
 }
 
 export default function SortSelect({
   options,
   activeOption,
   onItemClick,
+  className,
 }: Props) {
   const { width } = useWindowSize();
 
@@ -26,7 +29,7 @@ export default function SortSelect({
       options={options}
       activeOption={activeOption}
       optionsPosTop={8}
-      className={classes.container}
+      className={classNames(className)}
       selectButtonClassName={`grid-column align-center gap-6px space between ${classes.sortButton}`}
       optionsClassName={`flex-column ${classes.sortOptions}`}
       renderItem={(itemParent, _) => {
