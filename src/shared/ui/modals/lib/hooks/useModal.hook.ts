@@ -10,6 +10,38 @@ interface Props {
 export const useModal = ({ isOpen, onClose, customClickOutside }: Props) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
+  const closingByPopState = useRef(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      history.pushState({ modal: true }, "");
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    const handlePop = () => {
+      if (isOpen) {
+        closingByPopState.current = true;
+        onClose();
+      }
+    };
+
+    window.addEventListener("popstate", handlePop);
+    return () => window.removeEventListener("popstate", handlePop);
+  }, [isOpen, onClose]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      if (!closingByPopState.current) {
+        history.back();
+      }
+      closingByPopState.current = false;
+      return () => {
+        closingByPopState.current = false;
+      };
+    }
+  }, [isOpen]);
+
   useEffect(() => {
     if (isOpen) {
       if (document) {
@@ -28,19 +60,6 @@ export const useModal = ({ isOpen, onClose, customClickOutside }: Props) => {
       }
     };
   }, [isOpen]);
-
-  useEffect(() => {
-    const handlePopState = () => {
-      if (isOpen) {
-        onClose();
-      }
-    };
-
-    window.addEventListener("popstate", handlePopState);
-    return () => {
-      window.removeEventListener("popstate", handlePopState);
-    };
-  }, [isOpen, onClose]);
 
   const clickOutside = useCallback(
     (event: MouseEvent) => {

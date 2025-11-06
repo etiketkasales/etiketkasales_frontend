@@ -7,14 +7,29 @@ import classes from "./addresses-modal.module.scss";
 import Modal from "~/src/shared/ui/modals/ui/default";
 import AddressesModalDefault from "./default";
 import AddressesModalAdd from "./add";
+import LoaderCircle from "~/src/shared/ui/loader-circle";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  action: "choose_address" | "see_addresses";
 }
 
-export default function AddressesModal({ isOpen, onClose }: Props) {
-  const { stage, setStage, newAddress, onInputChange } = useAddressesModal();
+export default function AddressesModal({
+  isOpen,
+  onClose,
+  action = "see_addresses",
+}: Props) {
+  const {
+    stage,
+    setStage,
+    newAddress,
+    onInputChange,
+    loading,
+    addresses,
+    onSaveButtonClick,
+    onAddressClick,
+  } = useAddressesModal(onClose);
 
   return (
     <Modal
@@ -28,12 +43,19 @@ export default function AddressesModal({ isOpen, onClose }: Props) {
         }
       }}
       containerClassName={classNames(
-        `${classes[stage]} ${classes.container} flex-column gap-6`,
+        `${classes[stage]} ${classes.container} flex-column gap-6 relative`,
       )}
       titleTextClassName={classes.title}
     >
+      {loading && <LoaderCircle radius={20} />}
       <div className={`flex-row relative ${classes.content}`}>
-        <AddressesModalDefault stage={stage} setStage={(s) => setStage(s)} />
+        <AddressesModalDefault
+          stage={stage}
+          setStage={(s) => setStage(s)}
+          addresses={addresses}
+          onAddressClick={onAddressClick}
+          addressClickType={action === "choose_address" ? "default" : "delete"}
+        />
         <AddressesModalAdd
           stage={stage}
           newAddress={newAddress}

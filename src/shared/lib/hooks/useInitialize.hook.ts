@@ -3,8 +3,6 @@ import { useAppDispatch } from "~/src/app/store/hooks";
 import { setUser } from "~/src/app/store/reducers/user.slice";
 import { useCart } from "~/src/features/cart/lib/hooks/useCart.hook";
 import { useUser } from "~/src/features/user/lib/hooks/useUser.hook";
-import CookieUtils from "../utils/cookies.utils";
-import JwtUtils from "../utils/jwt.utils";
 
 export const useInitialize = () => {
   const dispatch = useAppDispatch();
@@ -26,12 +24,16 @@ export const useInitialize = () => {
       remember = localStorage.getItem("needRemember") === "true";
       dispatch(setUser({ needRemember: remember }));
     }
-    const token = CookieUtils.getCookie("auth_token");
-    const isLoggedIn = token && !JwtUtils.isExpiredToken(token);
-
-    if (remember && isLoggedIn) {
-      handleGetUser();
-      dispatch(setUser({ isLoggedIn: true }));
+    if (remember) {
+      handleGetUser()
+        .then(() => {
+          dispatch(setUser({ isLoggedIn: true }));
+        })
+        .catch(() => {
+          dispatch(setUser({ isLoggedIn: false }));
+        });
+    } else {
+      dispatch(setUser({ isLoggedIn: false }));
     }
   }, [handleGetCities, handleGetUser, updateCart, dispatch]);
 };

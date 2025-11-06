@@ -65,9 +65,15 @@ apiClient.interceptors.response.use(
         const refreshToken = CookieUtils.getCookie("refresh_token");
         if (!refreshToken) throw new Error("Refresh token not found");
 
-        const res = await axios.post(`${BASE_URL}/auth/refresh/`, {
-          refresh_token: refreshToken,
-        });
+        const res = await axios.post(
+          `${BASE_URL}/auth/refresh/`,
+          {
+            refresh_token: refreshToken,
+          },
+          {
+            withCredentials: true,
+          },
+        );
 
         const newAccessToken = res.data.access_token;
         if (newAccessToken) {

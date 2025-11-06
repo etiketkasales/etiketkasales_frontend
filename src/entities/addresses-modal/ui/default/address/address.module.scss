@@ -1,0 +1,9 @@
+.container {
+    order: var(--order);
+    padding: $space-10px;
+    flex: 1 0;
+    border-radius: $space-3;
+    box-shadow: $shadow-100;
+    opacity: 0.8;
+
+}

@@ -55,6 +55,8 @@ class CookieUtils {
         const decoded = jwtDecode<IJwtToken>(token);
         const expiresIn = decoded.exp * 1000 - Date.now();
 
+        const isDev = process.env.NODE_ENV === "development";
+
         if (expiresIn <= 0) {
           console.warn(`Токен ${name} уже истек`);
           return;
@@ -63,7 +65,7 @@ class CookieUtils {
         options = {
           path: "/",
           "Max-Age": Math.floor(expiresIn / 1000),
-          Secure: true,
+          Secure: !isDev,
           SameSite: "lax",
           ...options,
         };

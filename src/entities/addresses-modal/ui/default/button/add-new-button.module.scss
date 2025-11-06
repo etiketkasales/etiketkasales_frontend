@@ -1,0 +1,20 @@
+.yellow {
+    padding: $space-3;
+}
+
+.ghost {
+    gap: $space-1;
+    grid-auto-flow: column;
+    align-items: center;
+    padding: $space-3 0;
+
+    &:hover {
+        span {
+            color: $yellow-800;
+        }
+
+        svg path {
+            color: $yellow-800;
+        }
+    }
+}

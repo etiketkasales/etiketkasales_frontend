@@ -14,7 +14,11 @@ export default function ProfileModal({ modalType, onClose }: Props) {
       return null;
     case "addresses":
       return (
-        <AddressesModal isOpen={modalType === "addresses"} onClose={onClose} />
+        <AddressesModal
+          isOpen={modalType === "addresses"}
+          onClose={onClose}
+          action="see_addresses"
+        />
       );
   }
 }

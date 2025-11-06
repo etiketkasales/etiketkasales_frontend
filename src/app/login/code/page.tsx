@@ -1,5 +1,5 @@
-import LoginMain from "~/src/features/login/ui";
+import LoginPage from "~/src/pages-components/login";
 
 export default function Page() {
-  return <LoginMain />;
+  return <LoginPage />;
 }

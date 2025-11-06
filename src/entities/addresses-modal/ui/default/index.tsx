@@ -1,16 +1,27 @@
 import React from "react";
+import classNames from "classnames";
 
 import classes from "./default.module.scss";
-import Button from "~/src/shared/ui/button";
+import AddNewAddress from "./button";
+import { IUserAddress } from "~/src/features/user/model";
 import { AddressesModalStage } from "../../model";
-import classNames from "classnames";
+import ModalAddress from "./address";
 
 interface Props {
   stage: AddressesModalStage;
   setStage: (stage: AddressesModalStage) => void;
+  addresses: IUserAddress[];
+  onAddressClick: (type: "delete" | "default", id: number) => void;
+  addressClickType: "delete" | "default";
 }
 
-export default function AddressesModalDefault({ stage, setStage }: Props) {
+export default function AddressesModalDefault({
+  stage,
+  setStage,
+  addresses,
+  onAddressClick,
+  addressClickType,
+}: Props) {
   return (
     <div
       className={classNames(`flex-column gap-3 scrollbar`, classes.container, {
@@ -18,16 +29,19 @@ export default function AddressesModalDefault({ stage, setStage }: Props) {
         [classes.hidden]: stage === "add",
       })}
     >
-      <Button
-        typeButton="yellow"
+      <ul className={`flex-column gap-3 ${classes.addresses}`}>
+        {addresses.map((item, index) => (
+          <ModalAddress
+            key={item.id + index}
+            {...item}
+            onClick={(id) => onAddressClick(addressClickType, id)}
+          />
+        ))}
+      </ul>
+      <AddNewAddress
         onClick={() => setStage("add")}
-        className={classes.button}
-        radius={12}
-      >
-        <span className="heading h7 text-yellow-1000">
-          Добавить новый адрес
-        </span>
-      </Button>
+        type={addresses && addresses.length > 0 ? "ghost" : "yellow"}
+      />
     </div>
   );
 }

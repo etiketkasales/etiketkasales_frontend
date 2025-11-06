@@ -8,7 +8,6 @@ import { IChangeableProfile, IProfile } from "~/src/features/user/model";
 
 export const useUser = () => {
   const dispatch = useAppDispatch();
-
   const setLoading = useCallback(
     (loading: boolean) => {
       dispatch(setUser({ loadingData: loading }));

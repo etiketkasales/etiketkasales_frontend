@@ -5,6 +5,7 @@ import {
   SChangeableProfile,
   UserRoleType,
   SProfile,
+  IUserAddress,
 } from "~/src/features/user/model";
 
 interface InitialStateI {
@@ -14,6 +15,7 @@ interface InitialStateI {
   isLoggedIn: boolean;
   needRemember: boolean;
   loadingData: boolean;
+  addresses: IUserAddress[];
   [key: string]: any;
 }
 
@@ -25,6 +27,7 @@ const initialState: InitialStateI = {
   needRemember: true,
   loadingData: false,
   isLoggedIn: true,
+  addresses: [],
 };
 
 export const userSlice = createSlice({

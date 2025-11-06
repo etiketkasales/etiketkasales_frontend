@@ -1,9 +1,9 @@
 import { apiClient, tryCatch } from "~/src/shared/lib/api/client.api";
+import { AxiosError } from "axios";
+import CookieUtils from "~/src/shared/lib/utils/cookies.utils";
 
 import { IProfile, UserRoleType } from "~/src/features/user/model";
 import { IGetDataBase } from "~/src/shared/model";
-import CookieUtils from "~/src/shared/lib/utils/cookies.utils";
-import { AxiosError } from "axios";
 
 export const getProfile = async () => {
   return await tryCatch(async () => {
