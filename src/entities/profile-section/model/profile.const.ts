@@ -2,6 +2,7 @@ import {
   IAsideItem,
   IOrder,
   IProfileInput,
+  IUserCompany,
   ProfileActionType,
 } from "./profile.interface";
 

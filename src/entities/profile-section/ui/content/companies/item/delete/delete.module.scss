@@ -1,0 +1,24 @@
+.container {
+    position: relative;
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: -$space-5;
+    }
+
+    @media screen and (any-hover: hover) {
+        &:hover {
+            svg path {
+                fill: $red-500;
+            }
+        }
+    }
+
+    @media screen and (width <= 768px) {
+        align-self: flex-end;
+        &::after {
+            inset: -$space-2;
+        }
+    }
+}

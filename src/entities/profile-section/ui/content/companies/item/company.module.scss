@@ -1,0 +1,14 @@
+.container {
+    border-radius: $space-5;
+    padding: $space-5;
+    flex-direction: row;
+    gap: $space-6;
+    justify-content: space-between;
+    align-items: center;
+
+    @media screen and (width <= 768px) {
+       flex-direction: column-reverse;
+        align-items: initial;
+       gap: 0px; 
+    }
+};

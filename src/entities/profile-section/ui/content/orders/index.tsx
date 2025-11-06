@@ -4,7 +4,6 @@ import { useOrders } from "~/src/entities/profile-section/lib/hooks";
 
 import classes from "./profile-orders.module.scss";
 import ProfileContentContainer from "../container";
-import LoaderCircle from "~/src/shared/ui/loader-circle";
 import ProfileOrdersItem from "./item";
 import { profileTitlesMap } from "~/src/entities/profile-section/model";
 
@@ -17,8 +16,8 @@ export default function ProfileOrders() {
         [classes.loading]: loading,
       })}
       title={profileTitlesMap.orders}
+      loading={loading}
     >
-      {loading && <LoaderCircle radius={20} />}
       <ul className={`flex-column ${classes.list}`}>
         {orders.map((item) => {
           return (

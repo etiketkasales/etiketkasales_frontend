@@ -21,6 +21,28 @@ export interface IOrder {
   bill_url?: string;
 }
 
+export interface IUserCompanyBase {
+  name: string;
+  legal_address: string;
+  actual_address: string;
+  inn: string;
+  kpp: string;
+  ogrn: string;
+  director_name: string;
+  contact_person: string;
+  contact_phone: string;
+  contact_email: string;
+}
+
+export interface IUserCompany extends IUserCompanyBase {
+  id: number;
+  user_id: number;
+  is_default: boolean;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
 export type BuyerSectionType =
   | "personal"
   | "orders"

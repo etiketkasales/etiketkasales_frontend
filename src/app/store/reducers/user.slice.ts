@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IUserCompany } from "~/src/entities/profile-section/model";
 import {
   IChangeableProfile,
   IProfile,
@@ -16,6 +17,7 @@ interface InitialStateI {
   needRemember: boolean;
   loadingData: boolean;
   addresses: IUserAddress[];
+  companies: IUserCompany[];
   [key: string]: any;
 }
 
@@ -28,6 +30,7 @@ const initialState: InitialStateI = {
   loadingData: false,
   isLoggedIn: true,
   addresses: [],
+  companies: [],
 };
 
 export const userSlice = createSlice({

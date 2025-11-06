@@ -7,6 +7,7 @@ import LoaderCircle from "~/src/shared/ui/loader-circle";
 import { ProfileActionType } from "~/src/entities/profile-section/model/profile.interface";
 import { IProfile } from "~/src/features/user/model";
 import ProfileOrders from "./orders";
+import ProfileCompanies from "./companies";
 
 interface Props {
   activeSection: ProfileActionType | null;
@@ -33,5 +34,7 @@ export default function ProfileContent({
       return <ProfilePersonal userInfo={userInfo} />;
     case "orders":
       return <ProfileOrders />;
+    case "as_legal":
+      return <ProfileCompanies />;
   }
 }

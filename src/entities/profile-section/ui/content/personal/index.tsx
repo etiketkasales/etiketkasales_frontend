@@ -30,6 +30,7 @@ export default function ProfilePersonal({ userInfo }: Props) {
     <ProfileContentContainer
       className={`${classes.container} flex-column`}
       title={profileTitlesMap.personal}
+      loading={loading}
     >
       <ProfileUserPreview
         avatar={userInfo?.avatar}
