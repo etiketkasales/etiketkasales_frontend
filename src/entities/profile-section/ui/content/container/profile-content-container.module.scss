@@ -3,3 +3,9 @@
     padding-bottom: $space-8;
     flex: 1 1;
 }
+
+.heading {
+    @media screen and (width <= 1024px) {
+        display: none;
+    }
+}

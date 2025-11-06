@@ -19,14 +19,28 @@ class StringUtils {
   static formatDateFromApi(d: string): string {
     const [date, _] = d.split("T");
     const [year, month, day] = date.split("-");
+    const fallback = (v: string, withDot?: boolean) =>
+      v ? `${v}${withDot ? "." : ""}` : "";
 
-    return `${day}.${month}.${year}`;
+    return `${fallback(day, true)}${fallback(month, true)}${fallback(year, false)}`;
   }
 
   static formatPhone(p: string): string {
     return p
       .toString()
       .replace(/(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})/, "+7 ($2) $3-$4-$5");
+  }
+
+  static formatPrice(price: string | number): string {
+    const n = Number(price);
+
+    if (isNaN(n)) return "";
+
+    // Округляем до целого
+    const rounded = Math.round(n);
+
+    // Форматируем с пробелами
+    return rounded.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   }
 }
 

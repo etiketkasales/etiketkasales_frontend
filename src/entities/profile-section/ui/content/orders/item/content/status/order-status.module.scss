@@ -1,0 +1,6 @@
+.container {
+    gap: $space-2;
+    @media screen and (width <= 560px) {
+        gap: $space-1;
+    }
+}

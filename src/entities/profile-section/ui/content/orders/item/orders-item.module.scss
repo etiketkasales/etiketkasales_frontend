@@ -1,0 +1,16 @@
+.container {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: $space-6;
+    align-items: flex-start;
+
+    border-radius: $space-5;
+    padding: $space-5;
+
+    @media screen and (width <= 560px) {
+        flex-direction: column;
+        gap: $space-4;
+        padding: $space-3;
+        justify-content: initial;
+    }
+}

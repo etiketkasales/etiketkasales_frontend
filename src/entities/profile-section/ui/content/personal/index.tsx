@@ -27,10 +27,10 @@ export default function ProfilePersonal({ userInfo }: Props) {
   } = useChangePersonal(userInfo);
 
   return (
-    <ProfileContentContainer className={`${classes.container} flex-column`}>
-      <h1 className={`heading h4 text-neutral-1000 ${classes.heading}`}>
-        {profileTitlesMap.personal}
-      </h1>
+    <ProfileContentContainer
+      className={`${classes.container} flex-column`}
+      title={profileTitlesMap.personal}
+    >
       <ProfileUserPreview
         avatar={userInfo?.avatar}
         name={userInfo?.name}

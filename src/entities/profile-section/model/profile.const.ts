@@ -1,5 +1,6 @@
 import {
   IAsideItem,
+  IOrder,
   IProfileInput,
   ProfileActionType,
 } from "./profile.interface";

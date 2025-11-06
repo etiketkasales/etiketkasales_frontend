@@ -1,1 +1,1 @@
-export const getOrders = async () => {};
+export const getCompanies = async () => {};

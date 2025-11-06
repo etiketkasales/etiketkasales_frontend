@@ -18,6 +18,7 @@ export interface IOrder {
   updated_at: string; //2025-01-07T12:00:00Z
   user_name: string;
   user_surname: string;
+  bill_url?: string;
 }
 
 export type BuyerSectionType =

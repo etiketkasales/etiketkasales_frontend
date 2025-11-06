@@ -1,0 +1,13 @@
+.container {
+    gap: $space-8;
+    flex: 1 1;
+    border-radius: $space-5;
+}
+
+.list {
+    gap: $space-3;
+}
+
+.loading {
+    min-height: 300px;
+}

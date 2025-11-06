@@ -1,0 +1,16 @@
+.container {
+  align-self: flex-start;
+  border-radius: $space-3;
+  box-shadow: $shadow-100;
+  padding: $space-3;
+
+  transition: background-color $transition;
+
+  &:active {
+    background-color: $yellow-600;
+  }
+
+  &:hover {
+    background-color: $yellow-300;
+  }
+}

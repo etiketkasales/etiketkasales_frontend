@@ -1,0 +1,10 @@
+.container {
+    flex-direction: column;
+    gap: $space-6;
+
+    @media screen and (width <= 560px) {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+}

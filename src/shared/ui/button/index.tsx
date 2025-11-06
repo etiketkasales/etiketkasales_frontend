@@ -28,6 +28,7 @@ interface Props<T extends ElementType>
   as?: T;
   href?: string;
   ref?: React.Ref<HTMLButtonElement>;
+  blank?: boolean;
 }
 
 export default function Button<T extends ElementType>({
@@ -43,6 +44,7 @@ export default function Button<T extends ElementType>({
   as,
   href,
   ref,
+  blank,
   ...rest
 }: Props<T>) {
   const { prefetch, push } = useRouter();
