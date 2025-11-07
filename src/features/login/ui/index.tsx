@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useLogIn } from "../lib/hooks/useLogIn.hook";
+import { useLogIn } from "../lib/hooks";
 import { useAppSelector } from "~/src/app/store/hooks";
 import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
 import { selectLogIn } from "~/src/app/store/reducers/login.slice";
@@ -19,6 +19,7 @@ export default function LoginMain() {
     useLogIn({ isCodePage });
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
     if (window.location.pathname.includes("code")) {
       setIsCodePage(true);
     } else {

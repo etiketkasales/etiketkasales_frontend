@@ -49,7 +49,7 @@ export const useUser = () => {
     } finally {
       setLoading(false);
     }
-  }, [setLoading, setUserData]);
+  }, [dispatch, setLoading, setUserData, dispatch]);
 
   return {
     handleGetUser,

@@ -1,6 +1,7 @@
 import React from "react";
 
 import AddressesModal from "~/src/entities/addresses-modal/ui";
+import LogoutModal from "~/src/entities/profile-section/ui/modals/logout";
 import { ProfileActionType } from "~/src/entities/profile-section/model";
 
 interface Props {
@@ -20,5 +21,7 @@ export default function ProfileModal({ modalType, onClose }: Props) {
           action="see_addresses"
         />
       );
+    case "logout":
+      return <LogoutModal isOpen={modalType === "logout"} onClose={onClose} />;
   }
 }

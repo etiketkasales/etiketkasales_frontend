@@ -19,6 +19,10 @@ export const sendCode = async (phone: string) => {
     console.error(err);
   }
 };
+const setCookies = (accessToken: string, refreshToken: string) => {
+  CookieUtils.setCookieWithToken("auth_token", accessToken, 86400);
+  CookieUtils.setCookieWithToken("refresh_token", refreshToken, 2592000);
+};
 
 export const verifyCode = async (phone: string, code: string) => {
   try {
@@ -26,8 +30,8 @@ export const verifyCode = async (phone: string, code: string) => {
       phone,
       code,
     });
-    CookieUtils.setCookieWithToken("auth_token", res.data.access_token);
-    CookieUtils.setCookieWithToken("refresh_token", res.data.refresh_token);
+    setCookies(res.data.access_token, res.data.refresh_token);
+
     return res.data;
   } catch (err) {
     const error = err as AxiosError<IVerifyCode>;
@@ -44,9 +48,7 @@ export const loginByPassword = async (phone: string, password: string) => {
       phone,
       password,
     });
-    CookieUtils.setCookieWithToken("auth_token", res.data.access_token);
-    CookieUtils.setCookieWithToken("refresh_token", res.data.refresh_token);
-
+    setCookies(res.data.access_token, res.data.refresh_token);
     return res.data.user || res.data;
   } catch (err) {
     console.error(err);

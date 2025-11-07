@@ -23,4 +23,5 @@ export interface IVerifyCode extends ICodeBase {
   access_token: string;
   refresh_token: string;
   user: IProfile;
+  expires_in: number;
 }

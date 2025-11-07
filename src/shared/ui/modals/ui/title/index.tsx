@@ -9,6 +9,7 @@ import Button from "~/src/shared/ui/button";
 interface Props {
   title: string;
   onClose: () => void;
+  needButton?: boolean;
   className?: string;
   textClassName?: string;
 }
@@ -16,6 +17,7 @@ interface Props {
 export default function ModalTitle({
   title,
   onClose,
+  needButton,
   className,
   textClassName,
 }: Props) {
@@ -30,15 +32,17 @@ export default function ModalTitle({
         >
           {title}
         </h2>
-        <Button
-          typeButton="ghost"
-          size="0"
-          onClick={onClose}
-          className={classes.button}
-          needActiveScale={false}
-        >
-          <Icon />
-        </Button>
+        {needButton && (
+          <Button
+            typeButton="ghost"
+            size="0"
+            onClick={onClose}
+            className={classes.button}
+            needActiveScale={false}
+          >
+            <Icon />
+          </Button>
+        )}
       </div>
     </Container>
   );

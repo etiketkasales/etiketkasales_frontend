@@ -13,6 +13,7 @@ interface Props extends IModalBaseProps {
   bgColor?: string;
   titleClassName?: string;
   titleTextClassName?: string;
+  needBackButton?: boolean;
 }
 
 export default function Modal({
@@ -26,6 +27,7 @@ export default function Modal({
   bgColor,
   titleClassName,
   titleTextClassName,
+  needBackButton = true,
 }: Props) {
   const { contentRef } = useModal({ isOpen, onClose, customClickOutside });
 
@@ -41,6 +43,7 @@ export default function Modal({
           onClose={onClose}
           className={titleClassName}
           textClassName={titleTextClassName}
+          needButton={needBackButton}
         />
         {children}
       </Container>

@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { selectLogIn } from "~/src/app/store/reducers/login.slice";
 import { useUser } from "~/src/features/user/lib/hooks/useUser.hook";
+import { setUser } from "~/src/app/store/reducers/user.slice";
 import { usePhoneInput } from "~/src/shared/ui/inputs/phone/hooks/usePhoneInput.hook";
 import { sendCode, verifyCode } from "../api/login.api";
 import InputUtils from "~/src/shared/lib/utils/input.util";
@@ -10,13 +11,12 @@ import InputUtils from "~/src/shared/lib/utils/input.util";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 
 import { MessageI } from "~/src/shared/model";
-import { setUser } from "~/src/app/store/reducers/user.slice";
 
 export const useLogIn = ({ isCodePage }: { isCodePage: boolean }) => {
   const dispatch = useAppDispatch();
   const { setUserData } = useUser();
   const { push } = useRouter();
-  const { phoneNumber, prevHref } = useAppSelector(selectLogIn);
+  const { phoneNumber } = useAppSelector(selectLogIn);
   const [code, setCode] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<MessageI | null>(null);
@@ -72,20 +72,10 @@ export const useLogIn = ({ isCodePage }: { isCodePage: boolean }) => {
             }),
           );
           setUserData(res.user);
-          push(prevHref);
         }
       },
     });
-  }, [
-    code,
-    phoneNumber,
-    formatForApi,
-    checkPhone,
-    push,
-    dispatch,
-    prevHref,
-    setUserData,
-  ]);
+  }, [code, phoneNumber, formatForApi, checkPhone, dispatch, setUserData]);
 
   const promiseCallback = useCallback(async () => {
     if (isCodePage) {

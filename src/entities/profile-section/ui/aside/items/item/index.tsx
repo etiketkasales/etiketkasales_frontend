@@ -28,7 +28,6 @@ export default function ProfileAsideItem({
         },
       )}
       onClick={() => {
-        if (isDangerous) return;
         onClick();
       }}
     >

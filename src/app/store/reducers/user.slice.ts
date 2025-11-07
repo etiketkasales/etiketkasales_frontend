@@ -18,6 +18,7 @@ interface InitialStateI {
   loadingData: boolean;
   addresses: IUserAddress[];
   companies: IUserCompany[];
+  loggedOutFromProfile: boolean;
   [key: string]: any;
 }
 
@@ -29,6 +30,7 @@ const initialState: InitialStateI = {
   needRemember: true,
   loadingData: false,
   isLoggedIn: true,
+  loggedOutFromProfile: false,
   addresses: [],
   companies: [],
 };
@@ -56,6 +58,13 @@ export const userSlice = createSlice({
         console.error(err);
       }
     },
+    clearUserData: (state: InitialStateI) => {
+      state.addresses = [];
+      state.changeableUserInfo = SChangeableProfile;
+      state.userInfo = SProfile;
+      state.companies = [];
+      state.isLoggedIn = false;
+    },
     setNeedRemember: (state, action: PayloadAction<boolean>) => {
       state.needRemember = action.payload;
       if (typeof window !== "undefined") {
@@ -65,6 +74,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUser, setNeedRemember } = userSlice.actions;
+export const { setUser, setNeedRemember, clearUserData } = userSlice.actions;
 export const selectUser = (state: { user: InitialStateI }) => state.user;
 export default userSlice.reducer;

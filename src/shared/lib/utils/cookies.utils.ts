@@ -49,7 +49,13 @@ class CookieUtils {
     });
   }
 
-  static setCookieWithToken(name: string, token: string, options?: any) {
+  // 86400 - для auth_token, 2592000 - для refresh_token
+  static setCookieWithToken(
+    name: string,
+    token: string,
+    maxAge?: 86400 | 2592000,
+    options?: any,
+  ) {
     return this.exceptFunction(() => {
       if (document) {
         const decoded = jwtDecode<IJwtToken>(token);
@@ -64,9 +70,9 @@ class CookieUtils {
 
         options = {
           path: "/",
-          "Max-Age": Math.floor(expiresIn / 1000),
           Secure: !isDev,
           SameSite: "lax",
+          "Max-Age": maxAge,
           ...options,
         };
 
