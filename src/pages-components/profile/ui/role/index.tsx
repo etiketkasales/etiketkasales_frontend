@@ -9,12 +9,12 @@ import classes from "./role-page.module.scss";
 import PageWrapper from "~/src/entities/page-wrapper/ui";
 import ProfileSection from "~/src/entities/profile-section/ui";
 import HeaderWithBack from "~/src/entities/header-with-back/ui";
+import ProfileModal from "./modal";
 import { UserRoleType } from "~/src/features/user/model";
 import {
   ProfileActionType,
   profileTitlesMap,
 } from "~/src/entities/profile-section/model";
-import ProfileModal from "./modal";
 
 interface Props {
   userRole: UserRoleType;

@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import classes from "./info.module.scss";
 import ChevronRight from "~/public/etiketka-page/chevron-compact-right.svg";
 import Star from "~/public/etiketka-page/star-fill.svg";
-import ImageContainer from "~/src/shared/ui/image-container/ui";
 import SkeletonWrapper from "~/src/shared/ui/skeleton/ui";
+import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
 import { SellerI } from "~/src/shared/ui/seller-info/model/seller.interface";
 
 interface Props {
@@ -37,13 +37,11 @@ export default function SellerInfo({
         <div className="flex-row gap-3 align-center">
           {loaded ? (
             <>
-              <ImageContainer
+              <ImageWrapper
                 src={sellerInfo.avatar}
                 width={44}
                 height={44}
-                fixedSize
-                radius={12}
-                className="border-bg-gray"
+                className={`border-bg-gray ${classes.imageContainer}`}
               />
               <div className="flex-column gap-1">
                 <p

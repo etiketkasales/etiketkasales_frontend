@@ -3,9 +3,9 @@ import React from "react";
 import { useAdvs } from "~/src/shared/ui/advs/lib/hooks/useAdvs.hook";
 
 import classes from "./three-ads.module.scss";
-import ImageContainer from "~/src/shared/ui/image-container/ui";
 import SkeletonWrapper from "~/src/shared/ui/skeleton/ui";
 import InfoPlain from "../info-plain";
+import ImageWrapper from "../../../image-wrapper/ui";
 
 export default function ThreeAds() {
   const { advs, loading } = useAdvs();
@@ -18,7 +18,7 @@ export default function ThreeAds() {
         }
 
         return (
-          <ImageContainer
+          <ImageWrapper
             key={index}
             src={item.image_url}
             width={399}
@@ -26,10 +26,9 @@ export default function ThreeAds() {
             alt={"Рекламный баннер"}
             loading={"lazy"}
             className={`${classes.item} relative`}
-            radius={20}
           >
             <InfoPlain className={classes.infoPlain} needText={false} />
-          </ImageContainer>
+          </ImageWrapper>
         );
       })}
     </div>

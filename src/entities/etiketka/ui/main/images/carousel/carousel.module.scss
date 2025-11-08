@@ -9,9 +9,19 @@
     border-radius: $space-5;
 }
 
+.imageContainer {
+    border-radius: $space-4;
+    height: 100px;
+    width: 100px;
+}
+
 @media screen and (width > 768px) {
     .current {
         border: 4px solid $dark-yellow;
+    }
+
+    .imageContainer {
+        border-radius: $space-5;
     }
 }
 

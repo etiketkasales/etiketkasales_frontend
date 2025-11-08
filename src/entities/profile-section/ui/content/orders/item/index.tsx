@@ -14,7 +14,7 @@ export default function ProfileOrdersItem({
   order_number,
   total_amount,
   status,
-  bill_url,
+  invoice_url,
 }: Props) {
   return (
     <Container
@@ -26,7 +26,7 @@ export default function ProfileOrdersItem({
         created_at={created_at}
         order_number={order_number}
         status={status}
-        bill_url={bill_url}
+        bill_url={invoice_url}
       />
       <OrderExtra total_amount={total_amount} />
     </Container>

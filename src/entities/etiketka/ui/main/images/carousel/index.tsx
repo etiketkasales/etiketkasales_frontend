@@ -3,9 +3,9 @@ import React, { Dispatch, SetStateAction } from "react";
 import { useWindowSize } from "react-use";
 
 import classes from "./carousel.module.scss";
-import ImageContainer from "~/src/shared/ui/image-container/ui";
 import Button from "~/src/shared/ui/button";
 import SkeletonWrapper from "~/src/shared/ui/skeleton/ui";
+import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
 
 interface Props {
   images_urls: string[];
@@ -43,13 +43,11 @@ export default function ImagesCarousel({
                 onMouseEnter={() => setPreviewImage(src)}
                 onMouseLeave={() => setPreviewImage(null)}
               >
-                <ImageContainer
+                <ImageWrapper
                   src={src}
                   width={100}
                   height={100}
-                  radius={width <= 768 ? 20 : 16}
-                  fixedSize
-                  className={`${currentImage === src ? classes.current : ""}`}
+                  className={`${currentImage === src ? classes.current : ""} ${classes.imageContainer}`}
                 />
               </Button>
             );

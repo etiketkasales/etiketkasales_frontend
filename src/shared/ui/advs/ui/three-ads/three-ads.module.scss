@@ -1,5 +1,6 @@
 .item {
     grid-column: 4 span;
+    border-radius: $space-5;
 
     img {
         transition: transform $transition;

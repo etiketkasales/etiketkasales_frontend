@@ -5,11 +5,11 @@ import { useAppSelector } from "~/src/app/store/hooks";
 import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
 
 import classes from "./images.module.scss";
-import ImageContainer from "~/src/shared/ui/image-container/ui";
 import ImagesCarousel from "./carousel";
 import EtiketkaMainContainer from "~/src/entities/etiketka/ui/container";
 import EtiketkaImagesPrice from "./price";
 import SkeletonWrapper from "~/src/shared/ui/skeleton/ui";
+import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
 
 interface Props {
   images_urls: string[];
@@ -38,13 +38,11 @@ export default function EtiketkaImages({
     >
       {loaded ? (
         currentImage && (
-          <ImageContainer
+          <ImageWrapper
             src={previewImage ?? currentImage}
             width={width > 1100 ? 468 : 350}
             height={width > 1100 ? 468 : 350}
-            fixedSize={width <= 1100}
             alt=""
-            radius={20}
             className={`${classes.image}`}
           />
         )

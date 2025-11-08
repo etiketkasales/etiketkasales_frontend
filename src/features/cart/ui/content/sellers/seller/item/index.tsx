@@ -4,10 +4,10 @@ import { useWindowSize } from "react-use";
 
 import classes from "./item.module.scss";
 import CheckboxInput from "~/src/shared/ui/inputs/checkbox";
-import ImageContainer from "~/src/shared/ui/image-container/ui";
 import CartItemInfo from "./info";
 import CartItemInfoBottom from "./info/bottom";
 import { ICartItem } from "~/src/features/cart/model/cart.interface";
+import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
 
 interface Props {
   item: ICartItem;
@@ -40,12 +40,12 @@ export default function CartSellerItem({
             checked={isSelected}
           />
         </div>
-        <ImageContainer
+        <ImageWrapper
           src={item.images[0]}
           alt={item.name}
           width={width > 460 ? 120 : 100}
           height={width > 460 ? 120 : 100}
-          radius={20}
+          className={classes.image}
         />
         <CartItemInfo item={item} />
       </div>

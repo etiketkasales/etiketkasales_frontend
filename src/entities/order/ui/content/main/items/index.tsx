@@ -1,13 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { selectCart } from "~/src/app/store/reducers/cart.slice";
 import { useAppSelector } from "~/src/app/store/hooks";
 import StringUtils from "~/src/shared/lib/utils/string.util";
 
 import classes from "./items.module.scss";
 import OrderMainWrapper from "../wrapper";
-import ImageContainer from "~/src/shared/ui/image-container/ui";
-import { selectCart } from "~/src/app/store/reducers/cart.slice";
+import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
 
 interface ItemI {
   link: string;
@@ -47,12 +47,12 @@ export default function OrderMainItems() {
                 className="flex cursor"
                 onClick={() => push(`/etiketka/${item.link}`)}
               >
-                <ImageContainer
+                <ImageWrapper
                   src={item.image}
                   alt="Картинка товара"
                   width={80}
                   height={80}
-                  radius={16}
+                  imgClassName={classes.img}
                 />
               </li>
             );

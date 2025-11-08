@@ -12,6 +12,12 @@
     height: 120px;
 }
 
+.image {
+    border-radius: $space-5;
+    max-width: 120px;
+    max-height: 120px;
+}
+
 @media screen and (width <=768px) {
     .container {
         gap: $space-3;
@@ -35,5 +41,10 @@
     .image_skeleton {
         width: 100px;
         height: 100px;
+    }
+
+    .image {
+        max-width: 100px;
+        max-height: 100px;
     }
 }

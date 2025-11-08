@@ -3,7 +3,7 @@ import classNames from "classnames";
 
 import classes from "../swiper-item.module.scss";
 import Container from "~/src/shared/ui/container/ui";
-import ImageContainer from "~/src/shared/ui/image-container/ui";
+import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
 
 interface Props {
   image: string;
@@ -18,7 +18,7 @@ export default function ItemWrapperIcon({ image }: Props) {
         classes.icon,
       )}
     >
-      <ImageContainer
+      <ImageWrapper
         src={image}
         width={24}
         height={24}

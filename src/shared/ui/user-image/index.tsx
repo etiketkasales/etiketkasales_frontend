@@ -3,7 +3,7 @@ import React from "react";
 
 import classes from "./user-image.module.scss";
 import Person from "~/public/profile/person-fill.svg";
-import ImageContainer from "../image-container/ui";
+import ImageWrapper from "../image-wrapper/ui";
 
 interface Props {
   src: string | null;
@@ -27,13 +27,12 @@ export default function UserImage({ src, width, height }: Props) {
   }
 
   return (
-    <ImageContainer
+    <ImageWrapper
       src={src}
       width={width}
       height={height}
       className={classes.container}
-      alt="User image"
-      radius={"50%"}
+      alt=""
     />
   );
 }
