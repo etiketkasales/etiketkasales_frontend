@@ -11,10 +11,9 @@ export default function ProfileInDev() {
     >
       <div className="flex-column gap-10 align-center">
         <ImageWrapper
-          src={"/logo.png"}
+          src={"/header/logo.png"}
           width={262}
           height={49}
-          fill
           className={classes.container}
         />
         <h2 className="heading h4 text-neutral-grey-900">

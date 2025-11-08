@@ -6,7 +6,7 @@ import DeleteCompanyModal from "~/src/entities/profile-section/ui/modals/delete"
 import { ProfileActionType } from "~/src/entities/profile-section/model";
 
 interface Props {
-  modalType: ProfileActionType;
+  modalType: ProfileActionType | null;
   onClose: () => void;
 }
 

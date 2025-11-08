@@ -32,7 +32,11 @@ export default function Modal({
   const { contentRef } = useModal({ isOpen, onClose, customClickOutside });
 
   return (
-    <div className={classNames(wrapperClassName, classes.wrapper)}>
+    <div
+      className={classNames(wrapperClassName, classes.wrapper, {
+        [classes.active]: isOpen,
+      })}
+    >
       <Container
         ref={contentRef}
         bgColor={bgColor}

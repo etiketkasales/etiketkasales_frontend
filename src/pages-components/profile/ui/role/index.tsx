@@ -55,12 +55,7 @@ export default function ProfileRolePage({ userRole }: Props) {
         setModalActive={(t) => setModalType(t)}
         loaded={!loadingData && loaded}
       />
-      {modalType !== null && (
-        <ProfileModal
-          modalType={modalType}
-          onClose={() => setModalType(null)}
-        />
-      )}
+      <ProfileModal modalType={modalType} onClose={() => setModalType(null)} />
     </PageWrapper>
   );
 }

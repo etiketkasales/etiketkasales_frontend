@@ -6,4 +6,9 @@
 
     display: grid;
     place-content: center;
+    transition: opacity $transition;
+    opacity: 0;
+    &.active {
+        opacity: 1
+    }
 }

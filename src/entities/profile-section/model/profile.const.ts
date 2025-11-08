@@ -87,6 +87,12 @@ export const profileModalActions: ProfileActionType[] = [
   "delete",
   "logout",
 ];
+export const profileInDev: ProfileActionType[] = [
+  "reviews",
+  "accounting",
+  "promotion",
+  "statistics",
+];
 
 export const profilePersonalInputs: IProfileInput[] = [
   {

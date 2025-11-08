@@ -4,10 +4,12 @@ import classes from "./profile-content.module.scss";
 import ProfilePersonal from "./personal";
 import ProfileContentContainer from "./container";
 import LoaderCircle from "~/src/shared/ui/loader-circle";
-import { ProfileActionType } from "~/src/entities/profile-section/model/profile.interface";
-import { IProfile } from "~/src/features/user/model";
 import ProfileOrders from "./orders";
 import ProfileCompanies from "./companies";
+import ProfileInDev from "./in-dev";
+import { ProfileActionType } from "~/src/entities/profile-section/model/profile.interface";
+import { IProfile } from "~/src/features/user/model";
+import { profileInDev } from "../../model";
 
 interface Props {
   activeSection: ProfileActionType | null;
@@ -27,6 +29,10 @@ export default function ProfileContent({
       </ProfileContentContainer>
     );
   }
+  if (activeSection && profileInDev.includes(activeSection)) {
+    return <ProfileInDev />;
+  }
+
   switch (activeSection) {
     default:
       return null;
