@@ -10,6 +10,7 @@ import ProfileInDev from "./in-dev";
 import { ProfileActionType } from "~/src/entities/profile-section/model/profile.interface";
 import { IProfile } from "~/src/features/user/model";
 import { profileInDev } from "../../model";
+import CompanyProfile from "./company-profile";
 
 interface Props {
   activeSection: ProfileActionType | null;
@@ -42,5 +43,7 @@ export default function ProfileContent({
       return <ProfileOrders />;
     case "as_legal":
       return <ProfileCompanies />;
+    case "profile":
+      return <CompanyProfile userInfo={userInfo} />;
   }
 }

@@ -48,8 +48,8 @@ export interface IProfile extends IChangeableProfile {
   agreement_accepted_at: string | null; //2025-01-29T10:00:00Z
   role: UserRoleType;
   is_active: boolean;
-  created_at: string | null; //2025-01-29T10:00:00Z
-  updated_at: string | null; //2025-01-29T10:00:00Z
+  created_at: string; //2025-01-29T10:00:00Z
+  updated_at: string; //2025-01-29T10:00:00Z
 }
 
 export type UserRoleType = "buyer" | "seller";

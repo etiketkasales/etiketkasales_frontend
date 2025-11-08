@@ -1,0 +1,8 @@
+.container {
+    gap: $space-8;
+    max-height: max-content;
+
+    @media screen and (width <= 768px) {
+        padding: $space-3 !important;
+    }
+}

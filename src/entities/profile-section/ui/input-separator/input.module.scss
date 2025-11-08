@@ -1,0 +1,25 @@
+
+.inputContainer {
+  background-color: $neutral-300;
+  padding: $space-6px $space-3;
+  border-radius: $space-3;
+  max-height: 52px;
+  grid-column: 6 span;
+
+  @media screen and (width <= 768px) {
+    grid-column: 12 span;
+  }
+  
+  .holder {
+    order: 0;
+  }
+
+  .input {
+    order: 1;
+  }
+}
+
+
+.input {
+  background-color: transparent;
+}

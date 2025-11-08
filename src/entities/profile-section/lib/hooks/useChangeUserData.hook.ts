@@ -9,7 +9,7 @@ import FormUtils from "~/src/shared/lib/utils/form.util";
 import { IChangeableProfile, IProfile } from "~/src/features/user/model";
 import { MessageI } from "~/src/shared/model";
 
-export const useChangePersonal = (userInfo: IProfile) => {
+export const useChangeUserData = (userInfo: IProfile) => {
   const dispatch = useAppDispatch();
   const { setUserData } = useUser();
   const { changeableUserInfo } = useAppSelector(selectUser);
@@ -62,7 +62,7 @@ export const useChangePersonal = (userInfo: IProfile) => {
       if (v.trim() === "") {
         setDisabledButton(true);
       } else {
-        updatedValue = v.trim();
+        updatedValue = v;
         if (v.trim() !== userInfo[field]) {
           setDisabledButton(false);
         }
@@ -91,6 +91,7 @@ export const useChangePersonal = (userInfo: IProfile) => {
           setUserData(res.user);
           setEnabledInputs([]);
           setError(null);
+          setDisabledButton(true);
         }
       },
       setError,

@@ -21,8 +21,9 @@ $third-family: var(--inter-font);
     text-decoration-line: line-through;
 }
 
-.underline-front {
-    text-decoration: underline solid from-front;
+.underline-front,
+.underline {
+    text-decoration: underline solid;
 }
 
 .blue-link {

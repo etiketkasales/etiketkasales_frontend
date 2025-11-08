@@ -1,6 +1,6 @@
 import React from "react";
 
-import ProfileChangeButton from "./button";
+import ProfileSaveButton from "~/src/entities/profile-section/ui/save-button";
 import ProfilePersonalInputs from "./inputs";
 import { IChangeableProfile } from "~/src/features/user/model";
 import { MessageI } from "~/src/shared/model";
@@ -39,7 +39,7 @@ export default function ProfileChange({
         onKeyDown={onKeyDown}
         error={error}
       />
-      <ProfileChangeButton disabled={isDisabled} onSave={onSave} />
+      <ProfileSaveButton disabled={isDisabled} onSave={onSave} />
     </>
   );
 }

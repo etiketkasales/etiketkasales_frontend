@@ -17,7 +17,7 @@ export default function HeaderWithBackMedia({
   onBackClick,
 }: Props) {
   return (
-    <div className={`${classes.container} relative`}>
+    <div className={`relative`}>
       <Button
         typeButton="ghost"
         size="0"

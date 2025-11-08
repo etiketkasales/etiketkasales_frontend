@@ -1,5 +1,9 @@
 .wrapper {
     border-radius: $space-5;
+
+    @media screen and (width <= 1024px) {
+        min-height: 532px;
+    }
 }
 
 .container {

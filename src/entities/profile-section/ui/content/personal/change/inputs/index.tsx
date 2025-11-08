@@ -1,7 +1,7 @@
 import React from "react";
 
 import classes from "./personal-inputs.module.scss";
-import ProfileInputsSeparator from "./separator";
+import ProfileInputsSeparator from "~/src/entities/profile-section/ui/input-separator";
 import { IChangeableProfile } from "~/src/features/user/model";
 import { profilePersonalInputs } from "~/src/entities/profile-section/model";
 import { MessageI } from "~/src/shared/model";

@@ -8,7 +8,7 @@ interface Props {
   disabled: boolean;
 }
 
-export default function ProfileChangeButton({ onSave, disabled }: Props) {
+export default function ProfileSaveButton({ onSave, disabled }: Props) {
   return (
     <Button
       typeButton="yellow"

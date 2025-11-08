@@ -15,5 +15,6 @@
 @media screen and (width <= 768px) {
   .container {
     gap: $space-4;
+    padding: $space-4 !important;
   }
 }

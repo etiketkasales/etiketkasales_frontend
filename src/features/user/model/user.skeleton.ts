@@ -48,7 +48,7 @@ export const SProfile: IProfile = {
   seller_rejection_reason: null,
   agreement_accepted: false,
   agreement_accepted_at: null,
-  updated_at: null,
+  updated_at: "",
 };
 
 export const SChangeableProfile: IChangeableProfile = {
