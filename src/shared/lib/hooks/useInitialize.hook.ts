@@ -25,13 +25,7 @@ export const useInitialize = () => {
       dispatch(setUser({ needRemember: remember }));
     }
     if (remember) {
-      handleGetUser()
-        .then(() => {
-          dispatch(setUser({ isLoggedIn: true }));
-        })
-        .catch(() => {
-          dispatch(setUser({ isLoggedIn: false }));
-        });
+      handleGetUser();
     } else {
       dispatch(setUser({ isLoggedIn: false }));
     }

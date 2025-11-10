@@ -12,21 +12,21 @@ export const useUser = () => {
     (loading: boolean) => {
       dispatch(setUser({ loadingData: loading }));
     },
-    [dispatch],
+    [dispatch]
   );
 
   const setEditableData = useCallback(
     (data: IProfile) => {
       const editableData = Object.fromEntries(
         Object.entries(data).filter(([key]) =>
-          profileChangeableFields.includes(key as keyof IProfile),
-        ),
+          profileChangeableFields.includes(key as keyof IProfile)
+        )
       );
       dispatch(
-        setUser({ changeableUserInfo: editableData as IChangeableProfile }),
+        setUser({ changeableUserInfo: editableData as IChangeableProfile })
       );
     },
-    [dispatch],
+    [dispatch]
   );
 
   const setUserData = useCallback(
@@ -34,7 +34,7 @@ export const useUser = () => {
       dispatch(setUser({ userInfo: data }));
       setEditableData(data);
     },
-    [dispatch, setEditableData],
+    [dispatch, setEditableData]
   );
 
   const handleGetUser = useCallback(async () => {
@@ -43,13 +43,16 @@ export const useUser = () => {
       const res = await getProfile();
       if (res.user) {
         setUserData(res.user);
+      } else {
+        dispatch(setUser({ isLoggedIn: false }));
       }
     } catch (err) {
       console.error(err);
+      dispatch(setUser({ isLoggedIn: false }));
     } finally {
       setLoading(false);
     }
-  }, [setLoading, setUserData]);
+  }, [dispatch, setLoading, setUserData]);
 
   return {
     handleGetUser,
