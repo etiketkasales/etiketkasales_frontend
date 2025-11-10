@@ -8,7 +8,7 @@ import ProfileOrdersItem from "./item";
 import { profileTitlesMap } from "~/src/entities/profile-section/model";
 
 export default function ProfileOrders() {
-  const { orders, loading } = useOrders();
+  const { orders, loading } = useOrders({ role: "buyer" });
 
   return (
     <ProfileContentContainer

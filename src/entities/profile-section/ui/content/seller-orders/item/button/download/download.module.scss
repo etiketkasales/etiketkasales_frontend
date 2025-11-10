@@ -1,0 +1,12 @@
+.container {
+    flex-direction: row;
+
+    @media screen and (width <= 768px) {
+        flex-direction: column;
+        flex: 1 0;
+    }
+}
+
+.button {
+    padding: $space-2 $space-6;
+}

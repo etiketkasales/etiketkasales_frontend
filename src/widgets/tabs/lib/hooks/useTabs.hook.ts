@@ -8,6 +8,13 @@ export const useTabs = () => {
   const ref = useRef<HTMLDivElement>(null);
   const { items } = useAppSelector(selectCart);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.location.pathname === "/") {
+      dispatch(setNavigation({ activeTabsItem: "" }));
+    }
+  }, [dispatch]);
+
   const setHeight = useCallback(
     (height: number | null) => {
       dispatch(

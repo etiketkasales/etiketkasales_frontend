@@ -38,7 +38,7 @@ export const sellerTabs: IAsideItem[] = [
   },
   {
     title: "Заказы",
-    action: "orders",
+    action: "seller_orders",
   },
   {
     title: "Карточки товаров",
@@ -65,6 +65,7 @@ export const sellerTabs: IAsideItem[] = [
 export const profileTitlesMap: Record<ProfileActionType, string> = {
   personal: "Личные данные",
   orders: "Мои заказы",
+  seller_orders: "Заказы",
   as_legal: "Покупать как юр. лицо",
   addresses: "Адреса",
   quote: "Заявка на активацию магазина",

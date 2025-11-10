@@ -26,7 +26,12 @@ class StringUtils {
   }
 
   static formatPhone(p: string): string {
-    return p
+    let value: string = "";
+    value = p;
+    if (p.includes("+")) {
+      value = p.replace("+", "");
+    }
+    return value
       .toString()
       .replace(/(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})/, "+7 ($2) $3-$4-$5");
   }

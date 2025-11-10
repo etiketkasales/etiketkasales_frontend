@@ -7,6 +7,7 @@ interface NavigationStateI {
   tabsHeight: number | null;
   loaded: boolean;
   cities: string[];
+  activeTabsItem: string;
   [key: string]: any;
 }
 
@@ -16,6 +17,7 @@ const initialState: NavigationStateI = {
   headerHeight: 0,
   tabsHeight: null,
   loaded: false,
+  activeTabsItem: "",
   cities: [],
 };
 

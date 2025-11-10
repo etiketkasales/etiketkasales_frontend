@@ -1,17 +1,30 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
+import {
+  selectNavigation,
+  setNavigation,
+} from "~/src/app/store/reducers/navigation.slice";
+
 import { ICartItem } from "~/src/features/cart/model/cart.interface";
 
 export const useTabsItem = (link: string, cartItems: ICartItem[]) => {
+  const dispatch = useAppDispatch();
   const { push, prefetch } = useRouter();
-  const [isActive, setIsActive] = useState<boolean>(false);
+  const { activeTabsItem } = useAppSelector(selectNavigation);
+
+  const onTabClick = useCallback(() => {
+    if (activeTabsItem === link) return;
+    push(`/${link}`);
+  }, [push, link, activeTabsItem]);
 
   useEffect(() => {
+    if (!link || link === "") return;
     if (typeof window === "undefined") return;
-    if (window.location.pathname === link) {
-      setIsActive(true);
+    if (window.location.pathname.includes(link)) {
+      dispatch(setNavigation({ activeTabsItem: link }));
     }
-  }, [link]);
+  }, [link, dispatch]);
 
   useEffect(() => {
     prefetch(link);
@@ -34,13 +47,9 @@ export const useTabsItem = (link: string, cartItems: ICartItem[]) => {
     }
   };
 
-  const buttonClick = () => {
-    push(link);
-  };
-
   return {
     getDop,
-    isActive,
-    buttonClick,
+    isActive: activeTabsItem === link,
+    onTabClick,
   };
 };

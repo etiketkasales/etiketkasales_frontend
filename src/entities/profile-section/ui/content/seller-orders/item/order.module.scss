@@ -1,0 +1,10 @@
+.container {
+    padding: $space-5;
+    gap: $space-6;
+    border-radius: $space-5;
+    border: 1px solid var(--border-color);
+
+    @media screen and (width <= 768px) {
+        padding: $space-3;
+    }
+}

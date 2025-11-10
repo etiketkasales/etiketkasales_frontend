@@ -7,20 +7,20 @@ import { TabsItemI } from "./tabs.interface";
 export const tabsItems: TabsItemI[] = [
   {
     Icon: House,
-    link: "/",
+    link: "",
   },
   {
     Icon: Heart,
-    link: "/favorite",
+    link: "favorite",
     needDop: "favourites",
   },
   {
     Icon: Cart,
-    link: "/cart",
+    link: "cart",
     needDop: "cart",
   },
   {
     Icon: Person,
-    link: "/profile",
+    link: "profile",
   },
 ];

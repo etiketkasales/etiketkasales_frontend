@@ -1,0 +1,22 @@
+.container {
+    flex-direction: row;
+    align-items: center;
+
+    @media screen and (width <= 768px) {
+        flex-direction: column;
+        flex: 1 0;
+
+        .cancel,
+        .confirm {
+            width: 100%;
+        }
+    }
+}
+
+.cancel {
+    padding: $space-2 $space-6;
+}
+
+.confirm {
+    padding: $space-3 $space-6;
+}

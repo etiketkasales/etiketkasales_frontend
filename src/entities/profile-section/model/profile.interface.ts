@@ -54,7 +54,7 @@ export type SellerSectionType =
   | "quote"
   | "profile"
   | "reviews"
-  | "orders"
+  | "seller_orders"
   | "products"
   | "promotion"
   | "accounting"

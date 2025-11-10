@@ -1,0 +1,16 @@
+.item {
+  position: relative;
+  padding-left: $space-3;
+  margin-left: $space-2;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background-color: var(--color);
+    width: 4px;
+    height: 4px;
+  }
+}

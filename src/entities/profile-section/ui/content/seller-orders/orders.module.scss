@@ -1,0 +1,11 @@
+.container {
+    gap: $space-4;
+    align-self: flex-start;
+}
+
+.list {
+    gap: $space-3;
+    @media screen and (width <= 768px) {
+        gap: $space-4;
+    }
+}

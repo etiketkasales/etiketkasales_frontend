@@ -30,6 +30,8 @@ export default function ProfileRolePage({ userRole }: Props) {
 
   if (!isLoggedIn) return redirect("/login");
 
+  // if (userRole !== userInfo.role) return redirect("/profile");
+
   return (
     <PageWrapper
       CustomHeader={

@@ -1,38 +1,42 @@
 .container {
-    position: relative;
-    width: 26px;
-    height: 26px;
+  position: relative;
+  width: 26px;
+  height: 26px;
 
-    svg {
-        g {
-            opacity: 0.4;
-        }
-        path {
-            fill: $gray-2;
-            opacity: 0.4;
-        }
+  svg {
+    g {
+      opacity: 0.4;
     }
+    path {
+      fill: $gray-2;
+      opacity: 0.4;
+    }
+  }
+}
+
+.button {
+  position: relative;
 }
 
 .active {
-    svg {
-        g {
-            opacity: 1;
-        }
-
-        path {
-            fill: $dark-yellow;
-        }
+  svg {
+    g {
+      opacity: 1;
     }
+
+    path {
+      fill: $dark-yellow;
+    }
+  }
 }
 
 .dop {
-    position: absolute;
-    top: 0;
-    right: 0;
-    transform: translate(50%, -50%);
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
 
-    background-color: $light-yellow;
-    padding: $space-0 $space-1;
-    border-radius: $space-3;
+  background-color: $light-yellow;
+  padding: $space-0 $space-1;
+  border-radius: $space-3;
 }

@@ -13,7 +13,7 @@ interface Props extends TabsItemI {
 }
 
 export default function TabsItem({ Icon, link, needDop, cartItems }: Props) {
-  const { isActive, buttonClick, getDop } = useTabsItem(link, cartItems);
+  const { isActive, onTabClick, getDop } = useTabsItem(link, cartItems);
 
   return (
     <Button
@@ -22,7 +22,7 @@ export default function TabsItem({ Icon, link, needDop, cartItems }: Props) {
       className={classNames(classes.button, {
         [classes.active]: isActive,
       })}
-      onClick={buttonClick}
+      onClick={onTabClick}
       needActiveScale={false}
     >
       <Icon />

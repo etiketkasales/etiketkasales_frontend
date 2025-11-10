@@ -18,10 +18,12 @@ interface Props {
   fill?: boolean;
 }
 
+const fallbackImage = "/shared/image-src-plug.png";
+
 export default function ImageWrapper({
   width,
   height,
-  src = "/shared/image-src-plug.png",
+  src = fallbackImage,
   className,
   imgClassName,
   alt = "",
@@ -35,7 +37,7 @@ export default function ImageWrapper({
   return (
     <div className={classNames(className, classes.container)}>
       <Image
-        src={canLoad ? src : "/shared/image-src-plug.png"}
+        src={canLoad ? (src ? src : fallbackImage) : fallbackImage}
         width={width}
         height={height}
         alt={alt}
