@@ -3,7 +3,8 @@ import classNames from "classnames";
 import { useModal } from "~/src/shared/ui/modals/lib/hooks";
 
 import classes from "./modal.module.scss";
-import Container from "../../../container/ui";
+import { AnimatePresence, motion } from "framer-motion";
+import Container from "~/src/shared/ui/container/ui";
 import ModalTitle from "../title";
 import { IModalBaseProps } from "~/src/shared/ui/modals/model";
 
@@ -32,25 +33,30 @@ export default function Modal({
   const { contentRef } = useModal({ isOpen, onClose, customClickOutside });
 
   return (
-    <div
-      className={classNames(wrapperClassName, classes.wrapper, {
-        [classes.active]: isOpen,
-      })}
-    >
-      <Container
-        ref={contentRef}
-        bgColor={bgColor}
-        className={classNames(containerClassName)}
-      >
-        <ModalTitle
-          title={title}
-          onClose={onClose}
-          className={titleClassName}
-          textClassName={titleTextClassName}
-          needButton={needBackButton}
-        />
-        {children}
-      </Container>
-    </div>
+    <AnimatePresence initial={false}>
+      {isOpen && (
+        <motion.div
+          className={classNames(wrapperClassName, classes.wrapper)}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <Container
+            ref={contentRef}
+            bgColor={bgColor}
+            className={classNames(containerClassName)}
+          >
+            <ModalTitle
+              title={title}
+              onClose={onClose}
+              className={titleClassName}
+              textClassName={titleTextClassName}
+              needButton={needBackButton}
+            />
+            {children}
+          </Container>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

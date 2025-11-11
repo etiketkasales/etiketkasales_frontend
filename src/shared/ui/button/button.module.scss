@@ -39,6 +39,11 @@
   border: 1px solid $bg-gray;
 }
 
+.red-border {
+  background-color: transparent;
+  border: 1px solid $red-300;
+}
+
 .blue {
   border-radius: $space-2;
   background-color: $blue-500;

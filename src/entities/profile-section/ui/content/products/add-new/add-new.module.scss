@@ -1,0 +1,14 @@
+.container {
+    align-self: flex-start;
+    padding: $space-4 $space-6;
+    border-radius: $space-4;
+
+    @media screen and (width <= 768px) {
+        padding: $space-3;
+        border-radius: $space-3;
+    }
+}
+
+.long {
+    align-self: initial !important;
+}

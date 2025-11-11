@@ -3,7 +3,10 @@ import React, { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import { useFiltersParse } from "~/src/features/filters/lib/hooks/useFiltersParse.hook";
 import { useAppDispatch } from "~/src/app/store/hooks";
-import { setCatalogueActiveFilters } from "~/src/app/store/reducers/catalogue.slice";
+import {
+  setCatalogue,
+  setCatalogueActiveFilters,
+} from "~/src/app/store/reducers/catalogue.slice";
 
 import classes from "./filters.module.scss";
 import Container from "~/src/shared/ui/container/ui";
@@ -32,6 +35,10 @@ export default function ProductsFilters({ initFilters, className }: Props) {
   useEffect(() => {
     dispatch(setCatalogueActiveFilters(filterForCatalogue));
   }, [dispatch, filterForCatalogue]);
+
+  useEffect(() => {
+    dispatch(setCatalogue({ allFilters: initFilters }));
+  }, [dispatch, initFilters]);
 
   return (
     <Container

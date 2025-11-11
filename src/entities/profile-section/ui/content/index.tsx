@@ -9,6 +9,7 @@ import ProfileCompanies from "./companies";
 import ProfileInDev from "./in-dev";
 import CompanyProfile from "./company-profile";
 import SellerOrders from "./seller-orders";
+import ProfileProducts from "./products";
 import { ProfileActionType } from "~/src/entities/profile-section/model/profile.interface";
 import { IProfile } from "~/src/features/user/model";
 import { profileInDev } from "../../model";
@@ -48,5 +49,7 @@ export default function ProfileContent({
       return <ProfileCompanies />;
     case "profile":
       return <CompanyProfile userInfo={userInfo} />;
+    case "products":
+      return <ProfileProducts />;
   }
 }

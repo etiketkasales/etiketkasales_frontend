@@ -1,0 +1,13 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: $space-8;
+    justify-content: start;
+};
+
+@media screen and (width <= 768px) {
+    .container {
+        gap: $space-4;
+        justify-content: space-between;
+    }
+}

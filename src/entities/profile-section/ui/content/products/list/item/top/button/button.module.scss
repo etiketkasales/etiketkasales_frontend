@@ -1,0 +1,19 @@
+.container {
+    border: 2px solid $neutral-100;
+    padding: $space-10px;
+    border-radius: $space-4;
+    box-shadow: $shadow-400 !important;
+    width: 56px;
+    height: 56px;
+
+    position: absolute;
+    bottom: -$space-4;
+    right: $space-4;
+
+    @media screen and (width <= 560px) {
+        width: 44px;
+        height: 44px;
+        right: $space-3;
+        bottom: -$space-10px;
+    }
+}

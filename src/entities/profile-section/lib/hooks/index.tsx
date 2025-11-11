@@ -4,3 +4,4 @@ export * from "./useOrders.hook";
 export * from "./useCompanies.hook";
 export * from "./useDeleteCompany.hook";
 export * from "./useChangeUserData.hook";
+export * from "./useNewProduct.hook";

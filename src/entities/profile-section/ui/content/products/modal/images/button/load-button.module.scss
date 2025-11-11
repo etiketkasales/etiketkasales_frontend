@@ -1,0 +1,29 @@
+.container {
+  border: 1px dashed $yellow-600;
+  border-radius: $space-5;
+  padding: $space-4;
+  max-width: 160px;
+  max-width: 160px;
+  flex: 1 1;
+  justify-self: flex-start;
+
+  transition: border $transition;
+
+  @media screen and (width <= 768px) {
+    justify-self: center;
+  }
+
+  @media screen and (any-hover: hover) {
+    &:hover {
+      border: 1px dashed $yellow-800;
+
+      p {
+        color: $yellow-800 !important;
+      }
+
+      svg path {
+        fill: $yellow-800;
+      }
+    }
+  }
+}

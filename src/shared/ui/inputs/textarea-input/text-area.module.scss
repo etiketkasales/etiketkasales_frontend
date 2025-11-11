@@ -1,0 +1,30 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  flex: 1;
+}
+
+.withIcons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input {
+  flex: 1;
+  width: 100%;
+  background-color: transparent;
+}
+
+.iconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.iconBtn:hover {
+  opacity: 0.7;
+}

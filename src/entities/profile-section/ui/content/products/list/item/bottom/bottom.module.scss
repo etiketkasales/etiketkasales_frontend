@@ -1,0 +1,17 @@
+.container {
+    gap: $space-1;
+    justify-content: center;
+
+    @media screen and (width <= 768px) {
+        gap: $space-0;
+    }
+}
+
+.webkitBox {
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

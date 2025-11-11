@@ -11,6 +11,7 @@ interface InitialStateI {
   catalogueFilters: IFilters;
   activeFilters: IActiveFilter[];
   activeCategories: string[];
+  allFilters: IFilters | null;
   [key: string]: any;
 }
 
@@ -18,6 +19,7 @@ const initialState: InitialStateI = {
   catalogueFilters: {},
   activeFilters: [],
   activeCategories: [],
+  allFilters: null,
 };
 
 export const catalogueSlice = createSlice({

@@ -1,0 +1,9 @@
+.container {
+    grid-column: 4 span;
+    gap: $space-4;
+
+    @media screen and (width <= 768px) {
+        gap: $space-3;
+        grid-column: 6 span;
+    }
+}
