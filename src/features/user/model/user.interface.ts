@@ -10,6 +10,8 @@ export interface UserInfoI {
   in_favourites_ids: number[];
 }
 
+export type SellerStatusType = "draft" | "pending" | "approved" | "rejected";
+
 export interface IChangeableProfile {
   email: string | null;
   name: string | null;
@@ -42,8 +44,8 @@ export interface IChangeableProfile {
 export interface IProfile extends IChangeableProfile {
   id: number;
   phone: string;
-  seller_status: string;
-  seller_rejection_reason: null;
+  seller_status: SellerStatusType;
+  seller_rejection_reason: string | null;
   seller_approved_at: string | null; //2025-01-29T10:00:00Z
   agreement_accepted_at: string | null; //2025-01-29T10:00:00Z
   role: UserRoleType;

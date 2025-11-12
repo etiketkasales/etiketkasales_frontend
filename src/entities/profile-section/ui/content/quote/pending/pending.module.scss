@@ -1,0 +1,7 @@
+.container {
+  min-height: 124px;
+
+  @media screen and (width <= 768px) {
+    min-height: 192px;
+  }
+}

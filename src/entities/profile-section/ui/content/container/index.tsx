@@ -10,6 +10,7 @@ interface Props {
   title?: string;
   className?: string;
   loading?: boolean;
+  needDeleteTitle?: boolean;
 }
 
 export default function ProfileContentContainer({
@@ -17,16 +18,16 @@ export default function ProfileContentContainer({
   className,
   title,
   loading = false,
+  needDeleteTitle = true,
 }: Props) {
   return (
     <ProfileContainer className={classNames(className, classes.container)}>
       {loading && <LoaderCircle radius={20} />}
       {title && (
         <h1
-          className={classNames(
-            `heading h4 text-neutral-1000`,
-            classes.heading,
-          )}
+          className={classNames(`heading h4 text-neutral-1000`, {
+            [classes.heading]: needDeleteTitle,
+          })}
         >
           {title}
         </h1>

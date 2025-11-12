@@ -35,7 +35,7 @@ export const useCompanies = () => {
   const handleGetCompanies = useCallback(async () => {
     await promiseCallback(async () => {
       const res = await getCompanies();
-      setCompanies(res || []);
+      setCompanies(res.filter((item) => item.is_active) || []);
     });
   }, [setCompanies, promiseCallback]);
 

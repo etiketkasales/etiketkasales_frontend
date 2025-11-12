@@ -1,0 +1,8 @@
+.container {
+    gap: $space-8;
+
+    @media screen and (width <= 768px) {
+        min-height: 224px;
+        justify-content: flex-start;
+    }
+}

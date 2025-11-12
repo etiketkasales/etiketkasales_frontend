@@ -3,7 +3,7 @@ import { IChangeableProfile } from "~/src/features/user/model";
 export interface IProfileInput {
   holder: string;
   field: keyof IChangeableProfile | "phone";
-  type: "string" | "phone" | "email";
+  type: "string" | "phone" | "email" | "checkbox";
 }
 
 export interface IOrder {
@@ -66,4 +66,9 @@ export type ProfileActionType = BuyerSectionType | SellerSectionType;
 export interface IAsideItem {
   title: string;
   action: ProfileActionType;
+}
+
+export interface IProfileLegalInputsSection {
+  title: string;
+  inputs: IProfileInput[];
 }

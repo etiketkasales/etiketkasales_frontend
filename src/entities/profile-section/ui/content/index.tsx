@@ -10,6 +10,7 @@ import ProfileInDev from "./in-dev";
 import CompanyProfile from "./company-profile";
 import SellerOrders from "./seller-orders";
 import ProfileProducts from "./products";
+import ProfileQuote from "./quote";
 import { ProfileActionType } from "~/src/entities/profile-section/model/profile.interface";
 import { IProfile } from "~/src/features/user/model";
 import { profileInDev } from "../../model";
@@ -51,5 +52,12 @@ export default function ProfileContent({
       return <CompanyProfile userInfo={userInfo} />;
     case "products":
       return <ProfileProducts />;
+    case "quote":
+      return (
+        <ProfileQuote
+          moderationStage={userInfo.seller_status}
+          rejectReason={userInfo.seller_rejection_reason}
+        />
+      );
   }
 }

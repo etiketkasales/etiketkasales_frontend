@@ -19,6 +19,7 @@ interface InitialStateI {
   addresses: IUserAddress[];
   companies: IUserCompany[];
   loggedOutFromProfile: boolean;
+  buyerAsSeller: boolean;
   [key: string]: any;
 }
 
@@ -33,6 +34,7 @@ const initialState: InitialStateI = {
   loggedOutFromProfile: false,
   addresses: [],
   companies: [],
+  buyerAsSeller: false,
 };
 
 export const userSlice = createSlice({

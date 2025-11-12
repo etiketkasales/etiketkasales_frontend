@@ -1,6 +1,8 @@
+import { IChangeableProfile } from "~/src/features/user/model";
 import {
   IAsideItem,
   IProfileInput,
+  IProfileLegalInputsSection,
   ProfileActionType,
 } from "./profile.interface";
 
@@ -27,6 +29,17 @@ export const buyerTabs: IAsideItem[] = [
   },
 ];
 
+export const sellerDraftTabs: IAsideItem[] = [
+  {
+    title: "Заявка на активацию магазина",
+    action: "quote",
+  },
+  {
+    title: "Адреса доставки",
+    action: "addresses",
+  },
+];
+
 export const sellerTabs: IAsideItem[] = [
   {
     title: "Профиль магазина",
@@ -39,6 +52,10 @@ export const sellerTabs: IAsideItem[] = [
   {
     title: "Заказы",
     action: "seller_orders",
+  },
+  {
+    title: "Адреса доставки",
+    action: "addresses",
   },
   {
     title: "Карточки товаров",
@@ -95,17 +112,18 @@ export const profileInDev: ProfileActionType[] = [
   "statistics",
 ];
 
+const stringInput = (
+  field: keyof IChangeableProfile,
+  holder: string,
+): IProfileInput => ({
+  holder,
+  field,
+  type: "string",
+});
+
 export const profilePersonalInputs: IProfileInput[] = [
-  {
-    holder: "Имя",
-    field: "name",
-    type: "string",
-  },
-  {
-    holder: "Фамилия",
-    field: "surname",
-    type: "string",
-  },
+  stringInput("name", "Имя"),
+  stringInput("surname", "Фамилия"),
   {
     holder: "Телефон",
     field: "phone",
@@ -117,3 +135,58 @@ export const profilePersonalInputs: IProfileInput[] = [
     type: "email",
   },
 ];
+
+export const profileLegalInputs: IProfileInput[] = [
+  stringInput("inn", "ИНН"),
+  stringInput("company_name", "Наименование компании"),
+  stringInput("kpp", "КПП"),
+  stringInput("ogrn", "ОГРН / ОГРНИП"),
+  stringInput("legal_address", "Юридический адрес"),
+  stringInput("actual_address", "Фактический адрес"),
+];
+
+export const requisitsInputs: IProfileInput[] = [
+  stringInput("bank_account", "Номер расчетного счета"),
+  stringInput("bank_bik", "БИК"),
+  stringInput("correspondent_account", "Корреспондентский счет"),
+  stringInput("bank_name", "Название банка получателя"),
+  stringInput("legal_address", "Юридический адрес"),
+  stringInput("actual_address", "Фактический адрес"),
+];
+
+export const directorInputs: IProfileInput[] = [
+  stringInput("director_surname", "Фамилия"),
+  stringInput("director_name", "Имя"),
+  stringInput("director_patronymic", "Отчество"),
+];
+
+export const accountantInputs: IProfileInput[] = [
+  {
+    holder: "За бухгалтерию отвечает генеральный директор",
+    field: "accountant_is_director",
+    type: "checkbox",
+  },
+  stringInput("accountant_surname", "Фамилия"),
+  stringInput("accountant_name", "Имя"),
+  stringInput("accountant_patronymic", "Отчество"),
+];
+
+export const aboutOrganisationSection: IProfileLegalInputsSection = {
+  title: "Об организации",
+  inputs: profileLegalInputs,
+};
+
+export const requisitsSection: IProfileLegalInputsSection = {
+  title: "Реквизиты",
+  inputs: requisitsInputs,
+};
+
+export const directorSection: IProfileLegalInputsSection = {
+  title: "Генеральный директор",
+  inputs: directorInputs,
+};
+
+export const accountantSection: IProfileLegalInputsSection = {
+  title: "Бухгалтер",
+  inputs: accountantInputs,
+};
