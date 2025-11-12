@@ -1,17 +1,17 @@
-import { CompanyI } from "~/src/features/company/model/company.interface";
 import { FormModalInputI } from "../../form-modal/model/form-modal.interface";
 import { OrgTypeI, RegistrationStageT } from "./company-registration.interface";
+import { IChangeableProfile } from "~/src/features/user/model";
 
-export const personalInputs: FormModalInputI<CompanyI>[] = [
+export const personalInputs: FormModalInputI<IChangeableProfile>[] = [
   {
     field: "name",
     type: "text",
     placeholder: "Имя",
   },
   {
-    field: "phone",
-    type: "phone",
-    placeholder: "Номер телефона",
+    field: "surname",
+    type: "string",
+    placeholder: "Фамилия",
   },
   {
     field: "email",
@@ -20,9 +20,9 @@ export const personalInputs: FormModalInputI<CompanyI>[] = [
   },
 ];
 
-export const nameInputs: FormModalInputI<CompanyI>[] = [
+export const nameInputs: FormModalInputI<IChangeableProfile>[] = [
   {
-    field: "organization_name",
+    field: "company_name",
     type: "text",
     placeholder: "Название магазина",
   },
@@ -39,26 +39,29 @@ export const statusInputs: OrgTypeI[] = [
   },
 ];
 
-export const personalFieldsRequired: (keyof CompanyI)[] = [
+export const personalFieldsRequired: (keyof IChangeableProfile)[] = [
   "name",
-  "phone",
+  "surname",
   "email",
-  "is_agree_confident",
+  "agreement_accepted",
 ];
 
-export const nameRequired: (keyof CompanyI)[] = ["organization_name"];
+export const nameRequired: (keyof IChangeableProfile)[] = ["company_name"];
 
-export const cityFieldsRequired: (keyof CompanyI)[] = [
-  "warehouse_town",
-  "is_agree_contact",
+export const cityFieldsRequired: (keyof IChangeableProfile)[] = [
+  "storage_city",
+];
+
+export const statusFieldsRequired: (keyof IChangeableProfile)[] = [
+  "company_type",
 ];
 
 export const requiredFieldsRecord: Record<
   RegistrationStageT,
-  (keyof CompanyI)[]
+  (keyof IChangeableProfile)[]
 > = {
   personal: personalFieldsRequired,
   name: nameRequired,
   city: cityFieldsRequired,
-  status: [],
+  status: statusFieldsRequired,
 };

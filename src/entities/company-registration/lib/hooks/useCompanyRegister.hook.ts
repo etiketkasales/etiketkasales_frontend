@@ -1,15 +1,15 @@
 import { useCallback, useState } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
-import {
-  selectCompany,
-  setCompanyData,
-  setStage,
-} from "~/src/app/store/reducers/company.slice";
+import { setStage } from "~/src/app/store/reducers/company.slice";
+import { selectUser, setUser } from "~/src/app/store/reducers/user.slice";
 import { useFormValidate } from "~/src/shared/lib/hooks/useFormValidate.hook";
+import { useUser } from "~/src/features/user/lib/hooks";
+import { changePersonalData } from "~/src/entities/profile-section/lib/api";
+import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 
-import { CompanyI } from "~/src/features/company/model/company.interface";
 import { requiredFieldsRecord } from "~/src/entities/company-registration/model/company-registration.const";
 import { RegistrationStageT } from "~/src/entities/company-registration/model/company-registration.interface";
+import { IChangeableProfile } from "~/src/features/user/model";
 
 interface Props {
   stage: RegistrationStageT;
@@ -17,51 +17,89 @@ interface Props {
 
 export const useCompanyRegister = ({ stage }: Props) => {
   const dispatch = useAppDispatch();
-  const { companyData } = useAppSelector(selectCompany);
+  const { changeableUserInfo, currentRole } = useAppSelector(selectUser);
   const [loading, setLoading] = useState<boolean>(false);
-
-  const requiredFields: (keyof CompanyI)[] = requiredFieldsRecord[stage];
+  const { setUserData } = useUser();
+  const requiredFields: (keyof IChangeableProfile)[] =
+    requiredFieldsRecord[stage];
   const { error, handleHasValidateError, handleIsError } = useFormValidate({
-    validateData: companyData,
+    validateData: changeableUserInfo,
     requiredFields,
   });
-
-  const isPhoneError = useCallback(() => {
-    return handleHasValidateError("phone");
-  }, [handleHasValidateError]);
 
   const isEmailError = useCallback(() => {
     return handleHasValidateError("email");
   }, [handleHasValidateError]);
 
   const hasErrors = useCallback(() => {
-    return handleIsError() || isEmailError() || isPhoneError();
-  }, [isPhoneError, isEmailError, handleIsError]);
+    return handleIsError() || isEmailError();
+  }, [isEmailError, handleIsError]);
 
-  const handleChangeData = (v: string, field: keyof CompanyI) => {
-    dispatch(setCompanyData({ ...companyData, [field]: v }));
-  };
+  const handleChangeData = useCallback(
+    (v: string, field: keyof IChangeableProfile) => {
+      dispatch(
+        setUser({
+          changeableUserInfo: {
+            ...changeableUserInfo,
+            [field]: v,
+          },
+        }),
+      );
+    },
+    [changeableUserInfo, dispatch],
+  );
 
-  const handleChangeBoolean = (v: boolean, field: keyof CompanyI) => {
-    dispatch(setCompanyData({ ...companyData, [field]: v }));
-  };
+  const handleChangeBoolean = useCallback(
+    (v: boolean, field: keyof IChangeableProfile) => {
+      dispatch(
+        setUser({
+          changeableUserInfo: {
+            ...changeableUserInfo,
+            [field]: v,
+          },
+        }),
+      );
+    },
+    [changeableUserInfo, dispatch],
+  );
 
-  const handleButtonClick = (nextPage?: RegistrationStageT) => {
-    const isError = hasErrors();
-    if (isError) return;
-    if (nextPage) {
-      handleChangeStage(nextPage);
-    }
-  };
+  const handleChangeStage = useCallback(
+    (stage: RegistrationStageT) => {
+      dispatch(setStage(stage));
+    },
+    [dispatch],
+  );
 
-  const handleChangeStage = (stage: RegistrationStageT) => {
-    dispatch(setStage(stage));
-  };
+  const onSave = useCallback(async () => {
+    await promiseWrapper({
+      setLoading,
+      callback: async () => {
+        const res = await changePersonalData(changeableUserInfo);
+        if (res.user) {
+          setUserData(res.user);
+        }
+      },
+    });
+  }, [setUserData, changeableUserInfo]);
+
+  const handleButtonClick = useCallback(
+    (nextPage?: RegistrationStageT) => {
+      const isError = hasErrors();
+      if (isError) return;
+      if (nextPage) {
+        handleChangeStage(nextPage);
+      }
+      if (stage === "city") {
+        onSave();
+      }
+    },
+    [hasErrors, handleChangeStage, onSave, stage],
+  );
 
   return {
     loading,
     error,
-    companyData,
+    companyData: changeableUserInfo,
     handleChangeData,
     handleChangeBoolean,
     handleButtonClick,

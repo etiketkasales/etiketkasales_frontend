@@ -4,12 +4,12 @@ import { useCompanyRegister } from "~/src/entities/company-registration/lib/hook
 
 import CompanyPersonal from "./personal";
 import CompanyStatus from "./status";
+import CompanyName from "./name";
+import CompanyCity from "./city";
 import {
   RegCommonPropsI,
   RegistrationStageT,
 } from "~/src/entities/company-registration/model/company-registration.interface";
-import CompanyName from "./name";
-import CompanyCity from "./city";
 
 interface Props {
   stage: RegistrationStageT;
@@ -38,9 +38,7 @@ export default function CompanyRegistration({ stage }: Props) {
     ),
     status: <CompanyStatus {...commonProps} />,
     name: <CompanyName {...commonProps} />,
-    city: (
-      <CompanyCity {...commonProps} onBooleanChange={handleChangeBoolean} />
-    ),
+    city: <CompanyCity {...commonProps} />,
   };
 
   return REG_COMPONENTS[stage] || null;

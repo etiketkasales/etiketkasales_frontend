@@ -11,7 +11,7 @@ import { FormModalInputI } from "~/src/entities/form-modal/model/form-modal.inte
 import { MessageI } from "~/src/shared/model";
 
 interface Props<T> {
-  headerText: string;
+  headerText?: string;
   inputs: FormModalInputI<T>[];
   formData: T;
   onChange: (v: string, field: keyof T) => void;
@@ -25,11 +25,13 @@ export default function FormModalInputs<T>({
   onChange,
   error,
 }: Props<T>) {
-  const { formatInput, formatForApi } = usePhoneInput();
+  const { formatForApi } = usePhoneInput();
 
   return (
     <div className={`flex-column gap-3 ${classes.container}`}>
-      <p className="text-16 gray-2 second-family regular">{headerText}</p>
+      {headerText && (
+        <p className="text-16 gray-2 second-family regular">{headerText}</p>
+      )}
       {inputs.map((input, index) => {
         const commonProps = {
           value: formData[input.field] ? String(formData[input.field]) : "",
@@ -66,11 +68,12 @@ export default function FormModalInputs<T>({
                 activeOption={
                   formData[input.field] ? String(formData[input.field]) : ""
                 }
-                options={input.selectOptions ? input.selectOptions : []}
+                options={input.selectOptions ? input.selectOptions : ["Москва"]}
                 className={`${classes.input} ${classes.select}`}
                 optionsClassName={`${classes.options}`}
                 selectedOptionClassName={`${classes.selectedOption}`}
                 optionsPosTop={12}
+                doubleHeader="Город"
                 optionHolder="Выберите город из списка"
                 error={error?.field === input.field ? error.message : ""}
                 renderItem={(item, index) => {

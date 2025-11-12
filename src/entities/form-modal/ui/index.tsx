@@ -1,5 +1,6 @@
 "use client";
 import React, { CSSProperties } from "react";
+import classNames from "classnames";
 
 import classes from "./form-modal.module.scss";
 import FormModalHeader from "./header";
@@ -8,12 +9,11 @@ import FormModalInputs from "./inputs";
 import Container from "~/src/shared/ui/container/ui";
 import { FormModalInputI } from "../model/form-modal.interface";
 import { MessageI } from "~/src/shared/model";
-import classNames from "classnames";
 
 interface Props<T> {
   formData: T;
   inputs: FormModalInputI<T>[];
-  inputsHeaderText: string;
+  inputsHeaderText?: string;
   onInputChange: (v: string, field: keyof T) => void;
   onButtonClick: () => void;
   headerText: string;

@@ -18,6 +18,7 @@ interface IResponse extends IGetDataBase {
   refresh_token?: string;
   expires_in?: number;
   error?: string;
+  missing_fields?: { field: string; label: string }[];
 }
 export const switchRole = async (role: UserRoleType) => {
   try {
@@ -36,5 +37,6 @@ export const switchRole = async (role: UserRoleType) => {
       return error.response.data;
     }
     console.error(err);
+    throw err;
   }
 };

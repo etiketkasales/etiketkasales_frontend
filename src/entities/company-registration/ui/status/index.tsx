@@ -9,7 +9,7 @@ interface Props extends RegCommonPropsI {}
 
 interface InputI {
   label: string;
-  name: "organization" | "person";
+  name: "ip" | "ooo";
 }
 
 export default function CompanyStatus({
@@ -22,11 +22,11 @@ export default function CompanyStatus({
   const inputs: InputI[] = [
     {
       label: "Организация",
-      name: "organization",
+      name: "ooo",
     },
     {
       label: "ИП",
-      name: "person",
+      name: "ip",
     },
   ];
 
@@ -37,7 +37,7 @@ export default function CompanyStatus({
       onBackButtonClick={() => changeStage("personal")}
       inputsHeaderText=""
       inputs={[]}
-      gap={"10"}
+      gap={"24"}
       headerText="Укажите ваш статус"
       subHeader="1 из 3"
       onInputChange={onInputChange}
@@ -52,9 +52,9 @@ export default function CompanyStatus({
               value={item.name}
               label={item.label}
               onChange={() => {
-                onInputChange(item.name, "organization_type");
+                onInputChange(item.name, "company_type");
               }}
-              checked={companyInfo.organization_type === item.name}
+              checked={companyInfo.company_type === item.name}
               gap="10px"
               type={"yellow"}
             />

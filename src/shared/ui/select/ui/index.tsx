@@ -24,6 +24,8 @@ interface Props<T> {
   error?: string | null;
   HeadingIconLeft?: React.ReactNode;
   HeadingIconRight?: React.ReactNode;
+  doubleHeader?: string;
+  doubleHeaderClassName?: string;
 }
 
 // TO DO: добавить обработку двойного хедера у кнопки
@@ -45,6 +47,8 @@ export default function Select<T>(props: Props<T>) {
     optionsFromBottom = false,
     HeadingIconLeft = null,
     HeadingIconRight = null,
+    doubleHeader,
+    doubleHeaderClassName = "text-body xs text-neutral-700",
   } = props;
   const { active, setActive, contentRef, buttonRef } = useSelect();
 
@@ -58,15 +62,22 @@ export default function Select<T>(props: Props<T>) {
         size="0"
         justifyCenter={false}
         needActiveScale={false}
-        className={`flex-row align-center ${selectButtonClassName}`}
+        className={`grid-column space-between align-center ${classes.button} ${selectButtonClassName}`}
         onClick={() => {
           setActive(!active);
         }}
       >
         {HeadingIconLeft}
-        <span className={`${selectedOptionClassName}`}>
-          {activeOption || optionHolder}
-        </span>
+        <div className="flex-column flex-start">
+          {doubleHeader && (
+            <span className={doubleHeaderClassName}>{doubleHeader}</span>
+          )}
+          <span
+            className={`${selectedOptionClassName} ${classes.selectedOption}`}
+          >
+            {activeOption || optionHolder}
+          </span>
+        </div>
         {HeadingIconRight || <Icon className={active ? classes.active : ""} />}
       </Button>
       <SelectOptions

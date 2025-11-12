@@ -1,4 +1,4 @@
-import { CompanyI } from "~/src/features/company/model/company.interface";
+import { IChangeableProfile } from "~/src/features/user/model";
 import { MessageI } from "~/src/shared/model";
 
 export type RegistrationStageT = "personal" | "status" | "name" | "city";
@@ -9,9 +9,9 @@ export interface OrgTypeI {
 }
 
 export interface RegCommonPropsI {
-  onInputChange: (v: string, field: keyof CompanyI) => void;
+  onInputChange: (v: string, field: keyof IChangeableProfile) => void;
   buttonClick: (nextPage?: RegistrationStageT) => void;
   changeStage: (stage: RegistrationStageT) => void;
-  companyInfo: CompanyI;
+  companyInfo: IChangeableProfile;
   error: MessageI | null;
 }

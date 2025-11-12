@@ -1,30 +1,31 @@
+import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
-import { useAppDispatch } from "~/src/app/store/hooks";
-import { setUser } from "~/src/app/store/reducers/user.slice";
 import { switchRole } from "~/src/features/user/lib/api/user.api";
+import { useUser } from "~/src/features/user/lib/hooks";
 import { UserRoleType } from "~/src/features/user/model";
-import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 
 export const useSwitchRole = () => {
-  const dispatch = useAppDispatch();
+  const { push } = useRouter();
+  const { setUserData } = useUser();
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleSwitchRole = useCallback(
     async (roleToSwitch: UserRoleType) => {
-      await promiseWrapper({
-        setLoading,
-        callback: async () => {
-          const res = await switchRole(roleToSwitch);
-          if (res) {
-            if (res.user) {
-              dispatch(setUser({ userInfo: res.user }));
-            }
-            dispatch(setUser({ role: roleToSwitch }));
-          }
-        },
-      });
+      try {
+        setLoading(true);
+        const res = await switchRole(roleToSwitch);
+        if (!res.success && Array.isArray(res.missing_fields)) {
+          push("/company/registrate");
+        } else if (res.user) {
+          setUserData(res.user);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
     },
-    [dispatch],
+    [setUserData, push],
   );
 
   return {

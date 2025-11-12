@@ -1,11 +1,14 @@
 "use client";
 import React from "react";
+import classNames from "classnames";
+import { useAppDispatch } from "~/src/app/store/hooks";
 
 import classes from "./for-bussiness.module.scss";
 import Button from "~/src/shared/ui/button";
-import classNames from "classnames";
+import { setForwardHref } from "~/src/app/store/reducers/login.slice";
 
 export default function ForBussinessSection() {
+  const dispatch = useAppDispatch();
   return (
     <section
       className={classNames(
@@ -23,10 +26,13 @@ export default function ForBussinessSection() {
       </div>
       <Button
         as={"a"}
-        href="/company/registrate"
+        href="/login"
         className={`${classes.link}`}
         typeButton={"white"}
         radius={12}
+        onClick={() => {
+          dispatch(setForwardHref("/company/registrate"));
+        }}
       >
         <span className="text-18 black semibold second-family">
           Стать продавцом

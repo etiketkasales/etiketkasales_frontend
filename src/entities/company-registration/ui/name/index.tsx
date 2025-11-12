@@ -19,7 +19,7 @@ export default function CompanyName({
       onButtonClick={() => buttonClick("city")}
       inputsHeaderText="Название будут видеть покупатели"
       inputs={nameInputs}
-      gap={"10"}
+      gap={"24"}
       headerText="Укажите название"
       subHeader="2 из 3"
       onInputChange={onInputChange}

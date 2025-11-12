@@ -6,10 +6,10 @@ import CheckboxInput from "~/src/shared/ui/inputs/checkbox";
 import PersonalLabel from "./label";
 import { personalInputs } from "~/src/entities/company-registration/model/company-registration.const";
 import { RegCommonPropsI } from "~/src/entities/company-registration/model/company-registration.interface";
-import { CompanyI } from "~/src/features/company/model/company.interface";
+import { IChangeableProfile } from "~/src/features/user/model";
 
 interface Props extends RegCommonPropsI {
-  onBooleanChange: (v: boolean, field: keyof CompanyI) => void;
+  onBooleanChange: (v: boolean, field: keyof IChangeableProfile) => void;
 }
 
 export default function CompanyPersonal({
@@ -23,7 +23,6 @@ export default function CompanyPersonal({
     <FormModal
       formData={companyInfo}
       onButtonClick={() => buttonClick("status")}
-      inputsHeaderText="Ваши контактные данные"
       inputs={personalInputs}
       gap={"24"}
       headerText="Регистрация продавца"
@@ -32,15 +31,15 @@ export default function CompanyPersonal({
     >
       <div className="flex-row gap-10px align-start">
         <CheckboxInput
-          checked={companyInfo.is_agree_confident}
+          checked={companyInfo.agreement_accepted}
           onChange={() => {
             onBooleanChange(
-              !companyInfo.is_agree_confident,
-              "is_agree_confident",
+              !companyInfo.agreement_accepted,
+              "agreement_accepted",
             );
           }}
-          name="is_agree_confident"
-          error={error?.field === "is_agree_confident"}
+          name="agreement_accepted"
+          error={error?.field === "agreement_accepted"}
         />
         <PersonalLabel />
       </div>

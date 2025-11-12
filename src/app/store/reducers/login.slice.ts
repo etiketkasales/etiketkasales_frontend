@@ -2,12 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface InitialStateI {
   phoneNumber: string;
-  prevHref: string;
+  forwardHref: string;
 }
 
 const initialState: InitialStateI = {
   phoneNumber: "",
-  prevHref: "/",
+  forwardHref: "/profile",
 };
 
 export const logInSlice = createSlice({
@@ -17,12 +17,12 @@ export const logInSlice = createSlice({
     setPhoneNumber: (state, action) => {
       state.phoneNumber = action.payload;
     },
-    setPrevHref: (state, action: PayloadAction<string>) => {
-      state.prevHref = action.payload || "/";
+    setForwardHref: (state, action: PayloadAction<string>) => {
+      state.forwardHref = action.payload || "/profile";
     },
   },
 });
 
-export const { setPhoneNumber, setPrevHref } = logInSlice.actions;
+export const { setPhoneNumber, setForwardHref } = logInSlice.actions;
 export const selectLogIn = (state: { login: InitialStateI }) => state.login;
 export default logInSlice.reducer;
