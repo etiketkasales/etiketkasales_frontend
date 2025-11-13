@@ -16,6 +16,7 @@ interface Props {
   children?: React.ReactNode;
   priority?: boolean;
   fill?: boolean;
+  needDummy?: boolean;
 }
 
 const fallbackImage = "/shared/image-src-plug.png";
@@ -31,8 +32,11 @@ export default function ImageWrapper({
   children = null,
   fill,
   priority,
+  needDummy = true,
 }: Props) {
   const { canLoad } = useImageWrapper({ src });
+
+  if (!needDummy && (!canLoad || !src)) return null;
 
   return (
     <div className={classNames(className, classes.container)}>

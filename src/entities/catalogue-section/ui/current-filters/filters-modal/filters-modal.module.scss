@@ -5,6 +5,14 @@
     }
 }
 
+.container,
+.filters {
+    display: none;
+    @media screen and (width <=  1024px) {
+        display: flex;
+    }
+}
+
 .filters {
     max-height: 100%;
     overflow-y: auto;

@@ -24,6 +24,7 @@ export default function ItemWrapperIcon({ image }: Props) {
         height={24}
         alt={""}
         className="radius-16"
+        needDummy={false}
       />
     </Container>
   );

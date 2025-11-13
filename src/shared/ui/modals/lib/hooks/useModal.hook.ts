@@ -31,18 +31,6 @@ export const useModal = ({ isOpen, onClose, customClickOutside }: Props) => {
   }, [isOpen, onClose]);
 
   useEffect(() => {
-    if (!isOpen) {
-      if (!closingByPopState.current) {
-        history.back();
-      }
-      closingByPopState.current = false;
-      return () => {
-        closingByPopState.current = false;
-      };
-    }
-  }, [isOpen]);
-
-  useEffect(() => {
     if (isOpen) {
       if (document) {
         scrollLock.disablePageScroll(document.body);

@@ -6,7 +6,9 @@ export const handleGetProductsFilters = async () => {
   let filters: IFilters = {};
   try {
     const res = await getProductsFilters();
-    filters = res.filters || res;
+    if (res) {
+      filters = res;
+    }
   } catch (err) {
     filters = {};
     console.error(err);

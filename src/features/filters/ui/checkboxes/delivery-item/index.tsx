@@ -1,6 +1,7 @@
 "use client";
 import React, { useCallback, useMemo } from "react";
 import { useFiltersCheckbox } from "~/src/features/filters/lib/hooks/useFiltersCheckbox.hook";
+import StringUtils from "~/src/shared/lib/utils/string.util";
 
 import FiltersItem from "~/src/features/filters/ui/item";
 import FiltersCheckAll from "../check-all";
@@ -10,7 +11,6 @@ import {
   IFIltersDeliveryInput,
 } from "~/src/features/filters/model/filters.interface";
 import { IInitializedFilter } from "../..";
-import StringUtils from "~/src/shared/lib/utils/string.util";
 
 interface Props extends IDeliveryCheckbox {
   setFilterForCatalogue: React.Dispatch<

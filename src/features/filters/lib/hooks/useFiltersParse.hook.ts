@@ -13,7 +13,6 @@ interface Props {
 export const useFiltersParse = ({ filters }: Props) => {
   return useMemo(() => {
     if (!filters) return [];
-
     return Object.entries(filters).map(([name, value]) => {
       let type: FilterType;
 
