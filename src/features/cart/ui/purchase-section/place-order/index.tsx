@@ -1,27 +1,46 @@
 "use client";
-import Link from "next/link";
-import React from "react";
+import React, { useCallback } from "react";
+import { useRouter } from "next/navigation";
+import { useAppSelector } from "~/src/app/store/hooks";
+import { selectUser } from "~/src/app/store/reducers/user.slice";
 
 import classes from "./place-order.module.scss";
 import Button from "~/src/shared/ui/button";
 
-interface ButtonI {
+interface Props {
+  openModal: () => void;
+}
+
+interface IButton {
   title: string;
   type: "yellow" | "border-bg";
   link: string;
+  onClick?: () => void;
 }
 
-export default function CartPlaceOrder() {
-  const buttons: ButtonI[] = [
+export default function CartPlaceOrder({ openModal }: Props) {
+  const { push } = useRouter();
+  const { companies } = useAppSelector(selectUser);
+
+  const onAsCompanyClick = useCallback(() => {
+    if (!companies || companies.length === 0) {
+      openModal();
+    } else {
+      push("/order/company");
+    }
+  }, [companies, openModal, push]);
+
+  const buttons: IButton[] = [
     {
       title: "Перейти к оформлению",
       type: "yellow",
       link: "/order",
     },
     {
-      title: "Купить как юрлицо",
+      title: "Купить как юр. лицо",
       type: "border-bg",
       link: "/order/company",
+      onClick: onAsCompanyClick,
     },
   ];
 
@@ -37,6 +56,7 @@ export default function CartPlaceOrder() {
             radius={12}
             className={classes.button}
             href={item.link}
+            customClickWithHref={item.onClick}
           >
             <span className="text-16 black second-family semibold">
               {item.title}

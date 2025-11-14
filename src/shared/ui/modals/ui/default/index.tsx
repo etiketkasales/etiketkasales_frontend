@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Container from "~/src/shared/ui/container/ui";
 import ModalTitle from "../title";
 import { IModalBaseProps } from "~/src/shared/ui/modals/model";
+import LoaderCircle from "../../../loader-circle";
 
 interface Props extends IModalBaseProps {
   wrapperClassName?: string;
@@ -15,6 +16,8 @@ interface Props extends IModalBaseProps {
   titleClassName?: string;
   titleTextClassName?: string;
   needBackButton?: boolean;
+  loading?: boolean;
+  loaderRadius?: number;
 }
 
 export default function Modal({
@@ -29,6 +32,8 @@ export default function Modal({
   titleClassName,
   titleTextClassName,
   needBackButton = true,
+  loading = false,
+  loaderRadius = 20,
 }: Props) {
   const { contentRef } = useModal({ isOpen, onClose, customClickOutside });
 
@@ -44,8 +49,9 @@ export default function Modal({
           <Container
             ref={contentRef}
             bgColor={bgColor}
-            className={classNames(containerClassName)}
+            className={classNames(containerClassName, "relative")}
           >
+            {loading && <LoaderCircle radius={loaderRadius} />}
             <ModalTitle
               title={title}
               onClose={onClose}

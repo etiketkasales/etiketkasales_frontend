@@ -1,0 +1,24 @@
+.title {
+  text-align: left !important;
+}
+
+.container {
+  width: 500px;
+  gap: $space-3;
+  padding: $space-6;
+  border-radius: $space-5;
+
+  @media screen and (width <= 560px) {
+    gap: $space-2;
+    width: calc(100vw - $space-3 * 2);
+    padding: $space-4;
+  }
+}
+
+.content {
+    gap: $space-5;
+
+    @media screen and (width <= 768px) {
+        gap: $space-6;
+    }
+}

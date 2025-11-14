@@ -22,7 +22,7 @@ export const useCompanyRegister = ({ stage }: Props) => {
   const { setUserData } = useUser();
   const requiredFields: (keyof IChangeableProfile)[] =
     requiredFieldsRecord[stage];
-  const { error, handleHasValidateError, handleIsError } = useFormValidate({
+  const { error, handleHasValidateError, hasEmptyError } = useFormValidate({
     validateData: changeableUserInfo,
     requiredFields,
   });
@@ -32,8 +32,8 @@ export const useCompanyRegister = ({ stage }: Props) => {
   }, [handleHasValidateError]);
 
   const hasErrors = useCallback(() => {
-    return handleIsError() || isEmailError();
-  }, [isEmailError, handleIsError]);
+    return hasEmptyError() || isEmailError();
+  }, [isEmailError, hasEmptyError]);
 
   const handleChangeData = useCallback(
     (v: string, field: keyof IChangeableProfile) => {

@@ -7,7 +7,11 @@ import classes from "./cart.module.scss";
 import CartContent from "./content";
 import CartPurchaseSection from "./purchase-section";
 
-export default function CartSection() {
+interface Props {
+  openModal: () => void;
+}
+
+export default function CartSection({ openModal }: Props) {
   const { selectedItems, sellerItems, handleSelectItem } = useCart();
   const { itemsSum, itemsDiscount } = useCartSum();
 
@@ -24,6 +28,7 @@ export default function CartSection() {
           itemsSum={itemsSum}
           itemsDiscount={itemsDiscount}
           itemsCount={selectedItems.length}
+          openModal={openModal}
         />
       </div>
     </section>

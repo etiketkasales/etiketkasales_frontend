@@ -4,249 +4,255 @@ $second-family: var(--openSans-font);
 $third-family: var(--inter-font);
 
 .second-family {
-    font-family: $second-family;
+  font-family: $second-family;
 }
 
 .third-family {
-    font-family: $third-family;
+  font-family: $third-family;
 }
 
 .nowrap-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .line-through {
-    text-decoration-line: line-through;
+  text-decoration-line: line-through;
 }
 
 .underline-front,
 .underline {
-    text-decoration: underline solid;
+  text-decoration: underline solid;
 }
 
 .blue-link {
-    color: $blue;
-    text-decoration-line: underline;
-    text-decoration-style: solid;
-    text-underline-position: from-font;
+  color: $blue-500;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-underline-position: from-font;
+
+  @media screen and (any-hover: hover) {
+    &:hover {
+      color: $blue-700;
+    }
+  }
 }
 
 // new design
 .heading {
-    font-family: $font-family;
-    font-weight: 700;
+  font-family: $font-family;
+  font-weight: 700;
 
-    &.display-1 {
-        font-size: 84px;
-        line-height: 95.238%;
-    }
+  &.display-1 {
+    font-size: 84px;
+    line-height: 95.238%;
+  }
 
-    &.display-2 {
-        font-size: 60px;
-        line-height: 120%;
-    }
+  &.display-2 {
+    font-size: 60px;
+    line-height: 120%;
+  }
 
-    &.h-1,
-    &.h1 {
-        font-size: 52px;
-        line-height: 138.462%;
-    }
+  &.h-1,
+  &.h1 {
+    font-size: 52px;
+    line-height: 138.462%;
+  }
 
-    &.h-2,
-    &.h2 {
-        font-size: clamp(1.5rem, 0.913rem + 2.04vw, 2.75rem);
-        line-height: clamp(1.75rem, 1.163rem + 2.04vw, 3rem);
-    }
+  &.h-2,
+  &.h2 {
+    font-size: clamp(1.5rem, 0.913rem + 2.04vw, 2.75rem);
+    line-height: clamp(1.75rem, 1.163rem + 2.04vw, 3rem);
+  }
 
-    &.h-3,
-    &.h3 {
-        font-size: 32px;
-        line-height: 112.5%;
-    }
+  &.h-3,
+  &.h3 {
+    font-size: 32px;
+    line-height: 112.5%;
+  }
 
-    &.h-4,
-    &.h4 {
-        font-size: 28px;
-        line-height: 114.286%;
-    }
+  &.h-4,
+  &.h4 {
+    font-size: 28px;
+    line-height: 114.286%;
+  }
 
-    &.h-5,
-    &.h5 {
-        font-size: 24px;
-        line-height: 116.667%;
-    }
+  &.h-5,
+  &.h5 {
+    font-size: 24px;
+    line-height: 116.667%;
+  }
 
-    &.h-6,
-    &.h6 {
-        font-size: 20px;
-        line-height: 120%;
-    }
+  &.h-6,
+  &.h6 {
+    font-size: 20px;
+    line-height: 120%;
+  }
 
-    &.h-7,
-    &.h7 {
-        font-size: 16px;
-        line-height: 125%;
-    }
+  &.h-7,
+  &.h7 {
+    font-size: 16px;
+    line-height: 125%;
+  }
 
-    &.h-8,
-    &.h8 {
-        font-size: 14px;
-        line-height: 128.571%;
-    }
+  &.h-8,
+  &.h8 {
+    font-size: 14px;
+    line-height: 128.571%;
+  }
 }
 
 .body-text,
 .text-body {
-    font-family: $font-family;
+  font-family: $font-family;
 
-    &.xl {
-        font-size: 16px;
-        line-height: 150%;
-        font-weight: 500;
-    }
+  &.xl {
+    font-size: 16px;
+    line-height: 150%;
+    font-weight: 500;
+  }
 
-    &.l {
-        font-size: 16px;
-        line-height: 150%;
-        font-weight: 400;
-    }
+  &.l {
+    font-size: 16px;
+    line-height: 150%;
+    font-weight: 400;
+  }
 
-    &.m {
-        font-size: clamp(0.75rem, 0.691rem + 0.2vw, 0.875rem);
-        line-height: clamp(1.125rem, 1.066rem + 0.2vw, 1.25rem);
-        font-weight: 400;
-    }
+  &.m {
+    font-size: clamp(0.75rem, 0.691rem + 0.2vw, 0.875rem);
+    line-height: clamp(1.125rem, 1.066rem + 0.2vw, 1.25rem);
+    font-weight: 400;
+  }
 
-    &.s {
-        font-size: 14px;
-        line-height: 142.857%;
-        font-weight: 400;
-    }
+  &.s {
+    font-size: 14px;
+    line-height: 142.857%;
+    font-weight: 400;
+  }
 
-    &.xs {
-        font-size: 12px;
-        line-height: 150%;
-        font-weight: 400;
-    }
+  &.xs {
+    font-size: 12px;
+    line-height: 150%;
+    font-weight: 400;
+  }
 }
 
 //size
 .text-40 {
-    font-size: 40px;
+  font-size: 40px;
 }
 
 .text-30 {
-    font-size: clamp(1.375rem, 1.17rem + 0.91vw, 1.875rem);
+  font-size: clamp(1.375rem, 1.17rem + 0.91vw, 1.875rem);
 }
 
 .text-24 {
-    font-size: clamp(1rem, 0.795rem + 0.91vw, 1.5rem);
+  font-size: clamp(1rem, 0.795rem + 0.91vw, 1.5rem);
 }
 
 .text-22 {
-    font-size: 22px;
+  font-size: 22px;
 }
 
 .text-20 {
-    font-size: clamp(1rem, 0.898rem + 0.45vw, 1.25rem);
+  font-size: clamp(1rem, 0.898rem + 0.45vw, 1.25rem);
 }
 
 .text-18 {
-    font-size: clamp(1rem, 0.949rem + 0.23vw, 1.125rem);
+  font-size: clamp(1rem, 0.949rem + 0.23vw, 1.125rem);
 }
 
 .size-18 {
-    font-size: 18px !important;
+  font-size: 18px !important;
 }
 
 .text-16 {
-    font-size: clamp(0.875rem, 0.824rem + 0.23vw, 1rem);
+  font-size: clamp(0.875rem, 0.824rem + 0.23vw, 1rem);
 }
 
 @mixin text-for-order-gray() {
-    color: $gray-2;
-    font-family: $second-family;
-    font-weight: 400;
-    font-size: clamp(0.875rem, 0.824rem + 0.23vw, 1rem);
+  color: $gray-2;
+  font-family: $second-family;
+  font-weight: 400;
+  font-size: clamp(0.875rem, 0.824rem + 0.23vw, 1rem);
 }
 
 .text-14 {
-    font-size: clamp(0.75rem, 0.699rem + 0.23vw, 0.875rem);
+  font-size: clamp(0.75rem, 0.699rem + 0.23vw, 0.875rem);
 }
 
 .text-12 {
-    font-size: 12px;
+  font-size: 12px;
 }
 
 //weight
 .xbold {
-    font-weight: 800;
+  font-weight: 800;
 }
 
 .bold {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .semibold {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .regular {
-    font-weight: 400;
+  font-weight: 400;
 }
 
 //color
 .white {
-    color: $white;
+  color: $white;
 }
 
 .gray {
-    color: $gray;
+  color: $gray;
 }
 
 .gray-1 {
-    color: $gray-1;
+  color: $gray-1;
 }
 
 .gray-2 {
-    color: $gray-2;
+  color: $gray-2;
 }
 
 .yellow {
-    color: $yellow-price;
+  color: $yellow-price;
 }
 
 .yellow-dark-2 {
-    color: $dark-yellow-2;
+  color: $dark-yellow-2;
 }
 
 .dark-yellow {
-    color: $dark-yellow;
+  color: $dark-yellow;
 }
 
 .black {
-    color: $black;
+  color: $black;
 }
 
 .red {
-    color: $red;
+  color: $red;
 }
 
 .green {
-    color: $green;
+  color: $green;
 }
 
 //
 .uppercase {
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 .text-left {
-    text-align: left;
+  text-align: left;
 }
 
 .text-center {
-    text-align: center;
+  text-align: center;
 }

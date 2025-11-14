@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IUserCompany } from "~/src/entities/profile-section/model";
 import {
   IChangeableProfile,
   IProfile,
@@ -7,6 +6,7 @@ import {
   UserRoleType,
   SProfile,
   IUserAddress,
+  IUserCompany,
 } from "~/src/features/user/model";
 
 interface InitialStateI {

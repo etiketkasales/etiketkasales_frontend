@@ -1,7 +1,7 @@
 import { apiClient, tryCatch } from "~/src/shared/lib/api/client.api";
 import { IGetData } from "~/src/shared/model";
-import { IUserCompany, IUserCompanyBase } from "../../model";
 import { AxiosError } from "axios";
+import { IUserCompany, IUserCompanyBase } from "~/src/features/user/model";
 
 export const getCompanies = async () => {
   return await tryCatch(async () => {

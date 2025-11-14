@@ -12,6 +12,7 @@ interface Props {
   checked: boolean;
   gap?: string;
   label?: string;
+  nodeLabel?: React.ReactNode;
   name?: string;
   className?: string;
   classNameLabel?: string;
@@ -26,6 +27,7 @@ export default function CheckboxInput({
   checked,
   className,
   classNameLabel,
+  nodeLabel,
   error = false,
 }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -53,6 +55,7 @@ export default function CheckboxInput({
         name={name}
       />
       {label && <span className={classNameLabel}>{label}</span>}
+      {nodeLabel}
       {checked &&
         (width > 460 ? (
           <ChecboxChecked className={classes.icon} />

@@ -30,6 +30,7 @@ interface Props<T extends ElementType>
   href?: string;
   ref?: React.Ref<HTMLButtonElement>;
   blank?: boolean;
+  customClickWithHref?: () => void;
 }
 
 export default function Button<T extends ElementType>({
@@ -46,6 +47,7 @@ export default function Button<T extends ElementType>({
   href,
   ref,
   blank,
+  customClickWithHref,
   ...rest
 }: Props<T>) {
   const { prefetch, push } = useRouter();
@@ -71,9 +73,13 @@ export default function Button<T extends ElementType>({
   return (
     <Tag
       onClick={(e) => {
-        onClick?.(e);
-        if (href) {
-          push(href);
+        if (customClickWithHref) {
+          customClickWithHref();
+        } else {
+          onClick?.(e);
+          if (href) {
+            push(href);
+          }
         }
       }}
       className={classNameLocal}

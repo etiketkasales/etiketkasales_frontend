@@ -5,7 +5,7 @@ import classes from "./company.module.scss";
 import Container from "~/src/shared/ui/container/ui";
 import CompanyContent from "./content";
 import DeleteCompany from "./delete";
-import { IUserCompany } from "~/src/entities/profile-section/model";
+import { IUserCompany } from "~/src/features/user/model";
 
 interface Props extends IUserCompany {
   onDelete: (id: number) => void;

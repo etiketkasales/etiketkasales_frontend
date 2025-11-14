@@ -11,6 +11,7 @@ interface Props {
   itemsSum: number;
   itemsDiscount: number;
   itemsCount: number;
+  openModal: () => void;
 }
 
 // TO DO прикрутить оформление заказа и покупку как юр.лицо
@@ -19,6 +20,7 @@ export default function CartPurchaseSection({
   itemsSum,
   itemsDiscount,
   itemsCount,
+  openModal,
 }: Props) {
   const { width } = useWindowSize();
   return (
@@ -32,7 +34,7 @@ export default function CartPurchaseSection({
         itemsDiscount={itemsDiscount}
         itemsCount={itemsCount}
       />
-      <CartPlaceOrder />
+      <CartPlaceOrder openModal={openModal} />
     </CartWrapper>
   );
 }
