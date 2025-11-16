@@ -1,79 +1,47 @@
-import React, { memo } from "react";
-import classNames from "classnames";
+import React, { memo, useCallback } from "react";
+import TextInput, { TextInputProps } from "../text-input";
 
-import classes from "./phone.module.scss";
-import Button from "~/src/shared/ui/button";
-import Input, { InputProps } from "~/src/shared/ui/input";
-
-export interface PhoneInputProps extends InputProps {
-  wrapperClassName?: string;
-  inputClassName?: string;
-  rightIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
-  leftIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
-  onRightIconClick?: () => void;
-  onLeftIconClick?: () => void;
-  iconButtonClassName?: string;
-  gap?: number;
+export interface PhoneInputProps
+  extends Omit<TextInputProps, "value" | "onChange"> {
+  value: string;
+  onChange: (value: string) => void;
 }
 
+const formatPhone = (value: string): string => {
+  const digits = value.replace(/\D/g, "");
+
+  let num = digits;
+  if (num.startsWith("8")) num = "7" + num.slice(1);
+  if (!num.startsWith("7")) num = "7" + num;
+
+  let formatted = "+7";
+
+  if (num.length > 1) formatted += " " + num.slice(1, 4);
+  if (num.length > 4) formatted += " " + num.slice(4, 7);
+  if (num.length > 7) formatted += "-" + num.slice(7, 9);
+  if (num.length > 9) formatted += "-" + num.slice(9, 11);
+
+  return formatted;
+};
+
 const PhoneInput: React.FC<PhoneInputProps> = memo(
-  ({
-    wrapperClassName,
-    inputClassName,
-    rightIcon: RightIcon,
-    leftIcon: LeftIcon,
-    onRightIconClick,
-    onLeftIconClick,
-    iconButtonClassName,
-    gap = 8,
-    ...inputProps
-  }) => {
-    const hasIcons = Boolean(RightIcon || LeftIcon);
+  ({ value, onChange, placeholder, ...props }) => {
+    const handleChange = useCallback(
+      (e: React.ChangeEvent<HTMLInputElement>) => {
+        const formatted = formatPhone(e.target.value);
+        onChange(formatted);
+      },
+      [onChange],
+    );
 
     return (
-      <div
-        className={classNames(
-          classes.wrapper,
-          hasIcons && classes.withIcons,
-          wrapperClassName,
-        )}
-        style={hasIcons ? { gap } : undefined}
-      >
-        {LeftIcon && (
-          <Button
-            typeButton="ghost"
-            size="0"
-            className={classNames(classes.iconBtn, iconButtonClassName)}
-            onClick={onLeftIconClick}
-            aria-label="left-icon-button"
-          >
-            <LeftIcon />
-          </Button>
-        )}
-
-        <Input
-          {...inputProps}
-          type="tel"
-          inputMode="tel"
-          className={classNames(
-            classes.input,
-            "text-16 black regular second-family",
-            inputClassName,
-          )}
-        />
-
-        {RightIcon && (
-          <Button
-            typeButton="ghost"
-            size="0"
-            className={classNames(classes.iconBtn, iconButtonClassName)}
-            onClick={onRightIconClick}
-            aria-label="right-icon-button"
-          >
-            <RightIcon />
-          </Button>
-        )}
-      </div>
+      <TextInput
+        {...props}
+        value={value}
+        onChange={handleChange}
+        inputMode="tel"
+        placeholder={placeholder ?? "+7 ___ ___-__-__"}
+      />
     );
   },
 );

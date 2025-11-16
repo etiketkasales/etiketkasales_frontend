@@ -6,6 +6,7 @@ import logInSlice from "./reducers/login.slice";
 import userSlice from "./reducers/user.slice";
 import companySlice from "./reducers/company.slice";
 import cartSlice from "./reducers/cart.slice";
+import orderSlice from "./reducers/order.slice";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     login: logInSlice,
     user: userSlice,
     company: companySlice,
+    order: orderSlice,
   },
   devTools: true,
 });

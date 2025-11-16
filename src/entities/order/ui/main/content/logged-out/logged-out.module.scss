@@ -1,0 +1,7 @@
+.container {
+  flex: 1 0;
+  padding: $space-5;
+  @media screen and (width <= 768px) {
+    padding: $space-4;
+  }
+}

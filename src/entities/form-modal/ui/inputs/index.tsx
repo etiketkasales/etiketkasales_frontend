@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { usePhoneInput } from "~/src/shared/ui/inputs/phone/hooks/usePhoneInput.hook";
 
 import classes from "./inputs.module.scss";
 import TextInput from "~/src/shared/ui/inputs/text-input";
@@ -9,6 +8,7 @@ import Select from "~/src/shared/ui/select/ui";
 import Button from "~/src/shared/ui/button";
 import { FormModalInputI } from "~/src/entities/form-modal/model/form-modal.interface";
 import { MessageI } from "~/src/shared/model";
+import StringUtils from "~/src/shared/lib/utils/string.util";
 
 interface Props<T> {
   headerText?: string;
@@ -25,20 +25,18 @@ export default function FormModalInputs<T>({
   onChange,
   error,
 }: Props<T>) {
-  const { formatForApi } = usePhoneInput();
-
   return (
     <div className={`flex-column gap-3 ${classes.container}`}>
       {headerText && (
         <p className="text-16 gray-2 second-family regular">{headerText}</p>
       )}
       {inputs.map((input, index) => {
+        const { field, placeholder } = input;
         const commonProps = {
-          value: formData[input.field] ? String(formData[input.field]) : "",
-          placeholder: input.placeholder,
+          placeholder: placeholder,
           inputClassName: classes.input,
-          errorText: error?.field === input.field ? error.message : "",
-          name: `etiketka-${String(input.field)}`,
+          errorText: error?.field === field ? error.message : "",
+          name: `etiketka-${String(field)}`,
         };
         switch (input.type) {
           default:
@@ -47,6 +45,7 @@ export default function FormModalInputs<T>({
               <TextInput
                 key={index + input.field.toString()}
                 onChange={(e) => onChange(e.target.value, input.field)}
+                value={formData[field] ? String(formData[field]) : ""}
                 {...commonProps}
               />
             );
@@ -54,10 +53,11 @@ export default function FormModalInputs<T>({
             return (
               <PhoneInput
                 key={index}
-                onChange={(e) =>
-                  onChange(formatForApi(e.target.value), input.field)
-                }
+                onChange={(e) => onChange(e, input.field)}
                 className={classes.input}
+                value={StringUtils.formatPhone(
+                  formData[field]?.toString() || "",
+                )}
                 {...commonProps}
               />
             );
@@ -80,15 +80,13 @@ export default function FormModalInputs<T>({
                   return (
                     <Button
                       key={index}
-                      typeButton="bg-gray"
+                      typeButton="gray"
                       size="12"
                       onClick={() => onChange(item, input.field)}
                       className={`${classes.option}`}
                       justifyCenter={false}
                     >
-                      <span
-                        className={`text-14 gray second-family regular text-left cursor`}
-                      >
+                      <span className={`text-body l text-left cursor`}>
                         {item}
                       </span>
                     </Button>

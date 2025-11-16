@@ -2,7 +2,6 @@
 import React from "react";
 import { useAppDispatch } from "~/src/app/store/hooks";
 import { setPhoneNumber } from "~/src/app/store/reducers/login.slice";
-import { usePhoneInput } from "~/src/shared/ui/inputs/phone/hooks/usePhoneInput.hook";
 
 import classes from "./body.module.scss";
 import PhoneInput from "~/src/shared/ui/inputs/phone";
@@ -15,7 +14,6 @@ interface Props {
 }
 
 export default function LoginMainBody({ phone, message }: Props) {
-  const { formatInput } = usePhoneInput();
   const dispatch = useAppDispatch();
   return (
     <>
@@ -24,7 +22,7 @@ export default function LoginMainBody({ phone, message }: Props) {
           placeholder="Номер телефона"
           name="etiketka-phone"
           onChange={(e) => {
-            dispatch(setPhoneNumber(formatInput(e.target.value)));
+            dispatch(setPhoneNumber(e));
           }}
           value={phone}
           onKeyDown={(e) => e.key === "Enter" && e.preventDefault()}

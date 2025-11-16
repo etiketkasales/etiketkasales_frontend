@@ -8,14 +8,12 @@ import classes from "./button.module.scss";
 export type ButtonTypeButtonT =
   | "ghost"
   | "yellow"
-  | "light-yellow"
   | "white"
   | "blue"
-  | "green"
-  | "bg-gray"
-  | "gray-1"
-  | "border-bg"
-  | "red-border";
+  | "gray"
+  | "yellow-200"
+  | "red-border"
+  | "gray-border";
 
 interface Props<T extends ElementType>
   extends React.HTMLAttributes<HTMLButtonElement> {

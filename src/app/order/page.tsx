@@ -1,5 +1,5 @@
-import OrderPage from "~/src/pages-components/order";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <OrderPage />;
+  return redirect(`/order/person`);
 }

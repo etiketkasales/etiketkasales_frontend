@@ -1,0 +1,9 @@
+.container {
+    gap: $space-5;
+}
+
+.heading {
+    @media screen and (width <= 768px) {
+        display: none;
+    }
+}

@@ -1,0 +1,11 @@
+.input {
+    grid-column: 6 span;
+    padding: 0 $space-3;
+    height: 50px;
+    background-color: $neutral-300;
+    border-radius: $space-3;
+
+    @media screen and (width <= 768px) {
+        height: 59px;
+    }
+}

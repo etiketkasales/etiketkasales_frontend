@@ -9,6 +9,14 @@
   }
 
   @media screen and (width <=768px) {
+    padding: $space-3 $space-4;
     flex-direction: row;
+    justify-content: initial;
   }
+}
+
+.media {
+  justify-content: center;
+  display: flex;
+  flex: 1 0;
 }

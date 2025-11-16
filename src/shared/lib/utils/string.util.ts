@@ -1,3 +1,5 @@
+import { IUserAddress } from "~/src/features/user/model";
+
 class StringUtils {
   static pluralizeWords(forms: string[], count: number): string {
     const mod10 = count % 10;
@@ -46,6 +48,32 @@ class StringUtils {
 
     // Форматируем с пробелами
     return rounded.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  }
+
+  static formatAddress(address: IUserAddress) {
+    const {
+      country,
+      region,
+      city,
+      street,
+      house,
+      entrance,
+      apartment,
+      floor,
+      postal_code,
+    } = address;
+    const addressList = [
+      country,
+      region,
+      city,
+      street,
+      house,
+      entrance,
+      apartment,
+      floor,
+      postal_code,
+    ];
+    return addressList.filter(Boolean).join(", ");
   }
 }
 

@@ -8,7 +8,7 @@ import Button from "~/src/shared/ui/button";
 
 interface Props {
   isActive: boolean;
-  onClick: () => void;
+  onClick?: () => void;
   text?: string;
   className?: string;
   classNameText?: string;

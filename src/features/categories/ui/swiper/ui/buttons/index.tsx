@@ -30,7 +30,7 @@ export default function CategoriesSwiperButtons({ goPrev, goNext }: Props) {
         return (
           <Button
             key={index}
-            typeButton="bg-gray"
+            typeButton="gray"
             size="6-10"
             onClick={item.onClick}
           >

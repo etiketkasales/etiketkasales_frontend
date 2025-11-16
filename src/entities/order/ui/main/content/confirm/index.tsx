@@ -1,0 +1,26 @@
+import React from "react";
+
+import classes from "./confirm.module.scss";
+import OrderStageWrapper from "../stage-wrapper";
+import DeliveryChosenMethod from "./delivery";
+import OrderAcceptor from "./acceptor";
+import OrderPurchase from "./purchase";
+import { OrderType } from "~/src/app/store/reducers/order.slice";
+
+interface Props {
+  isActive: boolean;
+  type: OrderType;
+}
+
+export default function OrderConfirm({ isActive, type }: Props) {
+  return (
+    <OrderStageWrapper
+      isActive={isActive}
+      className={`flex-column ${classes.container}`}
+    >
+      <DeliveryChosenMethod chosenMethod={{}} />
+      <OrderAcceptor type={type} />
+      <OrderPurchase type={type} />
+    </OrderStageWrapper>
+  );
+}

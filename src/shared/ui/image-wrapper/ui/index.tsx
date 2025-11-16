@@ -28,7 +28,7 @@ export default function ImageWrapper({
   className,
   imgClassName,
   alt = "",
-  loading,
+  loading = "lazy",
   children = null,
   fill,
   priority,
@@ -36,20 +36,20 @@ export default function ImageWrapper({
 }: Props) {
   const { canLoad } = useImageWrapper({ src });
 
-  if (!needDummy && (!canLoad || !src)) return null;
-
   return (
     <div className={classNames(className, classes.container)}>
-      <Image
-        src={canLoad ? (src ? src : fallbackImage) : fallbackImage}
-        width={width}
-        height={height}
-        alt={alt}
-        className={imgClassName}
-        loading={loading}
-        priority={priority}
-        fill={fill}
-      />
+      {!needDummy && (!canLoad || !src) ? null : (
+        <Image
+          src={canLoad ? (src ? src : fallbackImage) : fallbackImage}
+          width={width}
+          height={height}
+          alt={alt}
+          className={imgClassName}
+          loading={loading}
+          priority={priority}
+          fill={fill}
+        />
+      )}
       {children}
     </div>
   );

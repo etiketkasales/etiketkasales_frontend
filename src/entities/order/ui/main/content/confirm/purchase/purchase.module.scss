@@ -1,0 +1,18 @@
+.container {
+    gap: $space-6;
+
+    @media screen and (width <= 768px) {
+        gap: $space-4;
+    }
+}
+
+.items {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: $space-3;
+
+    @media screen and (width <= 768px) {
+        flex-direction: column;
+        flex-wrap: initial;
+    }
+}

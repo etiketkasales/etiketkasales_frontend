@@ -1,0 +1,12 @@
+.wrapper {
+    border-radius: $space-5;
+    padding: $space-5;
+
+    @media screen and (width <= 768px) {
+        padding: $space-4;
+    }
+}
+
+.motionWrapper {
+    background-color: $neutral-100;
+}

@@ -8,16 +8,18 @@ import Button from "~/src/shared/ui/button";
 interface Props {
   children: React.ReactNode;
   classNameBackButton?: string;
+  containerClassName?: string;
   onBackClick?: () => void;
 }
 
 export default function HeaderWithBackMedia({
   children,
   classNameBackButton,
+  containerClassName,
   onBackClick,
 }: Props) {
   return (
-    <div className={`relative`}>
+    <div className={classNames(`relative`, containerClassName)}>
       <Button
         typeButton="ghost"
         size="0"

@@ -1,0 +1,12 @@
+.container {
+    gap: $space-6;
+
+    @media screen and (width <= 768px) {
+        gap: $space-4;
+    }
+}
+
+.button {
+    padding: $space-6px $space-10px;
+    align-self: flex-start;
+}

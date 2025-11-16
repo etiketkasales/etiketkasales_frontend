@@ -29,7 +29,7 @@ export default function LogoutModal({ isOpen, onClose }: Props) {
           onClick: async () => {
             await handleLogout().then(() => onClose());
           },
-          type: "border-bg",
+          type: "gray-border",
         },
       ]}
     />

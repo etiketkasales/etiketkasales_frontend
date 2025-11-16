@@ -8,7 +8,7 @@ import LoaderCircle from "~/src/shared/ui/loader-circle";
 
 export interface IProfileConfirmModalButton {
   title: string;
-  type: "yellow" | "border-bg";
+  type: "yellow" | "gray-border";
   onClick: () => void;
   disabled?: boolean;
   className?: string;

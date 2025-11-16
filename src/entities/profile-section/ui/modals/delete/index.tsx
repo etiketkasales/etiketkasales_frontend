@@ -28,7 +28,7 @@ export default function DeleteCompanyModal({ isOpen, onClose }: Props) {
           onClick: async () => {
             await handleDeleteCompany().then(() => onClose());
           },
-          type: "border-bg",
+          type: "gray-border",
         },
       ]}
     />

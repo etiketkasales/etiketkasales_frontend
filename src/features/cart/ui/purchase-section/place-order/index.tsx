@@ -13,7 +13,7 @@ interface Props {
 
 interface IButton {
   title: string;
-  type: "yellow" | "border-bg";
+  type: "yellow" | "gray-border";
   link: string;
   onClick?: () => void;
 }
@@ -38,7 +38,7 @@ export default function CartPlaceOrder({ openModal }: Props) {
     },
     {
       title: "Купить как юр. лицо",
-      type: "border-bg",
+      type: "gray-border",
       link: "/order/company",
       onClick: onAsCompanyClick,
     },

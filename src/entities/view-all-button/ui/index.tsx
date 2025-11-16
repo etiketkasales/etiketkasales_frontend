@@ -12,7 +12,7 @@ interface Props {
 export default function ViewAllButton({ categoryId }: Props) {
   return (
     <Button
-      typeButton="bg-gray"
+      typeButton="gray"
       size="6-10"
       className={classes.container}
       as={"a"}

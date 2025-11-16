@@ -1,25 +1,25 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import HeaderWithText from "~/src/entities/header-with-text/ui";
+import { redirect } from "next/navigation";
+import React from "react";
+import { useAppSelector } from "~/src/app/store/hooks";
+import { OrderType, selectOrder } from "~/src/app/store/reducers/order.slice";
 
+import HeaderWithText from "~/src/entities/header-with-text/ui";
 import OrderSection from "~/src/entities/order/ui";
 import PageWrapper from "~/src/entities/page-wrapper/ui";
 
-export default function OrderPage() {
-  const [forCompany, setForCompany] = useState<boolean>(false);
+interface Props {
+  type: OrderType;
+}
 
-  useEffect(() => {
-    if (!window) return;
+export default function OrderPage({ type }: Props) {
+  const { type: selectedType } = useAppSelector(selectOrder);
 
-    const company = window.location.href.includes("order/company");
-    if (company) {
-      setForCompany(true);
-    }
-  }, []);
+  if (type !== selectedType) return redirect(`/order/${selectedType}`);
 
   return (
     <PageWrapper CustomHeader={<HeaderWithText text="Оформление заказа" />}>
-      <OrderSection forCompany={forCompany} />
+      <OrderSection type={type} />
     </PageWrapper>
   );
 }

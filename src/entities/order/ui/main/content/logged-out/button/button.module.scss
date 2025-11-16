@@ -1,0 +1,7 @@
+.button {
+    align-self: flex-start;
+
+    @media screen and (width <= 768px) {
+        align-self: initial;
+    }
+}

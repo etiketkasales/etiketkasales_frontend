@@ -15,6 +15,9 @@ export const useAddresses = (needLoad?: boolean) => {
   const dispatch = useAppDispatch();
   const { addresses } = useAppSelector(selectUser);
   const [loading, setLoading] = useState<boolean>(false);
+  const [defAddress, setDefAddress] = useState<IUserAddress | null>(
+    addresses[0] || null,
+  );
   const hasBeenLoaded = useRef<boolean>(false);
 
   const setAddresses = useCallback(
@@ -83,8 +86,20 @@ export const useAddresses = (needLoad?: boolean) => {
     getAddresses();
   }, [getAddresses, addresses]);
 
+  useEffect(() => {
+    if (addresses && addresses.length > 0) {
+      let defaultAddress = addresses[0] || null;
+
+      const newDefault = addresses.find((item) => item.is_default);
+      if (newDefault) defaultAddress = newDefault;
+
+      setDefAddress(defaultAddress);
+    }
+  }, [addresses]);
+
   return {
     addresses,
+    defAddress,
     loading,
     getAddresses,
     setAddresses,

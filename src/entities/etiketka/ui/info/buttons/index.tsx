@@ -23,7 +23,7 @@ export default function EtiketkaInfoButtons({
           <li key={index}>
             <Button
               key={index}
-              typeButton={isActive ? "light-yellow" : "bg-gray"}
+              typeButton={isActive ? "yellow-200" : "gray"}
               size="16"
               radius={16}
               onClick={() => {
@@ -33,9 +33,7 @@ export default function EtiketkaInfoButtons({
               justifyCenter={false}
               needActiveScale={false}
             >
-              <span
-                className={`text-16 semibold second-family just-self-start ${isActive ? "yellow-dark-2" : "gray-2"}`}
-              >
+              <span className={`text-body xl just-self-start`}>
                 {item.title}
               </span>
             </Button>
