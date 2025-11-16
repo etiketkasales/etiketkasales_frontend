@@ -5,6 +5,7 @@ import { useWindowSize } from "react-use";
 
 import classes from "./tabs.module.scss";
 import TabsList from "./list";
+import Container from "~/src/shared/ui/container/ui";
 
 interface Props {
   TabsButton?: ReactNode;
@@ -24,12 +25,12 @@ export default function Tabs({ TabsButton }: Props) {
   if (width > 768) return null;
 
   return (
-    <section
+    <Container
       className={`flex-column white-container fixed gap-4 ${classes.container} ${getPadding()}`}
       ref={ref}
     >
       {TabsButton ? TabsButton : null}
       <TabsList cartItems={cartItems} />
-    </section>
+    </Container>
   );
 }

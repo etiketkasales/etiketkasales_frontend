@@ -68,13 +68,11 @@ export default function Select<T>(props: Props<T>) {
         }}
       >
         {HeadingIconLeft}
-        <div className="flex-column flex-start">
+        <div className={`flex-column flex-start ${selectedOptionClassName}`}>
           {doubleHeader && (
             <span className={doubleHeaderClassName}>{doubleHeader}</span>
           )}
-          <span
-            className={`${selectedOptionClassName} ${classes.selectedOption}`}
-          >
+          <span className={classes.selectedOption}>
             {activeOption || optionHolder}
           </span>
         </div>
