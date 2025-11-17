@@ -5,12 +5,19 @@ import classes from "./add.module.scss";
 import TextInput from "~/src/shared/ui/inputs/text-input";
 import Button from "~/src/shared/ui/button";
 import { AddressesModalStage } from "../../model";
+import { ISuggestedAddress } from "~/src/features/user/model";
+import AddressModalSuggestions from "./suggestions";
 
 interface Props {
   stage: AddressesModalStage;
   newAddress: string;
   onInputChange: (v: string) => void;
   onButtonClick: () => void;
+  suggestions: ISuggestedAddress[];
+  suggestionsLoading: boolean;
+  onSgnClick: (address: ISuggestedAddress) => void;
+  sgnsOpen: boolean;
+  setSgnsOpen: (b: boolean) => void;
 }
 
 export default function AddressesModalAdd({
@@ -18,6 +25,11 @@ export default function AddressesModalAdd({
   newAddress,
   onInputChange,
   onButtonClick,
+  suggestions,
+  suggestionsLoading,
+  onSgnClick,
+  sgnsOpen,
+  setSgnsOpen,
 }: Props) {
   return (
     <div
@@ -35,7 +47,17 @@ export default function AddressesModalAdd({
         onChange={(e) => onInputChange(e.target.value)}
         value={newAddress}
         wrapperClassName={classes.inputWrapper}
-      />
+      >
+        <AddressModalSuggestions
+          suggestions={suggestions}
+          onClick={(i) => {
+            onSgnClick(i);
+            setSgnsOpen(false);
+          }}
+          loading={suggestionsLoading}
+          open={sgnsOpen}
+        />
+      </TextInput>
       <Button
         typeButton="yellow"
         onClick={onButtonClick}

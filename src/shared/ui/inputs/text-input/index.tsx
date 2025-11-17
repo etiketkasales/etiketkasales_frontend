@@ -14,6 +14,7 @@ export interface TextInputProps extends InputProps {
   onLeftIconClick?: () => void;
   iconButtonClassName?: string;
   gap?: number;
+  children?: React.ReactNode;
 }
 
 const TextInput: React.FC<TextInputProps> = memo(
@@ -26,6 +27,7 @@ const TextInput: React.FC<TextInputProps> = memo(
     onLeftIconClick,
     iconButtonClassName,
     gap = 8,
+    children,
     ...inputProps
   }) => {
     const hasIcons = Boolean(RightIcon || LeftIcon);
@@ -55,6 +57,8 @@ const TextInput: React.FC<TextInputProps> = memo(
           {...inputProps}
           className={classNames(classes.input, inputClassName)}
         />
+
+        {children}
 
         {RightIcon && (
           <Button

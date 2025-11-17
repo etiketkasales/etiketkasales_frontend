@@ -6,6 +6,8 @@ import {
   INewAddress,
   newAddressSkeleton,
 } from "~/src/entities/addresses-modal/model";
+import { useAddressSuggestions } from "./useAddressSuggestions.hook";
+import { ISuggestedAddress } from "~/src/features/user/model";
 
 export const useAddressesModal = (onModalClose: () => void) => {
   const {
@@ -15,18 +17,40 @@ export const useAddressesModal = (onModalClose: () => void) => {
     handleDeleteAddress,
     handleSetDefaultAddress,
   } = useAddresses();
+  const {
+    loading: suggestionsLoading,
+    suggestions,
+    getSuggestions,
+    formatSuggestion,
+  } = useAddressSuggestions();
   const [stage, setStage] = useState<AddressesModalStage>("default");
+  const [sgnsOpen, setSgnsOpen] = useState<boolean>(false); // для показа/скрытия списка подсказок
   const [newAddress, setNewAddress] = useState<INewAddress>({
     forApi: newAddressSkeleton,
     forDisplay: "",
   });
 
-  const onInputChange = useCallback((v: string) => {
-    setNewAddress((prev) => ({
-      ...prev,
-      forDisplay: v,
-    }));
-  }, []);
+  const onInputChange = useCallback(
+    async (v: string) => {
+      setNewAddress((prev) => ({
+        ...prev,
+        forDisplay: v,
+      }));
+      setSgnsOpen(true);
+      await getSuggestions(v);
+    },
+    [getSuggestions]
+  );
+
+  const onSuggestionClick = useCallback(
+    (sgn: ISuggestedAddress) => {
+      setNewAddress({
+        forApi: formatSuggestion(sgn),
+        forDisplay: sgn.full_address,
+      });
+    },
+    [formatSuggestion]
+  );
 
   const onAddressClick = useCallback(
     async (type: "delete" | "default", id: number) => {
@@ -37,7 +61,7 @@ export const useAddressesModal = (onModalClose: () => void) => {
         onModalClose();
       }
     },
-    [handleDeleteAddress, handleSetDefaultAddress, onModalClose],
+    [handleDeleteAddress, handleSetDefaultAddress, onModalClose]
   );
 
   const onSaveButtonClick = useCallback(async () => {
@@ -58,5 +82,10 @@ export const useAddressesModal = (onModalClose: () => void) => {
     setStage,
     onSaveButtonClick,
     onAddressClick,
+    onSuggestionClick,
+    suggestions,
+    suggestionsLoading,
+    sgnsOpen,
+    setSgnsOpen,
   };
 };

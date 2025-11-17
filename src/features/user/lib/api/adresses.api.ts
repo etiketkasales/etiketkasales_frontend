@@ -1,6 +1,6 @@
 import { apiClient, tryCatch } from "~/src/shared/lib/api/client.api";
 import { IGetData } from "~/src/shared/model";
-import { IUserAddress, IUserAddressBase } from "../../model";
+import { ISuggestedAddress, IUserAddress, IUserAddressBase } from "../../model";
 
 export const getUserAddresses = async () => {
   return await tryCatch(async () => {
@@ -33,5 +33,15 @@ export const deleteAddress = async (id: number) => {
   return await tryCatch(async () => {
     const res = await apiClient.delete(`/users/addresses/${id}/`);
     return res.data;
+  });
+};
+
+export const getAddressSuggestions = async (q: string, limit?: number) => {
+  return await tryCatch(async () => {
+    const res = await apiClient.get<IGetData<ISuggestedAddress[]>>(
+      `/users/address-suggestions/`,
+    );
+
+    return res.data.data;
   });
 };

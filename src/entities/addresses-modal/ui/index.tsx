@@ -29,6 +29,11 @@ export default function AddressesModal({
     addresses,
     onSaveButtonClick,
     onAddressClick,
+    suggestions,
+    suggestionsLoading,
+    onSuggestionClick,
+    sgnsOpen,
+    setSgnsOpen,
   } = useAddressesModal(onClose);
 
   return (
@@ -61,6 +66,11 @@ export default function AddressesModal({
           newAddress={newAddress}
           onInputChange={onInputChange}
           onButtonClick={() => setStage("default")}
+          suggestions={suggestions}
+          suggestionsLoading={suggestionsLoading}
+          onSgnClick={onSuggestionClick}
+          sgnsOpen={sgnsOpen}
+          setSgnsOpen={(b) => setSgnsOpen(b)}
         />
       </div>
     </Modal>

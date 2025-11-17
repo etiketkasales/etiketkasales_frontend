@@ -45,7 +45,7 @@ export default function ImageWrapper({
           height={height}
           alt={alt}
           className={imgClassName}
-          loading={loading}
+          loading={priority ? "eager" : loading}
           priority={priority}
           fill={fill}
         />
