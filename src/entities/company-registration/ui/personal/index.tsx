@@ -32,13 +32,11 @@ export default function CompanyPersonal({
       <div className="flex-row gap-10px align-start">
         <CheckboxInput
           checked={companyInfo.agreement_accepted}
-          onChange={() => {
-            onBooleanChange(
-              !companyInfo.agreement_accepted,
-              "agreement_accepted",
-            );
+          onChange={(e) => {
+            onBooleanChange(e, "agreement_accepted");
           }}
           name="agreement_accepted"
+          id="agreement_accepted"
           error={error?.field === "agreement_accepted"}
         />
         <PersonalLabel />

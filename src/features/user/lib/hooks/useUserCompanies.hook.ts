@@ -37,11 +37,15 @@ export const useUserCompanies = () => {
   }, [setCompanies, promiseCallback]);
 
   const addCompany = useCallback(
-    async (data: IUserCompanyBase) => {
+    async (data: IUserCompanyBase, closeModal?: () => void) => {
       await promiseCallback(async () => {
-        const res = await addNewCompany(data);
-        if (Array.isArray(res)) {
-          setCompanies(res);
+        const mainRes = await addNewCompany(data);
+        if (mainRes.success) {
+          const res = await getCompanies();
+          if (Array.isArray(res)) {
+            setCompanies(res);
+          }
+          closeModal?.();
         }
       });
     },

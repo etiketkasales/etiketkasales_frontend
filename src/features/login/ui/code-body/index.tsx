@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import classes from "./code-body.module.scss";
-import TextInput from "~/src/shared/ui/inputs/text-input";
 import TimerButton from "./timer-button";
 import OtpInputCustom from "~/src/shared/ui/inputs/otp";
 
@@ -12,6 +11,7 @@ interface Props {
   setCode: React.Dispatch<React.SetStateAction<string>>;
   resendCode: () => Promise<void>;
   code: string;
+  onComplete: (codeParam?: string) => Promise<void>;
 }
 
 export default function LoginCodeBody({
@@ -19,6 +19,7 @@ export default function LoginCodeBody({
   code,
   setCode,
   resendCode,
+  onComplete,
 }: Props) {
   const { push } = useRouter();
   const [timer, setTimer] = useState<number>(30);
@@ -47,7 +48,10 @@ export default function LoginCodeBody({
       <OtpInputCustom
         value={code}
         numInputs={4}
-        onChange={(e) => setCode(e)}
+        onChange={(e) => {
+          setCode(e);
+          if (e.length === 4) onComplete(e);
+        }}
         classNameInput={`${classes.input} heading h5 text-neutral-1000`}
         classNameContainer={`flex-row gap-3`}
       />

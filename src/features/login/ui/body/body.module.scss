@@ -1,5 +1,8 @@
 .input {
-    width: 100%;
+    padding: $space-3-half $space-4;
+    border-radius: $space-3;
+    background-color: $neutral-300 !important;
+
     transition: border 0.3s ease;
 }
 

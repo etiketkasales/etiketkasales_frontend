@@ -2,7 +2,7 @@ import React from "react";
 
 import OtpInput from "react-otp-input";
 
-interface Props<T> {
+interface Props {
   value: string;
   onChange: (e: string) => void;
   numInputs?: number;
@@ -10,13 +10,13 @@ interface Props<T> {
   classNameInput?: string;
 }
 
-export default function OtpInputCustom<T>({
+export default function OtpInputCustom({
   value,
   onChange,
   numInputs = 4,
   classNameContainer,
   classNameInput,
-}: Props<T>) {
+}: Props) {
   return (
     <OtpInput
       value={value}
@@ -24,7 +24,22 @@ export default function OtpInputCustom<T>({
       numInputs={numInputs}
       containerStyle={classNameContainer}
       renderInput={(props) => {
-        return <input {...props} className={classNameInput} />;
+        return (
+          <input
+            {...props}
+            className={classNameInput}
+            onFocus={(e) => {
+              if (props.onFocus) props.onFocus(e);
+
+              // снимаем выделение текста
+              const el = e.target;
+              requestAnimationFrame(() => {
+                const len = el.value.length;
+                el.setSelectionRange(len, len);
+              });
+            }}
+          />
+        );
       }}
       inputType="tel"
     />

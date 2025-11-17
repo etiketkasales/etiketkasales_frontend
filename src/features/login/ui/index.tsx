@@ -36,6 +36,7 @@ export default function LoginMain() {
           setCode={setCode}
           phoneNumber={phoneNumber}
           resendCode={handleSendPhone}
+          onComplete={handleSendData}
         />
       ) : (
         <LoginMainBody phone={phoneNumber} message={message} />

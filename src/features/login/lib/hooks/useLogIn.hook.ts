@@ -23,25 +23,22 @@ export const useLogIn = ({ isCodePage }: { isCodePage: boolean }) => {
 
   const { formatForApi } = usePhoneInput();
 
-  const checkPhone = useCallback(
-    (phone: string) => {
-      if (!InputUtils.isPhoneLengthValid(phone)) {
-        setMessage({
-          message: "Введите корректный номер",
-          type: "error",
-        });
-        return;
-      }
-    },
-    [setMessage],
-  );
+  const hasPhoneError = useCallback((phone: string): boolean => {
+    return !InputUtils.isPhoneLengthValid(phone);
+  }, []);
 
   const handleSendPhone = useCallback(async () => {
     await promiseWrapper({
       setLoading,
       setError: setMessage,
       callback: async () => {
-        checkPhone(phoneNumber);
+        if (hasPhoneError(phoneNumber)) {
+          setMessage({
+            message: "Введите корректный номер",
+            type: "error",
+          });
+          return;
+        }
         const res = await sendCode(formatForApi(phoneNumber));
         if (res?.success) {
           setMessage({
@@ -52,47 +49,64 @@ export const useLogIn = ({ isCodePage }: { isCodePage: boolean }) => {
         }
       },
     });
-  }, [phoneNumber, formatForApi, checkPhone, push]);
+  }, [phoneNumber, formatForApi, hasPhoneError, push]);
 
-  const handleSendCode = useCallback(async () => {
-    return await promiseWrapper({
-      setLoading,
-      setError: setMessage,
-      callback: async () => {
-        checkPhone(phoneNumber);
-        const res = await verifyCode(formatForApi(phoneNumber), code);
-        setMessage({
-          type: "success",
-          message: res?.message || "Вход успешен",
-        });
-        if (res && res.success) {
-          dispatch(
-            setUser({
-              isLoggedIn: true,
-            }),
+  const handleSendCode = useCallback(
+    async (codeParam?: string) => {
+      return await promiseWrapper({
+        setLoading,
+        setError: setMessage,
+        callback: async () => {
+          if (hasPhoneError(phoneNumber)) {
+            setMessage({
+              message: "Введите корректный номер",
+              type: "error",
+            });
+            return;
+          }
+          const res = await verifyCode(
+            formatForApi(phoneNumber),
+            codeParam ?? code,
           );
-          setUserData(res.user);
-        }
-      },
-    });
-  }, [code, phoneNumber, formatForApi, checkPhone, dispatch, setUserData]);
+          setMessage({
+            type: "success",
+            message: res?.message || "Вход успешен",
+          });
+          if (res && res.success) {
+            dispatch(
+              setUser({
+                isLoggedIn: true,
+              }),
+            );
+            setUserData(res.user);
+          }
+        },
+      });
+    },
+    [code, phoneNumber, formatForApi, hasPhoneError, dispatch, setUserData],
+  );
 
-  const promiseCallback = useCallback(async () => {
-    if (isCodePage) {
-      await handleSendCode();
-    } else {
-      await handleSendPhone();
-    }
-    setMessage(null);
-  }, [isCodePage, handleSendPhone, handleSendCode]);
+  const promiseCallback = useCallback(
+    async (codeParam?: string) => {
+      if (isCodePage) {
+        await handleSendCode(codeParam);
+      } else {
+        await handleSendPhone();
+      }
+    },
+    [isCodePage, handleSendPhone, handleSendCode],
+  );
 
-  const handleSendData = useCallback(async () => {
-    await promiseWrapper({
-      setLoading,
-      setError: setMessage,
-      callback: promiseCallback,
-    });
-  }, [promiseCallback]);
+  const handleSendData = useCallback(
+    async (codeParam?: string) => {
+      await promiseWrapper({
+        setLoading,
+        setError: setMessage,
+        callback: async () => await promiseCallback(codeParam),
+      });
+    },
+    [promiseCallback],
+  );
 
   useEffect(() => {
     if (message) {

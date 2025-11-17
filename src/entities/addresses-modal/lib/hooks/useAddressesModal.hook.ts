@@ -39,7 +39,7 @@ export const useAddressesModal = (onModalClose: () => void) => {
       setSgnsOpen(true);
       await getSuggestions(v);
     },
-    [getSuggestions]
+    [getSuggestions],
   );
 
   const onSuggestionClick = useCallback(
@@ -49,7 +49,7 @@ export const useAddressesModal = (onModalClose: () => void) => {
         forDisplay: sgn.full_address,
       });
     },
-    [formatSuggestion]
+    [formatSuggestion],
   );
 
   const onAddressClick = useCallback(
@@ -61,7 +61,7 @@ export const useAddressesModal = (onModalClose: () => void) => {
         onModalClose();
       }
     },
-    [handleDeleteAddress, handleSetDefaultAddress, onModalClose]
+    [handleDeleteAddress, handleSetDefaultAddress, onModalClose],
   );
 
   const onSaveButtonClick = useCallback(async () => {

@@ -20,13 +20,13 @@ interface IErrorResponse {
 }
 export const addNewCompany = async (data: IUserCompanyBase) => {
   try {
-    const res = await apiClient.post<IGetData<IUserCompany[]>>(
+    const res = await apiClient.post<IGetData<IUserCompany>>(
       `/users/companies`,
       {
         ...data,
       },
     );
-    return res.data.data;
+    return res.data;
   } catch (err) {
     const axiosErr = err as AxiosError<IErrorResponse>;
     if (axiosErr.response) {

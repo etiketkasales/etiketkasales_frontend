@@ -22,7 +22,7 @@ export default function AddCompanyModal({ isOpen, onClose }: Props) {
     error,
     specificError,
     loading,
-  } = useAddCompany();
+  } = useAddCompany(onClose);
 
   return (
     <Modal

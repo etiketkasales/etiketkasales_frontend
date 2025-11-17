@@ -6,6 +6,7 @@ import { useFormValidate } from "~/src/shared/lib/hooks/useFormValidate.hook";
 import { useUser } from "~/src/features/user/lib/hooks";
 import { changePersonalData } from "~/src/entities/profile-section/lib/api";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
+import { useRouter } from "next/navigation";
 
 import { requiredFieldsRecord } from "~/src/entities/company-registration/model/company-registration.const";
 import { RegistrationStageT } from "~/src/entities/company-registration/model/company-registration.interface";
@@ -17,7 +18,8 @@ interface Props {
 
 export const useCompanyRegister = ({ stage }: Props) => {
   const dispatch = useAppDispatch();
-  const { changeableUserInfo, currentRole } = useAppSelector(selectUser);
+  const { push } = useRouter();
+  const { changeableUserInfo } = useAppSelector(selectUser);
   const [loading, setLoading] = useState<boolean>(false);
   const { setUserData } = useUser();
   const requiredFields: (keyof IChangeableProfile)[] =
@@ -77,20 +79,21 @@ export const useCompanyRegister = ({ stage }: Props) => {
         const res = await changePersonalData(changeableUserInfo);
         if (res.user) {
           setUserData(res.user);
+          push("/profile");
         }
       },
     });
-  }, [setUserData, changeableUserInfo]);
+  }, [setUserData, changeableUserInfo, push]);
 
   const handleButtonClick = useCallback(
-    (nextPage?: RegistrationStageT) => {
+    async (nextPage?: RegistrationStageT) => {
       const isError = hasErrors();
       if (isError) return;
       if (nextPage) {
         handleChangeStage(nextPage);
       }
       if (stage === "city") {
-        onSave();
+        await onSave();
       }
     },
     [hasErrors, handleChangeStage, onSave, stage],

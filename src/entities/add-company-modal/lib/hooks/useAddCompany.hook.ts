@@ -11,7 +11,7 @@ import {
 import { IUserCompanyBase } from "~/src/features/user/model";
 import { MessageI } from "~/src/shared/model";
 
-export const useAddCompany = () => {
+export const useAddCompany = (onClose: () => void) => {
   const {
     newData: newCompany,
     onStringInputChange,
@@ -69,9 +69,9 @@ export const useAddCompany = () => {
     const specificError = hasSpecificError();
     if (specificError) return;
     await onSave(async () => {
-      await addCompany(newCompany);
+      await addCompany(newCompany, onClose);
     });
-  }, [addCompany, newCompany, hasSpecificError, onSave]);
+  }, [addCompany, newCompany, hasSpecificError, onSave, onClose]);
 
   useEffect(() => {
     if (specificError) {

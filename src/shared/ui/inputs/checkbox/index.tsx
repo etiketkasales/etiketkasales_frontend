@@ -17,6 +17,7 @@ interface Props {
   className?: string;
   classNameLabel?: string;
   error?: boolean;
+  id?: string;
 }
 
 export default function CheckboxInput({
@@ -29,6 +30,7 @@ export default function CheckboxInput({
   classNameLabel,
   nodeLabel,
   error = false,
+  id,
 }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const { width } = useWindowSize();
@@ -53,6 +55,7 @@ export default function CheckboxInput({
         }}
         checked={checked}
         name={name}
+        id={id}
       />
       {label && <span className={classNameLabel}>{label}</span>}
       {nodeLabel}

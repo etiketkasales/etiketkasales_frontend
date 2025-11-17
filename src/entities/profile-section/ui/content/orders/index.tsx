@@ -18,13 +18,17 @@ export default function ProfileOrders() {
       title={profileTitlesMap.orders}
       loading={loading}
     >
-      <ul className={`flex-column ${classes.list}`}>
-        {orders.map((item) => {
-          return (
-            <ProfileOrdersItem {...item} key={`${item.id} ${item.user_id}`} />
-          );
-        })}
-      </ul>
+      {Array.isArray(orders) && orders.length > 0 ? (
+        <ul className={`flex-column ${classes.list}`}>
+          {orders.map((item) => {
+            return (
+              <ProfileOrdersItem {...item} key={`${item.id} ${item.user_id}`} />
+            );
+          })}
+        </ul>
+      ) : (
+        <h6 className="heading h7 text-neutral-700">У вас пока нет заказов</h6>
+      )}
     </ProfileContentContainer>
   );
 }
