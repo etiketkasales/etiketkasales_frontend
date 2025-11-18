@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import classNames from "classnames";
+import { useRouter } from "next/navigation";
 import { useSwitchRole } from "~/src/entities/profile-section/lib/hooks";
 
 import classes from "./switch-role.module.scss";
@@ -11,10 +12,11 @@ import LoaderCircle from "~/src/shared/ui/loader-circle";
 import { UserRoleType } from "~/src/features/user/model";
 
 interface Props {
-  userRole: UserRoleType;
+  userRole: UserRoleType | "seller-pending";
 }
 
 export default function ProfileSwitchRole({ userRole }: Props) {
+  const { push } = useRouter();
   const { handleSwitchRole, loading } = useSwitchRole();
   return (
     <ProfileContainer
@@ -24,9 +26,13 @@ export default function ProfileSwitchRole({ userRole }: Props) {
         classes.container,
       )}
       bgColor="neutral-100"
-      onClick={() =>
-        handleSwitchRole(userRole === "buyer" ? "seller" : "buyer")
-      }
+      onClick={() => {
+        if (userRole === "seller-pending") {
+          push("/profile/buyer");
+        } else {
+          handleSwitchRole(userRole === "buyer" ? "seller" : "buyer");
+        }
+      }}
     >
       {loading && <LoaderCircle radius={20} />}
       {userRole === "buyer" ? <Shop /> : <Person />}

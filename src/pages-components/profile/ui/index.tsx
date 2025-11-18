@@ -8,14 +8,22 @@ import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
 
 export default function ProfilePage() {
   const { handleGetUser } = useUser();
-  const { currentRole, isLoggedIn, loadingData } = useAppSelector(selectUser);
+  const { currentRole, isLoggedIn, loadingData, userInfo } =
+    useAppSelector(selectUser);
   const { loaded } = useAppSelector(selectNavigation);
 
   useEffect(() => {
     handleGetUser();
   }, [handleGetUser]);
 
-  if (!isLoggedIn && !loadingData && loaded) redirect("/login");
+  if (!loadingData && loaded) {
+    if (!isLoggedIn) {
+      redirect("/login");
+    }
+    if (userInfo.seller_status === "pending") {
+      redirect("/profile/seller-pending");
+    }
+  }
 
   return redirect(`/profile/${currentRole}`);
 }

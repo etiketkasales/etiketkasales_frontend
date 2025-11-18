@@ -8,7 +8,7 @@ import { UserRoleType } from "~/src/features/user/model";
 import { ProfileActionType } from "~/src/entities/profile-section/model";
 
 interface Props {
-  userRole: UserRoleType;
+  userRole: UserRoleType | "seller-pending";
   activeSection: string | null;
   onItemClick: (section: string) => void;
   setModalActive: (type: ProfileActionType) => void;

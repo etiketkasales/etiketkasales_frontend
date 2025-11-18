@@ -56,6 +56,16 @@ export const statusFieldsRequired: (keyof IChangeableProfile)[] = [
   "company_type",
 ];
 
+export const companyRegFieldsRequired: (keyof IChangeableProfile)[] = [
+  "name",
+  "surname",
+  "email",
+  "agreement_accepted",
+  "company_type",
+  "storage_city",
+  "company_name",
+];
+
 export const requiredFieldsRecord: Record<
   RegistrationStageT,
   (keyof IChangeableProfile)[]

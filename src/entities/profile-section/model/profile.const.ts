@@ -4,7 +4,7 @@ import {
   IProfileInput,
   IProfileLegalInputsSection,
   ProfileActionType,
-} from "./profile.interface";
+} from ".";
 
 export const buyerTabs: IAsideItem[] = [
   {
@@ -29,7 +29,7 @@ export const buyerTabs: IAsideItem[] = [
   },
 ];
 
-export const sellerDraftTabs: IAsideItem[] = [
+export const sellerPendingTabs: IAsideItem[] = [
   {
     title: "Заявка на активацию магазина",
     action: "quote",
@@ -37,6 +37,10 @@ export const sellerDraftTabs: IAsideItem[] = [
   {
     title: "Адреса доставки",
     action: "addresses",
+  },
+  {
+    title: "Выйти",
+    action: "logout",
   },
 ];
 

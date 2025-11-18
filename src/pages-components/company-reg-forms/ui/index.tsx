@@ -1,15 +1,18 @@
 "use client";
 import React, { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useAppSelector } from "~/src/app/store/hooks";
 import { selectCompany } from "~/src/app/store/reducers/company.slice";
+import { useCheckRegInfo } from "../lib/hooks/useCheckRegInfo.hook";
 
 import CompanyRegistration from "~/src/entities/company-registration/ui";
 import FormPageWrapper from "~/src/shared/ui/form-page/ui";
+import LoaderCircle from "~/src/shared/ui/loader-circle";
 
 export default function CompanyRegistrationPage() {
   const { push, prefetch } = useRouter();
   const { stage, nextStage } = useAppSelector(selectCompany);
+  const { needRedirect, loading } = useCheckRegInfo();
 
   useEffect(() => {
     if (nextStage) {
@@ -24,6 +27,10 @@ export default function CompanyRegistrationPage() {
       push(currentRoute);
     }
   }, [stage, push]);
+
+  if (needRedirect) return redirect("/profile/seller-pending");
+
+  if (loading) return <LoaderCircle radius={0} />;
 
   if (!stage) return null;
 

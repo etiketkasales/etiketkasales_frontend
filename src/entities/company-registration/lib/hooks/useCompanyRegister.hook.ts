@@ -79,7 +79,7 @@ export const useCompanyRegister = ({ stage }: Props) => {
         const res = await changePersonalData(changeableUserInfo);
         if (res.user) {
           setUserData(res.user);
-          push("/profile");
+          push("/profile/seller-pending");
         }
       },
     });

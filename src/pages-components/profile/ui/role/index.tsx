@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useProfileSections } from "~/src/entities/profile-section/lib/hooks";
 import { useAppSelector } from "~/src/app/store/hooks";
 import { selectUser } from "~/src/app/store/reducers/user.slice";
@@ -17,20 +17,28 @@ import {
 } from "~/src/entities/profile-section/model";
 
 interface Props {
-  userRole: UserRoleType;
+  paramsRole: UserRoleType | "seller-pending";
 }
 
-export default function ProfileRolePage({ userRole }: Props) {
+export default function ProfileRolePage({ paramsRole }: Props) {
   const { userInfo, isLoggedIn, loadingData } = useAppSelector(selectUser);
+  const defaultSection = useMemo(() => {
+    if (paramsRole === "seller-pending") return "quote";
+    return paramsRole === "seller" ? "profile" : "personal";
+  }, [paramsRole]);
   const { activeSection, onItemClick, exitSection, loaded } =
     useProfileSections({
-      defaultSection: userRole === "buyer" ? "personal" : "profile",
+      defaultSection,
     });
   const [modalType, setModalType] = useState<ProfileActionType | null>(null);
 
   if (!isLoggedIn) return redirect("/login");
 
-  // if (userRole !== userInfo.role) return redirect("/profile");
+  if (paramsRole !== userInfo.role) {
+    if (paramsRole !== "seller-pending") {
+      return redirect("/profile");
+    }
+  }
 
   return (
     <PageWrapper
@@ -51,7 +59,7 @@ export default function ProfileRolePage({ userRole }: Props) {
     >
       <ProfileSection
         userInfo={userInfo}
-        userRole={userRole}
+        userRole={paramsRole}
         activeSection={activeSection}
         onItemClick={onItemClick}
         setModalActive={(t) => setModalType(t)}

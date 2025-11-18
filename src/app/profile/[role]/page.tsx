@@ -11,5 +11,5 @@ interface Props {
 export default async function Page({ params }: Props) {
   const pageParams = await params;
   const role = pageParams.role;
-  return <ProfileRolePage userRole={role} />;
+  return <ProfileRolePage paramsRole={role} />;
 }

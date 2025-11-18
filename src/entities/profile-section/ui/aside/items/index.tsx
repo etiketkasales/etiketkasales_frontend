@@ -9,12 +9,13 @@ import {
   buyerTabs,
   profileDangerousActions,
   profileModalActions,
+  sellerPendingTabs,
   sellerTabs,
 } from "~/src/entities/profile-section/model/profile.const";
 import { ProfileActionType } from "~/src/entities/profile-section/model/profile.interface";
 
 interface Props {
-  userRole: UserRoleType;
+  userRole: UserRoleType | "seller-pending";
   activeSection: string | null;
   onItemClick: (section: string) => void;
   setModalActive: (type: ProfileActionType) => void;
@@ -27,7 +28,16 @@ export default function ProfileAsideItems({
   setModalActive,
 }: Props) {
   const itemsToMap = useMemo(() => {
-    return userRole === "buyer" ? buyerTabs : sellerTabs;
+    switch (userRole) {
+      default:
+        return [];
+      case "buyer":
+        return buyerTabs;
+      case "seller":
+        return sellerTabs;
+      case "seller-pending":
+        return sellerPendingTabs;
+    }
   }, [userRole]);
 
   return (
