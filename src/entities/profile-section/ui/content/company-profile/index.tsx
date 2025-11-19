@@ -1,13 +1,13 @@
 import React from "react";
-import { useChangeUserData } from "~/src/entities/profile-section/lib/hooks";
+import { useChangePersonal } from "../../../lib/hooks/useChangePersonal.hook";
 
 import classes from "./company-profile.module.scss";
 import ProfileContentContainer from "../container";
 import CompanyProfileAvatar from "./avatar";
 import CompanyRegDate from "./reg-date";
+import CompanyProfileChange from "./change";
 import { IProfile } from "~/src/features/user/model";
 import { profileTitlesMap } from "~/src/entities/profile-section/model";
-import CompanyProfileChange from "./change";
 
 interface Props {
   userInfo: IProfile;
@@ -24,7 +24,7 @@ export default function CompanyProfile({ userInfo }: Props) {
     setEnabledInputs,
     onKeyDown,
     error,
-  } = useChangeUserData(userInfo);
+  } = useChangePersonal({ userInfo });
   return (
     <ProfileContentContainer
       className={`flex-column ${classes.container}`}

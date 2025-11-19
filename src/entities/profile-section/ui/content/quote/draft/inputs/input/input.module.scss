@@ -1,0 +1,16 @@
+.input {
+  max-width: 400px;
+}
+
+.inputWrapper {
+  padding: $space-3;
+  flex: 1 1;
+  background-color: $neutral-300;
+  border-radius: $space-3;
+  min-height: 50px;
+
+  &::placeholder {
+    color: $neutral-700;
+  }
+}
+

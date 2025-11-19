@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useChangePersonal } from "~/src/entities/profile-section/lib/hooks/useChangePersonal.hook";
 
 import classes from "./personal.module.scss";
 import ProfileUserPreview from "./preview";
@@ -7,7 +8,6 @@ import ProfileContentContainer from "../container";
 import ProfileChange from "./change";
 import { profileTitlesMap } from "~/src/entities/profile-section/model";
 import { IProfile } from "~/src/features/user/model";
-import { useChangeUserData } from "../../../lib/hooks";
 
 interface Props {
   userInfo: IProfile;
@@ -24,7 +24,7 @@ export default function ProfilePersonal({ userInfo }: Props) {
     setEnabledInputs,
     onKeyDown,
     error,
-  } = useChangeUserData(userInfo);
+  } = useChangePersonal({ userInfo });
 
   return (
     <ProfileContentContainer

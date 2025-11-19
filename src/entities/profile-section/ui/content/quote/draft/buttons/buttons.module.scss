@@ -1,0 +1,19 @@
+.container {
+    flex-direction: row;
+    align-self: flex-end;
+    gap: $space-8;
+    @media screen and (width <= 560px) {
+        flex-direction: column;
+        gap: $space-5;
+        align-items: flex-end;
+    }
+}
+
+.button {
+    padding: $space-3;
+    order: var(--order);
+
+    @media screen and (width <= 560px) {
+        padding: $space-2 $space-3;
+    }
+}

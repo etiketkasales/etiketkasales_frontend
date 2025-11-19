@@ -26,3 +26,4 @@ export const getOrders = async () => {
 };
 
 export * from "./buyer.api";
+export * from "./seller.api";

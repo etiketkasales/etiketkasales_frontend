@@ -81,9 +81,9 @@ export default function Button<T extends ElementType>({
         }
       }}
       className={classNameLocal}
-      {...rest}
       style={{
         borderRadius: radius ? `${radius}px` : undefined,
+        ...rest.style,
       }}
       disabled={disabled}
       ref={ref}

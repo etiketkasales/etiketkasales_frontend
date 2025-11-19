@@ -19,11 +19,29 @@ class InputUtils {
     return normalized.length === 10;
   }
 
+  static createInput() {
+    return {
+      createStringInput: this.createStringInput,
+      createNumberInput: this.createNumberInput,
+    };
+  }
+  static createNumberInput<T, Fields>(
+    field: keyof Fields,
+    placeholder: string,
+    options?: any,
+  ): T {
+    return {
+      placeholder,
+      field,
+      type: "number",
+      ...options,
+    } as T;
+  }
   static createStringInput<T, Fields>(
     field: keyof Fields,
     placeholder: string,
     options?: any,
-  ) {
+  ): T {
     return {
       placeholder,
       field,
@@ -33,5 +51,6 @@ class InputUtils {
   }
 }
 
-export const createStringInput = InputUtils.createStringInput;
+export const { createStringInput, createNumberInput } =
+  InputUtils.createInput();
 export default InputUtils;

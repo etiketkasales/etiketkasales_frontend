@@ -1,0 +1,19 @@
+.terms {
+    max-height: 600px;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    scrollbar-width: 0px;
+
+    padding: $space-8;
+    border-radius: $space-5;
+
+    @media screen and (width <= 560px) {
+        padding: $space-3;
+    }
+}
+
+.loader {
+    min-height: 200px;
+}

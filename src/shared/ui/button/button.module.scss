@@ -89,6 +89,10 @@
   background-color: $yellow-500;
   box-shadow: $shadow-100;
 
+  span {
+    color: $yellow-1000;
+  }
+
   &:active {
     background-color: $yellow-600;
   }

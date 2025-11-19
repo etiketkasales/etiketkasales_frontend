@@ -39,7 +39,7 @@ export default function CheckboxInput({
     <label
       htmlFor={name}
       className={classNames(
-        `relative no-select cursor${label ? " align-center" : ""} flex-row${gap ? ` gap-${gap}` : ""}`,
+        `relative no-select cursor flex-row${gap ? ` gap-${gap}` : ""}`,
         className,
       )}
     >

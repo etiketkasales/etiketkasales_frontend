@@ -55,6 +55,7 @@ export default function ProfileContent({
     case "quote":
       return (
         <ProfileQuote
+          userInfo={userInfo}
           moderationStage={userInfo.seller_status}
           rejectReason={userInfo.seller_rejection_reason}
         />

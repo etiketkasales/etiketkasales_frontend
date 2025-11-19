@@ -31,3 +31,13 @@
 .iconBtn:hover {
   opacity: 0.7;
 }
+
+
+.error {
+  outline: 1px solid $red-400;
+  background-color: $red-100;
+  color: $red-1000 !important;
+  &::placeholder {
+    color: $red-500 !important;
+  }
+}

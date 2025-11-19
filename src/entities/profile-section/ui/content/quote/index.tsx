@@ -2,14 +2,20 @@ import React from "react";
 
 import QuoteRejected from "./rejected";
 import QuotePending from "./pending";
-import { SellerStatusType } from "~/src/features/user/model";
+import QuoteDraft from "./draft";
+import { IProfile, SellerStatusType } from "~/src/features/user/model";
 
 interface Props {
+  userInfo: IProfile;
   moderationStage: SellerStatusType;
   rejectReason: string | null;
 }
 
-export default function ProfileQuote({ moderationStage, rejectReason }: Props) {
+export default function ProfileQuote({
+  moderationStage,
+  rejectReason,
+  userInfo,
+}: Props) {
   switch (moderationStage) {
     default:
       return null;
@@ -18,6 +24,6 @@ export default function ProfileQuote({ moderationStage, rejectReason }: Props) {
     case "pending":
       return <QuotePending />;
     case "draft":
-      return null;
+      return <QuoteDraft />;
   }
 }

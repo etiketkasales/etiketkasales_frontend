@@ -22,6 +22,22 @@ class FormUtils {
     return null;
   }
 
+  static getBankBicError(bik: string, field?: string): MessageI | null {
+    const validBIC = bik.length === 9;
+    if (!validBIC) {
+      return this.getError("Некорректный БИК", field || "bank_bik");
+    }
+    return null;
+  }
+
+  static getBankAccountError(account: string, field?: string): MessageI | null {
+    const validAccount = account.length === 20;
+    if (!validAccount) {
+      return this.getError("Некорректный номер счета", field || "bank_account");
+    }
+    return null;
+  }
+
   static getOGRNError(ogrn: string, field?: string): MessageI | null {
     const validOGRN = ogrn.length === 13;
     if (!validOGRN) {
