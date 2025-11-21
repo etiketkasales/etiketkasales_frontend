@@ -33,11 +33,11 @@ export default function CompanyProfileChange({
     <>
       <ProfileInputsSeparator
         type="string"
-        field="company_name"
-        onInputChange={(e) => onInputChange(e, "company_name")}
+        field="shop_name"
+        onInputChange={(e) => onInputChange(e, "shop_name")}
         changeableProfileData={changeableProfileData}
         enabledInputs={enabledInputs}
-        enableInput={() => enableInput("company_name")}
+        enableInput={() => enableInput("shop_name")}
         holder="Название магазина"
         error={error}
         onKeyDown={onKeyDown}
