@@ -30,13 +30,15 @@ export default function CompanyRegistrationPage() {
 
   if (needRedirect) return redirect("/profile/seller-pending");
 
-  if (loading) return <LoaderCircle radius={0} />;
+  if (loading) {
+    return <LoaderCircle radius={0} />;
+  } else {
+    if (!stage) return null;
 
-  if (!stage) return null;
-
-  return (
-    <FormPageWrapper needBgSvg>
-      <CompanyRegistration stage={stage} />
-    </FormPageWrapper>
-  );
+    return (
+      <FormPageWrapper needBgSvg>
+        <CompanyRegistration stage={stage} />
+      </FormPageWrapper>
+    );
+  }
 }

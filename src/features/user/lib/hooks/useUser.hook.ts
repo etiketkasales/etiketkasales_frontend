@@ -5,7 +5,6 @@ import { getProfile } from "~/src/features/user/lib/api/user.api";
 
 import { profileChangeableFields } from "~/src/features/user/model/user.const";
 import { IChangeableProfile, IProfile } from "~/src/features/user/model";
-import { setOrder } from "~/src/app/store/reducers/order.slice";
 
 export const useUser = () => {
   const dispatch = useAppDispatch();

@@ -22,7 +22,7 @@ export const personalInputs: FormModalInputI<IChangeableProfile>[] = [
 
 export const nameInputs: FormModalInputI<IChangeableProfile>[] = [
   {
-    field: "company_name",
+    field: "shop_name",
     type: "text",
     placeholder: "Название магазина",
   },
@@ -63,7 +63,7 @@ export const companyRegFieldsRequired: (keyof IChangeableProfile)[] = [
   "agreement_accepted",
   "company_type",
   "storage_city",
-  "company_name",
+  "shop_name",
 ];
 
 export const requiredFieldsRecord: Record<
