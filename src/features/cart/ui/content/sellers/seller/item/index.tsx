@@ -1,13 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useWindowSize } from "react-use";
+import { useCartItems } from "~/src/features/cart/lib/hooks/useCartItems.hook";
 
 import classes from "./item.module.scss";
 import CheckboxInput from "~/src/shared/ui/inputs/checkbox";
-import CartItemInfo from "./info";
-import CartItemInfoBottom from "./info/bottom";
+import CartSellerItemInfo from "./info";
 import { ICartItem } from "~/src/features/cart/model/cart.interface";
-import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
+import SellerItemButtons from "./extra";
 
 interface Props {
   item: ICartItem;
@@ -20,7 +19,9 @@ export default function CartSellerItem({
   selectedItems,
   selectItem,
 }: Props) {
-  const { width } = useWindowSize();
+  const { handleDeleteEtiketka: deleteFromCart } = useCartItems({
+    itemId: item.id,
+  });
   const [isSelected, setIsSelected] = useState<boolean>(false);
 
   useEffect(() => {
@@ -32,24 +33,30 @@ export default function CartSellerItem({
   }, [selectedItems, item.id]);
 
   return (
-    <li className={`flex-column gap-3`}>
-      <div className={`flex-row gap-6 ${classes.container}`}>
-        <div className={`${classes.checkbox}`}>
-          <CheckboxInput
-            onChange={() => selectItem(item.id)}
-            checked={isSelected}
-          />
-        </div>
-        <ImageWrapper
-          src={item.images[0]}
-          alt={item.name}
-          width={width > 460 ? 120 : 100}
-          height={width > 460 ? 120 : 100}
-          className={classes.image}
+    <li className={`flex ${classes.container}`}>
+      <div className={`flex-row ${classes.innerContainer}`}>
+        <CheckboxInput
+          checked={isSelected}
+          onChange={() => selectItem(item.id)}
+          className={classes.checkbox}
         />
-        <CartItemInfo item={item} />
+        <CartSellerItemInfo
+          image={item.images[0]}
+          price={item.price}
+          old_price={item.old_price}
+          name={item.name}
+          deleteFromCart={deleteFromCart}
+        />
       </div>
-      <CartItemInfoBottom item={item} className={classes.bottom} />
+      <SellerItemButtons
+        itemId={item.id}
+        itemMin={item.min_order_quantity}
+        itemStock={item.stock_quantity}
+        itemQuantity={item.quantity}
+        deleteFromCart={deleteFromCart}
+        price={item.price}
+        old_price={item.old_price}
+      />
     </li>
   );
 }

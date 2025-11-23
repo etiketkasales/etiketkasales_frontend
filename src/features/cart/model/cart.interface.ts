@@ -5,16 +5,26 @@ export interface IGetCart {
 
 export interface ICartItem {
   id: number;
+  user_id: number | null;
   product_id: number;
   quantity: number;
-  min_order_quantity: number;
   price: string;
-  old_price: string;
+  old_price: string | null;
+  created_at: string;
+  updated_at: string;
   name: string;
   slug: string;
   images: string[];
+  stock_quantity: number;
+  min_order_quantity: number;
+  material: string;
+  color: string;
+  size: string;
+  type: string;
+  form: string;
   seller_id: number;
   seller_name: string;
+  company_name: null;
 }
 
 export interface ICartTotal {

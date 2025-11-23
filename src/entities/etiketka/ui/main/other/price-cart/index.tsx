@@ -23,6 +23,7 @@ export default function EtiketkaPriceCart({ item, updateInfo }: Props) {
           itemId={item.id}
           quantity={item.cart_quantity}
           minQuantity={item.min_order_quantity}
+          maxQuantity={item.stock_quantity}
           type="with_text"
           className={classes.button}
           updateInfo={updateInfo}

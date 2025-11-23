@@ -1,4 +1,4 @@
-import { IEtiketka } from "./etiketka.interface";
+import { IEtiketka } from "./";
 
 export const productSkeleton: IEtiketka = {
   id: 0,
@@ -16,4 +16,5 @@ export const productSkeleton: IEtiketka = {
   category_name: "",
   cart_quantity: 0,
   min_order_quantity: 0,
+  stock_quantity: 0,
 };

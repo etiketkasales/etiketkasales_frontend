@@ -1,5 +1,6 @@
 .disabled {
-    svg path {
-        fill: $neutral-500;
+    svg path,
+    svg rect {
+        fill: $neutral-500 !important;
     }
 }

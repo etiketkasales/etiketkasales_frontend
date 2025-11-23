@@ -5,7 +5,7 @@ import classes from "./price.module.scss";
 
 interface Props {
   price: number | string;
-  old_price?: number | string;
+  old_price?: number | string | null;
   alignCenter?: boolean;
   needTransform?: boolean;
   className?: string;

@@ -1,25 +1,42 @@
-"use client";
 import React from "react";
 
-import classes from "./info.module.scss";
-import CartItemInfoTop from "./top";
-import CartItemInfoBottom from "./bottom";
-import { ICartItem } from "~/src/features/cart/model/cart.interface";
+import classes from "./seller-item.module.scss";
+import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
+import SellerItemDouble from "../actions/double";
+import Price from "~/src/shared/ui/price/ui";
 
 interface Props {
-  item: ICartItem;
+  image: string;
+  name: string;
+  deleteFromCart: () => Promise<void>;
+  price: string;
+  old_price: string | null;
 }
 
-export default function CartItemInfo({ item }: Props) {
+export default function CartSellerItemInfo({
+  image,
+  name,
+  deleteFromCart,
+  price,
+  old_price,
+}: Props) {
   return (
-    <div className={`flex-column gap-5 space-between ${classes.container}`}>
-      <CartItemInfoTop
-        href={`/etiketka/${item.slug}/${item.id}`}
-        title={item.name}
-        price={item.price}
-        old_price={item.old_price}
+    <div className={`flex-row ${classes.container}`}>
+      <ImageWrapper
+        src={image}
+        alt={""}
+        className={classes.image}
+        width={120}
+        height={120}
       />
-      <CartItemInfoBottom item={item} className={classes.bottom} />
+      <div className={`flex-column ${classes.innerContainer}`}>
+        <p className={`heading h6 text-neutral-1000 ${classes.text}`}>{name}</p>
+        <SellerItemDouble
+          deleteFromCart={deleteFromCart}
+          containerClassName={classes.double}
+        />
+        <Price old_price={old_price} price={price} className={classes.price} />
+      </div>
     </div>
   );
 }

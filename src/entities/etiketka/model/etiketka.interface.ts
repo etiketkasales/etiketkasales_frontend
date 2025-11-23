@@ -15,6 +15,7 @@ export interface IEtiketka {
   category_name: string;
   cart_quantity: number;
   min_order_quantity: number;
+  stock_quantity: number;
 }
 
 export interface ISpecification {

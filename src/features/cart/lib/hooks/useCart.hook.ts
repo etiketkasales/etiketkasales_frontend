@@ -1,35 +1,38 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { selectCart, setCart } from "~/src/app/store/reducers/cart.slice";
+import { selectOrder, setOrder } from "~/src/app/store/reducers/order.slice";
+import { getCart } from "../api/cart.api";
 
 import { ICartItem } from "../../model/cart.interface";
-import { getCart } from "../api/cart.api";
 
 export const useCart = () => {
   const dispatch = useAppDispatch();
-  const { items, selectedItems } = useAppSelector(selectCart);
+  const { items } = useAppSelector(selectCart);
+  const { itemsToOrderIds } = useAppSelector(selectOrder);
+
   const [sellerItems, setSellerItems] = useState<Array<ICartItem[]>>([]);
 
   const handleSelectItem = useCallback(
     (id: number) => {
       dispatch(
-        setCart({
-          selectedItems: selectedItems.includes(id)
-            ? selectedItems.filter((item) => item !== id)
-            : [...selectedItems, id],
+        setOrder({
+          itemsToOrderIds: itemsToOrderIds.includes(id)
+            ? itemsToOrderIds.filter((item) => item !== id)
+            : [...itemsToOrderIds, id],
         }),
       );
     },
-    [selectedItems, dispatch],
+    [itemsToOrderIds, dispatch],
   );
 
   useEffect(() => {
     dispatch(
       setCart({
-        isAllSelected: selectedItems.length === items.length,
+        isAllSelected: itemsToOrderIds.length === items.length,
       }),
     );
-  }, [selectedItems, items, dispatch]);
+  }, [itemsToOrderIds, items, dispatch]);
 
   const updateCart = useCallback(async () => {
     try {
@@ -47,7 +50,7 @@ export const useCart = () => {
   // группирует по продавцам
   useEffect(() => {
     if (!items.length) {
-      dispatch(setCart({ selectedItems: [] }));
+      dispatch(setCart({ itemsToOrderIds: [] }));
       setSellerItems([]);
       return;
     }
@@ -58,12 +61,12 @@ export const useCart = () => {
       items.filter((item) => item.seller_id === id),
     );
 
-    dispatch(setCart({ selectedItems: selected }));
+    dispatch(setCart({ itemsToOrderIds: selected }));
     setSellerItems(groupedBySeller);
   }, [items, dispatch]);
 
   return {
-    selectedItems,
+    selectedItems: itemsToOrderIds,
     sellerItems,
     handleSelectItem,
     updateCart,

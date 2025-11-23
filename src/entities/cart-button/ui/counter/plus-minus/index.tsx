@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import classNames from "classnames";
 import { useCartItems } from "~/src/features/cart/lib/hooks/useCartItems.hook";
@@ -12,6 +13,7 @@ interface Props {
   type: "plus" | "minus";
   quantity: number;
   min: number;
+  max: number;
   itemId: number;
   updateInfo?: () => Promise<void>;
 }
@@ -25,6 +27,7 @@ export default function CartCounterPlusMinus({
   type,
   quantity,
   min,
+  max,
   itemId,
   updateInfo,
 }: Props) {
@@ -32,19 +35,25 @@ export default function CartCounterPlusMinus({
   const { handleButtonClick, loading } = useCartButton({ updateInfo });
   const Icon = icons[type];
   const isMinus = type === "minus";
+  const isDisabled =
+    loading || (isMinus && quantity === min) || (!isMinus && quantity === max);
+
   return (
     <Button
       typeButton="ghost"
       size="0"
       onClick={async () => {
-        await handleButtonClick(
-          async () => await handleUpdateEtiketka(quantity + (isMinus ? -1 : 1)),
-        );
+        if (!isDisabled) {
+          await handleButtonClick(
+            async () =>
+              await handleUpdateEtiketka(quantity + (isMinus ? -1 : 1)),
+          );
+        }
       }}
       className={classNames({
-        [classes.disabled]: isMinus && quantity === 1,
+        [classes.disabled]: isDisabled,
       })}
-      disabled={(isMinus && (quantity === 1 || quantity === min)) || loading}
+      disabled={isDisabled}
     >
       <Icon />
     </Button>

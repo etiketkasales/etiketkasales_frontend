@@ -1,50 +1,25 @@
-.bottom {
-    display: none;
-}
+.container {
+    flex-direction: row;
+    justify-content: space-between;
+    flex: 1 0;
+    gap: $space-10;
 
-.checkbox_skeleton {
-    width: 20px;
-    height: 20px;
-}
-
-.image_skeleton {
-    width: 120px;
-    height: 120px;
-}
-
-.image {
-    border-radius: $space-5;
-    max-width: 120px;
-    max-height: 120px;
-}
-
-@media screen and (width <=768px) {
-    .container {
+    @media screen and (width <= 768px) {
+        flex-direction: column;
+        justify-content: initial;
         gap: $space-3;
     }
-    
-    .checkbox {
-        order: 1;
-    }
-
-    .bottom {
-        display: flex;
-    }
-
-    .checkbox_skeleton {
-        width: 24px;
-        height: 24px;
-    }
 }
 
-@media screen and (width <= 460px) {
-    .image_skeleton {
-        width: 100px;
-        height: 100px;
-    }
+.innerContainer {
+    gap: $space-6;
 
-    .image {
-        max-width: 100px;
-        max-height: 100px;
+    @media screen and (width <= 768px) {
+        gap: $space-3;
+        justify-content: space-between;
+        .checkbox {
+            order: 1;
+            justify-self: flex-end;
+        }
     }
 }

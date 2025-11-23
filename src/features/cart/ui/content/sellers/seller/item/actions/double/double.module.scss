@@ -1,0 +1,46 @@
+.container {
+    gap: $space-5;
+
+    @media screen and (width <= 768px) {
+        gap: $space-3;
+    }
+}
+
+.item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: $space-6px;
+    padding: 0px;
+
+
+    .icon {
+        display: block;
+        max-width: 24px;
+        max-height: 24px;
+    }
+
+    .iconMedia {
+        display: none;
+        max-width: 22px;
+        max-height: 22px;
+    }
+
+    @media screen and (width <= 768px) {
+        padding: $space-2;
+        border-radius: $space-3;
+        background-color: $neutral-300;
+
+        .icon {
+            display: none;
+        }
+
+        .iconMedia {
+            display: block;
+        }
+
+        p {
+            display: none;
+        }
+    }
+}

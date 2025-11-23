@@ -12,6 +12,7 @@ export default function CartCounter({
   itemId,
   quantity,
   minQuantity,
+  maxQuantity,
   className,
   updateInfo,
 }: Props) {
@@ -19,6 +20,7 @@ export default function CartCounter({
     itemId,
     quantity,
     min: minQuantity,
+    max: maxQuantity,
     updateInfo,
   };
 

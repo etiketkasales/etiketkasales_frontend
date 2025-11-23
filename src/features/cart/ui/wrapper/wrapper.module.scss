@@ -1,0 +1,9 @@
+.container {
+    flex: 1 0;
+    max-width: 862px;
+    border-radius: $space-5;
+
+    @media screen and (width <= 1024px) {
+        max-width: unset;
+    }
+}

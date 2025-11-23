@@ -8,6 +8,7 @@ export interface ICommonCartButton {
   itemId: number;
   quantity: number;
   minQuantity: number;
+  maxQuantity: number;
   className?: string;
   updateInfo?: () => Promise<void>;
 }

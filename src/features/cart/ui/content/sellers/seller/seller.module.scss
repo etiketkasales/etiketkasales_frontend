@@ -1,16 +1,14 @@
-.line {
-    width: 100%;
-    height: 1px;
-    background: var(--Background, #F3F4F6);
+.container {
+  padding: $space-5;
+  gap: $space-8;
+
+  @media screen and (width <= 768px) {
+    gap: $space-6;
+    padding: $space-3;
+    padding-bottom: $space-4;
+  }
 }
 
-@media screen and (width <=768px) {
-    .container {
-        gap: $space-6;
-        padding: $space-3 $space-3 $space-4;
-    }
-
-    .list {
-        gap: $space-5;
-    }
+.list {
+  gap: $space-6;
 }

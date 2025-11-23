@@ -1,0 +1,62 @@
+.container {
+  gap: $space-6;
+  @media screen and (width <= 768px) {
+    gap: $space-3;
+  }
+}
+
+.innerContainer {
+  gap: $space-5;
+  padding-bottom: $space-10px;
+  justify-content: space-between;
+
+  @media screen and (width <= 768px) {
+    padding-bottom: 0px;
+    justify-content: initial;
+    gap: $space-1;
+  }
+}
+
+.image {
+  min-width: 120px;
+  max-width: 120px;
+  height: 120px;
+
+  img {
+    border-radius: $space-5;
+  }
+
+  @media screen and (width <= 768px) {
+    min-width: 100px;
+    max-width: 100px;
+    height: 100px;
+
+    img {
+      border-radius: $space-4;
+    }
+  }
+}
+
+.price {
+  display: none;
+}
+
+.text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 340px;
+}
+
+@media screen and (width <= 768px) {
+  .double {
+    display: none;
+  }
+
+  .price {
+    display: flex;
+  }
+}

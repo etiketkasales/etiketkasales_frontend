@@ -1,4 +1,4 @@
-import { EtiketkaInfoButtonI } from "./etiketka.interface";
+import { EtiketkaInfoButtonI } from "./";
 
 export const etiketkaButtonsC: EtiketkaInfoButtonI[] = [
   {

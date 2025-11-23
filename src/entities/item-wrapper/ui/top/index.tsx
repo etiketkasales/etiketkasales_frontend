@@ -28,6 +28,7 @@ export default function ItemWrapperTop({ updateInfo, item, image }: Props) {
         quantity={item.cart_quantity}
         minQuantity={item.min_order_quantity}
         updateInfo={updateInfo}
+        maxQuantity={item.stock_quantity}
       />
     </div>
   );

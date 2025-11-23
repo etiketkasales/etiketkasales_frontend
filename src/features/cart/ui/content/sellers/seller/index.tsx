@@ -19,26 +19,21 @@ export default function CartSellerItems({
   selectItem,
 }: Props) {
   return (
-    <CartWrapper
-      padding="20"
-      className={`flex-column gap-8 ${classes.container}`}
-    >
+    <CartWrapper className={`flex-column ${classes.container}`}>
       <SellerInfoContainer
         sellerId={items[0].seller_id}
         gap={10}
         spaceBetween={false}
       />
-      <ul className={`flex-column gap-6 ${classes.list}`}>
+      <ul className={`flex-column ${classes.list}`}>
         {items.map((item, index) => {
           return (
-            <React.Fragment key={index}>
-              <CartSellerItem
-                item={item}
-                selectedItems={selectedItems}
-                selectItem={selectItem}
-              />
-              {index !== items.length - 1 && <div className={classes.line} />}
-            </React.Fragment>
+            <CartSellerItem
+              key={`${item.id}-${index}`}
+              item={item}
+              selectedItems={selectedItems}
+              selectItem={selectItem}
+            />
           );
         })}
       </ul>
