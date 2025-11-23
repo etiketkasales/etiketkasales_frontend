@@ -5,7 +5,7 @@ import { useCartSum } from "~/src/features/cart/lib/hooks/useCartSum.hook";
 
 import classes from "./cart.module.scss";
 import CartContent from "./content";
-import CartPurchaseSection from "./purchase-section";
+import CartOrderSummary from "./order-summary";
 
 interface Props {
   openModal: () => void;
@@ -13,7 +13,7 @@ interface Props {
 
 export default function CartSection({ openModal }: Props) {
   const { selectedItems, sellerItems, handleSelectItem } = useCart();
-  const { itemsSum, itemsDiscount } = useCartSum();
+  const { itemsSum, itemsDiscount, paySum } = useCartSum();
 
   return (
     <section className={`flex-column gap-30px ${classes.container}`}>
@@ -24,10 +24,11 @@ export default function CartSection({ openModal }: Props) {
           selectedItems={selectedItems}
           selectItem={handleSelectItem}
         />
-        <CartPurchaseSection
-          itemsSum={itemsSum}
-          itemsDiscount={itemsDiscount}
-          itemsCount={selectedItems.length}
+        <CartOrderSummary
+          totalSum={itemsSum}
+          discountSum={itemsDiscount}
+          totalItemsCount={selectedItems.length}
+          paySum={paySum}
           openModal={openModal}
         />
       </div>

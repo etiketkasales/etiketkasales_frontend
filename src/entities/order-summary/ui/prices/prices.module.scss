@@ -1,0 +1,15 @@
+.container {
+    gap: $space-7;
+
+    @media screen and (width <= 768px) {
+        gap: $space-3;
+    }
+}
+
+.innerContainer {
+    gap: $space-3;
+
+    @media screen and (width <= 768px) {
+        gap: $space-2;
+    }
+}

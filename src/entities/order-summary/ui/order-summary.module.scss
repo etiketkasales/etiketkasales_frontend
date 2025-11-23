@@ -1,0 +1,17 @@
+.container {
+    gap: $space-7;
+    
+    padding: $space-4;
+    border-radius: $space-5;
+    
+    max-width: 358px;
+    flex: 1 0;
+
+    position: sticky;
+    top: 0;
+
+    @media screen and (width <= 768px) {
+        max-width: unset;
+        gap: $space-5;
+    }
+}

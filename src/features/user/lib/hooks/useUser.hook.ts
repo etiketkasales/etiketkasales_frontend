@@ -1,13 +1,17 @@
 import { useCallback } from "react";
 import { useAppDispatch } from "~/src/app/store/hooks";
 import { setUser } from "~/src/app/store/reducers/user.slice";
+import { useUserCompanies } from "./useUserCompanies.hook";
 import { getProfile } from "~/src/features/user/lib/api/user.api";
+import { useAddresses } from "./useAddresses.hook";
 
 import { profileChangeableFields } from "~/src/features/user/model/user.const";
 import { IChangeableProfile, IProfile } from "~/src/features/user/model";
 
 export const useUser = () => {
   const dispatch = useAppDispatch();
+  const { handleGetCompanies } = useUserCompanies();
+  const { getAddresses } = useAddresses();
   const setLoading = useCallback(
     (loading: boolean) => {
       dispatch(setUser({ loadingData: loading }));
@@ -41,6 +45,8 @@ export const useUser = () => {
     try {
       setLoading(true);
       const res = await getProfile();
+      await handleGetCompanies();
+      await getAddresses();
       if (res.user) {
         setUserData(res.user);
       } else {
@@ -52,7 +58,7 @@ export const useUser = () => {
     } finally {
       setLoading(false);
     }
-  }, [dispatch, setLoading, setUserData]);
+  }, [dispatch, setLoading, setUserData, getAddresses, handleGetCompanies]);
 
   return {
     handleGetUser,

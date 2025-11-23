@@ -53,17 +53,9 @@ export const useAddCompany = (onClose: () => void) => {
       }
     }
 
-    if (!newError && !conditionsAccepted) {
-      newError = {
-        field: "checkbox",
-        type: "error",
-        message: "",
-      };
-    }
-
     setSpecificError(newError);
     return newError !== null;
-  }, [newCompany, conditionsAccepted]);
+  }, [newCompany]);
 
   const onSaveCompany = useCallback(async () => {
     const specificError = hasSpecificError();

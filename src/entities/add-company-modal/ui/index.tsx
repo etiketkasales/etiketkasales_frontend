@@ -52,7 +52,12 @@ export default function AddCompanyModal({ isOpen, onClose }: Props) {
         <AddCompanyButtons
           onClose={onClose}
           onSave={async () => await onSaveCompany()}
-          disabled={loading || error !== null || specificError !== null}
+          disabled={
+            loading ||
+            error !== null ||
+            specificError !== null ||
+            !conditionsAccepted
+          }
         />
       </div>
     </Modal>

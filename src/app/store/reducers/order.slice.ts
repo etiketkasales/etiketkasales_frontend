@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IEtiketka } from "~/src/entities/etiketka/model";
 import { INewOrderInfo } from "~/src/entities/order/model";
 import { newOrderSkeleton } from "~/src/entities/order/model";
 
@@ -7,12 +8,14 @@ export type OrderType = "company" | "person";
 interface InitialStateI {
   type: OrderType;
   orderInfo: INewOrderInfo;
+  itemsToOrder: IEtiketka[];
   [key: string]: any;
 }
 
 const initialState: InitialStateI = {
   type: "person",
   orderInfo: newOrderSkeleton,
+  itemsToOrder: [],
 };
 
 export const orderSlice = createSlice({

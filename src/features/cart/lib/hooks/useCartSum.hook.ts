@@ -9,6 +9,7 @@ export const useCartSum = () => {
 
   const [itemsSum, setItemsSum] = useState<number>(0);
   const [itemsDiscount, setItemsDiscount] = useState<number>(0);
+  const [paySum, setPaySum] = useState<number>(0);
 
   useEffect(() => {
     if (!items || selectedItems.length === 0) {
@@ -38,10 +39,12 @@ export const useCartSum = () => {
 
     setItemsSum(sum);
     setItemsDiscount(discount);
+    setPaySum(sum - discount);
   }, [selectedItems, items]); // высчитывает общую сумму и скидку
 
   return {
     itemsSum,
     itemsDiscount,
+    paySum,
   };
 };
