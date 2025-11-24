@@ -10,10 +10,16 @@ import CheckboxInput from "~/src/shared/ui/inputs/checkbox";
 import CartDeleteAll from "./delete-all";
 
 interface Props {
+  onCheckboxChange: (selectAll: boolean) => void;
+  onDeleteClick: () => void;
   className?: string;
 }
 
-export default function CartFunctional({ className }: Props) {
+export default function CartFunctional({
+  className,
+  onCheckboxChange,
+  onDeleteClick,
+}: Props) {
   const { isAllSelected } = useAppSelector(selectCart);
 
   return (
@@ -26,12 +32,12 @@ export default function CartFunctional({ className }: Props) {
     >
       <CheckboxInput
         label="Выбрать все"
-        onChange={() => {}}
+        onChange={() => onCheckboxChange(!isAllSelected)}
         gap="10px"
         checked={isAllSelected}
         className={classes.checkbox}
       />
-      <CartDeleteAll />
+      <CartDeleteAll onClick={onDeleteClick} />
     </CartWrapper>
   );
 }

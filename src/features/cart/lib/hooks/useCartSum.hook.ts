@@ -16,6 +16,7 @@ export const useCartSum = () => {
     if (!items || itemsToOrderIds.length === 0) {
       setItemsDiscount(0);
       setItemsSum(0);
+      setPaySum(0);
       return;
     }
 

@@ -40,5 +40,5 @@ export interface IValidateCart {
     subtotal: string;
     item_count: number;
   };
-  warnings: string[];
+  warnings: any[];
 }

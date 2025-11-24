@@ -1,25 +1,26 @@
 "use client";
 import React from "react";
 
-import classes from "./delete-all.module.scss";
-import TrashCan from "~/public/cart/trash2-fill.svg";
+import TrashCan from "~/public/cart/yellow-trash.svg";
 import Button from "~/src/shared/ui/button";
 
-export default function CartDeleteAll() {
+interface Props {
+  onClick: () => void;
+}
+
+export default function CartDeleteAll({ onClick }: Props) {
   return (
     <Button
       typeButton="ghost"
       size="0"
       onClick={() => {}}
       needActiveScale={false}
-      className={`${classes.button} right-element`}
+      className={`right-element`}
       justifyCenter={false}
     >
       <div className="flex-row gap-6px align-center">
         <TrashCan />
-        <span className="text-16 second-family gray-2 regular">
-          Удалить выбранные
-        </span>
+        <span className="heading h7 text-yellow-600">Удалить выбранные</span>
       </div>
     </Button>
   );

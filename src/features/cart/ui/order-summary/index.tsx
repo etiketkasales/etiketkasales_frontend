@@ -38,6 +38,7 @@ export default function CartOrderSummary({
       title: "Перейти к оформлению",
       type: "yellow",
       link: "/order",
+      onClick: () => push("/order"),
     },
     {
       title: "Купить как юр. лицо",

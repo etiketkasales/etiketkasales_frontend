@@ -2,7 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { selectCart, setCart } from "~/src/app/store/reducers/cart.slice";
 import { selectOrder, setOrder } from "~/src/app/store/reducers/order.slice";
-import { getCart } from "../api/cart.api";
+import { getCart, mergeCart } from "../api/cart.api";
+import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 
 import { ICartItem } from "../../model/cart.interface";
 
@@ -10,8 +11,8 @@ export const useCart = () => {
   const dispatch = useAppDispatch();
   const { items } = useAppSelector(selectCart);
   const { itemsToOrderIds } = useAppSelector(selectOrder);
-
   const [sellerItems, setSellerItems] = useState<Array<ICartItem[]>>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSelectItem = useCallback(
     (id: number) => {
@@ -32,36 +33,67 @@ export const useCart = () => {
         isAllSelected: itemsToOrderIds.length === items.length,
       }),
     );
-  }, [itemsToOrderIds, items, dispatch]);
+  }, [itemsToOrderIds.length, items.length, dispatch]);
 
-  const updateCart = useCallback(async () => {
-    try {
-      const res = await getCart();
+  const onCheckboxChange = useCallback(
+    (selectAll: boolean) => {
       dispatch(
-        setCart({
-          items: res.items,
+        setOrder({
+          itemsToOrderIds: selectAll ? items.map((item) => item.id) : [],
         }),
       );
-    } catch (err) {
-      console.error(err);
-    }
+    },
+    [dispatch, items],
+  );
+
+  const updateCart = useCallback(async () => {
+    await promiseWrapper({
+      setLoading,
+      callback: async () => {
+        const res = await getCart();
+        dispatch(
+          setCart({
+            items: res.items,
+          }),
+        );
+      },
+    });
   }, [dispatch]);
+
+  const cartMerging = useCallback(async () => {
+    await promiseWrapper({
+      setLoading,
+      callback: async () => {
+        await mergeCart();
+        await updateCart();
+      },
+    });
+  }, [updateCart]);
+
+  const deleteMarked = useCallback(async () => {
+    await promiseWrapper({
+      setLoading,
+      callback: async () => {
+        await updateCart();
+      },
+    });
+  }, [updateCart]);
 
   // группирует по продавцам
   useEffect(() => {
     if (!items.length) {
-      dispatch(setCart({ itemsToOrderIds: [] }));
+      dispatch(setOrder({ itemsToOrderIds: [] }));
       setSellerItems([]);
       return;
     }
 
-    const selected = items.map((item) => item.product_id);
+    const selected = items.map((item) => item.id);
     const sellerIdList = [...new Set(items.map((item) => item.seller_id))];
     const groupedBySeller = sellerIdList.map((id) =>
       items.filter((item) => item.seller_id === id),
     );
 
-    dispatch(setCart({ itemsToOrderIds: selected }));
+    dispatch(setOrder({ itemsToOrderIds: selected }));
     setSellerItems(groupedBySeller);
   }, [items, dispatch]);
 
@@ -70,5 +102,9 @@ export const useCart = () => {
     sellerItems,
     handleSelectItem,
     updateCart,
+    cartMerging,
+    onCheckboxChange,
+    deleteMarked,
+    loading,
   };
 };
