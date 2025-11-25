@@ -31,8 +31,9 @@ export default function CategoriesSwiperButtons({ goPrev, goNext }: Props) {
           <Button
             key={index}
             typeButton="gray"
-            size="6-10"
             onClick={item.onClick}
+            radius={12}
+            className={classes.button}
           >
             <item.Icon style={{ width: "22px", height: "22px" }} />
           </Button>
