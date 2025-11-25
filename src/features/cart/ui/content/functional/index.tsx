@@ -7,7 +7,7 @@ import { selectCart } from "~/src/app/store/reducers/cart.slice";
 import classes from "./functional.module.scss";
 import CartWrapper from "~/src/features/cart/ui/wrapper";
 import CheckboxInput from "~/src/shared/ui/inputs/checkbox";
-import CartDeleteAll from "./delete-all";
+import CartDeleteAll from "./delete-marked";
 
 interface Props {
   onCheckboxChange: (selectAll: boolean) => void;
@@ -36,8 +36,14 @@ export default function CartFunctional({
         gap="10px"
         checked={isAllSelected}
         className={classes.checkbox}
+        classNameLabel={classes.label}
+        id="cart-select-all-products"
+        name="cart-select-all-products"
       />
-      <CartDeleteAll onClick={onDeleteClick} />
+      <CartDeleteAll
+        onClick={onDeleteClick}
+        textClassName={classes.deleteLabel}
+      />
     </CartWrapper>
   );
 }

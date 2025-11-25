@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { selectCart, setCart } from "~/src/app/store/reducers/cart.slice";
 import { selectOrder, setOrder } from "~/src/app/store/reducers/order.slice";
-import { getCart, mergeCart } from "../api/cart.api";
+import { getCart, mergeCart, multiDeleteProducts } from "../api/cart.api";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 
 import { ICartItem } from "../../model/cart.interface";
@@ -74,10 +74,12 @@ export const useCart = () => {
     await promiseWrapper({
       setLoading,
       callback: async () => {
+        if (itemsToOrderIds.length === 0) return;
+        await multiDeleteProducts(itemsToOrderIds);
         await updateCart();
       },
     });
-  }, [updateCart]);
+  }, [updateCart, itemsToOrderIds]);
 
   // группирует по продавцам
   useEffect(() => {

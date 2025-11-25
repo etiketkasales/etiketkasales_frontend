@@ -1,20 +1,32 @@
 .container {
-    padding: $space-5;
+  padding: $space-5;
+}
+
+.label {
+  @include text-body-l();
+  color: $neutral-1000;
+}
+
+.deleteLabel {
+    @include heading-h7();
 }
 
 @media screen and (width <= 768px) {
-    .container {
-        padding: 0;
-        flex-direction: row-reverse;
+  .container {
+    padding: 0;
+    flex-direction: row-reverse;
+  }
 
-        label,
-        span {
-            color: $black;
-        }
-    }
+  .checkbox {
+    flex-direction: row-reverse;
+  }
 
-    .checkbox {
-        flex-direction: row-reverse;
-        
-    }
+  .label,
+  .deleteLabel {
+    @include heading-h8();
+  }
+
+  .label {
+    color: $neutral-700;
+  }
 }

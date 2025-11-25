@@ -103,6 +103,27 @@ $third-family: var(--inter-font);
   }
 }
 
+@mixin text-body-l {
+  font-size: 16px;
+  line-height: 150%;
+  font-weight: 400;
+  font-family: $font-family;
+}
+
+@mixin heading-h8 {
+  font-size: 14px;
+  line-height: 128.571%;
+  font-weight: 700;
+  font-family: $font-family;
+}
+
+@mixin heading-h7 {
+  font-size: 16px;
+  line-height: 125%;
+  font-weight: 700;
+  font-family: $font-family;
+}
+
 .body-text,
 .text-body {
   font-family: $font-family;

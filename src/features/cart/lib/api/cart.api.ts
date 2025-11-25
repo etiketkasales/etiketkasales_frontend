@@ -75,3 +75,13 @@ export const mergeCart = async () => {
   });
   return res;
 };
+
+export const multiDeleteProducts = async (ids: number[]) => {
+  return await tryCatch(async () => {
+    const res = await apiClient.post(`/cart/remove-items/`, {
+      ids: [...ids],
+    });
+
+    return res.data;
+  });
+};

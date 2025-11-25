@@ -1,13 +1,24 @@
 import React from "react";
 
 import classes from "./cart-header.module.scss";
-import HeaderWithBack from "~/src/entities/header-with-back/ui";
-import HeaderSearch from "~/src/entities/header-default/ui/search";
+import HeaderDefault from "../../header-default/ui";
+import CartHeaderMedia from "./media";
 
-export default function CartHeader() {
+interface Props {
+  deleteMarked: () => void;
+  onCheckboxChange: (selectAll: boolean) => void;
+}
+
+export default function CartHeader({ deleteMarked, onCheckboxChange }: Props) {
   return (
-    <HeaderWithBack className={classes.container}>
-      <HeaderSearch className={classes.input} />
-    </HeaderWithBack>
+    <HeaderDefault
+      className={classes.container}
+      CustomMediaHeader={
+        <CartHeaderMedia
+          deleteMarked={deleteMarked}
+          onChecboxChange={onCheckboxChange}
+        />
+      }
+    />
   );
 }

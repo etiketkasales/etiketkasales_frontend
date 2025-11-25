@@ -1,26 +1,32 @@
 "use client";
 import React from "react";
-import { useCart } from "~/src/features/cart/lib/hooks/useCart.hook";
 import { useCartSum } from "~/src/features/cart/lib/hooks/useCartSum.hook";
 
 import classes from "./cart.module.scss";
 import CartContent from "./content";
 import CartOrderSummary from "./order-summary";
 import LoaderCircle from "~/src/shared/ui/loader-circle";
+import { ICartItem } from "../model/cart.interface";
 
 interface Props {
+  loading: boolean;
+  sellerItems: ICartItem[][];
+  selectedItems: number[];
+  handleSelectItem: (id: number) => void;
+  onCheckboxChange: (selectAll: boolean) => void;
+  deleteMarked: () => Promise<void>;
   openModal: () => void;
 }
 
-export default function CartSection({ openModal }: Props) {
-  const {
-    selectedItems,
-    sellerItems,
-    handleSelectItem,
-    onCheckboxChange,
-    deleteMarked,
-    loading,
-  } = useCart();
+export default function CartSection({
+  openModal,
+  loading,
+  sellerItems,
+  selectedItems,
+  handleSelectItem,
+  onCheckboxChange,
+  deleteMarked,
+}: Props) {
   const { itemsSum, itemsDiscount, paySum } = useCartSum();
 
   return (
