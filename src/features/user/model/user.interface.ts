@@ -10,7 +10,11 @@ export interface UserInfoI {
   in_favourites_ids: number[];
 }
 
-export type SellerStatusType = "draft" | "pending" | "approved" | "rejected";
+export type SellerStatusType =
+  | "draft"
+  | "seller_pending"
+  | "approved"
+  | "failed";
 
 export interface IChangeableProfile {
   email: string | null;

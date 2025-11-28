@@ -17,6 +17,7 @@ export default function ViewAllButton({ categoryId }: Props) {
       className={classes.container}
       as={"a"}
       href={`/catalogue?category_id=${encodeURIComponent(categoryId)}`}
+      radius={12}
     >
       <div className="flex-row align-center gap-1">
         <span className="text-neutral-800 text-body xl">Смотреть все</span>

@@ -31,7 +31,7 @@ export default function Modal({
   bgColor,
   titleClassName,
   titleTextClassName,
-  needBackButton = true,
+  needBackButton = false,
   loading = false,
   loaderRadius = 20,
 }: Props) {
@@ -49,7 +49,7 @@ export default function Modal({
           <Container
             ref={contentRef}
             bgColor={bgColor}
-            className={classNames(containerClassName, "relative")}
+            className={classNames(containerClassName, "relative scrollbar")}
           >
             {loading && <LoaderCircle radius={loaderRadius} />}
             <ModalTitle

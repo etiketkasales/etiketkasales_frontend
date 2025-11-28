@@ -44,6 +44,7 @@ export default function CartSellerItem({
           image={item.images[0]}
           price={item.price}
           old_price={item.old_price}
+          slug={item.slug}
           name={item.name}
           deleteFromCart={deleteFromCart}
         />

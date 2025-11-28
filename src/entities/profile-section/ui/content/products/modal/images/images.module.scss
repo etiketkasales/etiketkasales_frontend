@@ -1,4 +1,31 @@
 .container {
-    flex: 1 1;
-    max-height: 160px;
+  display: flex;
+  flex-direction: row;
+  flex: 1 1;
+  max-height: 160px;
+  gap: $space-4;
+
+  @media screen and (width <= 400px) {
+    flex-direction: column;
+    max-height: unset;
+    gap: $space-2;
+    flex: 1 0;
+    align-items: flex-start;
+  }
+}
+
+.image {
+  position: relative;
+  max-width: 160px;
+  max-height: 160px;
+}
+
+.length {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: $space-2;
+  padding: 0 $space-1;
+  z-index: 1;
 }

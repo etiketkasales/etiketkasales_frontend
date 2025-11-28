@@ -1,13 +1,10 @@
-import {
-  INewProduct,
-  INewProductInput,
-  ISellerProductBase,
-} from "./seller-products.interface";
+import { INewProduct, INewProductInput } from "./seller-products.interface";
 
 export const newProductSkeleton: INewProduct = {
   name: "",
   description: "",
   images: [],
+  image_uploads_ids: [],
   price: "",
 };
 

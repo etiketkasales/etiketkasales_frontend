@@ -41,7 +41,7 @@
   display: none;
 }
 
-.text {
+.link {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   line-clamp: 2;
@@ -49,6 +49,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 340px;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 @media screen and (width <= 768px) {

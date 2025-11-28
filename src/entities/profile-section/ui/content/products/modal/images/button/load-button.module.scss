@@ -2,9 +2,8 @@
   border: 1px dashed $yellow-600;
   border-radius: $space-5;
   padding: $space-4;
-  max-width: 160px;
-  max-width: 160px;
-  flex: 1 1;
+  width: 160px;
+  max-height: 160px;
   justify-self: flex-start;
 
   transition: border $transition;

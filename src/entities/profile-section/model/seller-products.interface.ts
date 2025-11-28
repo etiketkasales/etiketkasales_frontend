@@ -14,6 +14,7 @@ export interface ISellerProduct extends ISellerProductBase {
 }
 
 export interface INewProduct extends ISellerProductBase {
+  image_uploads_ids: number[];
   [key: string]: any; // поля для фильтров, заранее неизвестны
 }
 

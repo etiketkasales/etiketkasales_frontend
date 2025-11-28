@@ -27,6 +27,8 @@ export default function ProfileProductsModal({
     modalStage,
     setModalStage,
     onSave,
+    onFileLoad,
+    currentImages,
   } = useNewProduct(onClose);
 
   return (
@@ -43,9 +45,8 @@ export default function ProfileProductsModal({
         className={`flex-column gap-6`}
       >
         <ProductsModalImages
-          onFileLoad={() => {}}
-          onRemove={() => {}}
-          currentImages={[]}
+          onFileLoad={onFileLoad}
+          currentImages={currentImages}
         />
         <ProductsModalMainInputs
           onInputChange={onInputChange}

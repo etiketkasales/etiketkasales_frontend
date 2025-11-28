@@ -15,28 +15,6 @@
   }
 }
 
-@media screen and (any-hover: hover) {
-  .white:hover {
-    background-color: $neutral-200;
-  }
-
-  .blue:hover {
-    background-color: $blue-400;
-  }
-
-  .yellow:hover {
-    background-color: $yellow-300;
-  }
-
-  .gray:hover {
-    background-color: $neutral-400;
-  }
-
-  .gray-border:hover {
-    background-color: $neutral-200;
-  }
-}
-
 .yellow-200 {
   background-color: $yellow-200;
 
@@ -56,6 +34,12 @@
 
   span {
     color: $neutral-800;
+  }
+
+  @media screen and (any-hover: hover) {
+    &:hover {
+      background-color: $neutral-200;
+    }
   }
 
   &:active {
@@ -80,6 +64,12 @@
   background-color: $blue-500;
   box-shadow: $shadow-100;
 
+  @media screen and (any-hover: hover) {
+    &:hover {
+      background-color: $blue-400;
+    }
+  }
+
   &:active {
     background-color: $blue-700;
   }
@@ -91,6 +81,12 @@
 
   span {
     color: $yellow-1000;
+  }
+
+  @media screen and (any-hover: hover) {
+    &:hover {
+      background-color: $yellow-300;
+    }
   }
 
   &:active {
@@ -116,6 +112,12 @@
     fill: $neutral-700;
   }
 
+  @media screen and (any-hover: hover) {
+    &:hover {
+      background-color: $neutral-400;
+    }
+  }
+
   &:active {
     background-color: $neutral-500;
   }
@@ -136,6 +138,12 @@
 
   span {
     color: $neutral-800;
+  }
+
+  @media screen and (any-hover: hover) {
+    &:hover {
+      background-color: $neutral-200;
+    }
   }
 
   &:active {

@@ -14,7 +14,11 @@ export const useSwitchRole = () => {
       try {
         setLoading(true);
         const res = await switchRole(roleToSwitch);
-        if (!res.success && Array.isArray(res.missing_fields)) {
+        if (
+          !res.success &&
+          (Array.isArray(res.missing_fields) ||
+            res.error?.includes("not verified")) // TODO: придумать, как улучшить эту проверку. Обсудить с бэком
+        ) {
           push("/company/registrate");
         } else if (res.user) {
           setUserData(res.user);

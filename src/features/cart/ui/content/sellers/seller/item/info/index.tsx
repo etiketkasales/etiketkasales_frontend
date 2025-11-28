@@ -2,6 +2,7 @@ import React from "react";
 
 import classes from "./seller-item.module.scss";
 import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
+import Link from "next/link";
 import SellerItemDouble from "../actions/double";
 import Price from "~/src/shared/ui/price/ui";
 
@@ -11,6 +12,7 @@ interface Props {
   deleteFromCart: () => Promise<void>;
   price: string;
   old_price: string | null;
+  slug: string;
 }
 
 export default function CartSellerItemInfo({
@@ -19,6 +21,7 @@ export default function CartSellerItemInfo({
   deleteFromCart,
   price,
   old_price,
+  slug,
 }: Props) {
   return (
     <div className={`flex-row ${classes.container}`}>
@@ -30,7 +33,14 @@ export default function CartSellerItemInfo({
         height={120}
       />
       <div className={`flex-column ${classes.innerContainer}`}>
-        <p className={`heading h6 text-neutral-1000 ${classes.text}`}>{name}</p>
+        <Link
+          href={`/etiketka/${slug}`}
+          rel="noopener norefferrer"
+          target="_blank"
+          className={`heading h6 text-neutral-1000 ${classes.link}`}
+        >
+          {name}
+        </Link>
         <SellerItemDouble
           deleteFromCart={deleteFromCart}
           containerClassName={classes.double}

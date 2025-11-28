@@ -1,4 +1,4 @@
-import React from "react";
+import React, { CSSProperties } from "react";
 import classNames from "classnames";
 import { useImageWrapper } from "../lib/hooks/useImageWrapper.hook";
 
@@ -17,6 +17,8 @@ interface Props {
   priority?: boolean;
   fill?: boolean;
   needDummy?: boolean;
+  onClick?: () => void;
+  style?: CSSProperties;
 }
 
 const fallbackImage = "/shared/image-src-plug.png";
@@ -33,11 +35,17 @@ export default function ImageWrapper({
   fill,
   priority,
   needDummy = true,
+  onClick,
+  style,
 }: Props) {
   const { canLoad } = useImageWrapper({ src });
 
   return (
-    <div className={classNames(className, classes.container)}>
+    <div
+      className={classNames(className, classes.container)}
+      onClick={onClick}
+      style={style}
+    >
       {!needDummy && (!canLoad || !src) ? null : (
         <Image
           src={canLoad ? (src ? src : fallbackImage) : fallbackImage}

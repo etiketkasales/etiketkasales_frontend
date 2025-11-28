@@ -32,13 +32,13 @@ export default function ProfileRolePage({ paramsRole }: Props) {
     });
   const [modalType, setModalType] = useState<ProfileActionType | null>(null);
 
-  if (!isLoggedIn) return redirect("/login");
+  // if (!isLoggedIn) return redirect("/login");
 
-  if (paramsRole !== userInfo.role) {
-    if (paramsRole !== "seller-pending") {
-      return redirect("/profile");
-    }
-  }
+  // if (paramsRole !== userInfo.role) {
+  //   if (paramsRole !== "seller-pending") {
+  //     return redirect("/profile");
+  //   }
+  // }
 
   return (
     <PageWrapper

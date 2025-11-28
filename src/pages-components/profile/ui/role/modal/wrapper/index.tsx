@@ -19,7 +19,7 @@ export default function ProfileModalWrapper({
   onClose,
   isOpen,
   className,
-  needBackButton = true,
+  needBackButton = false,
 }: Props) {
   return (
     <Modal

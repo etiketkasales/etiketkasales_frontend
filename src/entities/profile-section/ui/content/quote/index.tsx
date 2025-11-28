@@ -19,9 +19,9 @@ export default function ProfileQuote({
   switch (moderationStage) {
     default:
       return null;
-    case "rejected":
+    case "failed":
       return <QuoteRejected reason={rejectReason} />;
-    case "pending":
+    case "seller_pending":
       return <QuotePending />;
     case "draft":
       return <QuoteDraft />;

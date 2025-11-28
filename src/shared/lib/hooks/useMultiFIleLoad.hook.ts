@@ -2,18 +2,18 @@ import { useEffect, useState } from "react";
 import { useFileLoad } from "./useFileLoad.hook";
 
 interface Props {
-  callback?: (file: File) => Promise<string>;
+  callback?: (file: File) => Promise<number | null>;
 }
 
 export const useMultiFileLoad = ({ callback }: Props) => {
-  const [files, setFiles] = useState<string[]>([]);
-  const { fileLoading, fileName, onFileLoad } = useFileLoad({ callback });
+  const [files, setFiles] = useState<number[]>([]);
+  const { fileLoading, fileId, onFileLoad } = useFileLoad({ callback });
 
   useEffect(() => {
-    if (!fileName) return;
+    if (!fileId) return;
     if (fileLoading) return;
-    setFiles((prev) => [...prev, fileName]);
-  }, [fileName, fileLoading]);
+    setFiles((prev) => [...prev, fileId]);
+  }, [fileId, fileLoading]);
 
   return {
     files,

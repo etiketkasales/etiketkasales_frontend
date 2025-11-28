@@ -1,34 +1,49 @@
+"use callback";
 import React, { useRef } from "react";
 
 import classes from "./images.module.scss";
 import ProductModalLoadButton from "./button";
+import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
 
 interface Props {
   currentImages: string[];
-  onFileLoad: (event: { target: HTMLInputElement }) => void;
-  onRemove?: () => void;
+  onFileLoad: (file: File) => void;
 }
 
 export default function ProductsModalImages({
   currentImages,
   onFileLoad,
-  onRemove,
 }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    onFileLoad(file);
+  };
+
   return (
     <div className={classes.container}>
+      {currentImages.length > 0 && (
+        <ImageWrapper
+          src={currentImages[0]}
+          width={160}
+          height={160}
+          className={classes.image}
+        >
+          {currentImages.length > 1 && (
+            <p className={`text-neutral-1000 text-body l ${classes.length}`}>
+              + {currentImages.length - 1}
+            </p>
+          )}
+        </ImageWrapper>
+      )}
       <input
         type="file"
         accept="image/*"
         hidden={true}
         multiple={false}
-        onChange={(e) => {
-          onFileLoad(e);
-        }}
-        ref={(refParam) => {
-          if (inputRef === null || refParam === null) return;
-          inputRef.current = refParam;
-        }}
+        onChange={handleFileChange}
+        ref={inputRef}
       />
       <ProductModalLoadButton onClick={() => inputRef.current?.click()} />
     </div>

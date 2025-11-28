@@ -20,11 +20,14 @@ export default function QuoteRejected({ reason }: Props) {
           Магазин не прошел модерацию!
         </h3>
         {reason && <p className="text-body xl text-neutral-100">{reason}</p>}
-        <p className="text-body xl text-neutral-100">
-          Попробуйте отправить заявку повторно
-        </p>
       </div>
-      <Button typeButton="white" as={"a"} href="/" radius={12} size="12-24">
+      <Button
+        typeButton="white"
+        as={"a"}
+        href="/"
+        radius={12}
+        className={classes.button}
+      >
         <span className="heading h7 text-neutral-800">
           Вернуться на главную
         </span>
