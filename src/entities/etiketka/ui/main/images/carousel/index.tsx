@@ -1,10 +1,7 @@
-"use client";
 import React, { Dispatch, SetStateAction } from "react";
-import { useWindowSize } from "react-use";
+import classNames from "classnames";
 
 import classes from "./carousel.module.scss";
-import Button from "~/src/shared/ui/button";
-import SkeletonWrapper from "~/src/shared/ui/skeleton/ui";
 import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
 
 interface Props {
@@ -13,7 +10,6 @@ interface Props {
   setCurrentImage: Dispatch<SetStateAction<string>>;
   previewImage: string | null;
   setPreviewImage: Dispatch<SetStateAction<string | null>>;
-  loaded: boolean;
 }
 
 export default function ImagesCarousel({
@@ -21,40 +17,28 @@ export default function ImagesCarousel({
   currentImage,
   setCurrentImage,
   setPreviewImage,
-  loaded,
 }: Props) {
-  const { width } = useWindowSize();
-  const skeletons = Array(6).fill("");
-
+  const images = Array(7).fill("/shared/image-src-plug.png");
   return (
     <div
       className={`flex-row gap-2 align-center scrollbar ${classes.container}`}
     >
-      {loaded
-        ? images_urls.map((src, index) => {
-            return (
-              <Button
-                key={index}
-                typeButton="ghost"
-                size="0"
-                needActiveScale={false}
-                radius={width <= 768 ? 20 : 16}
-                onClick={() => setCurrentImage(src)}
-                onMouseEnter={() => setPreviewImage(src)}
-                onMouseLeave={() => setPreviewImage(null)}
-              >
-                <ImageWrapper
-                  src={src}
-                  width={100}
-                  height={100}
-                  className={`${currentImage === src ? classes.current : ""} ${classes.imageContainer}`}
-                />
-              </Button>
-            );
-          })
-        : skeletons.map((_, index) => {
-            return <SkeletonWrapper key={index} className={classes.skeleton} />;
-          })}
+      {images.map((src, index) => {
+        return (
+          <ImageWrapper
+            key={index + src}
+            src={src}
+            width={100}
+            height={100}
+            className={classNames("pointer", classes.imageContainer, {
+              [classes.current]: currentImage === src,
+            })}
+            onClick={() => setCurrentImage(src)}
+            onMouseEnter={() => setPreviewImage(src)}
+            onMouseLeave={() => setPreviewImage(null)}
+          />
+        );
+      })}
     </div>
   );
 }

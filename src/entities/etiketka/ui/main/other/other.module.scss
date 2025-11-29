@@ -1,4 +1,9 @@
 .container {
-    width: 100%;
+    flex: 1 0;
     max-width: 256px;
+    min-width: 200px;
+
+    @media screen and (width <= 1070px) {
+        max-width: unset;
+    }
 }

@@ -9,13 +9,17 @@ import Container from "~/src/shared/ui/container/ui";
 
 interface Props {
   TabsButton?: ReactNode;
+  popList?: boolean;
 }
 
-export default function Tabs({ TabsButton }: Props) {
+export default function Tabs({ TabsButton, popList = false }: Props) {
   const { width } = useWindowSize();
   const { ref, cartItems } = useTabs();
 
   const getPadding = () => {
+    if (popList) {
+      return "padding-8";
+    }
     if (Array.isArray(cartItems) && cartItems.length > 0) {
       return classes.padding_20_28_36;
     }
@@ -30,7 +34,7 @@ export default function Tabs({ TabsButton }: Props) {
       ref={ref}
     >
       {TabsButton ? TabsButton : null}
-      <TabsList cartItems={cartItems} />
+      {!popList && <TabsList cartItems={cartItems} />}
     </Container>
   );
 }

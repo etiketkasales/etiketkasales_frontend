@@ -1,3 +1,7 @@
-.text {
-    text-decoration: underline solid from-font;
+.icon {
+    transform: none;
+
+    &.active {
+        transform: rotate(-90deg);
+    }
 }

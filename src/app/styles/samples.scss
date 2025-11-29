@@ -1,3 +1,4 @@
+@use "app/styles/sizes.scss" as *;
 //
 .mandatory-x-container {
     overflow-x: auto;
@@ -20,11 +21,6 @@
         white-space: nowrap;
         scroll-snap-align: center;
     }
-}
-
-//
-.border-bg-gray {
-    border: 1px solid $bg-gray;
 }
 
 //

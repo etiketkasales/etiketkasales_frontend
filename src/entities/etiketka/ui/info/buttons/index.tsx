@@ -24,7 +24,6 @@ export default function EtiketkaInfoButtons({
             <Button
               key={index}
               typeButton={isActive ? "yellow-200" : "gray"}
-              size="16"
               radius={16}
               onClick={() => {
                 setCurrentIndex(item.action);

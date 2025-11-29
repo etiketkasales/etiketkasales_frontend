@@ -2,6 +2,7 @@ import React from "react";
 import classNames from "classnames";
 
 import classes from "./price.module.scss";
+import StringUtils from "~/src/shared/lib/utils/string.util";
 
 interface Props {
   price: number | string;
@@ -9,6 +10,8 @@ interface Props {
   alignCenter?: boolean;
   needTransform?: boolean;
   className?: string;
+  priceSize?: string;
+  oldPriceSize?: string;
 }
 
 export default function Price({
@@ -17,18 +20,9 @@ export default function Price({
   alignCenter,
   needTransform = true,
   className,
+  priceSize = "h6",
+  oldPriceSize = "h7",
 }: Props) {
-  // cop = копейки
-  const getPriceWithoutCop = (price: string | number) => {
-    const strPrice = String(price);
-    const [rubles, cops] = strPrice.split(".");
-    const [cops1, cops2] = cops.split("");
-    if (cops1 === "0" && cops2 === "0") {
-      return rubles;
-    }
-    return strPrice;
-  };
-
   return (
     <div
       className={classNames(
@@ -37,15 +31,21 @@ export default function Price({
       )}
     >
       <p
-        className={`${old_price ? "text-green-700" : "text-neutral-700"} heading h6 text`}
+        className={classNames(
+          `${old_price ? "text-green-700" : "text-neutral-700"} heading`,
+          priceSize,
+        )}
       >
-        {getPriceWithoutCop(price)}&nbsp;₽
+        {StringUtils.formatPrice(price)}&nbsp;₽
       </p>
       {old_price && (
         <p
-          className={`text-neutral-600 heading h7 line-through ${needTransform && classes.sub}`}
+          className={classNames(
+            `text-neutral-600 heading line-through ${needTransform && classes.sub}`,
+            oldPriceSize,
+          )}
         >
-          {getPriceWithoutCop(old_price)}&nbsp;₽
+          {StringUtils.formatPrice(old_price)}&nbsp;₽
         </p>
       )}
     </div>

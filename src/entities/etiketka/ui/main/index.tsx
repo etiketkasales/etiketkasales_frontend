@@ -6,23 +6,15 @@ import EtiketkaImages from "./images";
 import EtiketkaGeneral from "./general";
 import EtiketkaOther from "./other";
 import { IEtiketka } from "~/src/entities/etiketka/model";
-import { MessageI } from "~/src/shared/model";
 
 interface Props {
   item: IEtiketka;
-  loading: boolean;
-  error: MessageI | null;
   updateInfo: () => Promise<void>;
 }
 
-export default function EtiketkaMain({
-  item,
-  loading,
-  error,
-  updateInfo,
-}: Props) {
+export default function EtiketkaMain({ item, updateInfo }: Props) {
   return (
-    <section className={`flex-row gap-5 align-start ${classes.container}`}>
+    <section className={`flex ${classes.container}`}>
       <EtiketkaImages
         images_urls={item.images}
         price={item.price}

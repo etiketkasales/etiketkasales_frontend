@@ -1,27 +1,19 @@
 import { useCallback, useState } from "react";
+import { useAppSelector } from "~/src/app/store/hooks";
+import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
+import { getProductById } from "../api/etiketka.api";
+import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 
 import { IEtiketka } from "~/src/entities/etiketka/model";
-import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
-import { MessageI } from "~/src/shared/model";
-import { getProductById } from "../api/etiketka.api";
 
 interface Props {
   initProductInfo: IEtiketka;
 }
 
 export const useEtiketka = ({ initProductInfo }: Props) => {
+  const { loaded } = useAppSelector(selectNavigation);
   const [productInfo, setProductInfo] = useState<IEtiketka>(initProductInfo);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<MessageI | null>(null);
-
-  const errorHandler = (message: string, field: string) => {
-    setError({
-      message,
-      type: "error",
-      field,
-    });
-    return;
-  };
 
   const updateInfo = useCallback(async () => {
     await promiseWrapper({
@@ -34,8 +26,7 @@ export const useEtiketka = ({ initProductInfo }: Props) => {
   }, [productInfo.id]);
 
   return {
-    loading,
-    error,
+    loading: loading || !loaded,
     productInfo,
     updateInfo,
   };

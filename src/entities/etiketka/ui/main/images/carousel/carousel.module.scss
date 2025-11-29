@@ -1,68 +1,39 @@
+@use "app/styles/samples.scss" as *;
 .container {
-    max-width: 468px;
-    overflow-x: auto;
-}
-
-.skeleton {
-    width: 100px;
-    height: 100px;
-    border-radius: $space-5;
+  min-height: 100px;
+  @include mandatory-x(100%);
 }
 
 .imageContainer {
-    border-radius: $space-4;
-    height: 100px;
-    width: 100px;
+  border-radius: $space-4;
+  max-width: 100px;
+  max-height: 100px;
+  flex-shrink: 0;
+  scroll-snap-align: center;
 }
 
 @media screen and (width > 768px) {
-    .current {
-        border: 4px solid $dark-yellow;
-    }
+  .current {
+    outline: 4px solid $dark-yellow;
+    outline-offset: -$space-1;
+  }
 
-    .imageContainer {
-        border-radius: $space-5;
-    }
-}
-
-@media screen and (width <=1100px) {
-    .container {
-        max-width: 50%;
-        overflow-x: initial;
-        max-height: 350px;
-        overflow-y: auto;
-        display: grid;
-        grid-template-columns: repeat(12, 1fr);
-
-        button {
-            grid-column: 4 span;
-        }
-    }
+  .imageContainer {
+    border-radius: $space-5;
+  }
 }
 
 @media screen and (width <= 768px) {
-    .container {
-        display: flex;
-        flex-direction: row;
-        max-width: 100vw;
-        overflow-x: auto;
+  .container {
+    max-width: 100vw;
 
-        &::-webkit-scrollbar {
-            display: none;
-        }
-
-        button {
-            grid-column: initial;
-            div {
-                width: 344px !important;
-                height: 344px !important;
-            }
-        }
+    &::-webkit-scrollbar {
+      display: none;
     }
 
-    .skeleton {
-        border-radius: $space-4;
-        min-width: 344px;
-        height: 344px;
+    .imageContainer {
+      max-width: 344px;
+      max-height: 344px;
     }
+  }
 }

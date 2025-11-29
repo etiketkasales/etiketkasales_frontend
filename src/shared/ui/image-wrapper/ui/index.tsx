@@ -5,7 +5,7 @@ import { useImageWrapper } from "../lib/hooks/useImageWrapper.hook";
 import classes from "./image-wrapper.module.scss";
 import Image from "next/image";
 
-interface Props {
+interface Props extends React.ImgHTMLAttributes<HTMLImageElement> {
   width: number;
   height: number;
   src: string;
@@ -36,7 +36,10 @@ export default function ImageWrapper({
   priority,
   needDummy = true,
   onClick,
+  onMouseEnter,
+  onMouseLeave,
   style,
+  ...rest
 }: Props) {
   const { canLoad } = useImageWrapper({ src });
 
@@ -44,6 +47,8 @@ export default function ImageWrapper({
     <div
       className={classNames(className, classes.container)}
       onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       style={style}
     >
       {!needDummy && (!canLoad || !src) ? null : (
@@ -56,6 +61,7 @@ export default function ImageWrapper({
           loading={priority ? "eager" : loading}
           priority={priority}
           fill={fill}
+          {...rest}
         />
       )}
       {children}

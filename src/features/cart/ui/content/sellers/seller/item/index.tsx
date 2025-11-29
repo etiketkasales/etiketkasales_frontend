@@ -47,6 +47,7 @@ export default function CartSellerItem({
           slug={item.slug}
           name={item.name}
           deleteFromCart={deleteFromCart}
+          id={item.product_id}
         />
       </div>
       <SellerItemButtons

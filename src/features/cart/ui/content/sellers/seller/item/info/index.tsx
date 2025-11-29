@@ -13,6 +13,7 @@ interface Props {
   price: string;
   old_price: string | null;
   slug: string;
+  id: number;
 }
 
 export default function CartSellerItemInfo({
@@ -22,6 +23,7 @@ export default function CartSellerItemInfo({
   price,
   old_price,
   slug,
+  id,
 }: Props) {
   return (
     <div className={`flex-row ${classes.container}`}>
@@ -34,7 +36,7 @@ export default function CartSellerItemInfo({
       />
       <div className={`flex-column ${classes.innerContainer}`}>
         <Link
-          href={`/etiketka/${slug}`}
+          href={`/etiketka/${slug}/${id}`}
           rel="noopener norefferrer"
           target="_blank"
           className={`heading h6 text-neutral-1000 ${classes.link}`}

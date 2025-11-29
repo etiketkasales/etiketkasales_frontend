@@ -74,8 +74,8 @@ $third-family: var(--inter-font);
 
   &.h-4,
   &.h4 {
-    font-size: 28px;
-    line-height: 114.286%;
+    font-size: clamp(1.5rem, 1.383rem + 0.41vw, 1.75rem);
+    line-height: clamp(1.75rem, 1.633rem + 0.41vw, 2rem);
   }
 
   &.h-5,

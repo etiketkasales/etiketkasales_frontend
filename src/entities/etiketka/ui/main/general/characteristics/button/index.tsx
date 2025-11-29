@@ -1,7 +1,9 @@
 "use client";
 import React, { Dispatch, SetStateAction } from "react";
+import classNames from "classnames";
 
 import classes from "./button.module.scss";
+import Icon from "~/public/etiketka-page/chevron-compact-right.svg";
 import Button from "~/src/shared/ui/button";
 
 interface Props {
@@ -14,15 +16,17 @@ export default function CharacteristicsButton({ viewAll, setViewAll }: Props) {
     <div>
       <Button
         typeButton="ghost"
-        size="0"
         onClick={() => setViewAll(!viewAll)}
         needActiveScale={false}
+        justifyCenter={false}
+        className={`grid-column gap-1 align-center`}
       >
-        <span
-          className={`text-16 second-family dark-yellow semibold ${classes.text}`}
-        >
+        <span className={`heading h7 text-yellow-600`}>
           {!viewAll ? "Все характеристики" : "Скрыть"}
         </span>
+        <Icon
+          className={classNames(classes.icon, { [classes.active]: viewAll })}
+        />
       </Button>
     </div>
   );
