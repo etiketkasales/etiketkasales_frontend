@@ -14,14 +14,13 @@ export const useCatalogueProducts = () => {
   const [paginationPage, setPaginationPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const updateProducts = useCallback(
-    (newProducts: ISearchEtiketka[]) => {
-      const currentIds = products.map((p) => p.id);
-      newProducts = newProducts.filter((p) => !currentIds.includes(p.id));
-      setProducts((prev) => [...new Set([...prev, ...newProducts])]);
-    },
-    [products],
-  );
+  const updateProducts = useCallback((newProducts: ISearchEtiketka[]) => {
+    setProducts((prev) => {
+      const currentIds = prev.map((p) => p.id);
+      const newProds = newProducts.filter((p) => !currentIds.includes(p.id));
+      return [...prev, ...newProds];
+    });
+  }, []);
 
   const getCatalogueProducts = useCallback(
     async (params: ISearchParams) => {
