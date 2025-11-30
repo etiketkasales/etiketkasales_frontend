@@ -1,11 +1,12 @@
 "use client";
 import React, { useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { useAppSelector } from "~/src/app/store/hooks";
+import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { selectUser } from "~/src/app/store/reducers/user.slice";
 
 import OrderSummary from "~/src/entities/order-summary/ui";
 import { IOrderSummaryButton } from "~/src/entities/order-summary/model/order-summary.interface";
+import { setOrder } from "~/src/app/store/reducers/order.slice";
 
 interface Props {
   totalSum: number;
@@ -22,6 +23,7 @@ export default function CartOrderSummary({
   paySum,
   openModal,
 }: Props) {
+  const dispatch = useAppDispatch();
   const { push } = useRouter();
   const { companies } = useAppSelector(selectUser);
 
@@ -29,9 +31,10 @@ export default function CartOrderSummary({
     if (!companies || companies.length === 0) {
       openModal();
     } else {
-      push("/order/company");
+      dispatch(setOrder({ type: "company" }));
+      push("/order");
     }
-  }, [companies, openModal, push]);
+  }, [dispatch, companies, openModal, push]);
 
   const buttons: IOrderSummaryButton[] = [
     {
