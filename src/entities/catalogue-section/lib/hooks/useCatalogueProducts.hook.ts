@@ -11,27 +11,44 @@ interface ISearchParams {
 export const useCatalogueProducts = () => {
   const { params } = useGetFilters();
   const [products, setProducts] = useState<ISearchEtiketka[]>([]);
+  const [paginationPage, setPaginationPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const getCatalogueProducts = useCallback(async (params: ISearchParams) => {
-    try {
-      setLoading(true);
-      const res = await getProductsByFilters(params);
-      setProducts(res);
-    } catch (err) {
-      console.error(err);
-      setProducts([]);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const updateProducts = useCallback(
+    (newProducts: ISearchEtiketka[]) => {
+      const currentIds = products.map((p) => p.id);
+      newProducts = newProducts.filter((p) => !currentIds.includes(p.id));
+      setProducts((prev) => [...new Set([...prev, ...newProducts])]);
+    },
+    [products],
+  );
+
+  const getCatalogueProducts = useCallback(
+    async (params: ISearchParams) => {
+      try {
+        setLoading(true);
+        const res = await getProductsByFilters(params);
+        if (res.products) {
+          updateProducts(res.products);
+        }
+      } catch (err) {
+        console.error(err);
+        setProducts([]);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [updateProducts],
+  );
 
   useEffect(() => {
-    getCatalogueProducts(params);
-  }, [getCatalogueProducts, params]);
+    getCatalogueProducts({ ...params, page: paginationPage.toString() });
+  }, [getCatalogueProducts, params, paginationPage]);
 
   return {
     products,
+    setPaginationPage,
+    paginationPage,
     loading,
   };
 };

@@ -27,13 +27,13 @@ export const getProductsByFilters = async (query: IParams) => {
       {
         params: {
           page: query.page || "1",
-          per_page: query.per_page || "20",
+          per_page: query.per_page || "24",
           ...query,
         },
       },
     );
 
-    return response.data.data.products;
+    return response.data.data;
   });
 };
 

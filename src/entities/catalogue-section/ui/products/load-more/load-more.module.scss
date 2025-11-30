@@ -1,0 +1,9 @@
+.container {
+    padding: $space-6px $space-10px;
+    align-self: center;
+
+    @media screen and (width <= 768px) {
+        height: 0;
+        opacity: 0;
+    }
+}

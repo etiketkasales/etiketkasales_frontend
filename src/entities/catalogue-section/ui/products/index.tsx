@@ -7,24 +7,35 @@ import classes from "./catalogue-products.module.scss";
 import ItemWrapper from "~/src/entities/item-wrapper/ui";
 import Container from "~/src/shared/ui/container/ui";
 import LoaderCircle from "~/src/shared/ui/loader-circle";
+import LoadMoreButton from "./load-more";
+
+const productsBatchSize = 24;
 
 export default function CatalogueProducts() {
-  const { products, loading } = useCatalogueProducts();
+  const { products, loading, paginationPage, setPaginationPage } =
+    useCatalogueProducts();
 
   return (
     <Container
-      as="ul"
       className={classNames(classes.container, {
         [classes.loading]: loading,
       })}
     >
       {loading && <LoaderCircle radius={20} className={classes.loader} />}
-      {products &&
-        products.map((item) => {
-          return (
-            <ItemWrapper key={item.id} item={item} className={classes.item} />
-          );
-        })}
+      <ul className={classes.list}>
+        {products &&
+          products.map((item) => {
+            return (
+              <ItemWrapper key={item.id} item={item} className={classes.item} />
+            );
+          })}
+      </ul>
+      {products && products.length === paginationPage * productsBatchSize && (
+        <LoadMoreButton
+          paginationPage={paginationPage}
+          setPaginationPage={(page) => setPaginationPage(page + 1)}
+        />
+      )}
     </Container>
   );
 }

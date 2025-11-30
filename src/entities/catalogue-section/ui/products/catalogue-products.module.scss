@@ -1,11 +1,11 @@
 .container {
   position: relative;
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  column-gap: $space-5;
-  row-gap: $space-8;
   padding: $space-4;
   border-radius: $space-5;
+
+  display: flex;
+  flex-direction: column;
+  gap: $space-8;
 
   .loader {
     background-color: rgba(255, 255, 255, 0.4);
@@ -14,6 +14,13 @@
   &.loading {
     min-height: 200px;
   }
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: $space-5;
+  row-gap: $space-8;
 
   @media screen and (width <= 768px) {
     column-gap: $space-2;
@@ -22,14 +29,14 @@
 }
 
 .item {
-    grid-column: span 3;
-    height: 100%;
-    max-height: 307px;
-    @media screen and (width <= 1024px) {
-      grid-column: span 4;
-    }
+  grid-column: span 3;
+  height: 100%;
+  max-height: 307px;
+  @media screen and (width <= 1024px) {
+    grid-column: span 4;
+  }
 
-    @media screen and (width <= 460px) {
-      grid-column: span 6;
-    }
+  @media screen and (width <= 460px) {
+    grid-column: span 6;
+  }
 }
