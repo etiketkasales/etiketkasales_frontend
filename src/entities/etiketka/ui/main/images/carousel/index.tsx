@@ -18,12 +18,11 @@ export default function ImagesCarousel({
   setCurrentImage,
   setPreviewImage,
 }: Props) {
-  const images = Array(7).fill("/shared/image-src-plug.png");
   return (
     <div
       className={`flex-row gap-2 align-center scrollbar ${classes.container}`}
     >
-      {images.map((src, index) => {
+      {images_urls.map((src, index) => {
         return (
           <ImageWrapper
             key={index + src}
