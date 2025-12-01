@@ -10,11 +10,11 @@ import {
   IFiltersDelivery,
   IFiltersItemDefault,
   IFiltersRange,
-  ParsedFilter,
+  IParsedFilter,
 } from "~/src/features/filters/model";
 import { IInitializedFilter } from "..";
 
-interface Props extends ParsedFilter {
+interface Props extends IParsedFilter {
   setFilterForCatalogue: Dispatch<SetStateAction<IInitializedFilter[]>>;
 }
 

@@ -54,7 +54,7 @@ export interface IFiltersItemHookProps {
 
 export type FilterType = "default" | "range" | "delivery" | "";
 
-export interface ParsedFilter<T extends IFiltersItem = IFiltersItem> {
+export interface IParsedFilter<T extends IFiltersItem = IFiltersItem> {
   name: string;
   type: FilterType;
   data: T;

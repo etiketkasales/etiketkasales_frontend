@@ -8,13 +8,8 @@ import CurrentCategories from "./categories";
 import ClearAllFilters from "./clear-filters";
 import Sort from "./sort";
 import CatalogueFiltersModal from "./filters-modal";
-import { IFilters } from "~/src/features/filters/model";
 
-interface Props {
-  initFilters: IFilters;
-}
-
-export default function CatalogueFilters({ initFilters }: Props) {
+export default function CatalogueFilters() {
   const { activeCategories, activeFilters, needClearButton } =
     useCurrentFilters();
 
@@ -24,7 +19,7 @@ export default function CatalogueFilters({ initFilters }: Props) {
         className={`flex-row gap-3 align-center ${classes.buttonsContainer}`}
       >
         <Sort className={classes.sortMedia} />
-        <CatalogueFiltersModal initFilters={initFilters} />
+        <CatalogueFiltersModal />
       </div>
       <div className={`flex-row ${classes.container}`}>
         <Sort className={classes.sort} />

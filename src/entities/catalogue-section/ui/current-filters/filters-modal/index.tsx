@@ -7,13 +7,8 @@ import CurrentFiltersItemWrapper from "../item-wrapper";
 import FullscreenModal from "~/src/shared/ui/modals/ui/fullscreen";
 import ProductsFilters from "~/src/features/filters/ui";
 import FitlersModalButtons from "./buttons";
-import { IFilters } from "~/src/features/filters/model";
 
-interface Props {
-  initFilters: IFilters;
-}
-
-export default function CatalogueFiltersModal({ initFilters }: Props) {
+export default function CatalogueFiltersModal() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
@@ -32,10 +27,7 @@ export default function CatalogueFiltersModal({ initFilters }: Props) {
         title="Фильтры"
         bottomChild={<FitlersModalButtons onClose={() => setIsOpen(false)} />}
       >
-        <ProductsFilters
-          initFilters={initFilters}
-          className={classes.filters}
-        />
+        <ProductsFilters className={classes.filters} />
       </FullscreenModal>
     </>
   );

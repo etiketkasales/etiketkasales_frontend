@@ -1,12 +1,38 @@
 .input {
-    padding: $space-10px $space-3;
-    border-radius: $space-3;
-    background-color: $neutral-300;
-    flex: 1 0;
-    min-height: 50px;
+  padding: $space-10px $space-3;
+  border-radius: $space-3;
+  background-color: $neutral-300;
+  flex: 1 0;
+  min-height: 50px;
 
-    &.textarea {
-        height: 120px;
-        resize: none;
+  &.textarea {
+    height: 120px;
+    resize: none;
+  }
+}
+
+.selectItem {
+  padding: $space-2;
+  border-radius: $space-3;
+  background-color: $neutral-100;
+  transition: background-color $transition;
+
+  @media screen and (any-hover: hover) {
+    &:hover {
+      background-color: $neutral-300;
     }
+  }
+}
+
+.selectButton {
+  padding: $space-10px $space-3;
+  border-radius: $space-3;
+  background-color: $neutral-300;
+}
+
+.selectOptions {
+  padding: $space-3;
+  border-radius: $space-4;
+  box-shadow: $shadow-200;
+  background-color: $neutral-100;
 }

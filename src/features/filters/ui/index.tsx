@@ -2,9 +2,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import { useFiltersParse } from "~/src/features/filters/lib/hooks/useFiltersParse.hook";
-import { useAppDispatch } from "~/src/app/store/hooks";
+import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import {
-  setCatalogue,
+  selectCatalogue,
   setCatalogueActiveFilters,
 } from "~/src/app/store/reducers/catalogue.slice";
 
@@ -14,7 +14,6 @@ import FiltersSeparator from "./separator";
 import { IFilters } from "~/src/features/filters/model";
 
 interface Props {
-  initFilters: IFilters;
   className?: string;
 }
 
@@ -24,10 +23,10 @@ export interface IInitializedFilter {
   filters: string[];
 }
 
-export default function ProductsFilters({ initFilters, className }: Props) {
+export default function ProductsFilters({ className }: Props) {
+  const { parsedFilters } = useAppSelector(selectCatalogue);
   const dispatch = useAppDispatch();
   const ref = useRef<HTMLDivElement>(null);
-  const parsedFilters = useFiltersParse({ filters: initFilters });
   const [filterForCatalogue, setFilterForCatalogue] = useState<
     IInitializedFilter[]
   >([]);
@@ -35,10 +34,6 @@ export default function ProductsFilters({ initFilters, className }: Props) {
   useEffect(() => {
     dispatch(setCatalogueActiveFilters(filterForCatalogue));
   }, [dispatch, filterForCatalogue]);
-
-  useEffect(() => {
-    dispatch(setCatalogue({ allFilters: initFilters }));
-  }, [dispatch, initFilters]);
 
   return (
     <Container

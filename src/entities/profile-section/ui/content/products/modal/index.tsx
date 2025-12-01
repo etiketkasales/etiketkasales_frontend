@@ -3,11 +3,12 @@ import { useNewProduct } from "~/src/entities/profile-section/lib/hooks";
 
 import classes from "./products-modal.module.scss";
 import Modal from "~/src/shared/ui/modals/ui/default";
-import ProductsModalImages from "./images";
+import ProductsModalImages from "./stage/first/images";
 import LoaderCircle from "~/src/shared/ui/loader-circle";
-import ProductsModalMainInputs from "./main-inputs";
 import NewProductModalButtons from "./buttons";
 import NewProductModalStage from "./stage";
+import NewProductFirstStage from "./stage/first";
+import NewProductSecondStage from "./stage/second";
 
 interface Props {
   isActive: boolean;
@@ -40,19 +41,18 @@ export default function ProfileProductsModal({
       needBackButton={false}
     >
       {loading && <LoaderCircle radius={20} />}
-      <NewProductModalStage
-        isActive={modalStage === 1}
-        className={`flex-column gap-6`}
-      >
-        <ProductsModalImages
-          onFileLoad={onFileLoad}
-          currentImages={currentImages}
-        />
-        <ProductsModalMainInputs
-          onInputChange={onInputChange}
-          newProduct={newProduct}
-        />
-      </NewProductModalStage>
+      <NewProductFirstStage
+        modalStage={modalStage}
+        onFileLoad={onFileLoad}
+        currentImages={currentImages}
+        onInputChange={onInputChange}
+        newProduct={newProduct}
+      />
+      <NewProductSecondStage
+        modalStage={modalStage}
+        onInputChange={onInputChange}
+        newProduct={newProduct}
+      />
       <NewProductModalButtons
         modalStage={modalStage}
         setModalStage={(n) => setModalStage(n)}

@@ -21,5 +21,6 @@ export interface INewProduct extends ISellerProductBase {
 export interface INewProductInput {
   placeholder: string;
   field: keyof ISellerProductBase;
-  type?: "text" | "select" | "textarea";
+  type?: "text" | "select" | "textarea" | "number";
+  selectOptions?: string[];
 }

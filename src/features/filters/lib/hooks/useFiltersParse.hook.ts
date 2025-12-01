@@ -1,17 +1,13 @@
-import { useMemo } from "react";
+import { useCallback } from "react";
 import {
   FilterType,
   IFilters,
   IFiltersItem,
-  ParsedFilter,
+  IParsedFilter,
 } from "~/src/features/filters/model";
 
-interface Props {
-  filters: IFilters;
-}
-
-export const useFiltersParse = ({ filters }: Props) => {
-  return useMemo(() => {
+export const useFiltersParse = () => {
+  const parseFilters = useCallback((filters: IFilters) => {
     if (!filters) return [];
     return Object.entries(filters).map(([name, value]) => {
       let type: FilterType;
@@ -36,7 +32,8 @@ export const useFiltersParse = ({ filters }: Props) => {
         name,
         type,
         data: value as IFiltersItem,
-      } as ParsedFilter;
+      } as IParsedFilter;
     });
-  }, [filters]);
+  }, []);
+  return parseFilters;
 };

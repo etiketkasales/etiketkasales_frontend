@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface Props {
   isActive: boolean;
@@ -13,19 +13,16 @@ export default function NewProductModalStage({
   children,
   className,
 }: Props) {
+  if (!isActive) return null;
   return (
-    <AnimatePresence initial={false}>
-      {isActive && (
-        <motion.div
-          initial={{ opacity: 0, translateX: "100%", pointerEvents: "none" }}
-          animate={{ opacity: 1, translateX: 0, pointerEvents: "all" }}
-          exit={{ opacity: 0, translateX: "-100%", pointerEvents: "none" }}
-          transition={{ duration: 0.3 }}
-          className={className}
-        >
-          {children}
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <motion.div
+      initial={{ opacity: 0, translateX: "100%", pointerEvents: "none" }}
+      animate={{ opacity: 1, translateX: 0, pointerEvents: "all" }}
+      exit={{ opacity: 0, translateX: "-100%", pointerEvents: "none" }}
+      transition={{ duration: 0.3 }}
+      className={className}
+    >
+      {children}
+    </motion.div>
   );
 }

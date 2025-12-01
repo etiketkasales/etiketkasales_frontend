@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IFilters } from "~/src/features/filters/model";
+import { IFilters, IParsedFilter } from "~/src/features/filters/model";
 
 interface IActiveFilter {
   title: string;
@@ -8,18 +8,16 @@ interface IActiveFilter {
 }
 
 interface InitialStateI {
-  catalogueFilters: IFilters;
   activeFilters: IActiveFilter[];
   activeCategories: string[];
-  allFilters: IFilters | null;
+  parsedFilters: IParsedFilter[];
   [key: string]: any;
 }
 
 const initialState: InitialStateI = {
-  catalogueFilters: {},
   activeFilters: [],
   activeCategories: [],
-  allFilters: null,
+  parsedFilters: [],
 };
 
 export const catalogueSlice = createSlice({
