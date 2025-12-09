@@ -12,6 +12,7 @@ export const useAddressSuggestions = () => {
     await promiseWrapper({
       setLoading,
       callback: async () => {
+        if (!v || v.length < 3) return;
         const res = await getAddressSuggestions(v);
         setSuggestions(res || []);
       },

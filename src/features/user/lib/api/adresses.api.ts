@@ -40,6 +40,12 @@ export const getAddressSuggestions = async (q: string, limit?: number) => {
   return await tryCatch(async () => {
     const res = await apiClient.get<IGetData<ISuggestedAddress[]>>(
       `/users/address-suggestions/`,
+      {
+        params: {
+          query: q,
+          limit: limit || 5,
+        },
+      },
     );
 
     return res.data.data;

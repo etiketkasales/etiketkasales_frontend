@@ -1,5 +1,5 @@
 import { apiClient, tryCatch } from "~/src/shared/lib/api/client.api";
-import { IGetData } from "~/src/shared/model";
+import { IFileUploadRes, IGetData } from "~/src/shared/model";
 
 interface IAgreementRes {
   success: boolean;
@@ -15,24 +15,15 @@ export const getSellAgreement = async () => {
   });
 };
 
-export interface IUploadRes {
-  upload_id: number;
-  filename: string;
-  original_name: string;
-  size: number;
-  type: string;
-  url: string;
-  thumbnail: string;
-}
-export const uploadProductImage = async (image: File) => {
+export const uploadProductImage = async (image: string) => {
   return await tryCatch(async () => {
-    const res = await apiClient.post<IGetData<IUploadRes>>(
+    const res = await apiClient.post<IGetData<IFileUploadRes>>(
       `/upload/product-image`,
       {
         image,
       },
     );
 
-    return res.data.data.upload_id;
+    return res.data.data;
   });
 };

@@ -13,8 +13,8 @@ interface Props {
   validationFunction?: () => boolean;
   onInputChangeCustom?: (v: string, field: keyof IChangeableProfile) => void;
   onSaveCallback?: () => void;
-  error: MessageI | null;
-  setError: React.Dispatch<React.SetStateAction<MessageI | null>>;
+  error?: MessageI | null;
+  setError?: React.Dispatch<React.SetStateAction<MessageI | null>>;
 }
 
 export const useChangeUserData = ({

@@ -1,15 +1,16 @@
 import { useCallback, useState } from "react";
 import { useFileResize } from "./useFileResize.hook";
 import { promiseWrapper } from "../functions/shared.func";
+import { IFileUploadRes } from "../../model";
 
 interface Props {
-  callback?: (file: File) => Promise<number | null>;
+  callback?: (fileBinary: string) => Promise<IFileUploadRes | null>;
   maxSizeInMBProp?: number;
 }
 
 export const useFileLoad = ({ callback, maxSizeInMBProp }: Props) => {
   const [fileLoading, setFileLoading] = useState<boolean>(false);
-  const [fileId, setFileId] = useState<number | null>(null);
+  const [file, setFile] = useState<IFileUploadRes | null>(null);
   const resizeFile = useFileResize();
 
   const validateFileSize = useCallback(
@@ -27,23 +28,38 @@ export const useFileLoad = ({ callback, maxSizeInMBProp }: Props) => {
     [resizeFile, maxSizeInMBProp],
   );
 
+  const readFile = useCallback((file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+
+      fileReader.onload = () => {
+        resolve(fileReader.result?.toString() || "");
+      };
+
+      fileReader.onerror = reject;
+
+      fileReader.readAsDataURL(file);
+    });
+  }, []);
+
   const onFileLoad = useCallback(
     async (file: File) => {
       await promiseWrapper({
         setLoading: setFileLoading,
         callback: async () => {
-          const validatedFile = validateFileSize(file);
-          const loadedFileId = await callback?.(validatedFile || file);
-          setFileId(loadedFileId || null);
+          const fileBinary = await readFile(file);
+          if (!fileBinary) return;
+          const loadedFile = await callback?.(fileBinary);
+          setFile(loadedFile || null);
         },
       });
     },
-    [callback, validateFileSize],
+    [callback, readFile],
   );
 
   return {
     onFileLoad,
-    fileId,
+    file,
     fileLoading,
   };
 };

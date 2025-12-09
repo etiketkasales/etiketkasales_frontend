@@ -4,9 +4,9 @@ import classNames from "classnames";
 import classes from "./add.module.scss";
 import TextInput from "~/src/shared/ui/inputs/text-input";
 import Button from "~/src/shared/ui/button";
+import AddressModalSuggestions from "./suggestions";
 import { AddressesModalStage } from "../../model";
 import { ISuggestedAddress } from "~/src/features/user/model";
-import AddressModalSuggestions from "./suggestions";
 
 interface Props {
   stage: AddressesModalStage;

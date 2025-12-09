@@ -81,12 +81,6 @@ export const useAddresses = (needLoad?: boolean) => {
   );
 
   useEffect(() => {
-    if (addresses && addresses.length > 0) return;
-    if (hasBeenLoaded.current) return;
-    getAddresses();
-  }, [getAddresses, addresses]);
-
-  useEffect(() => {
     if (addresses && addresses.length > 0) {
       let defaultAddress = addresses[0] || null;
 

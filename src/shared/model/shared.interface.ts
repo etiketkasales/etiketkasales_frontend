@@ -60,3 +60,13 @@ export interface IGetDataBase {
 export interface IGetData<T> extends IGetDataBase {
   data: T;
 }
+
+export interface IFileUploadRes {
+  upload_id: number;
+  url: string;
+  filename?: string;
+  original_name?: string;
+  size?: number;
+  type?: string;
+  thumbnail?: string;
+}

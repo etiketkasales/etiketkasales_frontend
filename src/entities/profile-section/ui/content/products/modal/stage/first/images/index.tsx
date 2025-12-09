@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import classes from "./images.module.scss";
 import ProductModalLoadButton from "./button";
 import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
+import FileInput from "~/src/shared/ui/inputs/file";
 
 interface Props {
   currentImages: string[];
@@ -37,14 +38,7 @@ export default function ProductsModalImages({
           )}
         </ImageWrapper>
       )}
-      <input
-        type="file"
-        accept="image/*"
-        hidden={true}
-        multiple={false}
-        onChange={handleFileChange}
-        ref={inputRef}
-      />
+      <FileInput onChange={handleFileChange} ref={inputRef} />
       <ProductModalLoadButton onClick={() => inputRef.current?.click()} />
     </div>
   );

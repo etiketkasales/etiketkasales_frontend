@@ -12,30 +12,13 @@ export const useNewProduct = (onClose: () => void) => {
   const [newProduct, setNewProduct] = useState<INewProduct>(newProductSkeleton);
   const [currentImages, setCurrentImages] = useState<string[]>([]);
 
-  const readFile = useCallback(
-    (file: File) => {
-      const fileReader = new FileReader();
-      fileReader.onload = () => {
-        const imageUrl = fileReader.result?.toString() || "";
-        if (imageUrl) {
-          setCurrentImages([...currentImages, imageUrl]);
-        }
-      };
-      fileReader.readAsDataURL(file);
-    },
-    [currentImages],
-  );
-
-  const { onFileLoad, fileId, fileLoading } = useFileLoad({
-    callback: useCallback(
-      async (file: File) => {
-        if (!file) return null;
-        readFile(file);
-        const res = await uploadProductImage(file);
-        return res;
-      },
-      [readFile],
-    ),
+  const { onFileLoad, file, fileLoading } = useFileLoad({
+    callback: useCallback(async (fileBinary: string) => {
+      if (!fileBinary) return null;
+      setCurrentImages((prev) => [...prev, fileBinary]);
+      const res = await uploadProductImage(fileBinary);
+      return res;
+    }, []),
   });
 
   const onInputChange = useCallback(
@@ -58,13 +41,13 @@ export const useNewProduct = (onClose: () => void) => {
   }, [onClose]);
 
   useEffect(() => {
-    if (!fileId) return;
+    if (!file || !file.upload_id) return;
 
     setNewProduct((n) => ({
       ...n,
-      image_uploads_ids: [...new Set([...n.image_uploads_ids, fileId])],
+      image_uploads_ids: [...new Set([...n.image_uploads_ids, file.upload_id])],
     }));
-  }, [fileId, newProduct.image_uploads_ids]);
+  }, [file, newProduct.image_uploads_ids]);
 
   return {
     loading: loading || fileLoading,

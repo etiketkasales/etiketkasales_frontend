@@ -5,4 +5,3 @@ export * from "./useDebounce.hook";
 export * from "./useClickOutside.hook";
 export * from "./useFileLoad.hook";
 export * from "./useUpdateSearchParams.hook";
-export * from "./useMultiFIleLoad.hook";
