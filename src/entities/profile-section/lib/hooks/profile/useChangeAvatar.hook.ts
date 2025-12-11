@@ -5,7 +5,7 @@ import { selectUser, setUser } from "~/src/app/store/reducers/user.slice";
 
 import { useFileLoad } from "~/src/shared/lib/hooks";
 import { useChangeUserData } from "./useChangeUserData.hook";
-import { uploadAvatar } from "../api";
+import { uploadAvatar } from "../../api";
 
 export default function useChangeAvatar() {
   const dispatch = useAppDispatch();

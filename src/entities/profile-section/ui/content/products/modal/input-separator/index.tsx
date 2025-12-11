@@ -21,7 +21,7 @@ export default function NewProductInputSeparator({
   field,
   newProduct,
   onChange,
-  selectOptions,
+  options,
 }: Props) {
   const value: string = Array.isArray(newProduct[field])
     ? ""
@@ -59,7 +59,7 @@ export default function NewProductInputSeparator({
         <Select
           activeOption={newProduct[field]?.toString() || ""}
           optionHolder={placeholder}
-          options={selectOptions || []}
+          options={options || []}
           selectButtonClassName={classes.selectButton}
           optionsClassName={classes.selectOptions}
           doubleHeader={placeholder}

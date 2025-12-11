@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useChangeUserData } from "./useChangeUserData.hook";
+import { useChangeUserData } from "../profile/useChangeUserData.hook";
 import { selectUser } from "~/src/app/store/reducers/user.slice";
 import { useAppSelector } from "~/src/app/store/hooks";
 import FormUtils from "~/src/shared/lib/utils/form.util";

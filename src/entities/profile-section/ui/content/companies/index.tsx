@@ -1,6 +1,7 @@
+"use client";
 import React, { useState } from "react";
 import classNames from "classnames";
-import { useCompanies } from "~/src/entities/profile-section/lib/hooks/useCompanies.hook";
+import { useCompanies } from "~/src/entities/profile-section/lib/hooks";
 
 import classes from "./companies.module.scss";
 import ProfileContentContainer from "../container";

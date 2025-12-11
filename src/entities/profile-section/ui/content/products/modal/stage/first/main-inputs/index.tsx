@@ -3,7 +3,7 @@ import React from "react";
 import classes from "./inputs.module.scss";
 import NewProductInputSeparator from "../../../input-separator";
 import { INewProduct } from "~/src/entities/profile-section/model";
-import { newProductMainInputs } from "~/src/entities/profile-section/model/seller-products.const";
+import { newProductMainInputs } from "~/src/entities/profile-section/model/seller-products/seller-products.const";
 
 interface Props {
   newProduct: INewProduct;

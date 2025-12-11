@@ -1,18 +1,18 @@
 "use client";
 import React from "react";
-import { useRegisterCompany } from "~/src/entities/profile-section/lib/hooks/useRegisterCompany.hook";
+import { useRegisterCompany } from "~/src/entities/profile-section/lib/hooks";
 
 import classes from "./draft.module.scss";
 import ProfileContentContainer from "~/src/entities/profile-section/ui/content/container";
 import QuoteAbout from "./about";
 import LoaderCircle from "~/src/shared/ui/loader-circle";
 import QuoteButtons from "./buttons";
+import QuoteRequisits from "./requisits";
+import QuoteAgreement from "./agreement";
 import {
   profileTitlesMap,
   quoteStageNumbers,
 } from "~/src/entities/profile-section/model";
-import QuoteRequisits from "./requisits";
-import QuoteAgreement from "./agreement";
 
 export default function QuoteDraft() {
   const {

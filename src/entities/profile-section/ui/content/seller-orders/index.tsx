@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import classNames from "classnames";
 import { useOrders } from "~/src/entities/profile-section/lib/hooks";

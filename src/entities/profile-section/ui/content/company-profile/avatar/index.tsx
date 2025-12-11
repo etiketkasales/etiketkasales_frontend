@@ -1,6 +1,5 @@
 import React from "react";
 
-import classes from "./company-avatar.module.scss";
 import CompanyProfileAvatarNoImage from "./no-image";
 import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
 import Button from "~/src/shared/ui/button";

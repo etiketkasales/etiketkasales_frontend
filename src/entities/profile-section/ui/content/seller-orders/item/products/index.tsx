@@ -2,12 +2,12 @@ import React from "react";
 import StringUtils from "~/src/shared/lib/utils/string.util";
 
 import SellerOrderInfoContainer from "../info-container";
+import OrderProductsItem from "./item";
 import {
   ISellerOrderProduct,
   sellerOrderColors,
   SellerOrderStatusCode,
 } from "~/src/entities/profile-section/model";
-import OrderProductsItem from "./item";
 
 interface Props {
   products: ISellerOrderProduct[];

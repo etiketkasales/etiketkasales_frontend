@@ -1,10 +1,5 @@
 import { IChangeableProfile } from "~/src/features/user/model";
-import {
-  IAsideItem,
-  IProfileInput,
-  IProfileLegalInputsSection,
-  ProfileActionType,
-} from ".";
+import { IAsideItem, IProfileInput, ProfileActionType } from ".";
 
 export const buyerTabs: IAsideItem[] = [
   {

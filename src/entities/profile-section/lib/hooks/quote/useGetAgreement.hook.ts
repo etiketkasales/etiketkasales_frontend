@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
+
+import { getSellAgreement } from "~/src/entities/profile-section/lib/api";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
-import { getSellAgreement } from "../api";
 
 export const useGetAgreement = () => {
   const [loading, setLoading] = useState<boolean>(false);

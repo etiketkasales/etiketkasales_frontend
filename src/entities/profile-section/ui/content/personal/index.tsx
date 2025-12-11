@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useChangePersonal } from "~/src/entities/profile-section/lib/hooks/useChangePersonal.hook";
+import { useChangePersonal } from "~/src/entities/profile-section/lib/hooks";
 
 import classes from "./personal.module.scss";
 import ProfileUserPreview from "./preview";

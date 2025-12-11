@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
-import { getOrders } from "../api";
+import { getOrders } from "~/src/entities/profile-section/lib/api";
 
 import { IOrder, ISellerOrder } from "~/src/entities/profile-section/model";
 import { UserRoleType } from "~/src/features/user/model";

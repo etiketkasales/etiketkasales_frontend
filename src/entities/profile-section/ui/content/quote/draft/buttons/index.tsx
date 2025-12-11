@@ -1,7 +1,6 @@
 import React, { CSSProperties } from "react";
 
 import classes from "./buttons.module.scss";
-import { QuoteStageType } from "~/src/entities/profile-section/model";
 import Button from "~/src/shared/ui/button";
 
 interface Props {

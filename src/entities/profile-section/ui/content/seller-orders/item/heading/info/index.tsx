@@ -1,3 +1,4 @@
+"use client";
 import React, { useMemo } from "react";
 import StringUtils from "~/src/shared/lib/utils/string.util";
 

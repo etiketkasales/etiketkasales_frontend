@@ -12,12 +12,12 @@ export function convertParsedFiltersToInputs(
     .filter((f) => f.type !== "delivery")
     .map((filter): INewProductInput | null => {
       let type: INewProductInput["type"] = "text";
-      let selectOptions: string[] = [];
+      let options: string[] = [];
 
       switch (filter.type) {
         case "default":
           type = "select";
-          selectOptions = (filter.data as IFiltersItemDefault).filters;
+          options = (filter.data as IFiltersItemDefault).filters;
           break;
 
         case "range":
@@ -35,7 +35,7 @@ export function convertParsedFiltersToInputs(
         placeholder: filter.data.title,
         field: filter.name as keyof ISellerProductBase,
         type,
-        selectOptions,
+        options,
       };
     })
     .filter((i) => i !== null);

@@ -18,9 +18,13 @@ export interface INewProduct extends ISellerProductBase {
   [key: string]: any; // поля для фильтров, заранее неизвестны
 }
 
-export interface INewProductInput {
+export interface INewProductFilters {
+  field: keyof INewProduct;
   placeholder: string;
-  field: keyof ISellerProductBase;
+  for_empty_value?: string | null;
+  options?: string[] | null;
+}
+
+export interface INewProductInput extends INewProductFilters {
   type?: "text" | "select" | "textarea" | "number";
-  selectOptions?: string[];
 }

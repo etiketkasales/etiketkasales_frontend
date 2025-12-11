@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useFileLoad } from "~/src/shared/lib/hooks";
-import { uploadProductImage } from "../api";
+import { uploadProductImage } from "~/src/entities/profile-section/lib/api";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 
-import { INewProduct } from "../../model";
-import { newProductSkeleton } from "../../model/seller-products.const";
+import { INewProduct } from "~/src/entities/profile-section/model";
+import { newProductSkeleton } from "~/src/entities/profile-section/model";
 
 export const useNewProduct = (onClose: () => void) => {
   const [loading, setLoading] = useState<boolean>(false);

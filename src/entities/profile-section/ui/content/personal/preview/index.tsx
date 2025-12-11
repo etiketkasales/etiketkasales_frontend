@@ -1,10 +1,9 @@
 "use client";
 import React from "react";
 
-import classes from "./user-preview.module.scss";
 import ProfileAvatar from "./avatar";
 import ProfilePreviewText from "./text";
-import useChangeAvatar from "~/src/entities/profile-section/lib/hooks/useChangeAvatar.hook";
+import useChangeAvatar from "~/src/entities/profile-section/lib/hooks/profile/useChangeAvatar.hook";
 import FileInput from "~/src/shared/ui/inputs/file";
 
 interface Props {

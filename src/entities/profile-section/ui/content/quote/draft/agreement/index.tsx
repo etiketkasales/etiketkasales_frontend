@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import classNames from "classnames";
-import { useGetAgreement } from "~/src/entities/profile-section/lib/hooks/useGetAgreement.hook";
+import { useGetAgreement } from "~/src/entities/profile-section/lib/hooks";
 
 import classes from "./agreement.module.scss";
 import ReactMarkDown from "react-markdown";

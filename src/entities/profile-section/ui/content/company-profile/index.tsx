@@ -1,5 +1,5 @@
 import React from "react";
-import { useChangePersonal } from "../../../lib/hooks/useChangePersonal.hook";
+import { useChangePersonal } from "~/src/entities/profile-section/lib/hooks";
 
 import classes from "./company-profile.module.scss";
 import ProfileContentContainer from "../container";

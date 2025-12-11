@@ -6,13 +6,13 @@ import Container from "~/src/shared/ui/container/ui";
 import SellerOrderHeading from "./heading";
 import SellerOrderBuyer from "./buyer";
 import SellerOrderProducts from "./products";
+import SellerOrderDownloadButton from "./button/download";
+import SellerOrderConfirmationButton from "./button/confirmation";
+import SellerOrderDelivery from "./delivery";
 import {
   ISellerOrder,
   sellerOrderColors,
 } from "~/src/entities/profile-section/model";
-import SellerOrderDownloadButton from "./button/download";
-import SellerOrderConfirmationButton from "./button/confirmation";
-import SellerOrderDelivery from "./delivery";
 
 interface Props extends ISellerOrder {}
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { useDeleteCompany } from "~/src/entities/profile-section/lib/hooks";
+import { useDeleteShop } from "~/src/entities/profile-section/lib/hooks";
 
 import ProfileConfirmModal from "~/src/pages-components/profile/ui/role/modal/confirm";
 
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function DeleteCompanyModal({ isOpen, onClose }: Props) {
-  const { loading, handleDeleteCompany } = useDeleteCompany();
+  const { loading, deleteShop } = useDeleteShop();
 
   return (
     <ProfileConfirmModal
@@ -26,7 +26,7 @@ export default function DeleteCompanyModal({ isOpen, onClose }: Props) {
         {
           title: "Удалить",
           onClick: async () => {
-            await handleDeleteCompany().then(() => onClose());
+            await deleteShop(onClose);
           },
           type: "gray-border",
         },
