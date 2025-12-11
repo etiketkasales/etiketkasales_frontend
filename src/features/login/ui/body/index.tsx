@@ -17,19 +17,16 @@ export default function LoginMainBody({ phone, message }: Props) {
   const dispatch = useAppDispatch();
   return (
     <>
-      <div className="flex-column">
-        <PhoneInput
-          placeholder="Номер телефона"
-          name="etiketka-phone"
-          onChange={(e) => {
-            dispatch(setPhoneNumber(e));
-          }}
-          value={phone}
-          onKeyDown={(e) => e.key === "Enter" && e.preventDefault()}
-          inputClassName={`${classes.input} ${message && classes.error}`}
-        />
-        {message && <p className="red text-14 regular">{message.message}</p>}
-      </div>
+      <PhoneInput
+        placeholder="Номер телефона"
+        name="etiketka-phone"
+        onChange={(e) => {
+          dispatch(setPhoneNumber(e));
+        }}
+        value={phone}
+        onKeyDown={(e) => e.key === "Enter" && e.preventDefault()}
+        errorText={message && message.field === "phone" ? message.message : ""}
+      />
       <NeedRememberCheckbox />
     </>
   );

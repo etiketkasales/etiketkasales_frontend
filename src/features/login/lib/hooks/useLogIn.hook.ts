@@ -38,6 +38,7 @@ export const useLogIn = ({ isCodePage }: { isCodePage: boolean }) => {
           setMessage({
             message: "Введите корректный номер",
             type: "error",
+            field: "phone",
           });
           return;
         }
@@ -63,6 +64,7 @@ export const useLogIn = ({ isCodePage }: { isCodePage: boolean }) => {
             setMessage({
               message: "Введите корректный номер",
               type: "error",
+              field: "phone",
             });
             return;
           }
