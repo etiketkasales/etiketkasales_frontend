@@ -9,14 +9,14 @@ export default function ProfilePage() {
     useAppSelector(selectUser);
   const { loaded } = useAppSelector(selectNavigation);
 
-  // if (!loadingData && loaded) {
-  //   if (!isLoggedIn) {
-  //     redirect("/login");
-  //   }
-  //   if (userInfo.seller_status === "pending") {
-  //     redirect("/profile/seller-pending");
-  //   }
-  // }
+  if (!loadingData && loaded) {
+    if (!isLoggedIn) {
+      redirect("/login");
+    }
+    if (userInfo.seller_status === "pending") {
+      redirect("/profile/seller-pending");
+    }
+  }
 
   return redirect(`/profile/${currentRole}`);
 }
