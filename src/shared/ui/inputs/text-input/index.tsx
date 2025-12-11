@@ -2,18 +2,11 @@ import React, { memo } from "react";
 import classNames from "classnames";
 
 import classes from "./text-input.module.scss";
-import Button from "~/src/shared/ui/button";
-import Input, { InputProps } from "~/src/shared/ui/input";
+import CustomInput, { InputProps } from "../../input";
 
 export interface TextInputProps extends InputProps {
   wrapperClassName?: string;
   inputClassName?: string;
-  rightIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
-  leftIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
-  onRightIconClick?: () => void;
-  onLeftIconClick?: () => void;
-  iconButtonClassName?: string;
-  gap?: number;
   children?: React.ReactNode;
 }
 
@@ -21,55 +14,34 @@ const TextInput: React.FC<TextInputProps> = memo(
   ({
     wrapperClassName,
     inputClassName,
-    rightIcon: RightIcon,
-    leftIcon: LeftIcon,
-    onRightIconClick,
-    onLeftIconClick,
-    iconButtonClassName,
-    gap = 8,
+    errorText,
     children,
     ...inputProps
   }) => {
-    const hasIcons = Boolean(RightIcon || LeftIcon);
-
     return (
       <div
         className={classNames(
           classes.wrapper,
-          hasIcons && classes.withIcons,
           wrapperClassName,
+          errorText && classes.error,
+          "relative flex-column",
         )}
-        style={hasIcons ? { gap } : undefined}
       >
-        {LeftIcon && (
-          <Button
-            typeButton="ghost"
-            size="0"
-            className={classNames(classes.iconBtn, iconButtonClassName)}
-            onClick={onLeftIconClick}
-            aria-label="left-icon-button"
-          >
-            <LeftIcon />
-          </Button>
-        )}
-
-        <Input
+        <CustomInput
           {...inputProps}
+          errorText={errorText}
           className={classNames(classes.input, inputClassName)}
         />
-
         {children}
-
-        {RightIcon && (
-          <Button
-            typeButton="ghost"
-            size="0"
-            className={classNames(classes.iconBtn, iconButtonClassName)}
-            onClick={onRightIconClick}
-            aria-label="right-icon-button"
+        {errorText && (
+          <span
+            className={classNames(
+              classes.errorText,
+              "text-red-500 text-body xs",
+            )}
           >
-            <RightIcon />
-          </Button>
+            {errorText}
+          </span>
         )}
       </div>
     );
@@ -77,4 +49,5 @@ const TextInput: React.FC<TextInputProps> = memo(
 );
 
 TextInput.displayName = "TextInput";
+
 export default TextInput;

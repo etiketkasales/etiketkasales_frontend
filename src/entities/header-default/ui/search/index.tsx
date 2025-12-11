@@ -19,10 +19,10 @@ export default function HeaderSearch({ classNameInput, className }: Props) {
         classNameInput,
         "text-neutral-900 text-body l",
       )}
-      wrapperClassName={classNames(classes.wrapper, className)}
+      wrapperClassName={classNames(className)}
       name="search-etiketka"
       id="search-etiketka"
-      rightIcon={RightIcon}
+      RightIcon={RightIcon}
       iconButtonClassName={classes.icon}
     />
   );

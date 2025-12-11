@@ -1,0 +1,39 @@
+.wrapper {
+  flex: 1 0;
+  justify-content: space-between;
+}
+
+.container {
+  flex-direction: row;
+  gap: $space-4;
+}
+
+.button {
+  padding: $space-3;
+  border-radius: $space-3;
+  order: var(--order);
+
+  &.delete {
+    order: unset;
+  }
+}
+
+@media screen and (width <= 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .wrapper {
+    justify-content: initial;
+  }
+
+  .button {
+    padding: $space-2;
+    flex: 1 0;
+    order: initial;
+
+    &.delete {
+      order: var(--order);
+    }
+  }
+}

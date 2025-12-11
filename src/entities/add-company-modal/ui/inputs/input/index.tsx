@@ -1,7 +1,6 @@
 "use client";
 import React, { useCallback } from "react";
 
-import classes from "./add-company-input.module.scss";
 import TextInput from "~/src/shared/ui/inputs/text-input";
 import { IAddCompanyInput } from "~/src/entities/add-company-modal/model";
 import { IUserCompanyBase } from "~/src/features/user/model";
@@ -42,7 +41,6 @@ export default function AddCompanyInput({
     <TextInput
       value={newCompany[field]}
       onChange={(e) => onChange(e.target.value, field, type)}
-      inputClassName={classes.input}
       placeholder={placeholder}
       errorText={getError()}
       autoComplete={"off"}

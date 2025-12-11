@@ -1,8 +1,6 @@
 .wrapper {
-  display: flex;
-  align-items: center;
-  position: relative;
   flex: 1;
+  border-radius: $space-3;
 }
 
 .withIcons {
@@ -27,4 +25,8 @@
 
 .iconBtn:hover {
   opacity: 0.7;
+}
+
+.errorText {
+  padding: 0 $space-10px;
 }

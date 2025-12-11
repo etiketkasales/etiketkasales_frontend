@@ -1,0 +1,85 @@
+import { useCallback, useEffect, useState } from "react";
+import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
+import {
+  deleteSellerProduct,
+  editSellerProduct,
+  getSellerProducts,
+} from "~/src/entities/profile-section/lib/api";
+
+import { MessageI } from "~/src/shared/model";
+import {
+  IEditSellerProduct,
+  ISellerProduct,
+  SellerProductsModalType,
+} from "~/src/entities/profile-section/model";
+
+interface Props {
+  onClose?: () => void;
+  needLoad?: boolean;
+}
+
+export const useSellerProducts = ({ onClose, needLoad }: Props) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<MessageI | null>(null);
+  const [sellerProducts, setSellerProducts] = useState<ISellerProduct[]>([]);
+  const [modalType, setModalType] = useState<SellerProductsModalType>(null);
+  const [editProductId, setEditProductId] = useState<number>(0);
+
+  const promiseCallback = useCallback(async (callback: () => Promise<void>) => {
+    await promiseWrapper({
+      setLoading,
+      setError,
+      callback,
+    });
+  }, []);
+
+  const updateSellerProducts = useCallback(async () => {
+    await promiseCallback(async () => {
+      const res = await getSellerProducts();
+      if (res) {
+        setSellerProducts(res.products);
+      }
+    });
+  }, [promiseCallback]);
+
+  const deleteProduct = useCallback(
+    async (id: number) => {
+      await promiseCallback(async () => {
+        await deleteSellerProduct(id);
+        await updateSellerProducts();
+        onClose?.();
+      });
+    },
+    [promiseCallback, updateSellerProducts, onClose],
+  );
+
+  const updateProduct = useCallback(
+    async (data: IEditSellerProduct, id: number) => {
+      await promiseCallback(async () => {
+        await editSellerProduct(data, id);
+        await updateSellerProducts();
+        onClose?.();
+      });
+    },
+    [promiseCallback, updateSellerProducts, onClose],
+  );
+
+  useEffect(() => {
+    if (!needLoad) return;
+    updateSellerProducts();
+  }, [updateSellerProducts, needLoad]);
+
+  return {
+    loading,
+    error,
+    setError,
+    sellerProducts,
+    updateSellerProducts,
+    modalType,
+    setModalType,
+    editProductId,
+    setEditProductId,
+    updateProduct,
+    deleteProduct,
+  };
+};

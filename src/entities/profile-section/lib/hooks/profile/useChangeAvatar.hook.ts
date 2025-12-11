@@ -11,8 +11,10 @@ export default function useChangeAvatar() {
   const dispatch = useAppDispatch();
   const { changeableUserInfo } = useAppSelector(selectUser);
   const { file, onFileLoad, fileLoading } = useFileLoad({
-    callback: async (data) => {
-      if (!data) return null;
+    callback: async (file: File) => {
+      if (!file) return null;
+      const data = new FormData();
+      data.append("avatar", file);
       const res = await uploadAvatar(data);
       return res;
     },

@@ -46,7 +46,7 @@ export default function AddressesModalAdd({
         placeholder="Начните вводить адрес"
         onChange={(e) => onInputChange(e.target.value)}
         value={newAddress}
-        wrapperClassName={classes.inputWrapper}
+        separatedPlaceholder={false}
       >
         <AddressModalSuggestions
           suggestions={suggestions}

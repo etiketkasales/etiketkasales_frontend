@@ -1,0 +1,12 @@
+.container {
+  gap: $space-6;
+  padding: $space-5;
+  border-radius: $space-5;
+  width: 600px;
+  min-height: 200px;
+  overflow-x: hidden;
+
+  @media screen and (width <= 768px) {
+    width: calc(100vw - $space-3 * 2);
+  }
+}

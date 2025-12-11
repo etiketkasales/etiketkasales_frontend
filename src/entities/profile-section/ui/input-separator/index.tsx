@@ -54,7 +54,7 @@ export default function ProfileInputsSeparator({
     inputClassName: `${classes.input} text-body l text-neutral-900`,
     wrapperClassName: classNames(classes.inputContainer, className),
     disabled,
-    rightIcon: disabled ? RightIcon : undefined,
+    RightIcon: disabled ? RightIcon : undefined,
     onRightIconClick: () => enableInput(field),
     onKeyDown: onKeyDown,
   };

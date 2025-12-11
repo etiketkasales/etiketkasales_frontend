@@ -24,7 +24,6 @@ export default function FiltersRangeInput({
       id={filterName + "_" + type}
       value={value}
       onChange={(e) => onChange(type, e.target.value)}
-      classNameLabel={`${classes.container}`}
       inputClassName={`${classes.input} text-body l`}
       placeholder={placeholder}
       name={filterName + "_" + type}

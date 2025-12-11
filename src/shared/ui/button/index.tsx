@@ -13,7 +13,8 @@ export type ButtonTypeButtonT =
   | "gray"
   | "yellow-200"
   | "red-border"
-  | "gray-border";
+  | "gray-border"
+  | "yellow-border";
 
 interface Props<T extends ElementType>
   extends React.HTMLAttributes<HTMLButtonElement> {

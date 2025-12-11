@@ -12,6 +12,10 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
       <textarea
         ref={ref}
         className={classNames("scrollbar", className)}
+        style={{
+          resize: "none",
+          ...props.style,
+        }}
         {...props}
       />
     );

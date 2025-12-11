@@ -2,12 +2,14 @@
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     gap: $space-8;
-    justify-content: start;
+
+    max-width: max-content;
 };
 
 @media screen and (width <= 768px) {
     .container {
         gap: $space-4;
         justify-content: space-between;
+        max-width: unset;
     }
 }

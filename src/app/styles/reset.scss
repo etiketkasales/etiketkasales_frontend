@@ -43,7 +43,7 @@ path {
 }
 
 html {
-  background-color: $bg-gray;
+  background-color: $neutral-300;
   scroll-behavior: smooth;
   &::-webkit-scrollbar {
     display: none;
@@ -84,7 +84,7 @@ img {
   display: block;
   object-fit: cover;
   flex-shrink: 0;
-  transition: transform 0.4s ease;
+  transition: transform $transition;
 }
 
 input,

@@ -8,15 +8,8 @@
   }
 }
 
-.wrapper {
-  padding: $space-10px;
-  background-color: $neutral-300;
-  border-radius: $space-3;
-}
-
 .input {
   color: $neutral-900;
-  width: 100%;
   min-width: 150px;
   input {
     background-color: transparent !important;

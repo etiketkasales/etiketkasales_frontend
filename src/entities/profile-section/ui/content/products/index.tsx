@@ -1,32 +1,54 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
+import { useSellerProducts } from "~/src/entities/profile-section/lib/hooks";
 
 import classes from "./products.module.scss";
 import ProfileContentContainer from "../container";
 import AddNewProductButton from "./add-new";
 import ProfileProductsList from "./list";
-import ProfileProductsModal from "./modal";
-import { profileTitlesMap } from "~/src/entities/profile-section/model";
+import LoaderCircle from "~/src/shared/ui/loader-circle";
+import SellerProductModal from "./modals";
+import {
+  modalTitles,
+  profileTitlesMap,
+  sellerProductsTest,
+} from "~/src/entities/profile-section/model";
 
 interface Props {}
 
 export default function ProfileProducts({}: Props) {
-  const [modalActive, setModalActive] = useState<boolean | null>(null);
+  const {
+    sellerProducts,
+    loading,
+    modalType,
+    setModalType,
+    editProductId,
+    setEditProductId,
+  } = useSellerProducts({ needLoad: true });
+
   return (
     <ProfileContentContainer
       title={profileTitlesMap.products}
       className={`flex-column ${classes.container}`}
     >
-      <ProfileProductsList products={[]} />
-      <AddNewProductButton
-        onClick={() => setModalActive(true)}
-        disabled={false}
-        productsLength={2}
+      {loading && <LoaderCircle radius={20} className={classes.loader} />}
+      <ProfileProductsList
+        products={sellerProducts}
+        setModalId={(n) => setEditProductId(n)}
+        setModalActive={() => setModalType("edit")}
       />
-      {modalActive !== null && (
-        <ProfileProductsModal
-          isActive={modalActive}
-          onClose={() => setModalActive(false)}
+      <AddNewProductButton
+        onClick={() => setModalType("new")}
+        disabled={false}
+        productsLength={sellerProducts?.length || 0}
+      />
+      {modalType !== null && (
+        <SellerProductModal
+          type={modalType}
+          onClose={() => setModalType(null)}
+          title={modalTitles[modalType] || ""}
+          editProductId={editProductId}
+          products={sellerProducts}
         />
       )}
     </ProfileContentContainer>

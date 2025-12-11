@@ -1,11 +1,10 @@
 import React from "react";
+import StringUtils from "~/src/shared/lib/utils/string.util";
 
-import classes from "./input.module.scss";
 import TextInput from "~/src/shared/ui/inputs/text-input";
 import PhoneInput from "~/src/shared/ui/inputs/phone";
 import EmailInput from "~/src/shared/ui/inputs/email";
 import { INewOrderAcceptor, INewOrderInput } from "~/src/entities/order/model";
-import StringUtils from "~/src/shared/lib/utils/string.util";
 
 interface Props extends INewOrderInput {
   onChange: (v: string, f: keyof INewOrderAcceptor) => void;
@@ -23,7 +22,6 @@ export default function OrderAcceptorInput({
 }: Props) {
   const commonProps = {
     placeholder,
-    wrapperClassName: classes.input,
     disabled,
   };
 

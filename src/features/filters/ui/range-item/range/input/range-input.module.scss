@@ -1,9 +1,3 @@
-.container {
-  padding: $space-10px $space-3;
-  flex: 1 0;
-  border-radius: $space-3;
-  background-color: $neutral-300;
-
   .input {
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -16,4 +10,3 @@
       color: $neutral-700;
     }
   }
-}

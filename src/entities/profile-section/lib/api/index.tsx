@@ -25,12 +25,15 @@ export const getOrders = async () => {
   });
 };
 
-export const uploadAvatar = async (avatar: string) => {
+export const uploadAvatar = async (data: FormData) => {
   return await tryCatch(async () => {
     const res = await apiClient.post<IGetData<IFileUploadRes>>(
       `/upload/user-avatar`,
+      data,
       {
-        avatar,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       },
     );
     return res.data.data;

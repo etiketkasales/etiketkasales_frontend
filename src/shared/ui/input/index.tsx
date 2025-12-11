@@ -1,78 +1,100 @@
-import React, { Ref } from "react";
-
-import classes from "./input.module.scss";
+import React, { RefObject } from "react";
 import classNames from "classnames";
+
+import classes from "./new-input.module.scss";
+import Button from "../button";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
   classNameLabel?: string;
+
+  LeftIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
+  RightIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
+  onLeftIconClick?: () => void;
+  onRightIconClick?: () => void;
+  iconButtonClassName?: string;
+
   placeholder?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string | number;
-  type?: string;
-  name?: string;
-  disabled?: boolean;
-  ref?: Ref<HTMLInputElement>;
-  label?: string;
-  errorText?: string;
-  classNameError?: string;
-  borderType?: "label" | "input";
   separatedPlaceholder?: boolean;
   separatedPlaceholderClassName?: string;
+
+  ref?: RefObject<HTMLInputElement>;
+  errorText?: string;
 }
 
-export default function Input({
+const CustomInput = ({
   className,
   classNameLabel,
+  LeftIcon,
+  RightIcon,
+  onLeftIconClick,
+  onRightIconClick,
+  iconButtonClassName,
   placeholder,
-  onChange,
   value,
-  type,
-  name,
-  disabled,
-  ref,
-  label,
-  errorText = "",
-  classNameError,
-  borderType = "input",
-  separatedPlaceholder,
+  separatedPlaceholder = true,
   separatedPlaceholderClassName,
+  ref,
+  errorText,
   ...rest
-}: InputProps) {
+}: InputProps) => {
+  const defaultRef = React.useRef<HTMLInputElement>(null);
+
   return (
     <label
-      htmlFor={rest.id}
+      htmlFor={rest.name}
       className={classNames(
-        `cursor no-select flex-column ${classes.label}`,
+        "flex-row align-center",
+        classes.label,
         classNameLabel,
-        {
-          [classes.error]: errorText && borderType === "label",
-          ["relative"]: separatedPlaceholder,
-        },
+        errorText && classes.error,
       )}
+      onClick={() => {
+        if (ref) {
+          ref.current?.focus();
+        } else {
+          defaultRef.current?.focus();
+        }
+      }}
     >
-      <input
-        {...rest}
-        ref={ref}
-        name={name ?? ""}
-        type={type ?? "text"}
-        disabled={disabled}
-        placeholder={separatedPlaceholder ? undefined : placeholder}
-        value={value}
-        onChange={onChange}
-        className={classNames(`${classes.input}`, className, {
-          [classes.error]: errorText && borderType === "input",
-        })}
-      />
-      {separatedPlaceholder && (
-        <p className={separatedPlaceholderClassName}>{placeholder}</p>
+      {LeftIcon && (
+        <Button
+          typeButton="ghost"
+          onClick={onLeftIconClick}
+          className={iconButtonClassName}
+        >
+          <LeftIcon className={classes.icon} />
+        </Button>
       )}
-      {errorText && (
-        <p className={classNames(`red text-14 regular`, classNameError)}>
-          {errorText}
-        </p>
+      <div className={`flex-column flex-1`}>
+        {separatedPlaceholder && value && (
+          <span className={`text-body xs ${classes.separatedPlaceholder}`}>
+            {placeholder}
+          </span>
+        )}
+        <input
+          ref={ref ?? defaultRef}
+          className={classNames(classes.input, className)}
+          value={value}
+          placeholder={placeholder}
+          {...rest}
+        />
+      </div>
+      {RightIcon && (
+        <Button
+          typeButton="ghost"
+          onClick={onRightIconClick}
+          className={iconButtonClassName}
+        >
+          <RightIcon className={classes.icon} />
+        </Button>
       )}
     </label>
   );
-}
+};
+
+CustomInput.displayName = "Input";
+
+export default CustomInput;

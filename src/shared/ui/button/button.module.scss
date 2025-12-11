@@ -28,6 +28,37 @@
   color: inherit;
 }
 
+.yellow-border {
+  border: 1px solid $red-300;
+  background-color: $neutral-100;
+
+  span {
+    color: $neutral-800;
+  }
+
+  @media screen and (any-hover: hover) {
+    &:hover {
+      background-color: $neutral-200;
+      border: 1px solid $red-500;
+
+      span {
+        color: $red-500;
+      }
+    }
+  }
+
+  &:active {
+    background-color: $neutral-400;
+  }
+
+  &:disabled {
+    background-color: $neutral-100;
+    span {
+      color: $neutral-500;
+    }
+  }
+}
+
 .gray-border {
   border: 1px solid $neutral-300;
   background-color: $neutral-100;

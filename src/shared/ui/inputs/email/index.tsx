@@ -19,7 +19,7 @@ const EmailInput: React.FC<EmailInputProps> = memo(
         <TextInput
           {...rest}
           type="email"
-          inputClassName={classNames(classes.input, rest.inputClassName)}
+          inputClassName={classNames(rest.inputClassName)}
         />
         {errorText && (
           <p className={`text-body xs text-red-700 ${classes.errorText}`}>

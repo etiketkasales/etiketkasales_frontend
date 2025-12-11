@@ -1,8 +1,13 @@
 .wrapper {
   display: flex;
-  align-items: center;
-  position: relative;
   flex: 1;
+  border-radius: $space-3;
+  background-color: $neutral-300;
+  padding: $space-10px $space-3;
+}
+
+.textarea {
+  background-color: transparent;
 }
 
 .withIcons {
@@ -27,4 +32,18 @@
 
 .iconBtn:hover {
   opacity: 0.7;
+}
+
+.error {
+  outline: 1px solid $red-400;
+  background-color: $red-100 !important;
+  color: $red-1000 !important;
+
+  &::placeholder {
+    color: $red-1000 !important;
+  }
+}
+
+.errorText {
+  padding: 0 $space-10px;
 }

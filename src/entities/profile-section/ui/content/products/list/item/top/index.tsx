@@ -11,13 +11,14 @@ interface Props {
 
 export default function ProfileProductTop({ image, onButtonClick }: Props) {
   return (
-    <ImageWrapper
-      className={classes.container}
-      src={image}
-      width={216}
-      height={216}
-    >
+    <div className={`${classes.container} relative`}>
+      <ImageWrapper
+        className={classes.container}
+        src={image}
+        width={216}
+        height={216}
+      />
       <ProfileProductButton onClick={onButtonClick} />
-    </ImageWrapper>
+    </div>
   );
 }

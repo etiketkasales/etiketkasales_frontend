@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import StringUtils from "~/src/shared/lib/utils/string.util";
 
 import classes from "./inputs.module.scss";
 import TextInput from "~/src/shared/ui/inputs/text-input";
@@ -8,7 +9,6 @@ import Select from "~/src/shared/ui/select/ui";
 import Button from "~/src/shared/ui/button";
 import { FormModalInputI } from "~/src/entities/form-modal/model/form-modal.interface";
 import { MessageI } from "~/src/shared/model";
-import StringUtils from "~/src/shared/lib/utils/string.util";
 
 interface Props<T> {
   headerText?: string;
@@ -34,7 +34,6 @@ export default function FormModalInputs<T>({
         const { field, placeholder } = input;
         const commonProps = {
           placeholder: placeholder,
-          inputClassName: classes.input,
           errorText: error?.field === field ? error.message : "",
           name: `etiketka-${String(field)}`,
         };

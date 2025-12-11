@@ -4,7 +4,10 @@ import { promiseWrapper } from "../functions/shared.func";
 import { IFileUploadRes } from "../../model";
 
 interface Props {
-  callback?: (fileBinary: string) => Promise<IFileUploadRes | null>;
+  callback?: (
+    file: File,
+    fileBinary?: string,
+  ) => Promise<IFileUploadRes | null>;
   maxSizeInMBProp?: number;
 }
 
@@ -48,8 +51,7 @@ export const useFileLoad = ({ callback, maxSizeInMBProp }: Props) => {
         setLoading: setFileLoading,
         callback: async () => {
           const fileBinary = await readFile(file);
-          if (!fileBinary) return;
-          const loadedFile = await callback?.(fileBinary);
+          const loadedFile = await callback?.(file, fileBinary);
           setFile(loadedFile || null);
         },
       });

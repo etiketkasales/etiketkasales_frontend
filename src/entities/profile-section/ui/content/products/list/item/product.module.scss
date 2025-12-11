@@ -1,9 +1,28 @@
 .container {
-    grid-column: 4 span;
     gap: $space-4;
+    grid-column: 4 span;
+    max-width: 216px;
+
+    @media screen and (width <= 1024px) {
+        grid-column: 3 span;
+    }
 
     @media screen and (width <= 768px) {
         gap: $space-3;
         grid-column: 6 span;
+
+        &:nth-child(2n) {
+            justify-self: end;
+        }
+    }
+
+    @media screen and (width <= 390px) {
+        grid-column: 12 span;
+        max-width: unset;
+
+        justify-self: center;
+        &:nth-child(2n) {
+            justify-self: center;
+        }
     }
 }
