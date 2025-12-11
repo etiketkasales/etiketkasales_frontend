@@ -46,7 +46,7 @@ export const personalFieldsRequired: (keyof IChangeableProfile)[] = [
   "agreement_accepted",
 ];
 
-export const nameRequired: (keyof IChangeableProfile)[] = ["company_name"];
+export const nameRequired: (keyof IChangeableProfile)[] = ["shop_name"];
 
 export const cityFieldsRequired: (keyof IChangeableProfile)[] = [
   "storage_city",
