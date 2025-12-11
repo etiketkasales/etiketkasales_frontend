@@ -13,7 +13,7 @@ export default function ProfilePage() {
     if (!isLoggedIn) {
       redirect("/login");
     }
-    if (userInfo.seller_status === "pending") {
+    if (userInfo.seller_status === "seller_pending") {
       redirect("/profile/seller-pending");
     }
   }
