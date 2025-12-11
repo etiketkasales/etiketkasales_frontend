@@ -1,5 +1,6 @@
 "use client";
 import { redirect } from "next/navigation";
+
 import { useAppSelector } from "~/src/app/store/hooks";
 import { selectUser } from "~/src/app/store/reducers/user.slice";
 import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
@@ -13,6 +14,7 @@ export default function ProfilePage() {
     if (!isLoggedIn) {
       redirect("/login");
     }
+
     if (userInfo.seller_status === "seller_pending") {
       redirect("/profile/seller-pending");
     }
