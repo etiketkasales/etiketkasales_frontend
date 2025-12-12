@@ -6,16 +6,19 @@ import ProductModalLoadButton from "./button";
 import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
 import FileInput from "~/src/shared/ui/inputs/file";
 import { MessageI } from "~/src/shared/model";
+import { INewProductCurrentImage } from "~/src/entities/profile-section/model";
 
 interface Props {
-  currentImages: string[];
+  currentImages: INewProductCurrentImage[];
   onFileLoad: (file: File) => void;
+  onDeleteImage: (image: INewProductCurrentImage) => void;
   error: MessageI | null;
 }
 
 export default function ProductsModalImages({
   currentImages,
   onFileLoad,
+  onDeleteImage,
   error,
 }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -27,12 +30,13 @@ export default function ProductsModalImages({
 
   return (
     <div className={classes.container}>
-      {currentImages.length > 0 && (
+      {Array.isArray(currentImages) && currentImages.length > 0 && (
         <ImageWrapper
-          src={currentImages[0]}
+          src={currentImages[currentImages.length - 1].fileBinary}
           width={160}
           height={160}
           className={classes.image}
+          onClick={() => onDeleteImage(currentImages[currentImages.length - 1])}
         >
           {currentImages.length > 1 && (
             <p className={`text-neutral-1000 text-body l ${classes.length}`}>

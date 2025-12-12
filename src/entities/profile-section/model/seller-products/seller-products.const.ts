@@ -10,9 +10,9 @@ export const newProductSkeleton: INewProduct = {
   name: "",
   description: "",
   images: [],
-  image_uploads_ids: [],
+  image_upload_ids: [],
   price: "",
-  status_code: "approved",
+  status_code: "draft",
 };
 
 export const newProductMainInputs: INewProductInput[] = [

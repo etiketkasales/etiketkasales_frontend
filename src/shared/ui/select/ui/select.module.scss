@@ -2,10 +2,6 @@
   transform: rotate(180deg);
 }
 
-.error {
-  border: 1px solid $red;
-}
-
 .textSkeleton {
   width: 50px;
   height: 15px;
@@ -14,8 +10,33 @@
 
 .button {
   width: 100%;
+  transition: outline $transition;
+  outline: 0px solid transparent;
 }
 
 .selectedOption {
   background-color: transparent;
+}
+
+.error {
+  outline: 1px solid $red-500;
+  background-color: $red-300 !important;
+
+  span {
+    color: $red-500 !important;
+  }
+
+  .selectedOption {
+    color: $red-1000 !important;
+  }
+
+  svg {
+    path {
+      fill: $red-500;
+    }
+  }
+}
+
+.errorText {
+  padding: 0 $space-10px;
 }

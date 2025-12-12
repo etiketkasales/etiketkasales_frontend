@@ -10,7 +10,7 @@ import { MessageI } from "~/src/shared/model";
 import {
   IEditSellerProduct,
   ISellerProduct,
-  SellerProductsModalType,
+  ISellerProductsModal,
 } from "~/src/entities/profile-section/model";
 
 interface Props {
@@ -22,7 +22,10 @@ export const useSellerProducts = ({ onClose, needLoad }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<MessageI | null>(null);
   const [sellerProducts, setSellerProducts] = useState<ISellerProduct[]>([]);
-  const [modalType, setModalType] = useState<SellerProductsModalType>(null);
+  const [modal, setModal] = useState<ISellerProductsModal>({
+    active: null,
+    type: "new",
+  });
   const [editProductId, setEditProductId] = useState<number>(0);
 
   const promiseCallback = useCallback(async (callback: () => Promise<void>) => {
@@ -76,8 +79,8 @@ export const useSellerProducts = ({ onClose, needLoad }: Props) => {
     setError,
     sellerProducts,
     updateSellerProducts,
-    modalType,
-    setModalType,
+    modal,
+    setModal,
     editProductId,
     setEditProductId,
     updateProduct,

@@ -1,12 +1,15 @@
 import React from "react";
 
 import NewSellerProductModal from "./new";
-import { ISellerProduct } from "~/src/entities/profile-section/model";
 import EditSellerProductModal from "./edit";
+import {
+  ISellerProduct,
+  ISellerProductsModal,
+} from "~/src/entities/profile-section/model";
 
 interface Props {
   onClose: () => void;
-  type: "new" | "edit";
+  modal: ISellerProductsModal;
   title: string;
   editProductId: number;
   products: ISellerProduct[];
@@ -15,15 +18,15 @@ interface Props {
 export default function SellerProductModal({
   onClose,
   title,
-  type,
+  modal,
   editProductId,
   products,
 }: Props) {
-  switch (type) {
+  switch (modal.type) {
     case "new":
       return (
         <NewSellerProductModal
-          isActive={type === "new"}
+          isActive={modal.active!}
           onClose={onClose}
           title={title}
         />
@@ -33,7 +36,7 @@ export default function SellerProductModal({
       if (!editProduct) return null;
       return (
         <EditSellerProductModal
-          isActive={type === "edit"}
+          isActive={modal.active!}
           onClose={onClose}
           title={title}
           productData={editProduct}

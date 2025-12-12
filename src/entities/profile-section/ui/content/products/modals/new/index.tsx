@@ -4,10 +4,10 @@ import { useNewProduct } from "~/src/entities/profile-section/lib/hooks";
 
 import classes from "./products-modal.module.scss";
 import Modal from "~/src/shared/ui/modals/ui/default";
-import LoaderCircle from "~/src/shared/ui/loader-circle";
 import NewProductModalButtons from "./buttons";
 import NewProductFirstStage from "./stage/first";
 import NewProductSecondStage from "./stage/second";
+import { INewProduct } from "~/src/entities/profile-section/model";
 
 interface Props {
   isActive: boolean;
@@ -30,6 +30,8 @@ export default function NewSellerProductModal({
     setModalStage,
     error,
     onNextBtnClick,
+    onDeleteImage,
+    setRequiredFilters,
   } = useNewProduct({
     onClose,
   });
@@ -41,8 +43,9 @@ export default function NewSellerProductModal({
       title={title}
       containerClassName={`flex-column space-between ${classes.container}`}
       needBackButton={false}
+      loading={loading}
+      loaderRadius={20}
     >
-      {loading && <LoaderCircle radius={20} />}
       <NewProductFirstStage
         modalStage={modalStage}
         onFileLoad={onFileLoad}
@@ -50,12 +53,16 @@ export default function NewSellerProductModal({
         onInputChange={onInputChange}
         newProduct={newProduct}
         error={error}
+        onDeleteImage={onDeleteImage}
       />
       <NewProductSecondStage
         modalStage={modalStage}
         onInputChange={onInputChange}
         newProduct={newProduct}
         error={error}
+        setRequiredFields={(requiredFields) =>
+          setRequiredFilters(requiredFields)
+        }
       />
       <NewProductModalButtons
         modalStage={modalStage}

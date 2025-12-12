@@ -38,6 +38,12 @@ export interface INewProduct extends ISellerProductBase {
   [key: string]: any; // поля для фильтров, заранее неизвестны
 }
 
+export interface INewProductCurrentImage {
+  upload_id: number;
+  url: string;
+  fileBinary: string;
+}
+
 export interface INewProductFilter {
   field: keyof INewProduct;
   placeholder: string;
@@ -49,4 +55,9 @@ export interface INewProductInput extends INewProductFilter {
   type?: "text" | "select" | "textarea" | "numeric";
 }
 
-export type SellerProductsModalType = "edit" | "new" | null;
+export type SellerProductsModalType = "edit" | "new";
+
+export interface ISellerProductsModal {
+  active: boolean | null;
+  type: SellerProductsModalType;
+}

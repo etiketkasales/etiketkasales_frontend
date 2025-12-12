@@ -1,9 +1,9 @@
 import React from "react";
+import classNames from "classnames";
 
 import classes from "./load-button.module.scss";
 import ImageIcon from "~/public/profile/products/image.svg";
 import { MessageI } from "~/src/shared/model";
-import classNames from "classnames";
 
 interface Props {
   onClick: () => void;
@@ -24,7 +24,7 @@ export default function ProductModalLoadButton({
         {
           [classes.error]:
             error &&
-            (error.field === "images" || error.field === "image_uploads_ids"),
+            (error.field === "images" || error.field === "image_upload_ids"),
         },
       )}
       onClick={() => {

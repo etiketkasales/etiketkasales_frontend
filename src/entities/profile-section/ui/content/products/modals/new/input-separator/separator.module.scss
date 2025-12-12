@@ -3,6 +3,11 @@
   resize: none;
 }
 
+.input,
+.selectButton {
+  min-height: 58px;
+}
+
 .selectItem {
   padding: $space-2;
   border-radius: $space-3;
@@ -17,7 +22,7 @@
 }
 
 .selectButton {
-  padding: $space-10px $space-3;
+  padding: 0 $space-3;
   border-radius: $space-3;
   background-color: $neutral-300;
 }

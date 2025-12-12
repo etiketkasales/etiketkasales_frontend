@@ -6,6 +6,7 @@ import classes from "./select.module.scss";
 import Icon from "~/public/select/icon.svg";
 import Button from "~/src/shared/ui/button";
 import SelectOptions from "./options";
+import classNames from "classnames";
 
 interface Props<T> {
   activeOption: string;
@@ -49,12 +50,13 @@ export default function Select<T>(props: Props<T>) {
     HeadingIconRight = null,
     doubleHeader,
     doubleHeaderClassName = "text-body xs text-neutral-700",
+    error,
   } = props;
   const { active, setActive, contentRef, buttonRef } = useSelect();
 
   return (
     <div
-      className={`${containerRelative ? "relative" : ""} pointer ${className}`}
+      className={`${containerRelative ? "relative" : ""} pointer flex-column ${className}`}
     >
       <Button
         ref={buttonRef}
@@ -62,7 +64,12 @@ export default function Select<T>(props: Props<T>) {
         size="0"
         justifyCenter={false}
         needActiveScale={false}
-        className={`grid-column space-between align-center ${classes.button} ${selectButtonClassName}`}
+        className={classNames(
+          `grid-column space-between align-center`,
+          error && classes.error,
+          selectButtonClassName,
+          classes.button,
+        )}
         onClick={() => {
           setActive(!active);
         }}
@@ -78,6 +85,11 @@ export default function Select<T>(props: Props<T>) {
         </div>
         {HeadingIconRight || <Icon className={active ? classes.active : ""} />}
       </Button>
+      {error && (
+        <span className={`text-body xs text-red-500 ${classes.errorText}`}>
+          {error}
+        </span>
+      )}
       <SelectOptions
         active={active}
         setActive={setActive}

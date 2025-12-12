@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import FormUtils from "~/src/shared/lib/utils/form.util";
 
 import { MessageI } from "~/src/shared/model";
@@ -13,34 +13,42 @@ interface Props {
 
 export const useValidation = ({ checkData }: Props) => {
   const [error, setError] = useState<MessageI | null>(null);
-  const [requiredFilters, setRequiredFilters] = useState<string[]>([]);
+  const [requiredFilters, setRequiredFilters] = useState<(keyof INewProduct)[]>(
+    [],
+  );
 
   const getError = useCallback(
-    (requiredFields: (keyof INewProduct)[]) => {
+    (requiredFields: (keyof INewProduct)[]): boolean => {
       const newError = FormUtils.getFormError({
         currentError: error,
         requiredFields,
         checkData,
       });
-      setError(newError);
+      if (newError) {
+        setError(newError);
+        return true;
+      } else {
+        setError(null);
+        return false;
+      }
     },
     [checkData, error],
   );
 
+  const stageMap: Record<number, (keyof INewProduct)[]> = useMemo(
+    () => ({
+      1: newProductRequiredFields,
+      2: requiredFilters,
+    }),
+    [requiredFilters],
+  );
+
   const getStageError = useCallback(
-    (currentStage: number): boolean => {
-      switch (currentStage) {
-        default:
-          return false;
-        case 1:
-          getError(newProductRequiredFields);
-          return true;
-        case 2:
-          getError(requiredFilters);
-          return true;
-      }
+    (stage: number) => {
+      const fields = stageMap[stage] ?? [];
+      return getError(fields);
     },
-    [getError, requiredFilters],
+    [getError, stageMap],
   );
 
   return {

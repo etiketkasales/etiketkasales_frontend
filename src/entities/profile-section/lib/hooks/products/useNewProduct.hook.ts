@@ -8,7 +8,10 @@ import {
 } from "~/src/entities/profile-section/lib/api";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 
-import { INewProduct } from "~/src/entities/profile-section/model";
+import {
+  INewProduct,
+  INewProductCurrentImage,
+} from "~/src/entities/profile-section/model";
 import { newProductSkeleton } from "~/src/entities/profile-section/model";
 
 interface Props {
@@ -20,20 +23,33 @@ export const useNewProduct = ({ onClose }: Props) => {
   const [modalStage, setModalStage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [newProduct, setNewProduct] = useState<INewProduct>(newProductSkeleton);
-  const [currentImages, setCurrentImages] = useState<string[]>([]);
+  const [currentImages, setCurrentImages] = useState<INewProductCurrentImage[]>(
+    [],
+  );
 
-  const { onFileLoad, file, fileLoading } = useFileLoad({
-    callback: useCallback(async (file: File, fileBinary?: string) => {
+  const fileUploadCallback = useCallback(
+    async (file: File, fileBinary?: string) => {
       if (!file) return null;
       const formData = new FormData();
       formData.append("image", file);
-
       const res = await uploadProductImage(formData);
       if (fileBinary) {
-        setCurrentImages((prev) => [...prev, fileBinary]);
+        setCurrentImages((prev) => [
+          ...prev,
+          {
+            upload_id: res.upload_id,
+            url: res.url,
+            fileBinary,
+          },
+        ]);
       }
       return res;
-    }, []),
+    },
+    [],
+  );
+
+  const { onFileLoad, fileLoading } = useFileLoad({
+    callback: fileUploadCallback,
   });
 
   const { error, getStageError, setRequiredFilters } = useValidation({
@@ -72,22 +88,31 @@ export const useNewProduct = ({ onClose }: Props) => {
     }
   }, [modalStage, onSave, getStageError]);
 
-  useEffect(() => {
-    if (!file || !file.upload_id) return;
-
+  const onDeleteImage = useCallback((image: INewProductCurrentImage) => {
+    setCurrentImages((prev) =>
+      prev.filter((i) => i.upload_id !== image.upload_id),
+    );
     setNewProduct((n) => ({
       ...n,
-      image_uploads_ids: [...new Set([...n.image_uploads_ids, file.upload_id])],
-      images: [...new Set([...n.images, file.filename || ""])],
+      image_upload_ids: n.image_upload_ids.filter(
+        (id: number) => id !== image.upload_id,
+      ),
+      images: n.images.filter((i) => i !== image.url),
     }));
-  }, [file]);
+  }, []);
+
+  useEffect(() => {
+    setNewProduct((n) => ({
+      ...n,
+      image_upload_ids: [...new Set(currentImages.map((i) => i.upload_id))],
+      images: [...new Set(currentImages.map((i) => i.url))],
+    }));
+  }, [currentImages]);
 
   useEffect(() => {
     if (!error) return;
     getStageError(modalStage);
-
-    //eslint-disable-next-line
-  }, [modalStage, getStageError]);
+  }, [modalStage, getStageError, error]);
 
   return {
     loading: loading || fileLoading,
@@ -100,5 +125,6 @@ export const useNewProduct = ({ onClose }: Props) => {
     modalStage,
     error,
     setRequiredFilters,
+    onDeleteImage,
   };
 };

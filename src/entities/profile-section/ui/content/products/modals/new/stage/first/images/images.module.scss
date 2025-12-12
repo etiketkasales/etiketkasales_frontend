@@ -18,11 +18,13 @@
   position: relative;
   max-width: 160px;
   max-height: 160px;
+  border-radius: $space-5;
+  z-index: 0;
 }
 
 .length {
   position: absolute;
-  right: 0;
+  right: $space-3;
   top: 0;
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: $space-2;

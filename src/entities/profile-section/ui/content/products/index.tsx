@@ -11,7 +11,6 @@ import SellerProductModal from "./modals";
 import {
   modalTitles,
   profileTitlesMap,
-  sellerProductsTest,
 } from "~/src/entities/profile-section/model";
 
 interface Props {}
@@ -20,8 +19,8 @@ export default function ProfileProducts({}: Props) {
   const {
     sellerProducts,
     loading,
-    modalType,
-    setModalType,
+    modal,
+    setModal,
     editProductId,
     setEditProductId,
   } = useSellerProducts({ needLoad: true });
@@ -33,22 +32,32 @@ export default function ProfileProducts({}: Props) {
     >
       {loading && <LoaderCircle radius={20} className={classes.loader} />}
       <ProfileProductsList
-        products={sellerProductsTest}
+        products={sellerProducts}
         setModalId={(n) => setEditProductId(n)}
-        setModalActive={() => setModalType("edit")}
+        setModalActive={() =>
+          setModal({
+            active: true,
+            type: "edit",
+          })
+        }
       />
       <AddNewProductButton
-        onClick={() => setModalType("new")}
+        onClick={() =>
+          setModal({
+            type: "new",
+            active: true,
+          })
+        }
         disabled={false}
-        productsLength={sellerProductsTest?.length || 0}
+        productsLength={sellerProducts?.length || 0}
       />
-      {modalType !== null && (
+      {modal.active !== null && (
         <SellerProductModal
-          type={modalType}
-          onClose={() => setModalType(null)}
-          title={modalTitles[modalType] || ""}
+          modal={modal}
+          onClose={() => setModal((prev) => ({ ...prev, active: false }))}
+          title={modalTitles[modal.type] || ""}
           editProductId={editProductId}
-          products={sellerProductsTest}
+          products={sellerProducts}
         />
       )}
     </ProfileContentContainer>

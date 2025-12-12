@@ -74,11 +74,7 @@ const TextAreaInput: React.FC<TextAreaInputProps> = memo(
             )}
             <TextArea
               {...textareaProps}
-              className={classNames(
-                classes.textarea,
-                textareaClassName,
-                errorText && classes.error,
-              )}
+              className={classNames(classes.textarea, textareaClassName)}
               ref={ref ?? defaultRef}
             />
           </div>

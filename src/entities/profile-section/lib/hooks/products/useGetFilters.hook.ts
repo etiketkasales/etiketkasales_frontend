@@ -3,12 +3,17 @@ import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 import { getNewProductFilters } from "~/src/entities/profile-section/lib/api";
 
 import {
+  INewProduct,
   INewProductFilter,
   INewProductInput,
 } from "~/src/entities/profile-section/model";
 import { MessageI } from "~/src/shared/model";
 
-export const useGetFilters = () => {
+interface Props {
+  setRequiredFields: (requiredFields: (keyof INewProduct)[]) => void;
+}
+
+export const useGetFilters = ({ setRequiredFields }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<MessageI | null>(null);
   const [filtersToMap, setFiltersToMap] = useState<INewProductInput[]>([]);
@@ -42,18 +47,16 @@ export const useGetFilters = () => {
         const res = await getNewProductFilters();
         if (res && Array.isArray(res)) {
           setFiltersToMap(parseFilters(res) || []);
+          setRequiredFields(parseFilters(res).map((item) => item.field) || []);
         }
       },
     });
-  }, [parseFilters]);
-
-  useEffect(() => {
-    getFilters();
-  }, [getFilters]);
+  }, [parseFilters, setRequiredFields]);
 
   return {
     filtersToMap,
     loading,
     error,
+    getFilters,
   };
 };

@@ -46,7 +46,7 @@ export default function NewProductInputSeparator({
           }}
           type={type}
           placeholder={placeholder}
-          inputClassName={classNames(classes.text)}
+          wrapperClassName={classNames(classes.input)}
           errorText={error && error.field === field ? error.message : ""}
         />
       );
@@ -79,6 +79,7 @@ export default function NewProductInputSeparator({
             </div>
           )}
           optionsPosTop={12}
+          error={error && error.field === field ? error.message : ""}
         />
       );
   }

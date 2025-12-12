@@ -46,8 +46,9 @@ export default function EditSellerProductModal({
       title={title}
       containerClassName={`flex-column space-between ${classes.container}`}
       needBackButton={false}
+      loading={loading}
+      loaderRadius={20}
     >
-      {loading && <LoaderCircle radius={20} />}
       <EditProductImage
         onFileUpload={onFileLoad}
         imagePreview={editProductData.images?.[0] || ""}
