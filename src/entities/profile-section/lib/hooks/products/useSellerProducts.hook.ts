@@ -71,6 +71,7 @@ export const useSellerProducts = ({ onClose, needLoad }: Props) => {
 
   return {
     loading,
+    promiseCallback,
     error,
     setError,
     sellerProducts,

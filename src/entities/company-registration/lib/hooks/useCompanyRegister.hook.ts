@@ -1,16 +1,21 @@
 import { useCallback, useState } from "react";
+import { useRouter } from "next/navigation";
+
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { setStage } from "~/src/app/store/reducers/company.slice";
 import { selectUser, setUser } from "~/src/app/store/reducers/user.slice";
+
+import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 import { useFormValidate } from "~/src/shared/lib/hooks/useFormValidate.hook";
+
 import { useUser } from "~/src/features/user/lib/hooks";
 import { changePersonalData } from "~/src/entities/profile-section/lib/api";
-import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
-import { useRouter } from "next/navigation";
 
-import { requiredFieldsRecord } from "~/src/entities/company-registration/model/company-registration.const";
-import { RegistrationStageT } from "~/src/entities/company-registration/model/company-registration.interface";
 import { IChangeableProfile } from "~/src/features/user/model";
+import {
+  RegistrationStageT,
+  requiredFieldsRecord,
+} from "~/src/entities/company-registration/model";
 
 interface Props {
   stage: RegistrationStageT;

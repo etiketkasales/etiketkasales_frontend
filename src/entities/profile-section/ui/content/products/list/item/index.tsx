@@ -26,7 +26,7 @@ export default function ProfileProduct({
           setModalActive();
         }}
       />
-      <ProfileProductBottom {...rest} />
+      <ProfileProductBottom {...rest} id={id} />
     </li>
   );
 }

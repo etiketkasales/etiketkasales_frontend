@@ -5,11 +5,18 @@ export interface ISellerProductBase {
   images: string[];
 } // те, которые есть везде и которые можно изменить
 
+export type SellerProductStatusCode =
+  | "draft"
+  | "pending"
+  | "approved"
+  | "rejected"
+  | "archived";
+
 export interface ISellerProduct extends ISellerProductBase {
   id: number;
   image: string;
   status: string;
-  status_code: string; // "moderation" | "in_archive" etc
+  status_code: SellerProductStatusCode;
   slug: string;
   specifications: {
     [key: string]: boolean;
@@ -17,6 +24,7 @@ export interface ISellerProduct extends ISellerProductBase {
 }
 
 export interface IEditSellerProduct extends ISellerProductBase {
+  status_code: SellerProductStatusCode;
   image_upload_ids: number[];
 }
 

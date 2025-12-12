@@ -21,11 +21,18 @@ export const useEditProduct = ({ initialData, onClose }: Props) => {
     editSellerProductSkeleton,
   );
   const [disableSave, setDisableSave] = useState<boolean>(false);
-  const { updateProduct, deleteProduct, loading, error, setError } =
-    useSellerProducts({
-      onClose,
-      needLoad: false,
-    });
+  const {
+    updateProduct,
+    deleteProduct,
+    loading,
+    promiseCallback,
+    error,
+    setError,
+  } = useSellerProducts({
+    onClose,
+    needLoad: false,
+  });
+
   const fileLoadingCallback = useCallback(async (file: File) => {
     if (!file) return null;
     const formData = new FormData();
@@ -33,7 +40,6 @@ export const useEditProduct = ({ initialData, onClose }: Props) => {
     const res = await uploadProductImage(formData);
     return res;
   }, []);
-
   const { file, fileLoading, onFileLoad } = useFileLoad({
     callback: fileLoadingCallback,
   });
@@ -60,12 +66,39 @@ export const useEditProduct = ({ initialData, onClose }: Props) => {
   }, [editProductData, error, setError]);
 
   const onSave = useCallback(async () => {
-    if (!initialData || !initialData.id) return;
-    if (getFormError()) return;
+    await promiseCallback(async () => {
+      if (!initialData || !initialData.id) return;
+      if (getFormError()) return;
 
-    await updateProduct(editProductData, initialData.id);
-    onClose();
-  }, [editProductData, initialData, updateProduct, getFormError, onClose]);
+      await updateProduct(editProductData, initialData.id);
+      onClose();
+    });
+  }, [
+    editProductData,
+    initialData,
+    updateProduct,
+    getFormError,
+    onClose,
+    promiseCallback,
+  ]);
+
+  const toArchive = useCallback(async () => {
+    await promiseCallback(async () => {
+      if (!initialData?.id) return;
+      const newProduct: IEditSellerProduct = {
+        ...editProductData,
+        status_code: "archived",
+      };
+      await updateProduct(newProduct, initialData.id);
+      onClose();
+    });
+  }, [
+    promiseCallback,
+    updateProduct,
+    onClose,
+    initialData.id,
+    editProductData,
+  ]);
 
   useEffect(() => {
     if (!error) return;
@@ -80,6 +113,7 @@ export const useEditProduct = ({ initialData, onClose }: Props) => {
       name: initialData.name,
       description: initialData.description,
       price: initialData.price,
+      status_code: initialData.status_code,
       images: initialData.images,
       image_upload_ids: [],
     });
@@ -105,5 +139,6 @@ export const useEditProduct = ({ initialData, onClose }: Props) => {
     onInputChange,
     deleteProduct,
     error,
+    toArchive,
   };
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import TabsItem from "./item";
-import { tabsItems } from "~/src//widgets/tabs/model/tabs.const";
-import { ICartItem } from "~/src/features/cart/model/cart.interface";
+import { tabsItems } from "~/src//widgets/tabs/model";
+import { ICartItem } from "~/src/features/cart/model";
 
 interface Props {
   cartItems: ICartItem[];

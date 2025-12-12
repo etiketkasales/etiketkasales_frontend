@@ -33,14 +33,14 @@ export default function ProfileProducts({}: Props) {
     >
       {loading && <LoaderCircle radius={20} className={classes.loader} />}
       <ProfileProductsList
-        products={sellerProducts}
+        products={sellerProductsTest}
         setModalId={(n) => setEditProductId(n)}
         setModalActive={() => setModalType("edit")}
       />
       <AddNewProductButton
         onClick={() => setModalType("new")}
         disabled={false}
-        productsLength={sellerProducts?.length || 0}
+        productsLength={sellerProductsTest?.length || 0}
       />
       {modalType !== null && (
         <SellerProductModal
@@ -48,7 +48,7 @@ export default function ProfileProducts({}: Props) {
           onClose={() => setModalType(null)}
           title={modalTitles[modalType] || ""}
           editProductId={editProductId}
-          products={sellerProducts}
+          products={sellerProductsTest}
         />
       )}
     </ProfileContentContainer>

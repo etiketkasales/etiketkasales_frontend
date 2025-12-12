@@ -1,7 +1,7 @@
 "use client";
 import React, { ReactNode } from "react";
-import { useTabs } from "~/src/widgets/tabs/lib/hooks/useTabs.hook";
 import { useWindowSize } from "react-use";
+import { useTabs } from "~/src/widgets/tabs/lib/hooks/useTabs.hook";
 
 import classes from "./tabs.module.scss";
 import TabsList from "./list";

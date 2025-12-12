@@ -3,59 +3,8 @@ import {
   IEditSellerProductInput,
   INewProduct,
   INewProductInput,
-  ISellerProduct,
+  SellerProductStatusCode,
 } from "./seller-products.interface";
-
-export const sellerProductsTest: ISellerProduct[] = [
-  {
-    id: 1,
-    image: "",
-    status: "Активен",
-    status_code: "active",
-    slug: "test",
-    specifications: {},
-    name: "test",
-    description: "test",
-    price: "100",
-    images: [],
-  },
-  {
-    id: 2,
-    image: "",
-    status: "Активен",
-    status_code: "active",
-    slug: "test",
-    specifications: {},
-    name: "test",
-    description: "test",
-    price: "100",
-    images: [],
-  },
-  {
-    id: 3,
-    image: "",
-    status: "Активен",
-    status_code: "active",
-    slug: "test",
-    specifications: {},
-    name: "test",
-    description: "test",
-    price: "100",
-    images: [],
-  },
-  {
-    id: 4,
-    image: "",
-    status: "Активен",
-    status_code: "active",
-    slug: "test",
-    specifications: {},
-    name: "test",
-    description: "test",
-    price: "100",
-    images: [],
-  },
-];
 
 export const newProductSkeleton: INewProduct = {
   name: "",
@@ -63,6 +12,7 @@ export const newProductSkeleton: INewProduct = {
   images: [],
   image_uploads_ids: [],
   price: "",
+  status_code: "approved",
 };
 
 export const newProductMainInputs: INewProductInput[] = [
@@ -128,4 +78,16 @@ export const editSellerProductSkeleton: IEditSellerProduct = {
   image_upload_ids: [],
   price: "",
   images: [],
+  status_code: "approved",
+};
+
+export const sellerProductStatusColors: Record<
+  SellerProductStatusCode,
+  string
+> = {
+  approved: "green-700",
+  rejected: "red-700",
+  archived: "blue-600",
+  draft: "blue-600",
+  pending: "red-700",
 };

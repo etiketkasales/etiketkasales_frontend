@@ -28,6 +28,7 @@ export default function EditSellerProductModal({
     editProductData,
     onInputChange,
     onSave,
+    toArchive,
     fileLoading,
     onFileLoad,
     deleteProduct,
@@ -61,8 +62,8 @@ export default function EditSellerProductModal({
       />
       <EditProductModalButtons
         onSave={onSave}
-        onDelete={() => deleteProduct(productData.id)}
-        toArchive={async () => {}}
+        onDelete={async () => await deleteProduct(productData.id)}
+        toArchive={toArchive}
         disableSave={disableSave}
         loading={loading}
       />

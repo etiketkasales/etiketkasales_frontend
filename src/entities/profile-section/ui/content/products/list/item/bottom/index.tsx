@@ -2,46 +2,42 @@ import React from "react";
 
 import classes from "./bottom.module.scss";
 import StringUtils from "~/src/shared/lib/utils/string.util";
+import LinkContainer from "~/src/shared/ui/link-container/ui";
+import {
+  SellerProductStatusCode,
+  sellerProductStatusColors,
+} from "~/src/entities/profile-section/model";
 
 interface Props {
   price: string;
   name: string;
   status: string;
-  status_code: string;
+  status_code: SellerProductStatusCode;
+  slug: string;
+  id: number;
 }
-
-const getStatusColor = (code: string): string => {
-  let color: string = "text-green-700";
-  switch (code) {
-    case "in_archive":
-      color = "text-blue-600";
-      break;
-    case "moderation":
-      color = "text-red-700";
-      break;
-    case "published":
-      color = "text-green-700";
-      break;
-  }
-  return color;
-};
 
 export default function ProfileProductBottom({
   price,
   name,
   status,
   status_code,
+  slug,
+  id,
 }: Props) {
   return (
     <div className={`flex-column ${classes.container}`}>
       <p className="heading h6 text-neutral-600 nowrap-text">
         {StringUtils.formatPrice(price)} ₽
       </p>
-      <p className={`heading h7 text-neutral-900 ${classes.webkitBox}`}>
+      <LinkContainer
+        link={`/etiketka/${slug}/${id}`}
+        className={`heading h7 text-neutral-900 ${classes.webkitBox}`}
+      >
         {name}
-      </p>
+      </LinkContainer>
       <p
-        className={`heading h7 ${getStatusColor(status_code)} ${classes.webkitBox}`}
+        className={`heading h7 text-${sellerProductStatusColors[status_code]} ${classes.webkitBox}`}
       >
         {status}
       </p>
