@@ -3,7 +3,7 @@ import React from "react";
 import classes from "../preview-avatar.module.scss";
 import Icon from "~/public/profile/person-fill.svg";
 import Container from "~/src/shared/ui/container/ui";
-import LoaderCircle from "~/src/shared/ui/loader-circle";
+import Loader from "~/src/shared/ui/loader";
 
 interface Props {
   loading: boolean;
@@ -17,7 +17,7 @@ export default function NoImageAvatar({ loading, onClicK }: Props) {
       className={`${classes.container} pointer`}
       onClick={onClicK}
     >
-      {loading && <LoaderCircle radius={100} />}
+      {loading && <Loader radius={100} />}
       <Icon />
     </Container>
   );

@@ -27,8 +27,48 @@ export interface ISellerOrderProduct {
 }
 
 export type SellerOrderStatusCode =
-  | "need_confirmation"
-  | "confirmed"
-  | "declined"
-  | "delivered"
-  | "in_delivery";
+  | "need_confirm"
+  | "processing"
+  | "sent"
+  | "completed"
+  | "cancelled"
+  | "pending_payment"
+  | "in_transit"
+  | "refunded";
+
+export type SellerOrderOperationType = "accept" | "reject" | "send";
+
+export interface OrderOperationConfig<TForm> {
+  initialData: TForm;
+  requiredFields: (keyof TForm)[];
+}
+
+export interface ISendOrderForm {
+  track_number: string;
+  comment: string;
+}
+
+export interface IRejectOrderForm {
+  rejectReason: string;
+}
+
+export type OrderOperationFormData = ISendOrderForm | IRejectOrderForm;
+
+export type OrderModalType = "send" | "reject" | "";
+
+export type OrderOperationFormMap = {
+  send: ISendOrderForm;
+  reject: IRejectOrderForm;
+  accept: null;
+};
+
+export interface IOrderModalButton {
+  title: string;
+  type: "yellow" | "gray-border" | "red-border";
+  onClick: () => Promise<void> | void;
+}
+
+export interface IOrderModalInput<T> {
+  placeholder: string;
+  field: keyof T;
+}

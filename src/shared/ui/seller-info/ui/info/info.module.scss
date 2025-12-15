@@ -1,17 +1,18 @@
-.image_skeleton {
-    width: 44px;
-    height: 44px;
+.image {
+    max-width: 44px;
+    max-height: 44px;
+    outline: 1px solid $neutral-300;
     border-radius: $space-3;
 }
 
-.text_skeleton {
-    width: 70px;
-    height: 40px;
-    border-radius: $space-4;
-}
+.container {
+    @media screen and (any-hover: hover) {
+        p {
+            color: $neutral-1000;
+        }
 
-.imageContainer {
-    width: 44px;
-    height: 44px;
-    border-radius: $space-3;
+        svg path {
+            fill: $neutral-1000;
+        }
+    }
 }

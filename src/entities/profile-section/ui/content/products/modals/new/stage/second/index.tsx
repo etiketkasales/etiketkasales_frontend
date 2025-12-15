@@ -6,7 +6,7 @@ import { useGetFilters } from "~/src/entities/profile-section/lib/hooks";
 import classes from "./second-stage.module.scss";
 import NewProductModalStage from "..";
 import NewProductInputSeparator from "../../input-separator";
-import LoaderCircle from "~/src/shared/ui/loader-circle";
+import Loader from "~/src/shared/ui/loader";
 import { INewProduct } from "~/src/entities/profile-section/model";
 import { MessageI } from "~/src/shared/model";
 
@@ -44,7 +44,7 @@ export default function NewProductSecondStage({
       isActive={modalStage === 2}
       className={`flex-column gap-3`}
     >
-      {loading && <LoaderCircle radius={0} />}
+      {loading && <Loader radius={0} />}
       {!noFilters ? (
         filtersToMap.map((item, index) => (
           <NewProductInputSeparator

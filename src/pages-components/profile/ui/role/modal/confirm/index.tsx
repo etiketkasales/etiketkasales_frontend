@@ -4,7 +4,7 @@ import classNames from "classnames";
 import classes from "./confirm-modal.module.scss";
 import ProfileModalWrapper from "../wrapper";
 import Button from "~/src/shared/ui/button";
-import LoaderCircle from "~/src/shared/ui/loader-circle";
+import Loader from "~/src/shared/ui/loader";
 
 export interface IProfileConfirmModalButton {
   title: string;
@@ -39,7 +39,7 @@ export default function ProfileConfirmModal({
       className={classNames(containerClassName, "relative gap-6 flex-column")}
       needBackButton={false}
     >
-      {loading && <LoaderCircle radius={20} />}
+      {loading && <Loader radius={20} />}
       <div className={`flex-row ${classes.container}`}>
         {buttons.map((item, index) => (
           <Button

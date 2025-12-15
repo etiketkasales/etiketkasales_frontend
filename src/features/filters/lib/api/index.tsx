@@ -1,4 +1,4 @@
-import { apiClient, tryCatch } from "~/src/shared/lib/api/client.api";
+import { apiClient, tryCatch } from "~/src/shared/lib/api";
 import { IGetData } from "~/src/shared/model";
 import { IFilters } from "~/src/features/filters/model";
 

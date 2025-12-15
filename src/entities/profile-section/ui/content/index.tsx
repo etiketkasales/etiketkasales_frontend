@@ -3,7 +3,7 @@ import React from "react";
 import classes from "./profile-content.module.scss";
 import ProfilePersonal from "./personal";
 import ProfileContentContainer from "./container";
-import LoaderCircle from "~/src/shared/ui/loader-circle";
+import Loader from "~/src/shared/ui/loader";
 import ProfileOrders from "./orders";
 import ProfileCompanies from "./companies";
 import ProfileInDev from "./in-dev";
@@ -29,7 +29,7 @@ export default function ProfileContent({
   if (!loaded) {
     return (
       <ProfileContentContainer className={`relative ${classes.loader}`}>
-        <LoaderCircle radius={20} />
+        <Loader radius={20} />
       </ProfileContentContainer>
     );
   }

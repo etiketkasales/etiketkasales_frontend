@@ -16,6 +16,7 @@ const TextInput: React.FC<TextInputProps> = memo(
     inputClassName,
     errorText,
     children,
+    error,
     ...inputProps
   }) => {
     return (

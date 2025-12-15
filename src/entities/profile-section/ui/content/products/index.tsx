@@ -6,7 +6,7 @@ import classes from "./products.module.scss";
 import ProfileContentContainer from "../container";
 import AddNewProductButton from "./add-new";
 import ProfileProductsList from "./list";
-import LoaderCircle from "~/src/shared/ui/loader-circle";
+import Loader from "~/src/shared/ui/loader";
 import SellerProductModal from "./modals";
 import {
   modalTitles,
@@ -30,7 +30,7 @@ export default function ProfileProducts({}: Props) {
       title={profileTitlesMap.products}
       className={`flex-column ${classes.container}`}
     >
-      {loading && <LoaderCircle radius={20} className={classes.loader} />}
+      {loading && <Loader radius={20} className={classes.loader} />}
       <ProfileProductsList
         products={sellerProducts}
         setModalId={(n) => setEditProductId(n)}

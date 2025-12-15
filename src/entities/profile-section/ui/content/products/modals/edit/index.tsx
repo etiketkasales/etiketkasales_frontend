@@ -3,7 +3,7 @@ import React from "react";
 import { useEditProduct } from "~/src/entities/profile-section/lib/hooks/products/useEditProduct.hook";
 
 import classes from "./edit.module.scss";
-import LoaderCircle from "~/src/shared/ui/loader-circle";
+import Loader from "~/src/shared/ui/loader";
 import Modal from "~/src/shared/ui/modals/ui/default";
 import EditProductImage from "./images";
 import EditProductInputs from "./inputs";

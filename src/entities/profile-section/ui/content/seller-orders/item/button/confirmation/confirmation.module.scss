@@ -4,6 +4,7 @@
 
     @media screen and (width <= 768px) {
         flex-direction: column;
+        align-items: initial;
         flex: 1 0;
 
         .cancel,

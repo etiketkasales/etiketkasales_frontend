@@ -7,7 +7,7 @@ import { useCheckRegInfo } from "../lib/hooks/useCheckRegInfo.hook";
 
 import CompanyRegistration from "~/src/entities/company-registration/ui";
 import FormPageWrapper from "~/src/shared/ui/form-page/ui";
-import LoaderCircle from "~/src/shared/ui/loader-circle";
+import Loader from "~/src/shared/ui/loader";
 
 export default function CompanyRegistrationPage() {
   const { push, prefetch } = useRouter();
@@ -31,7 +31,7 @@ export default function CompanyRegistrationPage() {
   if (needRedirect) return redirect("/profile/seller-pending");
 
   if (loading) {
-    return <LoaderCircle radius={0} />;
+    return <Loader radius={0} />;
   } else {
     if (!stage) return null;
 

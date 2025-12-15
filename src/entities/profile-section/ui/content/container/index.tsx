@@ -3,7 +3,7 @@ import classNames from "classnames";
 
 import classes from "./profile-content-container.module.scss";
 import ProfileContainer from "~/src/entities/profile-section/ui/container";
-import LoaderCircle from "~/src/shared/ui/loader-circle";
+import Loader from "~/src/shared/ui/loader";
 
 interface Props {
   children: React.ReactNode;
@@ -22,7 +22,7 @@ export default function ProfileContentContainer({
 }: Props) {
   return (
     <ProfileContainer className={classNames(className, classes.container)}>
-      {loading && <LoaderCircle radius={20} />}
+      {loading && <Loader radius={20} />}
       {title && (
         <h1
           className={classNames(`heading h4 text-neutral-1000`, {

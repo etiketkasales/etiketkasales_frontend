@@ -1,4 +1,4 @@
-import { apiClient, tryCatch } from "~/src/shared/lib/api/client.api";
+import { apiClient, tryCatch } from "~/src/shared/lib/api";
 import { IFileUploadRes, IGetData, IGetDataBase } from "~/src/shared/model";
 import { IChangeableProfile, IProfile } from "~/src/features/user/model";
 import { IOrder } from "~/src/entities/profile-section/model";
@@ -39,6 +39,3 @@ export const uploadAvatar = async (data: FormData) => {
     return res.data.data;
   });
 };
-
-export * from "./buyer.api";
-export * from "./seller.api";

@@ -3,7 +3,6 @@ import React from "react";
 import { useAppDispatch } from "~/src/app/store/hooks";
 import { setPhoneNumber } from "~/src/app/store/reducers/login.slice";
 
-import classes from "./body.module.scss";
 import PhoneInput from "~/src/shared/ui/inputs/phone";
 import NeedRememberCheckbox from "./need-remember";
 import { MessageI } from "~/src/shared/model";
@@ -26,6 +25,7 @@ export default function LoginMainBody({ phone, message }: Props) {
         value={phone}
         onKeyDown={(e) => e.key === "Enter" && e.preventDefault()}
         errorText={message && message.field === "phone" ? message.message : ""}
+        autoComplete={"mobile tel"}
       />
       <NeedRememberCheckbox />
     </>

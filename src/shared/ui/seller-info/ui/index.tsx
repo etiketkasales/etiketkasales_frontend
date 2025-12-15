@@ -1,37 +1,42 @@
 "use client";
-import React from "react";
-import { useSeller } from "../lib/hooks/useSeller.hook";
-import { useAppSelector } from "~/src/app/store/hooks";
-import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
+import classNames from "classnames";
+import { useSellerInfo } from "~/src/shared/ui/seller-info/lib";
 
-import SellerInfo from "./info";
+import classes from "./seller-info.module.scss";
+import Container from "../../container/ui";
+import SellerInfoDetails from "./info";
+import Loader from "~/src/shared/ui/loader";
 
 interface Props {
   sellerId: number;
-  gap: number;
-  spaceBetween?: boolean;
+  wrapperClassName?: string;
+  infoClassName?: string;
+  loaderRadius?: number;
 }
 
-export default function SellerInfoContainer({
+export default function SellerInfo({
   sellerId,
-  gap,
-  spaceBetween = true,
+  wrapperClassName,
+  infoClassName,
+  loaderRadius,
 }: Props) {
-  const { loaded } = useAppSelector(selectNavigation);
-  const { sellerInfo, loading, error } = useSeller({ sellerId });
+  const { sellerInfo, loading, error } = useSellerInfo({ sellerId });
+
   return (
-    <div
-      className="flex-column gap-3"
-      style={{
-        gap: `${gap}px`,
-      }}
+    <Container
+      className={classNames(wrapperClassName, classes.container)}
+      as="a"
+      href={`#`}
     >
-      <h3 className="text-14 regular gray-2 second-family">Продавец</h3>
-      <SellerInfo
-        loaded={loaded || !loading}
-        sellerInfo={sellerInfo}
-        spaceBetween={spaceBetween}
-      />
-    </div>
+      {loading && <Loader radius={loaderRadius || 20} needCircle={false} />}
+      <p className="text-body l text-neutral-700">Продавец</p>
+      {sellerInfo && !error ? (
+        <SellerInfoDetails {...sellerInfo} className={infoClassName} />
+      ) : (
+        <p className="text-body l text-neutral-900">
+          Не удалось получить данные
+        </p>
+      )}
+    </Container>
   );
 }

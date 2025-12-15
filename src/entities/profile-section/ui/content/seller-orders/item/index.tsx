@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import classNames from "classnames";
 
 import classes from "./order.module.scss";
@@ -11,8 +12,13 @@ import SellerOrderConfirmationButton from "./button/confirmation";
 import SellerOrderDelivery from "./delivery";
 import {
   ISellerOrder,
+  OrderModalType,
   sellerOrderColors,
 } from "~/src/entities/profile-section/model";
+import OrderModalSwitcher from "./modals";
+import SellerOrderNeedConfirmButton from "./button/need_confirm";
+import OrderTrackNumber from "./track";
+import OrderMessage from "./message";
 
 interface Props extends ISellerOrder {}
 
@@ -32,6 +38,8 @@ export default function SellerOrder({
   readiness_message,
   message,
 }: Props) {
+  const [modalType, setModalType] = useState<OrderModalType | null>(null);
+
   return (
     <Container
       as="li"
@@ -58,6 +66,10 @@ export default function SellerOrder({
         />
       )}
       {buyer && <SellerOrderBuyer {...buyer} status_code={status_code} />}
+      {track_number && (
+        <OrderTrackNumber number={track_number} status_code={status_code} />
+      )}
+      {message && <OrderMessage message={message} status_code={status_code} />}
       {Array.isArray(products) && products.length > 0 && (
         <SellerOrderProducts products={products} status_code={status_code} />
       )}
@@ -67,20 +79,24 @@ export default function SellerOrder({
           act_url={act_file_url}
         />
       )}
-      {status_code === "need_confirmation" && (
-        <SellerOrderConfirmationButton
-          onConfirm={() => {}}
-          onCancel={() => {}}
-          confirmText="Принять заказ"
+      {status_code === "need_confirm" && (
+        <SellerOrderNeedConfirmButton
+          orderId={id}
+          setModalType={setModalType}
         />
       )}
-      {status_code === "confirmed" && (
+      {status_code === "processing" && (
         <SellerOrderConfirmationButton
-          onConfirm={() => {}}
-          onCancel={() => {}}
+          onConfirm={() => setModalType("send")}
+          onCancel={() => setModalType("reject")}
           confirmText="Отметить как отправлен"
         />
       )}
+      <OrderModalSwitcher
+        modalType={modalType}
+        orderId={id}
+        onClose={() => setModalType("")}
+      />
     </Container>
   );
 }

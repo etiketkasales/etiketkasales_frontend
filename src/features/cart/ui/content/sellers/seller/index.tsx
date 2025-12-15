@@ -22,8 +22,8 @@ export default function CartSellerItems({
     <CartWrapper className={`flex-column ${classes.container}`}>
       <SellerInfoContainer
         sellerId={items[0].seller_id}
-        gap={10}
-        spaceBetween={false}
+        infoClassName={classes.info}
+        wrapperClassName={`flex-column ${classes.wrapper}`}
       />
       <ul className={`flex-column ${classes.list}`}>
         {items.map((item, index) => {

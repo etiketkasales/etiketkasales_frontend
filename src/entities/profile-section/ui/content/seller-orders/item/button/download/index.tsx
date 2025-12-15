@@ -2,6 +2,7 @@ import React from "react";
 
 import classes from "./download.module.scss";
 import Button from "~/src/shared/ui/button";
+import LinkContainer from "~/src/shared/ui/link-container/ui";
 
 interface Props {
   act_url: string | null;
@@ -28,18 +29,16 @@ export default function SellerOrderDownloadButton({
       {buttons.map((item, index) => {
         if (!item.link) return null;
         return (
-          <Button
+          <LinkContainer
             key={`${index}-${item.link}`}
-            typeButton="white"
-            href={item.link}
-            as={"a"}
+            link={item.link}
             className={classes.button}
-            radius={12}
+            target="_blank"
           >
             <span className="heading h7 text-neutral-800">
               Скачать {item.text}
             </span>
-          </Button>
+          </LinkContainer>
         );
       })}
     </div>

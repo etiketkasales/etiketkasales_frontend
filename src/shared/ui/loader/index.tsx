@@ -6,10 +6,15 @@ import classes from "./loader-circle.module.scss";
 
 interface Props {
   radius: number;
+  needCircle?: boolean;
   className?: string;
 }
 
-export default function LoaderCircle({ radius, className }: Props) {
+export default function Loader({
+  radius,
+  className,
+  needCircle = true,
+}: Props) {
   return (
     <div
       className={classNames(
@@ -20,7 +25,7 @@ export default function LoaderCircle({ radius, className }: Props) {
         borderRadius: `${radius}px`,
       }}
     >
-      <span className={classes.loader}></span>
+      {needCircle && <span className={classes.loader}></span>}
     </div>
   );
 }

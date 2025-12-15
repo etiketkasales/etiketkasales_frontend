@@ -6,7 +6,7 @@ import { useGetAgreement } from "~/src/entities/profile-section/lib/hooks";
 import classes from "./agreement.module.scss";
 import ReactMarkDown from "react-markdown";
 import Container from "~/src/shared/ui/container/ui";
-import LoaderCircle from "~/src/shared/ui/loader-circle";
+import Loader from "~/src/shared/ui/loader";
 import QuoteStageContainer from "../stage-container";
 
 export default function QuoteAgreement() {
@@ -24,7 +24,7 @@ export default function QuoteAgreement() {
         })}
       >
         {loadingTerms ? (
-          <LoaderCircle radius={20} />
+          <Loader radius={20} />
         ) : (
           <ReactMarkDown
             components={{

@@ -1,26 +1,12 @@
-import { apiClient, tryCatch } from "~/src/shared/lib/api/client.api";
-import { IFileUploadRes, IGetData } from "~/src/shared/model";
+import { ISearchPagination } from "~/src/entities/etiketka/model";
 import {
   IEditSellerProduct,
   INewProduct,
   INewProductFilter,
   ISellerProduct,
-} from "../../model";
-import { ISearchPagination } from "~/src/entities/etiketka/model";
-
-interface IAgreementRes {
-  success: boolean;
-  error?: string;
-  terms?: string;
-  version?: string;
-  updated_at?: string;
-}
-export const getSellAgreement = async () => {
-  return await tryCatch(async () => {
-    const res = await apiClient.get<IAgreementRes>(`/seller/agreement-terms/`);
-    return res.data.terms;
-  });
-};
+} from "~/src/entities/profile-section/model";
+import { apiClient, tryCatch } from "~/src/shared/lib/api";
+import { IFileUploadRes, IGetData } from "~/src/shared/model";
 
 export const uploadProductImage = async (formData: FormData) => {
   return await tryCatch(async () => {

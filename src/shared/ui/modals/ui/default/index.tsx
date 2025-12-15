@@ -7,7 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Container from "~/src/shared/ui/container/ui";
 import ModalTitle from "../title";
 import { IModalBaseProps } from "~/src/shared/ui/modals/model";
-import LoaderCircle from "../../../loader-circle";
+import Loader from "../../../loader";
 
 interface Props extends IModalBaseProps {
   wrapperClassName?: string;
@@ -51,7 +51,7 @@ export default function Modal({
             bgColor={bgColor}
             className={classNames(containerClassName, "relative scrollbar")}
           >
-            {loading && <LoaderCircle radius={loaderRadius} />}
+            {loading && <Loader radius={loaderRadius} />}
             <ModalTitle
               title={title}
               onClose={onClose}

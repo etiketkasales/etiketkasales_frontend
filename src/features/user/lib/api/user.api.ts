@@ -1,4 +1,4 @@
-import { apiClient, tryCatch } from "~/src/shared/lib/api/client.api";
+import { apiClient, tryCatch } from "~/src/shared/lib/api";
 import { AxiosError } from "axios";
 import CookieUtils from "~/src/shared/lib/utils/cookies.utils";
 

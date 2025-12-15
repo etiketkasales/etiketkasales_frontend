@@ -1,0 +1,30 @@
+.container {
+  padding: $space-4;
+  border-radius: $space-5;
+  width: 400px;
+  gap: $space-6;
+
+  @media screen and (width <= 768px) {
+    padding: $space-3;
+    gap: $space-3;
+    width: calc(100vw - $space-3 * 2);
+  }
+}
+
+.buttons {
+  flex: 1 0;
+  flex-direction: row;
+  align-items: center;
+  gap: $space-3;
+
+  .button {
+    padding: $space-3;
+    flex: 1 0;
+    border-radius: $space-3;
+  }
+
+  @media screen and (width <= 768px) {
+    flex-direction: column;
+    align-items: initial;
+  }
+}

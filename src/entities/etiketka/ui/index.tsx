@@ -4,7 +4,7 @@ import classNames from "classnames";
 import classes from "./etiketka.module.scss";
 import EtiketkaMain from "./main";
 import EtiketkaInfo from "./info";
-import LoaderCircle from "~/src/shared/ui/loader-circle";
+import Loader from "~/src/shared/ui/loader";
 import { IEtiketka } from "../model";
 
 interface Props {
@@ -24,7 +24,7 @@ export default function EtiketkaSection({
 
   return (
     <section className={classNames(`flex-column gap-5`, classes.container)}>
-      {loading && <LoaderCircle radius={0} />}
+      {loading && <Loader radius={0} />}
       <EtiketkaMain {...commonProps} item={productInfo} />
       <EtiketkaInfo item={productInfo} />
     </section>

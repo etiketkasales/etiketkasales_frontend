@@ -8,7 +8,7 @@ import classes from "./switch-role.module.scss";
 import Shop from "~/public/profile/shop-window.svg";
 import Person from "~/public/profile/person-fill.svg";
 import ProfileContainer from "~/src/entities/profile-section/ui/container";
-import LoaderCircle from "~/src/shared/ui/loader-circle";
+import Loader from "~/src/shared/ui/loader";
 import { UserRoleType } from "~/src/features/user/model";
 
 interface Props {
@@ -34,7 +34,7 @@ export default function ProfileSwitchRole({ userRole }: Props) {
         }
       }}
     >
-      {loading && <LoaderCircle radius={20} />}
+      {loading && <Loader radius={20} />}
       {userRole === "buyer" ? <Shop /> : <Person />}
       <p className="text-body xl text-neutral-800">
         {userRole === "buyer" ? "Войти как продавец" : "Войти как покупатель"}

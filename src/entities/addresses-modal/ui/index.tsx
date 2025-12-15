@@ -7,7 +7,7 @@ import classes from "./addresses-modal.module.scss";
 import Modal from "~/src/shared/ui/modals/ui/default";
 import AddressesModalDefault from "./default";
 import AddressesModalAdd from "./add";
-import LoaderCircle from "~/src/shared/ui/loader-circle";
+import Loader from "~/src/shared/ui/loader";
 
 interface Props {
   isOpen: boolean;
@@ -52,7 +52,7 @@ export default function AddressesModal({
       )}
       titleTextClassName={classes.title}
     >
-      {loading && <LoaderCircle radius={20} />}
+      {loading && <Loader radius={20} />}
       <div className={`flex-row relative ${classes.content}`}>
         <AddressesModalDefault
           stage={stage}

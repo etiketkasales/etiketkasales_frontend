@@ -4,7 +4,7 @@ import {
   IGetRandomCategories,
   ITreeCategory,
 } from "~/src/features/categories/model/categories.interface";
-import { apiClient, tryCatch } from "~/src/shared/lib/api/client.api";
+import { apiClient, tryCatch } from "~/src/shared/lib/api";
 
 export const getRandomCategories = async () => {
   const res = await tryCatch(async () => {

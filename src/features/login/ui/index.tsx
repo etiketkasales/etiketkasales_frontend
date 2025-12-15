@@ -8,7 +8,7 @@ import { selectLogIn } from "~/src/app/store/reducers/login.slice";
 import LoginMainBody from "./body";
 import LoginWrapper from "./wrapper";
 import LoginBottom from "./bottom";
-import LoaderCircle from "~/src/shared/ui/loader-circle";
+import Loader from "~/src/shared/ui/loader";
 import LoginCodeBody from "./code-body";
 
 export default function LoginMain() {
@@ -29,7 +29,7 @@ export default function LoginMain() {
 
   return (
     <LoginWrapper title={isCodePage ? "Введите код" : "Авторизация"}>
-      {loading || (!loaded && <LoaderCircle radius={20} />)}
+      {loading || (!loaded && <Loader radius={20} />)}
       {isCodePage ? (
         <LoginCodeBody
           code={code}

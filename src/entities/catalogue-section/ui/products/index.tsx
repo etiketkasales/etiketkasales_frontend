@@ -6,7 +6,7 @@ import { useCatalogueProducts } from "~/src/entities/catalogue-section/lib/hooks
 import classes from "./catalogue-products.module.scss";
 import ItemWrapper from "~/src/entities/item-wrapper/ui";
 import Container from "~/src/shared/ui/container/ui";
-import LoaderCircle from "~/src/shared/ui/loader-circle";
+import Loader from "~/src/shared/ui/loader";
 import LoadMoreButton from "./load-more";
 
 const productsBatchSize = 24;
@@ -21,7 +21,7 @@ export default function CatalogueProducts() {
         [classes.loading]: loading,
       })}
     >
-      {loading && <LoaderCircle radius={20} className={classes.loader} />}
+      {loading && <Loader radius={20} className={classes.loader} />}
       <ul className={classes.list}>
         {products &&
           products.map((item) => {
