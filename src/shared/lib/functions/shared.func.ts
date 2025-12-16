@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { Dispatch, SetStateAction } from "react";
 import { MessageI } from "~/src/shared/model";
 
@@ -26,13 +27,17 @@ export async function promiseWrapper({
     }
     await callback();
   } catch (err) {
-    console.error(err);
+    const error = err as AxiosError<{ message?: string }>;
+    if (error.response?.data?.message) {
+      errorMessage = error.response.data.message;
+    }
     setError?.({
-      message: errorMessage || "Произошла ошибка сервера",
+      message: errorMessage || "Произошла ошибка",
       type: "error",
       field: "global",
     });
     setErrBool?.(true);
+    console.error(error);
     fallback?.();
     throw err;
   } finally {

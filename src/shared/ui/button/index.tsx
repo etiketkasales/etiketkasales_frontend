@@ -30,6 +30,7 @@ interface Props<T extends ElementType>
   ref?: React.Ref<HTMLButtonElement>;
   blank?: boolean;
   customClickWithHref?: () => void;
+  onClick?: () => void | Promise<void>;
 }
 
 export default function Button<T extends ElementType>({
@@ -71,11 +72,11 @@ export default function Button<T extends ElementType>({
 
   return (
     <Tag
-      onClick={(e) => {
+      onClick={() => {
         if (customClickWithHref) {
           customClickWithHref();
         } else {
-          onClick?.(e);
+          onClick?.();
           if (href) {
             push(href);
           }

@@ -6,12 +6,14 @@ import { useUser } from "~/src/features/user/lib/hooks/useUser.hook";
 import { useCart } from "~/src/features/cart/lib/hooks/useCart.hook";
 import { setUser } from "~/src/app/store/reducers/user.slice";
 import { usePhoneInput } from "~/src/shared/ui/inputs/phone/hooks/usePhoneInput.hook";
+import { addNotification } from "~/src/app/store/reducers/notifications.slice";
 import { sendCode, verifyCode } from "../api/login.api";
 import InputUtils from "~/src/shared/lib/utils/input.util";
-
-import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
+import { promiseWrapper } from "~/src/shared/lib";
 
 import { MessageI } from "~/src/shared/model";
+
+//Раздутый хук. TODO: рефактор этого хука
 
 export const useLogIn = ({ isCodePage }: { isCodePage: boolean }) => {
   const dispatch = useAppDispatch();
@@ -44,15 +46,18 @@ export const useLogIn = ({ isCodePage }: { isCodePage: boolean }) => {
         }
         const res = await sendCode(formatForApi(phoneNumber));
         if (res?.success) {
-          setMessage({
-            type: "success",
-            message: res?.message || "Код отправлен",
-          });
+          dispatch(
+            addNotification({
+              type: "success",
+              message: res?.message || "Код отправлен",
+              field: "global",
+            }),
+          );
           push("/login/code");
         }
       },
     });
-  }, [phoneNumber, formatForApi, hasPhoneError, push]);
+  }, [phoneNumber, formatForApi, hasPhoneError, push, dispatch]);
 
   const handleSendCode = useCallback(
     async (codeParam?: string) => {
@@ -72,14 +77,17 @@ export const useLogIn = ({ isCodePage }: { isCodePage: boolean }) => {
             formatForApi(phoneNumber),
             codeParam ?? code,
           );
-          setMessage({
-            type: "success",
-            message: res?.message || "Вход успешен",
-          });
           if (res && res.success) {
             dispatch(
               setUser({
                 isLoggedIn: true,
+              }),
+            );
+            dispatch(
+              addNotification({
+                type: "success",
+                message: res?.message || "Вы вошли в систему",
+                field: "global",
               }),
             );
             await cartMerging();
@@ -123,11 +131,12 @@ export const useLogIn = ({ isCodePage }: { isCodePage: boolean }) => {
 
   useEffect(() => {
     if (message) {
+      dispatch(addNotification(message));
       if (InputUtils.isPhoneLengthValid(phoneNumber)) {
         setMessage(null);
       }
     }
-  }, [phoneNumber, message]);
+  }, [phoneNumber, message, dispatch]);
 
   return {
     phone: phoneNumber,

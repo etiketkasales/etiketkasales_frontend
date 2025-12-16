@@ -1,0 +1,40 @@
+.container {
+  position: fixed;
+  bottom: $space-5;
+  right: $space-5;
+  z-index: $z-high;
+
+  padding: $space-4;
+  
+  width: max-content;
+  max-width: 400px;
+  max-height: calc(100vh / 4);
+  height: max-content;
+  overflow: hidden;
+  
+  gap: $space-2;
+
+  &::after {
+    position: absolute;
+    content: "";
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: $space-4;
+    background: linear-gradient(180deg, 0% transparent, 100% $neutral-100);
+  }
+
+  @media screen and (width <= 768px) {
+    bottom: unset;
+    top: $space-5;
+    right: 50%;
+    transform: translateX(50%);
+    max-height: 400px;
+    gap: 0;
+    ;
+  }
+}
+
+.noDisplay {
+  display: none;
+}

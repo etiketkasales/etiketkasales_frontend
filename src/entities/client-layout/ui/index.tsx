@@ -1,5 +1,6 @@
 import React from "react";
 import ClientInitializer from "./client-initializer";
+import NotificationsWidget from "~/src/widgets/notifications/ui";
 
 export default function ClientLayout({
   children,
@@ -10,6 +11,7 @@ export default function ClientLayout({
     <>
       {children}
       <ClientInitializer />
+      <NotificationsWidget />
     </>
   );
 }

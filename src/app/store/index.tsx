@@ -7,6 +7,7 @@ import userSlice from "./reducers/user.slice";
 import companySlice from "./reducers/company.slice";
 import cartSlice from "./reducers/cart.slice";
 import orderSlice from "./reducers/order.slice";
+import notificationsSlice from "./reducers/notifications.slice";
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     user: userSlice,
     company: companySlice,
     order: orderSlice,
+    notifications: notificationsSlice,
   },
   devTools: true,
 });

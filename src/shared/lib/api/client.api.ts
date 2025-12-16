@@ -24,9 +24,18 @@ const processQueue = (error: any, token: string | null = null) => {
   failedQueue = [];
 };
 
+declare module "axios" {
+  export interface AxiosRequestConfig {
+    skipAuth?: boolean;
+    _retry?: boolean;
+  }
+}
+
 // добавление токена к каждому запросу
 apiClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    if (config.skipAuth) return config;
+
     const token = CookieUtils.getCookie("auth_token");
 
     if (token && !JwtUtils.isExpiredToken(token)) {
@@ -43,8 +52,20 @@ apiClient.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
     const originalRequest: any = error.config;
+    const AUTH_URLS = ["login", "refresh", "verify-code", "send-code"];
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (
+      originalRequest.url &&
+      AUTH_URLS.some((url) => originalRequest.url?.includes(`/auth/${url}`))
+    ) {
+      return Promise.reject(error);
+    }
+
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest?.skipAuth
+    ) {
       if (isRefreshing) {
         return new Promise(function (resolve, reject) {
           failedQueue.push({ resolve, reject });
@@ -87,6 +108,7 @@ apiClient.interceptors.response.use(
 
         return apiClient(originalRequest);
       } catch (err) {
+        isRefreshing = false;
         processQueue(err, null);
         CookieUtils.deleteCookie("auth_token");
         CookieUtils.deleteCookie("refresh_token");

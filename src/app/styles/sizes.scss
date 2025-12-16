@@ -18,8 +18,11 @@ $space-50px: 50px;
 $space-80px: 80px;
 $space-100px: 100px;
 
-//radius
-$radius-20: 20px;
+//z-index
+$z-high: 1000;
+$z-medium: 500;
+$z-low: 100;
+$z-very-low: 1;
 
 //
 $container-width: 1240px;

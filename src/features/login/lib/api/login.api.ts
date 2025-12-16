@@ -1,14 +1,18 @@
 import { AxiosError } from "axios";
 import { apiClient, tryCatch } from "~/src/shared/lib/api";
-import { ISendCode, IVerifyCode } from "~/src/features/login/model";
 import CookieUtils from "~/src/shared/lib/utils/cookies.utils";
+import { ISendCode, IVerifyCode } from "~/src/features/login/model";
 
 export const sendCode = async (phone: string) => {
   try {
     return await tryCatch(async () => {
-      const res = await apiClient.post<ISendCode>(`/auth/send-code/`, {
-        phone,
-      });
+      const res = await apiClient.post<ISendCode>(
+        `/auth/send-code/`,
+        {
+          phone,
+        },
+        { skipAuth: true },
+      );
       return res.data;
     });
   } catch (err: AxiosError<ISendCode> | any) {
@@ -17,6 +21,7 @@ export const sendCode = async (phone: string) => {
       return error.response.data;
     }
     console.error(err);
+    throw err;
   }
 };
 const setCookies = (accessToken: string, refreshToken: string) => {
@@ -26,19 +31,24 @@ const setCookies = (accessToken: string, refreshToken: string) => {
 
 export const verifyCode = async (phone: string, code: string) => {
   try {
-    const res = await apiClient.post<IVerifyCode>(`/auth/verify-code/`, {
-      phone,
-      code,
-    });
+    const res = await apiClient.post<IVerifyCode>(
+      `/auth/verify-code/`,
+      {
+        phone,
+        code,
+      },
+      { skipAuth: true },
+    );
     setCookies(res.data.access_token, res.data.refresh_token);
 
     return res.data;
   } catch (err) {
     const error = err as AxiosError<IVerifyCode>;
     if (error.response) {
-      return error.response.data;
+      throw error.response.data.message;
     }
-    console.error(err);
+    console.error(error);
+    throw error;
   }
 };
 
@@ -52,6 +62,7 @@ export const loginByPassword = async (phone: string, password: string) => {
     return res.data.user || res.data;
   } catch (err) {
     console.error(err);
+    throw err;
   }
 };
 
