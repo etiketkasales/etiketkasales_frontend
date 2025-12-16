@@ -34,7 +34,7 @@ export default function Notification({ uuid, message, type, index }: Props) {
           {...handlers}
         >
           <Icon className={classes.icon} />
-          <span className="text-neutral-900 text-body l no-select">
+          <span className="text-neutral-900 heading h7 no-select">
             {message}
           </span>
         </motion.div>
