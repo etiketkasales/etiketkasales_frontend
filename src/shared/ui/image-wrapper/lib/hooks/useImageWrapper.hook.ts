@@ -27,7 +27,26 @@ export const useImageWrapper = ({ src }: Props) => {
     return () => controller.abort();
   }, [src, checkCanLoad]);
 
+  const safeImageSrc = (fallbackImage: string, src?: string): string => {
+    if (!src) return fallbackImage;
+
+    const trimmed = src.trim();
+
+    if (!trimmed) return fallbackImage;
+    if (trimmed === "null" || trimmed === "undefined") return fallbackImage;
+
+    if (trimmed.startsWith("/")) return trimmed;
+
+    try {
+      new URL(trimmed);
+      return trimmed;
+    } catch {
+      return fallbackImage;
+    }
+  };
+
   return {
     canLoad,
+    safeImageSrc,
   };
 };

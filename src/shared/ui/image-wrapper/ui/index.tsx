@@ -41,7 +41,9 @@ export default function ImageWrapper({
   style,
   ...rest
 }: Props) {
-  const { canLoad } = useImageWrapper({ src });
+  const { canLoad, safeImageSrc } = useImageWrapper({ src });
+
+  const safeSrc = canLoad ? safeImageSrc(fallbackImage, src) : fallbackImage;
 
   return (
     <div
@@ -53,7 +55,7 @@ export default function ImageWrapper({
     >
       {!needDummy && (!canLoad || !src) ? null : (
         <Image
-          src={canLoad ? (src ? src : fallbackImage) : fallbackImage}
+          src={safeSrc}
           width={width}
           height={height}
           alt={alt}

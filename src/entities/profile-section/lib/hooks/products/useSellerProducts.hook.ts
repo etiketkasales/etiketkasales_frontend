@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
+import { useAppDispatch } from "~/src/app/store/hooks";
+import { addNotification } from "~/src/app/store/reducers/notifications.slice";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 import {
   deleteSellerProduct,
@@ -19,6 +21,7 @@ interface Props {
 }
 
 export const useSellerProducts = ({ onClose, needLoad }: Props) => {
+  const dispatch = useAppDispatch();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<MessageI | null>(null);
   const [sellerProducts, setSellerProducts] = useState<ISellerProduct[]>([]);
@@ -49,11 +52,18 @@ export const useSellerProducts = ({ onClose, needLoad }: Props) => {
     async (id: number) => {
       await promiseCallback(async () => {
         await deleteSellerProduct(id);
+        dispatch(
+          addNotification({
+            message: "Товар удалён",
+            type: "success",
+            field: "global",
+          }),
+        );
         await updateSellerProducts();
         onClose?.();
       });
     },
-    [promiseCallback, updateSellerProducts, onClose],
+    [promiseCallback, updateSellerProducts, onClose, dispatch],
   );
 
   const updateProduct = useCallback(
@@ -61,10 +71,17 @@ export const useSellerProducts = ({ onClose, needLoad }: Props) => {
       await promiseCallback(async () => {
         await editSellerProduct(data, id);
         await updateSellerProducts();
+        dispatch(
+          addNotification({
+            message: "Товар изменён",
+            type: "success",
+            field: "global",
+          }),
+        );
         onClose?.();
       });
     },
-    [promiseCallback, updateSellerProducts, onClose],
+    [promiseCallback, updateSellerProducts, onClose, dispatch],
   );
 
   useEffect(() => {

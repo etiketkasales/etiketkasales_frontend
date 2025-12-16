@@ -1,10 +1,11 @@
 import { useCallback, useState } from "react";
 import { useAppDispatch } from "~/src/app/store/hooks";
+import { addNotification } from "~/src/app/store/reducers/notifications.slice";
 import {
   clearUserData,
   setNeedRemember,
 } from "~/src/app/store/reducers/user.slice";
-import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
+import { promiseWrapper } from "~/src/shared/lib/functions";
 import { logout } from "../api/login.api";
 
 export const useLogout = () => {
@@ -15,6 +16,13 @@ export const useLogout = () => {
   const handleClearUserData = useCallback(() => {
     dispatch(clearUserData());
     dispatch(setNeedRemember(false));
+    dispatch(
+      addNotification({
+        message: "Вы успешно вышли",
+        type: "success",
+        field: "global",
+      }),
+    );
   }, [dispatch]);
 
   const handleLogout = useCallback(async () => {

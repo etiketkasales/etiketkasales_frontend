@@ -24,9 +24,15 @@ export const sendCode = async (phone: string) => {
     throw err;
   }
 };
-const setCookies = (accessToken: string, refreshToken: string) => {
-  CookieUtils.setCookieWithToken("auth_token", accessToken, 86400);
-  CookieUtils.setCookieWithToken("refresh_token", refreshToken, 2592000);
+export const setCookies = ({
+  access,
+  refresh,
+}: {
+  access: string;
+  refresh: string;
+}) => {
+  CookieUtils.setCookieWithToken("auth_token", access, 86400);
+  CookieUtils.setCookieWithToken("refresh_token", refresh, 2592000);
 };
 
 export const verifyCode = async (phone: string, code: string) => {
@@ -39,7 +45,10 @@ export const verifyCode = async (phone: string, code: string) => {
       },
       { skipAuth: true },
     );
-    setCookies(res.data.access_token, res.data.refresh_token);
+    setCookies({
+      refresh: res.data.refresh_token,
+      access: res.data.access_token,
+    });
 
     return res.data;
   } catch (err) {
@@ -58,7 +67,10 @@ export const loginByPassword = async (phone: string, password: string) => {
       phone,
       password,
     });
-    setCookies(res.data.access_token, res.data.refresh_token);
+    setCookies({
+      refresh: res.data.refresh_token,
+      access: res.data.access_token,
+    });
     return res.data.user || res.data;
   } catch (err) {
     console.error(err);

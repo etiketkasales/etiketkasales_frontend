@@ -11,7 +11,7 @@ interface Props {
 
 export const useOrders = ({ role }: Props) => {
   const [orders, setOrders] = useState<IOrder[]>([]);
-  const [sellerOrders, setSellerOrders] = useState<ISellerOrder[]>([]); // обновить когда будет апи
+  const [sellerOrders, setSellerOrders] = useState<ISellerOrder[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleGetOrders = useCallback(async () => {

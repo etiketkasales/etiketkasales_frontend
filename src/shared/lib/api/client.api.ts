@@ -124,14 +124,14 @@ apiClient.interceptors.response.use(
 
 export const tryCatch = async <T>(
   func: () => Promise<T>,
-  fallback?: () => void,
+  fallback?: (error: any) => void,
 ) => {
   try {
     const res = await func();
     return res;
   } catch (err) {
     console.error(err);
-    fallback?.();
+    fallback?.(err);
     throw err;
   }
 };

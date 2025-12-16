@@ -12,7 +12,7 @@ interface Props {
   stage: AddressesModalStage;
   newAddress: string;
   onInputChange: (v: string) => void;
-  onButtonClick: () => void;
+  onButtonClick: () => void | Promise<void>;
   suggestions: ISuggestedAddress[];
   suggestionsLoading: boolean;
   onSgnClick: (address: ISuggestedAddress) => void;

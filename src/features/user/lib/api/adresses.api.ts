@@ -1,6 +1,7 @@
 import { apiClient, tryCatch } from "~/src/shared/lib/api";
 import { IGetData } from "~/src/shared/model";
 import { ISuggestedAddress, IUserAddress, IUserAddressBase } from "../../model";
+import { AxiosError } from "axios";
 
 export const getUserAddresses = async () => {
   return await tryCatch(async () => {
@@ -18,15 +19,23 @@ export const setDefaultAddress = async (id: number) => {
 };
 
 export const addNewAddress = async (data: IUserAddressBase) => {
-  return await tryCatch(async () => {
-    const res = await apiClient.post<IGetData<IUserAddress>>(
-      `/users/addresses/`,
-      {
-        ...data,
-      },
-    );
-    return res.data;
-  });
+  return await tryCatch(
+    async () => {
+      const res = await apiClient.post<IGetData<IUserAddress>>(
+        `/users/addresses/`,
+        {
+          ...data,
+        },
+      );
+      return res.data;
+    },
+    (err) => {
+      const error = err as AxiosError<IGetData<IUserAddress>>;
+      if (error.response) {
+        throw error.response.data;
+      }
+    },
+  );
 };
 
 export const deleteAddress = async (id: number) => {

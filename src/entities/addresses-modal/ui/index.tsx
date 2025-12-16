@@ -65,7 +65,7 @@ export default function AddressesModal({
           stage={stage}
           newAddress={newAddress}
           onInputChange={onInputChange}
-          onButtonClick={() => setStage("default")}
+          onButtonClick={onSaveButtonClick}
           suggestions={suggestions}
           suggestionsLoading={suggestionsLoading}
           onSgnClick={onSuggestionClick}

@@ -3,6 +3,7 @@ import { useAppDispatch } from "~/src/app/store/hooks";
 import { useUser } from "~/src/features/user/lib/hooks/useUser.hook";
 import { setUser } from "~/src/app/store/reducers/user.slice";
 import { changePersonalData } from "~/src/entities/profile-section/lib/api";
+import { addNotification } from "~/src/app/store/reducers/notifications.slice";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 
 import { IChangeableProfile } from "~/src/features/user/model";
@@ -61,21 +62,40 @@ export const useChangeUserData = ({
     [dispatch, userInfo, error, validationFunction],
   );
 
-  const onSave = useCallback(async () => {
-    await promiseWrapper({
-      setLoading,
-      callback: async () => {
-        if (!userInfo) return;
-        if (!validationFunction?.()) return;
-        const res = await changePersonalData(userInfo);
-        if (res) {
-          setUserData(res.user);
-          onSaveCallback?.();
-        }
-      },
+  const onSave = useCallback(
+    async (customMessage?: string) => {
+      await promiseWrapper({
+        setLoading,
+        callback: async () => {
+          if (!userInfo) return;
+          const validation = validationFunction;
+          if (validation && !validation()) return;
+
+          const res = await changePersonalData(userInfo);
+          if (res) {
+            dispatch(
+              addNotification({
+                message: customMessage || "Профиль обновлён",
+                type: "success",
+                field: "global",
+              }),
+            );
+            setUserData(res.user);
+            onSaveCallback?.();
+          }
+        },
+        setError,
+      });
+    },
+    [
+      userInfo,
+      validationFunction,
+      setUserData,
+      onSaveCallback,
       setError,
-    });
-  }, [userInfo, validationFunction, setUserData, onSaveCallback, setError]);
+      dispatch,
+    ],
+  );
 
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent) => {

@@ -1,17 +1,19 @@
 import { useCallback, useEffect, useState } from "react";
 import { useChangeUserData } from "./useChangeUserData.hook";
-import { useAppSelector } from "~/src/app/store/hooks";
+import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { selectUser } from "~/src/app/store/reducers/user.slice";
 import FormUtils from "~/src/shared/lib/utils/form.util";
 
 import { IChangeableProfile, IProfile } from "~/src/features/user/model";
 import { MessageI } from "~/src/shared/model";
+import { addNotification } from "~/src/app/store/reducers/notifications.slice";
 
 interface Props {
   userInfo: IProfile;
 }
 
 export const useChangePersonal = ({ userInfo }: Props) => {
+  const dispatch = useAppDispatch();
   const { changeableUserInfo } = useAppSelector(selectUser);
   const [disabledButton, setDisabledButton] = useState<boolean>(true);
   const [enabledInputs, setEnabledInputs] = useState<

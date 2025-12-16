@@ -10,6 +10,8 @@ import {
 } from "~/src/features/user/lib/api";
 
 import { IUserAddress, IUserAddressBase } from "~/src/features/user/model";
+import { addNotification } from "~/src/app/store/reducers/notifications.slice";
+import { AxiosError } from "axios";
 
 export const useAddresses = (needLoad?: boolean) => {
   const dispatch = useAppDispatch();
@@ -33,13 +35,24 @@ export const useAddresses = (needLoad?: boolean) => {
 
   const promiseCallback = useCallback(
     async (callback: () => Promise<void>) => {
-      await promiseWrapper({
-        setLoading,
-        needLoad,
-        callback,
-      });
+      try {
+        await promiseWrapper({
+          setLoading,
+          needLoad,
+          callback,
+        });
+      } catch (err: AxiosError<{ message?: string }> | any) {
+        dispatch(
+          addNotification({
+            message: err.message || "Произошла ошибка",
+            type: "error",
+            field: "global",
+          }),
+        );
+        throw err;
+      }
     },
-    [needLoad],
+    [needLoad, dispatch],
   );
 
   const getAddresses = useCallback(async () => {

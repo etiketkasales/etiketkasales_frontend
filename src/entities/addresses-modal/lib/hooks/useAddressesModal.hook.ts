@@ -1,13 +1,14 @@
 import { useCallback, useState } from "react";
 import { useAddresses } from "~/src/features/user/lib/hooks/useAddresses.hook";
+import { useAddressSuggestions } from "./useAddressSuggestions.hook";
 
 import {
   AddressesModalStage,
   INewAddress,
   newAddressSkeleton,
 } from "~/src/entities/addresses-modal/model";
-import { useAddressSuggestions } from "./useAddressSuggestions.hook";
 import { ISuggestedAddress } from "~/src/features/user/model";
+import { AxiosError } from "axios";
 
 export const useAddressesModal = (onModalClose: () => void) => {
   const {
@@ -65,12 +66,16 @@ export const useAddressesModal = (onModalClose: () => void) => {
   );
 
   const onSaveButtonClick = useCallback(async () => {
-    await handleAddNewAddress(newAddress.forApi);
-    setStage("default");
-    setNewAddress({
-      forApi: newAddressSkeleton,
-      forDisplay: "",
-    });
+    try {
+      await handleAddNewAddress(newAddress.forApi);
+      setStage("default");
+      setNewAddress({
+        forApi: newAddressSkeleton,
+        forDisplay: "",
+      });
+    } catch (err: AxiosError<{ message?: string }> | any) {
+      console.error(err);
+    }
   }, [handleAddNewAddress, newAddress.forApi]);
 
   return {

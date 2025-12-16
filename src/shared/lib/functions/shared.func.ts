@@ -39,7 +39,7 @@ export async function promiseWrapper({
     setErrBool?.(true);
     console.error(error);
     fallback?.();
-    throw err;
+    throw error;
   } finally {
     setLoading(false);
   }

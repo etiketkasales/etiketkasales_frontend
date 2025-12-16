@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
+import { useAppDispatch } from "~/src/app/store/hooks";
+import { addNotification } from "~/src/app/store/reducers/notifications.slice";
 import { useOrderOperations } from ".";
 import FormUtils from "~/src/shared/lib/utils/form.util";
 import { promiseWrapper } from "~/src/shared/lib";
@@ -22,6 +24,7 @@ export const useOrderOperation = <T extends SellerOrderOperationType>({
   orderId,
   closeModal,
 }: Props<T>) => {
+  const dispatch = useAppDispatch();
   const { orderOperationsMap } = useOrderOperations();
   const [formData, setFormData] = useState<OrderOperationFormMap[T] | null>(
     initialData,
@@ -70,22 +73,37 @@ export const useOrderOperation = <T extends SellerOrderOperationType>({
   const onSubmit = useCallback(async () => {
     const callback = orderOperationsMap[type];
     if (!callback) return;
-
     await promiseWrapper({
       setLoading,
       callback: async () => {
         if (isValidForm()) {
           await callback(orderId, formData).then(closeModal);
+          dispatch(
+            addNotification({
+              message: "Данные заказа обновлены",
+              type: "success",
+              field: "global",
+            }),
+          );
         }
       },
     });
-  }, [type, orderId, formData, isValidForm, closeModal, orderOperationsMap]);
+  }, [
+    type,
+    orderId,
+    formData,
+    isValidForm,
+    closeModal,
+    orderOperationsMap,
+    dispatch,
+  ]);
 
   useEffect(() => {
     if (error) {
       isValidForm();
+      dispatch(addNotification(error));
     }
-  }, [error, isValidForm]);
+  }, [error, isValidForm, dispatch]);
 
   return {
     onSubmit,

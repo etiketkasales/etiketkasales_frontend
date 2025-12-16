@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { useSellerProducts } from "./useSellerProducts.hook";
 import { useFileLoad } from "~/src/shared/lib/hooks";
+import { useSellerProducts } from ".";
 import { uploadProductImage } from "~/src/entities/profile-section/lib/api";
 import FormUtils from "~/src/shared/lib/utils/form.util";
 

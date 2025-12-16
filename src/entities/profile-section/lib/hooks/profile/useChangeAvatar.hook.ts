@@ -1,37 +1,32 @@
-import { useEffect, useRef } from "react";
-
+import { useRef } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
-import { selectUser, setUser } from "~/src/app/store/reducers/user.slice";
-
+import {
+  selectUser,
+  setProfileAvatar,
+} from "~/src/app/store/reducers/user.slice";
 import { useFileLoad } from "~/src/shared/lib/hooks";
-import { useChangeUserData } from "./useChangeUserData.hook";
-import { uploadAvatar } from "../../api";
+import { useChangeUserData } from ".";
+import { uploadAvatar } from "~/src/entities/profile-section/lib/api";
 
 export default function useChangeAvatar() {
   const dispatch = useAppDispatch();
   const { changeableUserInfo } = useAppSelector(selectUser);
-  const { file, onFileLoad, fileLoading } = useFileLoad({
+  const { onFileLoad, fileLoading } = useFileLoad({
     callback: async (file: File) => {
       if (!file) return null;
       const data = new FormData();
       data.append("avatar", file);
       const res = await uploadAvatar(data);
+      if (res.url) {
+        dispatch(setProfileAvatar({ avatar: res.url }));
+        onSave("Аватар изменён");
+      }
       return res;
     },
   });
   const { onSave } = useChangeUserData({ userInfo: changeableUserInfo });
 
   const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (!file || !file.url) return;
-    dispatch(
-      setUser({
-        changeableUserInfo: { ...changeableUserInfo, avatar: file.url },
-      }),
-    );
-    onSave();
-  }, [file, onSave, dispatch, changeableUserInfo]);
 
   return {
     inputRef,

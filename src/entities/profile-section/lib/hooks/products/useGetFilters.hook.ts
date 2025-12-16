@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 import { getNewProductFilters } from "~/src/entities/profile-section/lib/api";
 

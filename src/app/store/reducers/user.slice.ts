@@ -60,6 +60,14 @@ export const userSlice = createSlice({
         console.error(err);
       }
     },
+    setProfileAvatar: (
+      state: InitialStateI,
+      action: PayloadAction<{
+        avatar: string;
+      }>,
+    ) => {
+      state.changeableUserInfo.avatar = action.payload.avatar;
+    },
     clearUserData: (state: InitialStateI) => {
       state.addresses = [];
       state.changeableUserInfo = SChangeableProfile;
@@ -76,6 +84,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUser, setNeedRemember, clearUserData } = userSlice.actions;
+export const { setUser, setNeedRemember, clearUserData, setProfileAvatar } =
+  userSlice.actions;
 export const selectUser = (state: { user: InitialStateI }) => state.user;
 export default userSlice.reducer;

@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
+import { useValidation } from ".";
+import { addNotification } from "~/src/app/store/reducers/notifications.slice";
 import { useFileLoad } from "~/src/shared/lib/hooks";
 import { useSellerProducts } from "./useSellerProducts.hook";
-import { useValidation } from "./useValidation.hook";
+import { useAppDispatch } from "~/src/app/store/hooks";
 import {
   createNewProduct,
   uploadProductImage,
@@ -19,6 +21,7 @@ interface Props {
 }
 
 export const useNewProduct = ({ onClose }: Props) => {
+  const dispatch = useAppDispatch();
   const { updateSellerProducts } = useSellerProducts({ needLoad: false });
   const [modalStage, setModalStage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
@@ -72,10 +75,17 @@ export const useNewProduct = ({ onClose }: Props) => {
       callback: async () => {
         await createNewProduct(newProduct);
         await updateSellerProducts();
+        dispatch(
+          addNotification({
+            message: "Товар добавлен",
+            type: "success",
+            field: "global",
+          }),
+        );
         onClose();
       },
     });
-  }, [onClose, updateSellerProducts, newProduct]);
+  }, [onClose, updateSellerProducts, newProduct, dispatch]);
 
   const onNextBtnClick = useCallback(async () => {
     const hasError = getStageError(modalStage);
