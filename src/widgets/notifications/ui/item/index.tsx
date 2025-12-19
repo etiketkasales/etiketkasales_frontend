@@ -1,8 +1,8 @@
-import { AnimatePresence } from "framer-motion";
+"use client";
 import { useNotification } from "~/src/widgets/notifications/lib/hooks";
 
 import classes from "./notification.module.scss";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { INotification } from "~/src/widgets/notifications/model";
 import { notificationIcons } from "~/src/widgets/notifications/model";
 import { CSSProperties } from "react";
@@ -12,7 +12,7 @@ interface Props extends INotification {
 }
 
 export default function Notification({ uuid, message, type, index }: Props) {
-  const { offsetX, handlers, isActive } = useNotification({ uuid });
+  const { offsetX, handlers, isActive, swipeRight } = useNotification({ uuid });
   const Icon = notificationIcons[type];
 
   return (
@@ -21,8 +21,8 @@ export default function Notification({ uuid, message, type, index }: Props) {
         <motion.div
           initial={{ opacity: 1, x: 0 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: "100%" }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
+          exit={{ opacity: 0, x: swipeRight ? "100%" : "-100%" }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
           style={
             {
               x: offsetX || 0,

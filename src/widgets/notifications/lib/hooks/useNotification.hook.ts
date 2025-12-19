@@ -20,7 +20,7 @@ export const useNotification = ({ uuid }: Props) => {
     return () => clearTimeout(timer);
   }, [uuid, dispatch]);
 
-  const { offsetX, handlers } = useSwipeToDismiss({
+  const { offsetX, handlers, direction } = useSwipeToDismiss({
     onDismiss: onDelete,
   });
 
@@ -35,5 +35,6 @@ export const useNotification = ({ uuid }: Props) => {
     offsetX,
     handlers,
     isActive,
+    swipeRight: direction === "right",
   };
 };
