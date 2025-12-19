@@ -3,7 +3,7 @@ import React from "react";
 import classes from "./purchase.module.scss";
 import OrderContainer from "../../container";
 import OrderPurchaseItem from "./item";
-import { OrderType } from "~/src/app/store/reducers/order.slice";
+import { OrderType } from "~/src/entities/order/model";
 
 interface Props {
   type: OrderType;

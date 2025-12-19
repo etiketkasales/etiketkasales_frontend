@@ -7,7 +7,7 @@ import { selectOrder } from "~/src/app/store/reducers/order.slice";
 import classes from "./order-main.module.scss";
 import OrderContent from "./content";
 import OrderSummary from "~/src/entities/order-summary/ui";
-import { OrderType } from "~/src/app/store/reducers/order.slice";
+import { OrderType } from "~/src/entities/order/model";
 import { PersonalOrderStageType } from "~/src/entities/order/model/order.interface";
 
 interface Props {

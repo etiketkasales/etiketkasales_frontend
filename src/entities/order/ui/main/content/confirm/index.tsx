@@ -5,7 +5,7 @@ import OrderStageWrapper from "../stage-wrapper";
 import DeliveryChosenMethod from "./delivery";
 import OrderAcceptor from "./acceptor";
 import OrderPurchase from "./purchase";
-import { OrderType } from "~/src/app/store/reducers/order.slice";
+import { OrderType } from "~/src/entities/order/model";
 
 interface Props {
   isActive: boolean;

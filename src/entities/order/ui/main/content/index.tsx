@@ -8,7 +8,7 @@ import OrderLoggedOut from "./logged-out";
 import OrderChoosePvz from "./choose_pvz";
 import OrderContentLoader from "./loader";
 import OrderConfirm from "./confirm";
-import { OrderType } from "~/src/app/store/reducers/order.slice";
+import { OrderType } from "~/src/entities/order/model";
 import { PersonalOrderStageType } from "~/src/entities/order/model/order.interface";
 
 interface Props {

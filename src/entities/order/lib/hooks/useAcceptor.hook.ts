@@ -1,32 +1,26 @@
 import { useCallback, useState } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
-import { selectOrder, setOrder } from "~/src/app/store/reducers/order.slice";
-import { INewOrderAcceptor } from "../../model";
+import {
+  selectOrder,
+  setOrderReceiverData,
+} from "~/src/app/store/reducers/order.slice";
+
+import { IOrderReceiver } from "../../model";
 
 export const useAcceptor = () => {
   const dispatch = useAppDispatch();
-  const { orderInfo } = useAppSelector(selectOrder);
+  const { createOrderForCompanyData } = useAppSelector(selectOrder);
   const [canChange, setCanChange] = useState<boolean>(false);
 
   const onInputChange = useCallback(
-    (v: string, field: keyof INewOrderAcceptor) => {
-      dispatch(
-        setOrder({
-          orderInfo: {
-            ...orderInfo,
-            acceptor: {
-              ...orderInfo.acceptor,
-              [field]: v,
-            },
-          },
-        }),
-      );
+    (v: string, field: keyof IOrderReceiver) => {
+      dispatch(setOrderReceiverData({ [field]: v }));
     },
-    [dispatch, orderInfo],
+    [dispatch],
   );
 
   return {
-    acceptor: orderInfo.acceptor,
+    receiver: createOrderForCompanyData.receiver,
     onInputChange,
     canChange,
     setCanChange,

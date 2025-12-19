@@ -5,14 +5,14 @@ import classes from "./acceptor.module.scss";
 import OrderContainer from "../../container";
 import NewOrderInputs from "./inputs";
 import Button from "~/src/shared/ui/button";
-import { OrderType } from "~/src/app/store/reducers/order.slice";
+import { OrderType } from "~/src/entities/order/model";
 
 interface Props {
   type: OrderType;
 }
 
 export default function OrderAcceptor({ type }: Props) {
-  const { canChange, setCanChange, acceptor, onInputChange } = useAcceptor();
+  const { canChange, setCanChange, receiver, onInputChange } = useAcceptor();
 
   return (
     <OrderContainer
@@ -21,7 +21,7 @@ export default function OrderAcceptor({ type }: Props) {
     >
       <NewOrderInputs
         canChange={canChange}
-        acceptor={acceptor}
+        receiver={receiver}
         onInputChange={onInputChange}
       />
       <Button

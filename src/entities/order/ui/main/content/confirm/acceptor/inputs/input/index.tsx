@@ -4,17 +4,17 @@ import StringUtils from "~/src/shared/lib/utils/string.util";
 import TextInput from "~/src/shared/ui/inputs/text-input";
 import PhoneInput from "~/src/shared/ui/inputs/phone";
 import EmailInput from "~/src/shared/ui/inputs/email";
-import { INewOrderAcceptor, INewOrderInput } from "~/src/entities/order/model";
+import { INewOrderInput, IOrderReceiver } from "~/src/entities/order/model";
 
 interface Props extends INewOrderInput {
-  onChange: (v: string, f: keyof INewOrderAcceptor) => void;
-  acceptor: INewOrderAcceptor;
+  onChange: (v: string, f: keyof IOrderReceiver) => void;
+  receiver: IOrderReceiver;
   disabled: boolean;
 }
 
-export default function OrderAcceptorInput({
+export default function OrderreceiverInput({
   onChange,
-  acceptor,
+  receiver,
   field,
   placeholder,
   type,
@@ -32,7 +32,7 @@ export default function OrderAcceptorInput({
       return (
         <TextInput
           onChange={(e) => onChange(e.target.value, field)}
-          value={acceptor[field]}
+          value={receiver[field]}
           {...commonProps}
         />
       );
@@ -40,7 +40,7 @@ export default function OrderAcceptorInput({
       return (
         <PhoneInput
           onChange={(e) => onChange(e, field)}
-          value={StringUtils.formatPhone(acceptor[field])}
+          value={StringUtils.formatPhone(receiver[field])}
           {...commonProps}
         />
       );
@@ -48,7 +48,7 @@ export default function OrderAcceptorInput({
       return (
         <EmailInput
           onChange={(e) => onChange(e.target.value, field)}
-          value={acceptor[field]}
+          value={receiver[field]}
           {...commonProps}
         />
       );

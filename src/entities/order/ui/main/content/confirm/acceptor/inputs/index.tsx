@@ -2,17 +2,17 @@ import React from "react";
 
 import classes from "./inputs.module.scss";
 import OrderAcceptorInput from "./input";
-import { INewOrderAcceptor, newOrderInputs } from "~/src/entities/order/model";
+import { IOrderReceiver, newOrderInputs } from "~/src/entities/order/model";
 
 interface Props {
-  onInputChange: (v: string, f: keyof INewOrderAcceptor) => void;
-  acceptor: INewOrderAcceptor;
+  onInputChange: (v: string, field: keyof IOrderReceiver) => void;
+  receiver: IOrderReceiver;
   canChange: boolean;
 }
 
 export default function NewOrderInputs({
   onInputChange,
-  acceptor,
+  receiver,
   canChange,
 }: Props) {
   return (
@@ -21,7 +21,7 @@ export default function NewOrderInputs({
         <OrderAcceptorInput
           key={index + item.field}
           onChange={onInputChange}
-          acceptor={acceptor}
+          receiver={receiver}
           disabled={!canChange}
           {...item}
         />

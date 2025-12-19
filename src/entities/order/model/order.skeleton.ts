@@ -1,4 +1,6 @@
 import {
+  ICreateOrderBase,
+  ICreateOrderForCompany,
   INewOrderAcceptor,
   INewOrderInfo,
   OrderPricesI,
@@ -23,4 +25,20 @@ export const newOrderSkeleton: INewOrderInfo = {
   delivery_method: "",
   acceptor: newOrderAcceptorSkeleton,
   purchase_method: "",
+};
+
+export const createOrderSkeleton: ICreateOrderBase = {
+  delivery_address_id: 0,
+  delivery_method: "",
+};
+
+export const createOrderForCompanySkeleton: ICreateOrderForCompany = {
+  ...createOrderSkeleton,
+  company_id: 0,
+  receiver: {
+    receiver_name: "",
+    receiver_surname: "",
+    receiver_phone: "",
+    receiver_email: "",
+  },
 };

@@ -28,6 +28,48 @@ export interface INewOrderInfo {
 
 export interface INewOrderInput {
   placeholder: string;
-  field: keyof INewOrderAcceptor;
+  field: keyof IOrderReceiver;
   type: "phone" | "email" | "string";
 }
+
+// API
+export interface IDeliveryMethodResponse {
+  id: number;
+  code: string;
+  name: string;
+  description: string;
+  display: string;
+  image_url: string;
+}
+
+export interface IProductForDeliveryMethod {
+  id: number;
+  weight: number;
+}
+
+export interface IPaymentMethodResponse {
+  code: string;
+  name: string;
+  description: string;
+  commision_formatted: string;
+  image_url: string;
+}
+
+export interface ICreateOrderBase {
+  delivery_address_id: number;
+  delivery_method: string;
+}
+
+export interface IOrderReceiver {
+  receiver_name: string;
+  receiver_surname: string;
+  receiver_phone: string;
+  receiver_email: string;
+}
+
+export interface ICreateOrderForCompany extends ICreateOrderBase {
+  company_id: number;
+  receiver: IOrderReceiver;
+}
+
+export type OrderType = "company" | "person";
