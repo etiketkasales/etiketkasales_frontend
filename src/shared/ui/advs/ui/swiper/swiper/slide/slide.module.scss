@@ -1,0 +1,13 @@
+.image {
+  max-width: 1240px;
+  max-height: 464px;
+
+  img {
+    max-width: 1240px;
+    max-height: 464px;
+  }
+
+  @media screen and (width <= 420px) {
+    max-height: 200px;
+  }
+}
