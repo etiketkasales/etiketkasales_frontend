@@ -9,7 +9,7 @@ interface Props extends IUserAddress {}
 
 export default function OrderDefaultAddress(address: Props) {
   return (
-    <div className={`flex-row gap-1 ${classes.container}`}>
+    <div className={`flex-row gap-1 align-center ${classes.container}`}>
       <Icon />
       <span className="heading h7 text-blue-500 nowrap-text">
         {StringUtils.formatAddress(address)}

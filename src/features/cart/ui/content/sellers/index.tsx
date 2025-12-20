@@ -3,11 +3,12 @@ import React from "react";
 
 import CartSellerItems from "./seller";
 import { ICartItem } from "../../../model/cart.interface";
+import { IProductForDeliveryMethod } from "~/src/entities/order/model";
 
 interface Props {
   sellersItems: Array<ICartItem[]>;
-  selectedItems: number[];
-  selectItem: (id: number) => void;
+  selectedItems: IProductForDeliveryMethod[];
+  selectItem: (id: number, weight: number) => void;
 }
 
 export default function CartSellers({

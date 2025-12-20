@@ -3,9 +3,9 @@ import classNames from "classnames";
 
 import classes from "./default.module.scss";
 import AddNewAddress from "./button";
+import ModalAddress from "./address";
 import { IUserAddress } from "~/src/features/user/model";
 import { AddressesModalStage } from "../../model";
-import ModalAddress from "./address";
 
 interface Props {
   stage: AddressesModalStage;
@@ -29,10 +29,10 @@ export default function AddressesModalDefault({
         [classes.hidden]: stage === "add",
       })}
     >
-      <ul className={`flex-column gap-3 ${classes.addresses}`}>
+      <ul className={`flex-column gap-3`}>
         {addresses.map((item, index) => (
           <ModalAddress
-            key={item.id + index}
+            key={`${item.id}-${index}`}
             {...item}
             onClick={(id) => onAddressClick(addressClickType, id)}
           />

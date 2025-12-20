@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
+import { addNotification } from "~/src/app/store/reducers/notifications.slice";
 import { selectUser, setUser } from "~/src/app/store/reducers/user.slice";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 import {
@@ -10,7 +11,6 @@ import {
 } from "~/src/features/user/lib/api";
 
 import { IUserAddress, IUserAddressBase } from "~/src/features/user/model";
-import { addNotification } from "~/src/app/store/reducers/notifications.slice";
 import { AxiosError } from "axios";
 
 export const useAddresses = (needLoad?: boolean) => {

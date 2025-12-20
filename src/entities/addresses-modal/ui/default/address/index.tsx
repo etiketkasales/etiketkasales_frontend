@@ -1,9 +1,9 @@
 import React from "react";
+import classNames from "classnames";
 
 import classes from "./address.module.scss";
-import { IUserAddress } from "~/src/features/user/model";
 import Container from "~/src/shared/ui/container/ui";
-import classNames from "classnames";
+import { IUserAddress } from "~/src/features/user/model";
 
 interface Props extends IUserAddress {
   onClick: (id: number) => void;
@@ -32,7 +32,10 @@ export default function ModalAddress({
       bgColor={"neutral-300"}
       onClick={() => onClick(id)}
       as="li"
-      className={classNames(classes.container, "flex-row gap-1 align-center")}
+      className={classNames(
+        classes.container,
+        "flex-row gap-1 align-center pointer",
+      )}
       style={
         {
           "--order": is_default ? 0 : 1,

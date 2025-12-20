@@ -18,7 +18,7 @@ export const useOrderSummaryButtons = ({ openModal }: Props) => {
   const pushToOrder = useCallback(
     (type: "person" | "company") => {
       dispatch(setOrderType(type));
-      push("/order");
+      push("/order/create");
     },
     [push, dispatch],
   );

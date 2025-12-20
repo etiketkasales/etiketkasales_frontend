@@ -30,8 +30,8 @@
     right: 50%;
     transform: translateX(50%);
     max-height: 400px;
+    max-width: calc(100vw - 2 * $space-3);
     gap: 0;
-    ;
   }
 }
 

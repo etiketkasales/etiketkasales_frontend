@@ -7,12 +7,13 @@ import CartContent from "./content";
 import CartOrderSummary from "./order-summary";
 import Loader from "~/src/shared/ui/loader";
 import { ICartItem } from "../model/cart.interface";
+import { IProductForDeliveryMethod } from "~/src/entities/order/model";
 
 interface Props {
   loading: boolean;
   sellerItems: ICartItem[][];
-  selectedItems: number[];
-  handleSelectItem: (id: number) => void;
+  selectedItems: IProductForDeliveryMethod[];
+  handleSelectItem: (id: number, weight: number) => void;
   onCheckboxChange: (selectAll: boolean) => void;
   deleteMarked: () => Promise<void>;
   openModal: () => void;

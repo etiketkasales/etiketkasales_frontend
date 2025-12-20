@@ -1,25 +1,25 @@
+"use client";
 import React from "react";
+import { selectOrder } from "~/src/app/store/reducers/order.slice";
+import { useAppSelector } from "~/src/app/store/hooks";
 
 import classes from "./delivery.module.scss";
 import OrderContainer from "../../container";
 import DeliveryChosenMethodItem from "./item";
 
-interface Props {
-  chosenMethod: any;
-}
+export default function DeliveryChosenMethod() {
+  const { deliveryMethod } = useAppSelector(selectOrder);
 
-export default function DeliveryChosenMethod({ chosenMethod }: Props) {
   return (
     <OrderContainer
       title="Способ получения"
       className={`flex-column ${classes.container}`}
     >
       <DeliveryChosenMethodItem
-        image=""
-        name="Пункт выдачи СДЭК"
-        address="Краснодар Тополиная улица 48 к1"
-        price="809.00"
-        time="3–6 дней"
+        image={deliveryMethod.image_url}
+        name={deliveryMethod.name}
+        address={deliveryMethod.description}
+        display={deliveryMethod.display}
       />
     </OrderContainer>
   );

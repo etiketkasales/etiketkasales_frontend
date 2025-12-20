@@ -1,0 +1,7 @@
+.input {
+    grid-column: 6 span;
+
+    @media screen and (width <= 768px) {
+        grid-column: 12 span;
+    }
+}

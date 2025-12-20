@@ -7,12 +7,6 @@
 }
 
 .items {
-    flex-direction: row;
-    flex-wrap: wrap;
+    grid-template-columns: repeat(12, 1fr);
     gap: $space-3;
-
-    @media screen and (width <= 768px) {
-        flex-direction: column;
-        flex-wrap: initial;
-    }
 }

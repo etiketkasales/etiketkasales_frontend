@@ -3,17 +3,15 @@ import { useAppSelector } from "~/src/app/store/hooks";
 import { selectCart } from "~/src/app/store/reducers/cart.slice";
 import { selectOrder } from "~/src/app/store/reducers/order.slice";
 
-// TO DO: переписать под новый апи корзины. Сейчас на костылях
-
 export const useCartSum = () => {
-  const { itemsToOrderIds } = useAppSelector(selectOrder);
+  const { itemsToOrder } = useAppSelector(selectOrder);
   const { items } = useAppSelector(selectCart);
   const [itemsSum, setItemsSum] = useState<number>(0);
   const [itemsDiscount, setItemsDiscount] = useState<number>(0);
   const [paySum, setPaySum] = useState<number>(0);
 
   useEffect(() => {
-    if (!items || itemsToOrderIds.length === 0) {
+    if (!items || itemsToOrder?.length === 0) {
       setItemsDiscount(0);
       setItemsSum(0);
       setPaySum(0);
@@ -23,8 +21,8 @@ export const useCartSum = () => {
     let sum = 0;
     let discount = 0;
 
-    itemsToOrderIds.forEach((id) => {
-      const item = items.find((item) => item.id === id);
+    itemsToOrder.forEach((itemFromSlice) => {
+      const item = items.find((item) => item.id === itemFromSlice.id);
       if (!item) return;
 
       const count = item.quantity || 0;
@@ -42,7 +40,7 @@ export const useCartSum = () => {
     setItemsSum(sum);
     setItemsDiscount(discount);
     setPaySum(sum - discount);
-  }, [itemsToOrderIds, items]); // высчитывает общую сумму и скидку
+  }, [itemsToOrder, items]); // высчитывает общую сумму и скидку
 
   return {
     itemsSum,

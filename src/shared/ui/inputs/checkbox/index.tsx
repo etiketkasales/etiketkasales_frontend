@@ -16,6 +16,7 @@ interface Props {
   name?: string;
   className?: string;
   classNameLabel?: string;
+  checkboxClassName?: string;
   error?: boolean;
   id?: string;
 }
@@ -28,6 +29,7 @@ export default function CheckboxInput({
   checked,
   className,
   classNameLabel,
+  checkboxClassName,
   nodeLabel,
   error = false,
   id,
@@ -49,6 +51,7 @@ export default function CheckboxInput({
         className={classNames(`cursor`, classes.container, {
           [classes.checked]: checked,
           [classes.error]: error,
+          checkboxClassName,
         })}
         onChange={() => {
           onChange(!checked);

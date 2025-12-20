@@ -43,11 +43,20 @@ class StringUtils {
 
     if (isNaN(n)) return "";
 
-    // Округляем до целого
     const rounded = Math.round(n);
 
-    // Форматируем с пробелами
+    // Форматирую с пробелами
     return rounded.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  }
+
+  static formatPriceToNumber(price: string | number): number {
+    const n = Number(price);
+
+    if (isNaN(n)) return -1;
+
+    // Округляем до целого
+    const rounded = Math.round(n);
+    return rounded;
   }
 
   static formatAddress(address: IUserAddress) {

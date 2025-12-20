@@ -6,11 +6,12 @@ import CartWrapper from "~/src/features/cart/ui/wrapper";
 import SellerInfoContainer from "~/src/shared/ui/seller-info/ui";
 import CartSellerItem from "./item";
 import { ICartItem } from "~/src/features/cart/model/cart.interface";
+import { IProductForDeliveryMethod } from "~/src/entities/order/model";
 
 interface Props {
   items: ICartItem[];
-  selectedItems: number[];
-  selectItem: (id: number) => void;
+  selectedItems: IProductForDeliveryMethod[];
+  selectItem: (id: number, weight: number) => void;
 }
 
 export default function CartSellerItems({

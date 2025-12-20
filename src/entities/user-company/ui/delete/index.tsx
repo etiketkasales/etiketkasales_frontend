@@ -1,15 +1,13 @@
-import React from "react";
-
 import classes from "./delete.module.scss";
 import XCircle from "~/public/profile/x-circle.svg";
 import Button from "~/src/shared/ui/button";
 
 interface Props {
   onClick: () => void;
-  loading: boolean;
+  loading?: boolean;
 }
 
-export default function DeleteCompany({ onClick, loading }: Props) {
+export default function DeleteCompany({ onClick, loading = false }: Props) {
   return (
     <Button
       typeButton="ghost"

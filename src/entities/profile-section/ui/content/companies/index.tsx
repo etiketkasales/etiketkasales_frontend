@@ -5,9 +5,9 @@ import { useCompanies } from "~/src/entities/profile-section/lib/hooks";
 
 import classes from "./companies.module.scss";
 import ProfileContentContainer from "../container";
-import ProfileCompany from "./item";
 import AddCompanyButton from "./add-button";
 import AddCompanyModal from "~/src/entities/add-company-modal/ui";
+import UserCompany from "~/src/entities/user-company/ui";
 import { profileTitlesMap } from "~/src/entities/profile-section/model";
 
 export default function ProfileCompanies() {
@@ -24,11 +24,13 @@ export default function ProfileCompanies() {
         {companies && companies.length > 0 ? (
           companies.map((item, index) => {
             return (
-              <ProfileCompany
+              <UserCompany
                 key={`${item.id}-${index}`}
-                {...item}
                 onDelete={handleDeleteCompany}
                 loading={loading}
+                as={"li"}
+                needDeleteButton
+                {...item}
               />
             );
           })

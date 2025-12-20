@@ -1,0 +1,15 @@
+.container {
+    flex-direction: row;
+    align-items: center;
+
+    @media screen and (width <= 768px) {
+        flex-direction: column;
+        align-items: initial;
+    }
+}
+
+.button {
+    padding: $space-3;
+    align-self: flex-start;
+    border-radius: $space-3;
+}

@@ -10,7 +10,7 @@ export const getDeliveryMethodsForOrder = async (
   delivery_address_id: number,
   products: IProductForDeliveryMethod[],
 ) => {
-  await tryCatch(async () => {
+  return await tryCatch(async () => {
     const productsParam = JSON.stringify(products);
     const res = await apiClient.get<IGetData<IDeliveryMethodResponse[]>>(
       `/delivery-methods/`,
@@ -42,4 +42,52 @@ export const getPaymentMethodsForOrder = async (
     );
     return res.data.data;
   });
+};
+
+interface ICreateOrderParams {
+  delivery_address_id: number;
+  delivery_method: string;
+  receiver_name: string;
+  receiver_surname: string;
+  receiver_phone: string;
+  receiver_email: string;
+}
+export const createOrder = async (params: ICreateOrderParams) => {
+  return await tryCatch(
+    async () => {
+      const res = await apiClient.post<{ success: boolean }>(
+        `/orders/create-from-cart/`,
+        {
+          ...params,
+        },
+      );
+      return res.data;
+    },
+    (err) => {
+      throw err;
+    },
+  );
+};
+
+interface ICreateOrderForCompanyParams extends ICreateOrderParams {
+  company_id: number;
+}
+
+export const createOrderForCompany = async (
+  params: ICreateOrderForCompanyParams,
+) => {
+  return await tryCatch(
+    async () => {
+      const res = await apiClient.post<{ success: boolean }>(
+        `/orders/create-from-cart-company/`,
+        {
+          ...params,
+        },
+      );
+      return res.data;
+    },
+    (err) => {
+      throw err;
+    },
+  );
 };

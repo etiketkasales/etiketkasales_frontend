@@ -1,5 +1,6 @@
 .container {
     gap: $space-6;
+    align-items: flex-start;
 
     @media screen and (width <= 768px) {
         gap: $space-4;

@@ -16,6 +16,7 @@ export default function AddNewAddress({ type, onClick }: Props) {
       onClick={onClick}
       className={classes[type]}
       radius={12}
+      justifyCenter={type !== "ghost"}
     >
       {type === "ghost" && <Icon />}
       <span

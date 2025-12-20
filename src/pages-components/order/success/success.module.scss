@@ -1,0 +1,14 @@
+.container {
+    flex: 1 0;
+    padding: $space-7;
+    padding-top: $space-6;
+    padding-bottom: $space-8;
+    border-radius: $space-6;
+    
+    gap: $space-8;
+
+    @media screen and (width <= 768px) {
+        gap: $space-6;
+        padding: $space-4;
+    }
+}

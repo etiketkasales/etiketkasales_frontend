@@ -5,5 +5,14 @@
     border-radius: $space-3;
     box-shadow: $shadow-100;
     opacity: 0.8;
+    transition: background-color $transition;
 
+    @media screen and (any-hover: hover) {
+        &:hover {
+            background-color: $red-800;
+            span {
+                color: $neutral-100;
+            }
+        }
+    }
 }

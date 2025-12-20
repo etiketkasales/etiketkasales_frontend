@@ -1,40 +1,56 @@
 "use client";
 import React from "react";
-import { useDelivery } from "~/src/entities/order/lib/hooks/useDelivery.hook";
+import { useDelivery } from "~/src/entities/order/lib/hooks";
 
 import classes from "./delivery.module.scss";
 import OrderContainer from "../../container";
 import DeliveryMethodItem from "./item";
+import Loader from "~/src/shared/ui/loader";
+import { IDeliveryMethodResponse } from "~/src/entities/order/model";
 
 interface Props {
   canChoosePvz: boolean;
+  deliveryAddressId: number;
+  chosenDeliveryMethod: IDeliveryMethodResponse;
+  openModal: () => void;
 }
 
-export default function OrderDeliveryMethod({ canChoosePvz }: Props) {
-  const { methods } = useDelivery();
+export default function OrderDeliveryMethod({
+  canChoosePvz,
+  deliveryAddressId,
+  chosenDeliveryMethod,
+  openModal,
+}: Props) {
+  const { methods, loading, chooseDeliveryMethod } = useDelivery({
+    deliveryAddressId,
+    canLoad: canChoosePvz,
+  });
+
   return (
     <OrderContainer
-      className={`flex-column ${classes.container}`}
+      className={`flex-column relative ${classes.container}`}
       title="Способ получения"
     >
-      <div className={`flex-row ${classes.methods}`}>
-        {Array.isArray(methods) && methods.length ? (
-          methods.map((method, index) => (
+      {loading && <Loader radius={20} />}
+      {(!Array.isArray(methods) || !methods.length) && !loading ? (
+        <p className="text-body l text-neutral-800">
+          Не удалось получить методы доставки
+        </p>
+      ) : (
+        <div className={`grid ${classes.methods}`}>
+          {methods.map((method, index) => (
             <DeliveryMethodItem
               key={index}
-              name={method.name}
-              isActive={true}
-              addressName={method.addressName}
-              image={method.image}
+              isActive={chosenDeliveryMethod.id === method.id}
+              addressName={method.display}
               canChoosePvz={canChoosePvz}
+              chooseDeliveryMethod={chooseDeliveryMethod}
+              openModal={openModal}
+              method={method}
             />
-          ))
-        ) : (
-          <p className="text-body l text-neutral-800">
-            Не удалось получить методы
-          </p>
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </OrderContainer>
   );
 }

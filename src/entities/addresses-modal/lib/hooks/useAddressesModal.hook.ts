@@ -1,6 +1,9 @@
 import { useCallback, useState } from "react";
-import { useAddresses } from "~/src/features/user/lib/hooks/useAddresses.hook";
-import { useAddressSuggestions } from "./useAddressSuggestions.hook";
+import { useUserPersonal } from "~/src/features/user/lib/hooks";
+import { useAddresses } from "~/src/features/user/lib/hooks";
+import { addNotification } from "~/src/app/store/reducers/notifications.slice";
+import { useAddressSuggestions } from ".";
+import { useAppDispatch } from "~/src/app/store/hooks";
 
 import {
   AddressesModalStage,
@@ -11,6 +14,7 @@ import { ISuggestedAddress } from "~/src/features/user/model";
 import { AxiosError } from "axios";
 
 export const useAddressesModal = (onModalClose: () => void) => {
+  const dispatch = useAppDispatch();
   const {
     addresses,
     loading,
@@ -18,6 +22,7 @@ export const useAddressesModal = (onModalClose: () => void) => {
     handleDeleteAddress,
     handleSetDefaultAddress,
   } = useAddresses();
+  const hasPersonalData = useUserPersonal();
   const {
     loading: suggestionsLoading,
     suggestions,
@@ -45,12 +50,34 @@ export const useAddressesModal = (onModalClose: () => void) => {
 
   const onSuggestionClick = useCallback(
     (sgn: ISuggestedAddress) => {
+      if (!hasPersonalData) {
+        dispatch(
+          addNotification({
+            message: "Заполните персональные данные в профиле",
+            type: "error",
+            field: "global",
+          }),
+        );
+        return;
+      }
+      const hasSameAddress = addresses.some((a) => a.id === sgn.id);
+      if (hasSameAddress) {
+        dispatch(
+          addNotification({
+            message: "Такой адрес уже добавлен",
+            type: "error",
+            field: "global",
+          }),
+        );
+        return;
+      }
+
       setNewAddress({
         forApi: formatSuggestion(sgn),
         forDisplay: sgn.full_address,
       });
     },
-    [formatSuggestion],
+    [formatSuggestion, hasPersonalData, addresses, dispatch],
   );
 
   const onAddressClick = useCallback(

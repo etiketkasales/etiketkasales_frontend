@@ -5,7 +5,7 @@ export interface OrderPricesI {
   total: number;
 }
 
-export type PersonalOrderStageType = "choose_pvz" | "confirm";
+export type OrderStageType = "choose_pvz" | "confirm";
 
 export interface IOrderDeliveryMethod {
   name: string;
@@ -51,13 +51,8 @@ export interface IPaymentMethodResponse {
   code: string;
   name: string;
   description: string;
-  commision_formatted: string;
+  commission_formatted: string;
   image_url: string;
-}
-
-export interface ICreateOrderBase {
-  delivery_address_id: number;
-  delivery_method: string;
 }
 
 export interface IOrderReceiver {
@@ -67,7 +62,7 @@ export interface IOrderReceiver {
   receiver_email: string;
 }
 
-export interface ICreateOrderForCompany extends ICreateOrderBase {
+export interface ICreateOrderForCompany {
   company_id: number;
   receiver: IOrderReceiver;
 }

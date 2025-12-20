@@ -9,21 +9,19 @@ interface Props {
   name: string;
   image: string;
   address: string;
-  price: string;
-  time: string;
+  display: string;
 }
 
 export default function DeliveryChosenMethodItem({
   name,
   image,
   address,
-  price,
-  time,
+  display,
 }: Props) {
   return (
     <Container
       bgColor={"neutral-200"}
-      className={`flex-row ${classes.container}`}
+      className={`flex-row align-center ${classes.container}`}
     >
       <ImageWrapper
         src={image}
@@ -32,12 +30,7 @@ export default function DeliveryChosenMethodItem({
         height={40}
         className={classes.image}
       />
-      <ChosenDeliveryText
-        name={name}
-        address={address}
-        price={price}
-        time={time}
-      />
+      <ChosenDeliveryText name={name} address={address} display={display} />
     </Container>
   );
 }

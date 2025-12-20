@@ -9,11 +9,11 @@ import OrderChoosePvz from "./choose_pvz";
 import OrderContentLoader from "./loader";
 import OrderConfirm from "./confirm";
 import { OrderType } from "~/src/entities/order/model";
-import { PersonalOrderStageType } from "~/src/entities/order/model/order.interface";
+import { OrderStageType } from "~/src/entities/order/model/order.interface";
 
 interface Props {
   type: OrderType;
-  stage: PersonalOrderStageType;
+  stage: OrderStageType;
 }
 
 export default function OrderContent({ type, stage }: Props) {

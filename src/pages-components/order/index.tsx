@@ -7,5 +7,5 @@ import { selectOrder } from "~/src/app/store/reducers/order.slice";
 export default function OrderPage() {
   const { type } = useAppSelector(selectOrder);
 
-  return redirect(`/order/${type}`);
+  return redirect(`/order/create/${type}`);
 }

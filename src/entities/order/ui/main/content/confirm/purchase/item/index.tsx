@@ -26,18 +26,20 @@ export default function OrderPurchaseItem({
       className={`flex gap-5 align-center padding-20 radius-20 pointer ${classes.container}`}
       onClick={onClick}
     >
-      <ImageWrapper
-        src={image}
-        width={32}
-        height={32}
-        needDummy={false}
-        className={classes.image}
-      />
-      <div className={`flex-column ${classes.text}`}>
-        <p className="text-body xl text-neutral-1000">{name}</p>
-        <p className="text-body m text-neutral-700">
-          {comission ? `Коммиссия ${comission}%` : "Без комиссии"}
-        </p>
+      <div className={`flex ${classes.innerContainer}`}>
+        <ImageWrapper
+          src={image}
+          width={32}
+          height={32}
+          needDummy={false}
+          className={classes.image}
+        />
+        <div className={`flex-column ${classes.text}`}>
+          <p className="text-body xl text-neutral-1000 nowrap-text">{name}</p>
+          <p className="text-body m text-neutral-700 nowrap-text">
+            {comission}
+          </p>
+        </div>
       </div>
       <RadioButton isActive={isActive} />
     </Container>

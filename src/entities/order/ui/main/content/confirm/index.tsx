@@ -18,7 +18,7 @@ export default function OrderConfirm({ isActive, type }: Props) {
       isActive={isActive}
       className={`flex-column ${classes.container}`}
     >
-      <DeliveryChosenMethod chosenMethod={{}} />
+      <DeliveryChosenMethod />
       <OrderAcceptor type={type} />
       <OrderPurchase type={type} />
     </OrderStageWrapper>

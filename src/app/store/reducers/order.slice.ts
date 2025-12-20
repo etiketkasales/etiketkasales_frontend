@@ -1,30 +1,31 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  createOrderForCompanySkeleton,
-  createOrderSkeleton,
-  ICreateOrderBase,
-  ICreateOrderForCompany,
-  INewOrderInfo,
+  IDeliveryMethodResponse,
   IOrderReceiver,
+  IProductForDeliveryMethod,
+  orderDeliveryMethodSkeleton,
+  orderReceiverSkeleton,
   OrderType,
 } from "~/src/entities/order/model";
-import { newOrderSkeleton } from "~/src/entities/order/model";
 
 interface InitialStateI {
   type: OrderType;
-  orderInfo: INewOrderInfo;
-  createOrder: ICreateOrderBase;
-  createOrderForCompanyData: ICreateOrderForCompany;
-  itemsToOrderIds: number[];
-  [key: string]: any;
+  deliveryMethod: IDeliveryMethodResponse;
+  deliveryAddressId: number;
+  receiver: IOrderReceiver;
+  itemsToOrder: IProductForDeliveryMethod[];
+  receiverCompanyId: number;
+  buttonDisabled: boolean;
 }
 
 const initialState: InitialStateI = {
   type: "person",
-  orderInfo: newOrderSkeleton,
-  itemsToOrderIds: [],
-  createOrder: createOrderSkeleton,
-  createOrderForCompanyData: createOrderForCompanySkeleton,
+  itemsToOrder: [],
+  deliveryAddressId: 0,
+  deliveryMethod: orderDeliveryMethodSkeleton,
+  receiverCompanyId: 0,
+  receiver: orderReceiverSkeleton,
+  buttonDisabled: false,
 };
 
 export const orderSlice = createSlice({
@@ -34,38 +35,41 @@ export const orderSlice = createSlice({
     setOrderType: (state, action: PayloadAction<OrderType>) => {
       state.type = action.payload;
     },
-    setOrder: (state, action: PayloadAction<Partial<InitialStateI>>) => {
-      try {
-        let key: keyof InitialStateI;
-        const valueArg = action.payload;
-        for (key in valueArg) {
-          if (
-            Object.hasOwnProperty.call(valueArg, key) &&
-            Object.hasOwnProperty.call(state, key)
-          ) {
-            state[key] = valueArg[key];
-          }
-        }
-      } catch (err) {
-        console.error(err);
-      }
+    setButtonDisabled: (state, action: PayloadAction<boolean>) => {
+      state.buttonDisabled = action.payload;
     },
-    setOrderInfo: (
-      state: InitialStateI,
-      action: PayloadAction<INewOrderInfo>,
-    ) => {
-      state.orderInfo = action.payload;
-    },
-    setOrderReceiverData: (
+    setOrderItems: (
       state,
-      action: PayloadAction<Partial<IOrderReceiver>>,
+      action: PayloadAction<IProductForDeliveryMethod[]>,
     ) => {
-      state.createOrderForCompany.receiver = action.payload;
+      state.itemsToOrder = action.payload;
+    },
+    setOrderReceiverData: (state, action: PayloadAction<IOrderReceiver>) => {
+      state.receiver = action.payload;
+    },
+    setOrderDeliveryAddressId: (state, action: PayloadAction<number>) => {
+      state.deliveryAddressId = action.payload;
+    },
+    setOrderDeliveryMethod: (
+      state,
+      action: PayloadAction<IDeliveryMethodResponse>,
+    ) => {
+      state.deliveryMethod = action.payload;
+    },
+    setOrderCompanyId: (state, action: PayloadAction<number>) => {
+      state.receiverCompanyId = action.payload;
     },
   },
 });
 
-export const { setOrderType, setOrder, setOrderInfo, setOrderReceiverData } =
-  orderSlice.actions;
+export const {
+  setOrderType,
+  setOrderReceiverData,
+  setOrderDeliveryAddressId,
+  setOrderDeliveryMethod,
+  setOrderItems,
+  setOrderCompanyId,
+  setButtonDisabled,
+} = orderSlice.actions;
 export const selectOrder = (state: { order: InitialStateI }) => state.order;
 export default orderSlice.reducer;

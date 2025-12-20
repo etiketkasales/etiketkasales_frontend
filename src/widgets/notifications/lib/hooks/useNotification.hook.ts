@@ -13,15 +13,15 @@ export const useNotification = ({ uuid }: Props) => {
 
   const onDelete = useCallback(() => {
     setIsActive(false);
+
     const timer = setTimeout(() => {
       dispatch(deleteNotification(uuid));
     }, 500);
 
     return () => clearTimeout(timer);
   }, [uuid, dispatch]);
-
-  const { offsetX, handlers, direction } = useSwipeToDismiss({
-    onDismiss: onDelete,
+  const { offsetX, handlers } = useSwipeToDismiss({
+    onDismiss: (_) => onDelete(),
   });
 
   useEffect(() => {
@@ -35,6 +35,5 @@ export const useNotification = ({ uuid }: Props) => {
     offsetX,
     handlers,
     isActive,
-    swipeRight: direction === "right",
   };
 };

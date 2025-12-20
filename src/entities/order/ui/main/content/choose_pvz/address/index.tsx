@@ -1,6 +1,5 @@
 "use client";
-import React, { useState } from "react";
-import { useAddresses } from "~/src/features/user/lib/hooks/useAddresses.hook";
+import React from "react";
 
 import classes from "./address.module.scss";
 import OrderContainer from "~/src/entities/order/ui/main/content/container";

@@ -1,6 +1,7 @@
 import React from "react";
 import StringUtils from "~/src/shared/lib/utils/string.util";
 
+import classes from "./input.module.scss";
 import TextInput from "~/src/shared/ui/inputs/text-input";
 import PhoneInput from "~/src/shared/ui/inputs/phone";
 import EmailInput from "~/src/shared/ui/inputs/email";
@@ -23,6 +24,7 @@ export default function OrderreceiverInput({
   const commonProps = {
     placeholder,
     disabled,
+    wrapperClassName: classes.input,
   };
 
   switch (type) {

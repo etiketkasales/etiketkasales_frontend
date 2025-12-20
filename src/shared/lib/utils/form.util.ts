@@ -3,7 +3,9 @@ import { MessageI } from "~/src/shared/model";
 
 class FormUtils {
   static checkIfValueEmpty(value: any): boolean {
-    return !value || !value.toString().trim().length;
+    if (value === null || value === undefined) return true;
+    if (typeof value === "string") return value.trim().length === 0;
+    return false;
   }
 
   private static getError(message: string, field: string): MessageI {
