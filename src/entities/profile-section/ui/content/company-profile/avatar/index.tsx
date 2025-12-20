@@ -1,5 +1,4 @@
-import React from "react";
-
+import classes from "./company-avatar.module.scss";
 import CompanyProfileAvatarNoImage from "./no-image";
 import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
 import Button from "~/src/shared/ui/button";
@@ -17,7 +16,13 @@ export default function CompanyProfileAvatar({ initCompanyAvatar }: Props) {
       className="grid-column gap-4 align-center left-element"
     >
       {initCompanyAvatar ? (
-        <ImageWrapper src={initCompanyAvatar} width={80} height={80} alt="" />
+        <ImageWrapper
+          src={initCompanyAvatar}
+          width={80}
+          height={80}
+          alt=""
+          className={classes.image}
+        />
       ) : (
         <CompanyProfileAvatarNoImage />
       )}
