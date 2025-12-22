@@ -78,12 +78,7 @@ export default function FormModal<T>({
         />
       )}
       {children}
-      <Button
-        typeButton="yellow"
-        size="12"
-        radius={12}
-        onClick={() => onButtonClick()}
-      >
+      <Button typeButton="yellow" size="12" radius={12} onClick={onButtonClick}>
         <span className="text-16 second-family black semibold">
           {buttonText}
         </span>

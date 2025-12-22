@@ -1,5 +1,4 @@
-import React from "react";
-
+"use client";
 import HeaderWithBackMedia from "./media";
 import HeaderDefault, { IHeaderDefaultProps } from "../../header-default/ui";
 

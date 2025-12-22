@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useCompanyRegister } from "~/src/entities/company-registration/lib/hooks/useCompanyRegister.hook";
+import { useCompanyRegister } from "~/src/entities/company-registration/lib/hooks";
 
 import CompanyPersonal from "./personal";
 import CompanyStatus from "./status";
@@ -9,7 +9,7 @@ import CompanyCity from "./city";
 import {
   RegCommonPropsI,
   RegistrationStageT,
-} from "~/src/entities/company-registration/model/company-registration.interface";
+} from "~/src/entities/company-registration/model";
 
 interface Props {
   stage: RegistrationStageT;

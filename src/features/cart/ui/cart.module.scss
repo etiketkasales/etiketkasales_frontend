@@ -1,3 +1,7 @@
+.container {
+  gap: $space-5;
+}
+
 @media screen and (width <= 1024px) {
   .inner {
     flex-direction: column;

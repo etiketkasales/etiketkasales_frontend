@@ -34,11 +34,11 @@ export default function ProfileRolePage({ paramsRole }: Props) {
 
   if (!isLoggedIn) return redirect("/login");
 
-  // if (paramsRole !== userInfo.role) {
-  //   if (paramsRole !== "seller-pending") {
-  //     return redirect("/profile");
-  //   }
-  // }
+  if (paramsRole !== userInfo.role) {
+    if (paramsRole !== "seller-pending") {
+      return redirect("/profile");
+    }
+  }
 
   return (
     <PageWrapper

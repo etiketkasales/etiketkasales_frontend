@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
-import { useCartSum } from "~/src/features/cart/lib/hooks/useCartSum.hook";
+import { useCartSum } from "~/src/features/cart/lib/hooks";
 
 import classes from "./cart.module.scss";
 import CartContent from "./content";
 import CartOrderSummary from "./order-summary";
 import Loader from "~/src/shared/ui/loader";
-import { ICartItem } from "../model/cart.interface";
+import { ICartItem } from "../model";
 import { IProductForDeliveryMethod } from "~/src/entities/order/model";
 
 interface Props {
@@ -31,7 +31,7 @@ export default function CartSection({
   const { itemsSum, itemsDiscount, paySum } = useCartSum();
 
   return (
-    <section className={`flex-column gap-30px relative ${classes.container}`}>
+    <section className={`flex-column relative ${classes.container}`}>
       {loading && <Loader radius={20} />}
       <h1 className="text-28 black second-family bold">Корзина</h1>
       <div className={`flex-row gap-5 flex-start ${classes.inner}`}>
