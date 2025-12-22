@@ -48,7 +48,7 @@ export default function SelectOptions<T>({
             right: optionsPosRight ? `${optionsPosRight}px` : undefined,
             transformOrigin: optionsFromBottom ? "bottom left" : "top left",
           }}
-          className={`${optionsClassName} flex-column scrollbar absolute ${classes.options}`}
+          className={`${optionsClassName} flex-column scrollbar absolute options-container ${classes.options}`}
           onClick={() => setActive(false)}
         >
           {options.map((item, index) => {
