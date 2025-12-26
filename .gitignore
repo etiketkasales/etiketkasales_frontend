@@ -6,6 +6,11 @@
 # dependecies
 /node_modules
 
+# env files
+.env
+.env.*
+!.env.example
+
 # next
 /.next
 /out
