@@ -1,3 +1,4 @@
+"use client";
 import { useCallback, useEffect } from "react";
 import { useAppDispatch } from "~/src/app/store/hooks";
 import { setUser } from "~/src/app/store/reducers/user.slice";

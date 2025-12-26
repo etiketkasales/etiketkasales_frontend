@@ -1,3 +1,4 @@
+"use client";
 import { useCallback, useState } from "react";
 import { useFormValidate } from "./useFormValidate.hook";
 import { promiseWrapper } from "../functions/shared.func";

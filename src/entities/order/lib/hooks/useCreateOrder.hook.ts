@@ -43,13 +43,11 @@ export const useCreateOrder = ({ type, stage, setStage }: Props) => {
     (success: boolean) => {
       if (success) {
         createNotification("Заказ успешно создан", "success");
-        push(`/order/done`);
       } else {
         createNotification(errorMessage, "error");
-        push("/order/error");
       }
     },
-    [push, createNotification],
+    [createNotification],
   );
 
   const onCreateOrder = useCallback(async () => {

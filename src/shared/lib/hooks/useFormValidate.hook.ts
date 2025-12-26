@@ -1,3 +1,4 @@
+"use client";
 import { useCallback, useEffect, useState } from "react";
 import FormUtils from "~/src/shared/lib/utils/form.util";
 

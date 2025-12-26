@@ -1,6 +1,7 @@
 import {
   ICreateOrderForCompany,
   IDeliveryMethodResponse,
+  IOrderPickupPointData,
   IOrderReceiver,
   OrderPricesI,
 } from "./order.interface";
@@ -31,4 +32,9 @@ export const orderDeliveryMethodSkeleton: IDeliveryMethodResponse = {
   description: "",
   display: "",
   image_url: "",
+};
+
+export const orderPickupPointSkeleton: IOrderPickupPointData = {
+  pickup_point_address: "",
+  pickup_point_id: "",
 };

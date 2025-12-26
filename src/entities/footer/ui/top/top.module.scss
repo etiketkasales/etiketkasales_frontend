@@ -13,6 +13,12 @@
     }
 }
 
+@media screen and (width <= 768px) {
+    .inner_container {
+        gap: $space-10;
+    }
+}
+
 @media screen and (width <= 460px) {
     .inner_container {
         gap: $space-8;

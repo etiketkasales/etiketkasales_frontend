@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   IDeliveryMethodResponse,
+  IOrderPickupPointData,
   IOrderReceiver,
   IProductForDeliveryMethod,
   orderDeliveryMethodSkeleton,
+  orderPickupPointSkeleton,
   orderReceiverSkeleton,
   OrderType,
 } from "~/src/entities/order/model";
@@ -13,8 +15,9 @@ interface InitialStateI {
   deliveryMethod: IDeliveryMethodResponse;
   deliveryAddressId: number;
   receiver: IOrderReceiver;
-  itemsToOrder: IProductForDeliveryMethod[];
   receiverCompanyId: number;
+  pickupPoint: IOrderPickupPointData;
+  itemsToOrder: IProductForDeliveryMethod[];
   buttonDisabled: boolean;
 }
 
@@ -24,6 +27,7 @@ const initialState: InitialStateI = {
   deliveryAddressId: 0,
   deliveryMethod: orderDeliveryMethodSkeleton,
   receiverCompanyId: 0,
+  pickupPoint: orderPickupPointSkeleton,
   receiver: orderReceiverSkeleton,
   buttonDisabled: false,
 };

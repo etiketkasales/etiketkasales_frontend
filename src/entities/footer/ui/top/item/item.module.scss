@@ -9,8 +9,8 @@
 }
 
 @media screen and (width <= 768px) {
-    .container:last-of-type {
-        grid-column: 8 span;
+    .container {
+        grid-column: 6 span;
     }
 }
 

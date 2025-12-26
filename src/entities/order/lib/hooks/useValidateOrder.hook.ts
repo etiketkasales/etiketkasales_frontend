@@ -7,7 +7,7 @@ import {
 import { addNotification } from "~/src/app/store/reducers/notifications.slice";
 import FormUtils from "~/src/shared/lib/utils/form.util";
 
-import { IOrderReceiver, OrderType } from "../../model";
+import { IOrderPickupPointData, IOrderReceiver, OrderType } from "../../model";
 
 interface Props {
   type: OrderType;
@@ -15,31 +15,55 @@ interface Props {
 
 export const useValidateOrder = ({ type }: Props) => {
   const dispatch = useAppDispatch();
-  const { receiver, receiverCompanyId, deliveryAddressId, deliveryMethod } =
-    useAppSelector(selectOrder);
+  const {
+    receiver,
+    receiverCompanyId,
+    deliveryAddressId,
+    deliveryMethod,
+    pickupPoint,
+  } = useAppSelector(selectOrder);
 
-  const isValidReceiver = useCallback((): boolean => {
-    const hasError = FormUtils.getFormError({
-      checkData: receiver,
-      requiredFields: Object.keys(receiver) as (keyof IOrderReceiver)[],
-    });
-
-    if (hasError) {
+  // Создает уведомление и возвращает false для валидации
+  const createNotification = useCallback(
+    (message: string) => {
       dispatch(
         addNotification({
-          message: "Заполните информацию о получателе",
+          message,
           type: "error",
           field: "global",
         }),
       );
       dispatch(setButtonDisabled(true));
       return false;
+    },
+    [dispatch],
+  );
+
+  // Валидация полей получателя и пункта выдачи заказа
+  const isValidObjects = useCallback((): boolean => {
+    let hasError = FormUtils.getFormError({
+      checkData: receiver,
+      requiredFields: Object.keys(receiver) as (keyof IOrderReceiver)[],
+    });
+
+    if (hasError) {
+      return createNotification("Заполните информацию о получателе");
+    } else {
+      hasError = FormUtils.getFormError({
+        checkData: pickupPoint,
+        requiredFields: Object.keys(
+          pickupPoint,
+        ) as (keyof IOrderPickupPointData)[],
+      });
+      if (hasError)
+        return createNotification("Заполните информацию о самовывозе");
     }
 
     dispatch(setButtonDisabled(false));
     return true;
-  }, [dispatch, receiver]);
+  }, [dispatch, receiver, createNotification, pickupPoint]);
 
+  // Валидация полей других параметров для создания заказа
   const isValidParams = useCallback(() => {
     const checkData = {
       receiverCompanyId,
@@ -58,28 +82,27 @@ export const useValidateOrder = ({ type }: Props) => {
         : ([...alwaysRequired] as (keyof typeof checkData)[]),
     });
 
-    if (hasErrors) {
-      dispatch(
-        addNotification({
-          message: "Заполните информацию о доставке",
-          type: "error",
-          field: "global",
-        }),
-      );
-      dispatch(setButtonDisabled(true));
-      return false;
-    }
+    if (hasErrors) return createNotification("Заполните информацию о доставке");
+
     dispatch(setButtonDisabled(false));
     return true;
-  }, [receiverCompanyId, deliveryAddressId, deliveryMethod, dispatch, type]);
+  }, [
+    receiverCompanyId,
+    deliveryAddressId,
+    deliveryMethod,
+    dispatch,
+    type,
+    createNotification,
+  ]);
 
+  // Функия возвращает true, если не нашлось никаких ошибок
   const isValidOrder = useCallback((): boolean => {
-    return isValidReceiver() && isValidParams();
-  }, [isValidParams, isValidReceiver]);
+    return isValidObjects() && isValidParams();
+  }, [isValidParams, isValidObjects]);
 
   return {
     isValidOrder,
-    isValidReceiver,
+    isValidObjects,
     isValidParams,
   };
 };

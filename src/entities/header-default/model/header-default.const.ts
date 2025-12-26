@@ -7,10 +7,10 @@ export const headerLinks: IHeaderLink[] = [
   },
   {
     title: "Оплата и доставка",
-    href: "/delivery",
+    href: "/payemnt-delivery",
   },
   {
     title: "Помощь",
-    href: "/help",
+    href: "/faq",
   },
 ];

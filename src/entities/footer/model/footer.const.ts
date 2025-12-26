@@ -1,11 +1,11 @@
-import { FooterInfo, FooterLinkI, FooterLinkListI } from "./footer.interface";
+import { FooterInfo, FooterLinkListI } from "./footer.interface";
 
 export const policy: FooterLinkListI = {
   title: "Этикеткасейлс",
   links: [
     {
       title: "Политика обработки данных",
-      link: "/personal-policy",
+      link: "/personal-data-policy",
     },
     {
       title: "Политика конфиденциальности",
@@ -13,7 +13,11 @@ export const policy: FooterLinkListI = {
     },
     {
       title: "Платежная информация",
-      link: "/purchase-policy",
+      link: "/payment-info",
+    },
+    {
+      title: "Оплата и доставка",
+      link: "/payment-delivery",
     },
   ],
 };
@@ -22,8 +26,8 @@ export const greeting: FooterLinkListI = {
   title: "Знакомство с нами",
   links: [
     {
-      title: "О компании",
-      link: "/about",
+      title: "О Этикеткасейлс",
+      link: "/",
     },
     {
       title: "Другие продукты",
@@ -40,12 +44,16 @@ export const help: FooterLinkListI = {
   title: "Помощь",
   links: [
     {
-      title: "Центр поддержки",
-      link: "/",
+      title: "Часто задаваемые вопросы",
+      link: "/faq",
     },
     {
       title: "Партнерская программа",
       link: "/",
+    },
+    {
+      title: "Стать продавцом",
+      link: "/for-bussiness",
     },
   ],
 };

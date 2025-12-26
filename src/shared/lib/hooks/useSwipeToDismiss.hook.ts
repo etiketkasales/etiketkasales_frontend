@@ -1,5 +1,4 @@
 "use client";
-
 import { useRef, useState, useCallback } from "react";
 
 type SwipeDirection = "left" | "right";

@@ -21,7 +21,9 @@ export default function HeaderWithText({
       customMediaClassName={classNames(customMediaClassName, classes.media)}
       classNameBackButton={classNameBackButton}
     >
-      <h3 className={`text-neutral-900 text-18 bold second-family text-center`}>
+      <h3
+        className={`text-neutral-900 text-18 bold second-family text-center ${classes.text}`}
+      >
         {text}
       </h3>
     </HeaderWithBack>

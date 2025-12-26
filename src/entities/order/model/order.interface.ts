@@ -47,6 +47,11 @@ export interface IProductForDeliveryMethod {
   weight: number;
 }
 
+export interface IOrderPickupPointData {
+  pickup_point_id: string;
+  pickup_point_address: string;
+}
+
 export interface IPaymentMethodResponse {
   code: string;
   name: string;

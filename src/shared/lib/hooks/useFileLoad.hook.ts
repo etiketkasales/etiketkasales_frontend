@@ -1,3 +1,4 @@
+"use client";
 import { useCallback, useState } from "react";
 import { useFileResize } from "./useFileResize.hook";
 import { promiseWrapper } from "../functions/shared.func";

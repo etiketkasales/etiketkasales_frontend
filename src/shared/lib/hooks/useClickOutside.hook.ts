@@ -1,3 +1,4 @@
+"use client";
 import { RefObject, useEffect } from "react";
 
 export const useClickOutside = <T extends HTMLElement>(
