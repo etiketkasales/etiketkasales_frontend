@@ -7,8 +7,13 @@ import { useAddresses } from "./useAddresses.hook";
 
 import { profileChangeableFields } from "~/src/features/user/model/user.const";
 import { IChangeableProfile, IProfile } from "~/src/features/user/model";
-import FormUtils from "~/src/shared/lib/utils/form.util";
 
+/**
+ * Hook that returns functions to get user data, set user data, and
+ * check if user is logged in.
+ *
+ * @returns {Object} - object with functions to get and set user data.
+ */
 export const useUser = () => {
   const dispatch = useAppDispatch();
   const { handleGetCompanies } = useUserCompanies();

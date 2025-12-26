@@ -20,6 +20,26 @@ interface Props {
   needLoad?: boolean;
 }
 
+/**
+ * useSellerProducts - a hook that provides functions and state to
+ *   interact with seller products.
+ * @param {Object} props - an object containing the onClose
+ *   function to close the modal and a boolean indicating whether to
+ *   load the seller products initially.
+ * @returns {Object} - an object containing the following properties:
+ *   loading - a boolean indicating whether the products are being loaded,
+ *   promiseCallback - a function that wraps a promise with a
+ *     callback, error - a string indicating the error message,
+ *     setError - a function to set the error message,
+ *     sellerProducts - an array of ISellerProduct,
+ *     updateSellerProducts - a function to update the seller products,
+ *     modal - an object containing the modal state,
+ *     setModal - a function to set the modal state,
+ *     editProductId - a number indicating the ID of the product to edit,
+ *     setEditProductId - a function to set the ID of the product to edit,
+ *     updateProduct - a function to update a product,
+ *     deleteProduct - a function to delete a product.
+ */
 export const useSellerProducts = ({ onClose, needLoad }: Props) => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState<boolean>(false);

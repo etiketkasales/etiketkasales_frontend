@@ -1,0 +1,20 @@
+.container {
+    padding: $space-5;
+    box-shadow: $shadow-500;
+    border-radius: $space-5;
+
+    position: absolute;
+    top: $space-5;
+    left: $space-4;
+
+    @media screen and (width <= 768px) {
+        padding: $space-2;
+        padding-bottom: $space-4;
+        border-radius: $space-5 $space-5 0 0;
+        box-shadow: $shadow-100;
+        left: 0;
+        right: 0;
+        top: unset;
+        bottom: 0;
+    }
+}

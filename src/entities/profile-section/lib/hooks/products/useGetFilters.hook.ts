@@ -13,6 +13,16 @@ interface Props {
   setRequiredFields: (requiredFields: (keyof INewProduct)[]) => void;
 }
 
+/**
+ * useGetFilters - a hook for fetching new product filters
+ *
+ * @param {Props} - an object containing a setRequiredFields function
+ * @returns {object} - an object containing filtersToMap, loading, error, and getFilters
+ * @property {INewProductInput[]} filtersToMap - an array of filters to be used in the form
+ * @property {boolean} loading - a boolean indicating whether the filters are being fetched
+ * @property {MessageI | null} error - an error message if something went wrong
+ * @property {function} getFilters - a function for fetching the filters
+ */
 export const useGetFilters = ({ setRequiredFields }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<MessageI | null>(null);

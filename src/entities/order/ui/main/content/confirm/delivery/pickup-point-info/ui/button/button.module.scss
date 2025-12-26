@@ -1,0 +1,8 @@
+.button {
+    padding: $space-2 $space-3;
+    align-self: flex-start;
+
+    @media screen and (width <= 768px) {
+        align-self: initial;
+    }
+}

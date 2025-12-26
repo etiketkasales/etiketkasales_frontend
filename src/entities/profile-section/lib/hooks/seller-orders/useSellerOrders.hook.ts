@@ -9,6 +9,19 @@ interface Props {
   needLoadEffect?: boolean;
 }
 
+/**
+ * useSellerOrders - a hook that provides functions and state to interact
+ *   with seller orders.
+ *
+ * @param {Props} Props object that contains needLoadEffect.
+ * @returns {Object} - an object containing the following properties:
+ *   orders - an array of ISellerOrder,
+ *   getOrders - a function to get the seller orders,
+ *   updateOrder - a function to update a seller order,
+ *   promiseCallback - a function that wraps a promise with a callback,
+ *   loading - a boolean indicating whether the orders are being loaded,
+ *   error - a string indicating the error message.
+ */
 export const useSellerOrders = ({ needLoadEffect }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<MessageI | null>(null);

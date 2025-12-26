@@ -24,6 +24,12 @@ interface Props {
   canLoad: boolean;
 }
 
+/**
+ * Hook для получения и выставления в стейт методов доставки
+ * @param {number} deliveryAddressId - ID адреса доставки
+ * @param {boolean} canLoad - Может ли загружать методы доставки
+ * @returns {Object} - Объект с методами доставки, индикатором загрузки и функцией для выбора метода доставки
+ */
 export const useDelivery = ({ deliveryAddressId, canLoad }: Props) => {
   const dispatch = useAppDispatch();
   const { itemsToOrder } = useAppSelector(selectOrder);
@@ -50,6 +56,7 @@ export const useDelivery = ({ deliveryAddressId, canLoad }: Props) => {
     [dispatch],
   );
 
+  // Получает и выставляет в стейт методы доставки
   const getMethods = useCallback(async () => {
     await promiseWrapper({
       setLoading,

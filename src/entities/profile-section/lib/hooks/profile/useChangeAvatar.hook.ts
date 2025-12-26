@@ -8,6 +8,14 @@ import { useFileLoad } from "~/src/shared/lib/hooks";
 import { useChangeUserData } from ".";
 import { uploadAvatar } from "~/src/entities/profile-section/lib/api";
 
+/**
+ * UseChangeAvatar is a hook that provides functionality for changing user's avatar.
+ * It uses useFileLoad and useChangeUserData hooks from shared lib.
+ * It takes no arguments and returns an object with inputRef, onFileLoad and fileLoading properties.
+ * inputRef is a reference to an input element where the user can input their avatar.
+ * onFileLoad is a function that calls a callback with the loaded file.
+ * fileLoading is a boolean that indicates whether the file is being loaded.
+ */
 export default function useChangeAvatar() {
   const dispatch = useAppDispatch();
   const { changeableUserInfo } = useAppSelector(selectUser);

@@ -16,6 +16,22 @@ interface Props {
   onClose: () => void;
 }
 
+/**
+ * Hook to edit a product in the seller profile section.
+ * @param {Object} initialData - Initial product data to be edited.
+ * @param {Function} onClose - Function to be called when the edit modal is closed.
+ * @returns {Object} - An object containing the following properties:
+ *  - loading: boolean indicating if there is a pending request.
+ *  - disableSave: boolean indicating if the save button should be disabled.
+ *  - editProductData: IEditSellerProduct containing the current product data to be edited.
+ *  - onSave: function to be called when the save button is clicked.
+ *  - fileLoading: boolean indicating if there is a pending file upload.
+ *  - onFileLoad: function to be called when a file is selected to be uploaded.
+ *  - onInputChange: function to be called when the input field changes.
+ *  - deleteProduct: function to be called when the delete button is clicked.
+ *  - error: MessageI containing the error message.
+ *  - toArchive: function to be called when the archive button is clicked.
+ */
 export const useEditProduct = ({ initialData, onClose }: Props) => {
   const [editProductData, setEditProductData] = useState<IEditSellerProduct>(
     editSellerProductSkeleton,

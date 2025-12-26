@@ -1,19 +1,34 @@
 import { useCallback, useEffect, useState } from "react";
 import { useChangeUserData } from "./useChangeUserData.hook";
-import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
+import { useAppSelector } from "~/src/app/store/hooks";
 import { selectUser } from "~/src/app/store/reducers/user.slice";
 import FormUtils from "~/src/shared/lib/utils/form.util";
 
 import { IChangeableProfile, IProfile } from "~/src/features/user/model";
 import { MessageI } from "~/src/shared/model";
-import { addNotification } from "~/src/app/store/reducers/notifications.slice";
 
 interface Props {
   userInfo: IProfile;
 }
 
+/**
+ * Hook for personal data change.
+ *
+ * @param {IProfile} userInfo - user information from state.
+ *
+ * @returns {{
+ *   changeableUserInfo: IChangeableProfile,
+ *   onInputChange: (v: string, field: keyof IChangeableProfile) => void,
+ *   onSave: () => void,
+ *   loading: boolean,
+ *   disabledButton: boolean,
+ *   enabledInputs: (keyof IChangeableProfile)[],
+ *   setEnabledInputs: React.Dispatch<React.SetStateAction<(keyof IChangeableProfile)[]>>,
+ *   onKeyDown: (e: React.KeyboardEvent) => void,
+ *   error: MessageI | null,
+ * }}
+ */
 export const useChangePersonal = ({ userInfo }: Props) => {
-  const dispatch = useAppDispatch();
   const { changeableUserInfo } = useAppSelector(selectUser);
   const [disabledButton, setDisabledButton] = useState<boolean>(true);
   const [enabledInputs, setEnabledInputs] = useState<

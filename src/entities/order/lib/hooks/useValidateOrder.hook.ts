@@ -13,6 +13,17 @@ interface Props {
   type: OrderType;
 }
 
+/**
+ * Возвращает функцию для валидации полей заказа.
+ * Функция возвращает true, если не нашлось никаких ошибок.
+ * Возвращает объект с функциями для валидации полей получателя, пункта выдачи заказа и других параметров для создания заказа.
+ * @param {Props} type - Тип заказа (individual/company)
+ * @returns {{
+ *   isValidOrder: () => boolean,
+ *   isValidObjects: () => boolean,
+ *   isValidParams: () => boolean,
+ * }}
+ */
 export const useValidateOrder = ({ type }: Props) => {
   const dispatch = useAppDispatch();
   const {

@@ -18,6 +18,15 @@ interface Props<T extends SellerOrderOperationType> {
   closeModal?: () => void;
 }
 
+/**
+ * useOrderOperation - use this hook to send accept, reject, delivery or close order
+ * @param {Object} props - props for hook
+ * @param {SellerOrderOperationType} props.type - type of operation
+ * @param {object} props.initialData - initial data for operation
+ * @param {number} props.orderId - id of order
+ * @param {Function} props.closeModal - callback to close modal
+ * @returns {Object} - object with onSubmit, onInputChange, formData, loading, error
+ */
 export const useOrderOperation = <T extends SellerOrderOperationType>({
   type,
   initialData,

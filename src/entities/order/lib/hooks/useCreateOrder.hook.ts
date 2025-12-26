@@ -5,10 +5,11 @@ import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { selectOrder } from "~/src/app/store/reducers/order.slice";
 import { addNotification } from "~/src/app/store/reducers/notifications.slice";
 import { useValidateOrder } from ".";
-import { createOrder, createOrderForCompany } from "../api";
+import { createOrder, createOrderForCompany, createOrderPayment } from "../api";
 import { promiseWrapper } from "~/src/shared/lib";
 
 import { OrderType, OrderStageType } from "../../model";
+import { IGetData } from "~/src/shared/model";
 
 interface Props {
   type: OrderType;
@@ -18,6 +19,17 @@ interface Props {
 
 const errorMessage = "Не удалось создать заказ";
 
+/**
+ * Возвращает функцию для создания заказа и платёжа.
+ * Функция возвращает объект с полями loading и onCreateButtonClick.
+ * @param {Props} type - Тип заказа (individual/company)
+ * @param {Props} stage - Стадия заказа (choose_pvz/confirm)
+ * @param {Props} setStage - Функция для смены стадии заказа
+ * @returns {{
+ *   loading: boolean,
+ *   onCreateButtonClick: () => Promise<void>,
+ * }}
+ */
 export const useCreateOrder = ({ type, stage, setStage }: Props) => {
   const dispatch = useAppDispatch();
   const { push } = useRouter();
@@ -39,6 +51,7 @@ export const useCreateOrder = ({ type, stage, setStage }: Props) => {
     [dispatch],
   );
 
+  // Создание плашек уведомлений
   const requestCallback = useCallback(
     (success: boolean) => {
       if (success) {
@@ -50,6 +63,24 @@ export const useCreateOrder = ({ type, stage, setStage }: Props) => {
     [createNotification],
   );
 
+  // Создание платёжа
+  const createPayment = useCallback(
+    async (orderId: number) => {
+      await promiseWrapper({
+        setLoading,
+        callback: async () => {
+          const res = await createOrderPayment(orderId);
+          if (res?.payment_url) {
+            createNotification("Платёж создан", "success");
+            push(res.payment_url);
+          } else createNotification("Не удалось создать платёж", "error");
+        },
+      });
+    },
+    [createNotification, push],
+  );
+
+  // Создание заказа — после передача айди в платёж и создание
   const onCreateOrder = useCallback(async () => {
     await promiseWrapper({
       setLoading,
@@ -57,7 +88,7 @@ export const useCreateOrder = ({ type, stage, setStage }: Props) => {
       callback: async () => {
         if (!isValidOrder()) return;
 
-        let res: { success: boolean } | null = null;
+        let res: IGetData<{ id: number }> | null = null;
         const defaultParams = {
           ...receiver,
           delivery_address_id: deliveryAddressId,
@@ -74,6 +105,13 @@ export const useCreateOrder = ({ type, stage, setStage }: Props) => {
             company_id: receiverCompanyId,
           });
         }
+
+        if (res?.success) {
+          if (res.data && res.data.id) {
+            await createPayment(res.data.id);
+          }
+        }
+
         requestCallback(true);
       },
       fallback: () => {
@@ -88,6 +126,7 @@ export const useCreateOrder = ({ type, stage, setStage }: Props) => {
     receiver,
     receiverCompanyId,
     type,
+    createPayment,
   ]);
 
   const onCreateButtonClick = useCallback(async () => {

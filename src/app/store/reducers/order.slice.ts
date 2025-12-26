@@ -60,6 +60,12 @@ export const orderSlice = createSlice({
     ) => {
       state.deliveryMethod = action.payload;
     },
+    setOrderPickupPoint: (
+      state,
+      action: PayloadAction<IOrderPickupPointData>,
+    ) => {
+      state.pickupPoint = action.payload;
+    },
     setOrderCompanyId: (state, action: PayloadAction<number>) => {
       state.receiverCompanyId = action.payload;
     },
@@ -74,6 +80,7 @@ export const {
   setOrderItems,
   setOrderCompanyId,
   setButtonDisabled,
+  setOrderPickupPoint,
 } = orderSlice.actions;
 export const selectOrder = (state: { order: InitialStateI }) => state.order;
 export default orderSlice.reducer;

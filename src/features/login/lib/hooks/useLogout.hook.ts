@@ -8,6 +8,11 @@ import {
 import { promiseWrapper } from "~/src/shared/lib/functions";
 import { logout } from "../api/login.api";
 
+/**
+ * Hook to handle logout user.
+ *
+ * @returns {Object} - object with handleLogout function, loading and error states.
+ */
 export const useLogout = () => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState<boolean>(false);

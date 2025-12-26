@@ -18,6 +18,19 @@ interface Props {
   setError?: React.Dispatch<React.SetStateAction<MessageI | null>>;
 }
 
+/**
+ * Hook for changing user's data.
+ *
+ * @param {Props} props - object with required properties:
+ * userInfo - user information from state,
+ * validationFunction - function that validates user information,
+ * onInputChangeCustom - function that is called when user input changes,
+ * onSaveCallback - function that is called when user data is successfully changed,
+ * error - error message that is displayed if validation fails,
+ * setError - function that sets error message.
+ *
+ * @returns {Object} - object with functions for changing user data and loading state.
+ */
 export const useChangeUserData = ({
   userInfo,
   validationFunction,

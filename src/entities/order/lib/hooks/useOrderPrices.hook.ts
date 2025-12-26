@@ -6,6 +6,13 @@ import { selectCart } from "~/src/app/store/reducers/cart.slice";
 import { OrderPricesI } from "~/src/entities/order/model/order.interface";
 import { orderPricesS } from "~/src/entities/order/model/order.skeleton";
 
+/**
+ * Hook to get order prices.
+ *
+ * Returns an object with the order prices, which includes the items sum, discount sum, delivery price and total.
+ *
+ * @returns {{ orderPrices: OrderPricesI }}
+ */
 export const useOrderPrices = () => {
   const { selectedItems } = useAppSelector(selectCart);
   const { itemsSum, itemsDiscount } = useCartSum();

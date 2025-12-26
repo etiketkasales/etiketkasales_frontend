@@ -10,6 +10,10 @@ import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 
 import { IUserCompany, IUserCompanyBase } from "~/src/features/user/model";
 
+/**
+ * @returns { addCompany, handleDeleteCompany, handleGetCompanies, companies, loading }
+ * A hook that returns functions to add, delete, and get companies, as well as the current companies and a boolean indicating whether the companies are loading.
+ */
 export const useUserCompanies = () => {
   const dispatch = useAppDispatch();
   const { companies } = useAppSelector(selectUser);

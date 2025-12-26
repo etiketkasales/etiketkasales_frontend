@@ -13,6 +13,20 @@ import {
 import { IUserAddress, IUserAddressBase } from "~/src/features/user/model";
 import { AxiosError } from "axios";
 
+/**
+ * A hook that returns functions to get, add, delete, and set default addresses, as well as the current addresses and a boolean indicating whether the addresses are loading.
+ * @param needLoad - If true, the hook will load the addresses on mount. Defaults to false.
+ * @returns {
+ *   addresses: Array of IUserAddress
+ *   defAddress: IUserAddress | null - The default address
+ *   loading: boolean - Whether the addresses are loading
+ *   getAddresses: () => Promise<void> - A function to get all addresses
+ *   setAddresses: (addresses: IUserAddress[]) => void - A function to set all addresses
+ *   handleAddNewAddress: (address: IUserAddressBase) => Promise<void> - A function to add a new address
+ *   handleDeleteAddress: (id: number) => Promise<void> - A function to delete an address
+ *   handleSetDefaultAddress: (id: number) => Promise<void> - A function to set an address as default
+ * }
+ **/
 export const useAddresses = (needLoad?: boolean) => {
   const dispatch = useAppDispatch();
   const { addresses } = useAppSelector(selectUser);

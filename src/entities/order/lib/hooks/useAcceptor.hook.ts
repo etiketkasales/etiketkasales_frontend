@@ -11,6 +11,16 @@ import {
 import { IOrderReceiver } from "../../model";
 import { IUserCompany } from "~/src/features/user/model";
 
+/**
+ * Хук для изменения акцептора заказа
+ * @returns объект со следующими поля:
+ *   receiver - акцептор заказа
+ *   onInputChange - функция для изменения ключевых полей
+ *   canChange - флаг изменения акцептора
+ *   setCanChange - функция для установки флага изменения акцептора
+ *   chosenCompany - выбранная организация
+ *   onButtonClick - функция для перехода на страницу выбора организации
+ */
 export const useAcceptor = () => {
   const dispatch = useAppDispatch();
   const { push } = useRouter();
@@ -19,6 +29,7 @@ export const useAcceptor = () => {
   const [canChange, setCanChange] = useState<boolean>(false);
   const [chosenCompany, setChosenCompany] = useState<IUserCompany | null>(null);
 
+  // Стандартная функция для изменения ключевых полей
   const onInputChange = useCallback(
     (v: string, field: keyof IOrderReceiver) => {
       dispatch(setOrderReceiverData({ ...receiver, [field]: v }));
@@ -26,10 +37,12 @@ export const useAcceptor = () => {
     [dispatch, receiver],
   );
 
+  // Переводит на страницу выбора организации
   const onButtonClick = useCallback(() => {
     push("/profile/buyer?active_section=companies");
   }, [push]);
 
+  // Ставит дефолтную организацию из профиля как выбранную
   useEffect(() => {
     if (!receiverCompanyId) return;
     const company =

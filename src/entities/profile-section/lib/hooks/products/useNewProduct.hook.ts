@@ -20,6 +20,24 @@ interface Props {
   onClose: () => void;
 }
 
+/**
+ * Hook for creating a new product.
+ *
+ * @param {Props} onClose - callback that is called when the modal is closed.
+ *
+ * @returns {Object} An object containing the following properties:
+ *   loading - a boolean indicating whether the modal is loading or not.
+ *   onInputChange - a callback that is called when the user changes an input field.
+ *   newProduct - the data of the new product.
+ *   onFileLoad - a callback that is called when the user uploads a file.
+ *   currentImages - an array of objects containing the image data of the new product.
+ *   onNextBtnClick - a callback that is called when the user clicks the "Next" button.
+ *   setModalStage - a callback that is called when the user changes the modal stage.
+ *   modalStage - a number indicating the current modal stage.
+ *   error - a string containing the error message of the current modal stage.
+ *   setRequiredFilters - a callback that is called when the user sets the required filters.
+ *   onDeleteImage - a callback that is called when the user deletes an image.
+ */
 export const useNewProduct = ({ onClose }: Props) => {
   const dispatch = useAppDispatch();
   const { updateSellerProducts } = useSellerProducts({ needLoad: false });

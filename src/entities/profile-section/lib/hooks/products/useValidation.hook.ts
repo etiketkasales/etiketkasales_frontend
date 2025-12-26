@@ -11,6 +11,15 @@ interface Props {
   checkData: INewProduct;
 }
 
+/**
+ * useValidation - a hook for validating new product data
+ * @param {Props} - an object containing checkData
+ * @returns {object} - an object containing error, getError, setRequiredFilters, and getStageError
+ * @property {MessageI | null} error - an error message if something went wrong
+ * @property {(requiredFields: (keyof INewProduct)[]) => boolean} getError - a function for checking if there are errors in the given fields
+ * @property {(requiredFilters: (keyof INewProduct)[]) => void} setRequiredFilters - a function for setting required filters
+ * @property {(stage: number) => boolean} getStageError - a function for checking if there are errors in the given stage
+ */
 export const useValidation = ({ checkData }: Props) => {
   const [error, setError] = useState<MessageI | null>(null);
   const [requiredFilters, setRequiredFilters] = useState<(keyof INewProduct)[]>(

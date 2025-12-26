@@ -13,6 +13,10 @@ import {
   SellerOrderOperationType,
 } from "~/src/entities/profile-section/model";
 
+/**
+ * Hook для работы with order operations
+ * @return {Record <SellerOrderOperationType, (orderId: number, formData: OrderOperationFormData | null) => Promise<void>>}
+ */
 export const useOrderOperations = () => {
   const { promiseCallback, updateOrder } = useSellerOrders({
     needLoadEffect: false,

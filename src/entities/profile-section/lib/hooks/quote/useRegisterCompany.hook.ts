@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useChangeUserData } from "../profile/useChangeUserData.hook";
+import { useChangeUserData } from "../profile";
 import { selectUser } from "~/src/app/store/reducers/user.slice";
 import { useAppSelector } from "~/src/app/store/hooks";
 import FormUtils from "~/src/shared/lib/utils/form.util";
@@ -14,6 +14,11 @@ import {
 import { IChangeableProfile } from "~/src/features/user/model";
 import { MessageI } from "~/src/shared/model";
 
+/**
+ * Хук для регистрации компании.
+ *
+ * @return {{changeableUserInfo: IChangeableProfile, onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void, onBooleanChange: (field: keyof IChangeableProfile, value: boolean) => void, onSave: () => void, stage: QuoteStageType, setPrevStage: () => void, loading: boolean, error: MessageI | null}}
+ */
 export const useRegisterCompany = () => {
   const { changeableUserInfo } = useAppSelector(selectUser);
   const [stage, setStage] = useState<QuoteStageType>("about");

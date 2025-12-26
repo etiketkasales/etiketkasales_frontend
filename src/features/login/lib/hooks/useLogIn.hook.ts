@@ -15,6 +15,19 @@ import { MessageI } from "~/src/shared/model";
 
 //Раздутый хук. TODO: рефактор этого хука
 
+/**
+ * useLogIn - хук для логина на странице входа
+ * @param {Object} options - объект с параметрами
+ * @param {boolean} options.isCodePage - флаг, указывающий, является ли страница страницей кода
+ * @returns {Object} - объект с параметрами, которые возвращаются из хука
+ * @property {string} phone - номер телефона, который отправлен на сервер
+ * @property {string} code - код, который отправлен на сервер
+ * @property {function} setCode - функция для смены кода
+ * @property {function} handleSendData - функция для отправки данных на сервер
+ * @property {function} handleSendPhone - функция для отправки номера телефона на сервер
+ * @property {MessageI | null} message - сообщение об ошибке
+ * @property {boolean} loading - флаг, указывающий, загружка ли страница
+ */
 export const useLogIn = ({ isCodePage }: { isCodePage: boolean }) => {
   const dispatch = useAppDispatch();
   const { setUserData } = useUser();

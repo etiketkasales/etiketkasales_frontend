@@ -5,3 +5,4 @@ export * from "./useOrderPrices.hook";
 export * from "./usePayment.hook";
 export * from "./useValidateOrder.hook";
 export * from "./useCreateOrder.hook";
+export * from "./useOrderPickupPoints.hook";

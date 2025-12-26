@@ -6,6 +6,11 @@ import { deleteShopProfile } from "~/src/entities/profile-section/lib/api";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 import { MessageI } from "~/src/shared/model";
 
+/**
+ * Хук для удаления магазина
+ *
+ * @returns {{loading: boolean, message: MessageI | null, deleteShop: (closeModal: () => void) => Promise<void>}}
+ */
 export const useDeleteShop = () => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState<boolean>(false);

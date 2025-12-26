@@ -12,6 +12,13 @@ const personalFields: (keyof IProfile)[] = [
   "email",
 ];
 
+/**
+ * Hook that checks if user has personal data.
+ *
+ * It checks if user has at least one of the following fields: phone, name, surname, email.
+ *
+ * @returns {boolean} - true if user has personal data, false otherwise.
+ */
 export const useUserPersonal = () => {
   const { userInfo } = useAppSelector(selectUser);
   const [hasPersonalData, setHasPersonalData] = useState<boolean>(false);

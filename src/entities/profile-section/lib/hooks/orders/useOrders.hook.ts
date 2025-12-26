@@ -9,6 +9,12 @@ interface Props {
   role: UserRoleType;
 }
 
+/**
+ * Hook to get orders for given role.
+ *
+ * @param {Props} Props object that contains role.
+ * @returns {Object} An object containing orders, sellerOrders, and loading status.
+ */
 export const useOrders = ({ role }: Props) => {
   const [orders, setOrders] = useState<IOrder[]>([]);
   const [sellerOrders, setSellerOrders] = useState<ISellerOrder[]>([]);

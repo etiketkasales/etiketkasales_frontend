@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { selectOrder } from "~/src/app/store/reducers/order.slice";
+import { addNotification } from "~/src/app/store/reducers/notifications.slice";
 import { promiseWrapper } from "~/src/shared/lib";
 import { getPaymentMethodsForOrder } from "../api";
 
 import { IPaymentMethodResponse } from "../../model";
-import { addNotification } from "~/src/app/store/reducers/notifications.slice";
 
 interface Props {
   isCompany: boolean;
@@ -13,6 +13,7 @@ interface Props {
 
 const errorMessage = "Не удалось получить способы оплаты";
 
+// Получение и отдача способов оплаты
 export const usePayment = ({ isCompany }: Props) => {
   const dispatch = useAppDispatch();
   const { itemsToOrder } = useAppSelector(selectOrder);

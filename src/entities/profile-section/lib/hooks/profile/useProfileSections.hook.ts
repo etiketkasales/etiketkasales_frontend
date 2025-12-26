@@ -13,6 +13,11 @@ interface Props {
   defaultSection: string;
 }
 
+/**
+ * useProfileSections - Hook for managing active section in profile.
+ * @param {{ defaultSection: string }} - Object with default section.
+ * @returns {{ activeSection: ProfileActionType | null, onItemClick: Function, exitSection: Function, loaded: boolean }} - Object with active section, onItemClick and exitSection functions and loaded flag.
+ */
 export const useProfileSections = ({ defaultSection }: Props) => {
   const { width } = useWindowSize();
   const { loaded } = useAppSelector(selectNavigation);

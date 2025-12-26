@@ -72,4 +72,17 @@ export interface ICreateOrderForCompany {
   receiver: IOrderReceiver;
 }
 
+export interface IOrderPickupPointResponse {
+  id: string;
+  code: string;
+  name: string;
+  full_address: string;
+  cost_formatted: string;
+  delivery_days: string;
+  delivery_time: {
+    formatted: string;
+  };
+  work_hours: string;
+}
+
 export type OrderType = "company" | "person";

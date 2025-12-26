@@ -6,6 +6,14 @@ import { switchRole } from "~/src/features/user/lib/api/user.api";
 import { useUser } from "~/src/features/user/lib/hooks";
 import { UserRoleType } from "~/src/features/user/model";
 
+/**
+ * Hook для смены роли пользователя.
+ *
+ * @returns {Object} - Объект с поля loading и функцией handleSwitchRole.
+ * @returns {boolean} loading - Флаг, указывающий на то, что запрос на смену роли находится в процессе выполнения.
+ * @returns {function} handleSwitchRole - Функция для смены роли пользователя.
+ * @param {UserRoleType} roleToSwitch - Роль, на которую нужно перейти.
+ */
 export const useSwitchRole = () => {
   const dispatch = useAppDispatch();
   const { push } = useRouter();
