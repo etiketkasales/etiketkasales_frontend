@@ -9,7 +9,7 @@ import classes from "./categories-swiper.module.scss";
 import CategoriesSwiperButtons from "./buttons";
 import CategoriesCustomSwiper from "./swiper";
 import Container from "~/src/shared/ui/container/ui";
-import { CategorySwiperT } from "~/src/features/categories/model/categories.interface";
+import { CategorySwiperT } from "~/src/features/categories/model";
 
 interface Props {
   title: string;

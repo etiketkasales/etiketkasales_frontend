@@ -3,7 +3,7 @@ import React from "react";
 
 import CatalogueItemWrapper from "./catalogue";
 import HomeItemWrapper from "./home";
-import { CategorySwiperT } from "~/src/features/categories/model/categories.interface";
+import { CategorySwiperT } from "~/src/features/categories/model";
 
 export interface IBaseWrapperProps {
   itemId: string | null;

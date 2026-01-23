@@ -43,7 +43,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/scroll-lock": "^2.1.3",
-    "@yandex/ymaps3-types": "^1.0.18413413",
+    "@yandex/ymaps3-types": "^1.0.18540164",
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
     "typescript": "^5"

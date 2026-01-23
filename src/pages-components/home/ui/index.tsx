@@ -9,7 +9,7 @@ import AddsBanner from "~/src/shared/ui/advs/ui/swiper";
 import CategoriesSwiper from "~/src/features/categories/ui/swiper/ui";
 import SectionWrapper from "~/src/entities/section-wrapper/ui";
 import ThreeAds from "~/src/shared/ui/advs/ui/three-ads";
-import { IGetRandomCategories } from "~/src/features/categories/model/categories.interface";
+import { IGetRandomCategories } from "~/src/features/categories/model";
 
 interface Props {
   initialSections: IGetRandomCategories[] | [];

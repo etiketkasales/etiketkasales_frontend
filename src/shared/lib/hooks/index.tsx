@@ -6,3 +6,5 @@ export * from "./useClickOutside.hook";
 export * from "./useFileLoad.hook";
 export * from "./useUpdateSearchParams.hook";
 export * from "./useSwipeToDismiss.hook";
+export * from "./useFileResize.hook";
+export * from "./useUserLocation.hook";

@@ -3,7 +3,7 @@ import {
   ICategory,
   IGetRandomCategories,
   ITreeCategory,
-} from "~/src/features/categories/model/categories.interface";
+} from "~/src/features/categories/model";
 import { apiClient, tryCatch } from "~/src/shared/lib/api";
 
 export const getRandomCategories = async () => {

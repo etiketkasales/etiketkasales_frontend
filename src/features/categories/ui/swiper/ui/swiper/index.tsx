@@ -13,10 +13,7 @@ import CategoryItem from "./item";
 import ItemSkeleton from "./item-skeleton";
 import CategoriesSwiperNoData from "./no-data";
 import AllCategories from "./all-categories";
-import {
-  CategorySwiperT,
-  ICategory,
-} from "~/src/features/categories/model/categories.interface";
+import { CategorySwiperT, ICategory } from "~/src/features/categories/model";
 
 interface Props {
   swiperRef: React.RefObject<SwiperCore | null>;

@@ -21,3 +21,18 @@
         max-width: calc(100vw - $space-4) !important;
     }
 }
+
+.map {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: $z-medium;
+
+    padding: $space-10;
+    border-radius: $space-5;
+    background-color: $neutral-100;
+
+    width: 600px;
+    height: 600px;
+}

@@ -4,7 +4,7 @@ import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 import { getCategories } from "../api/categories.api";
 
-import { ICategory } from "~/src/features/categories/model/categories.interface";
+import { ICategory } from "~/src/features/categories/model";
 
 export const useCategoriesSwiper = () => {
   const { loaded } = useAppSelector(selectNavigation);

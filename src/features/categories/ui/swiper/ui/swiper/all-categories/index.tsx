@@ -9,8 +9,8 @@ import swiperItemClasses from "../item/swiper-item.module.scss";
 import ItemWrapper from "../item-wrapper";
 import ItemWrapperIcon from "../item/icon";
 import ItemWrapperText from "../item/name";
-import { CategorySwiperT } from "~/src/features/categories/model/categories.interface";
-import { allCategory } from "~/src/features/categories/model/categories.const";
+import { CategorySwiperT } from "~/src/features/categories/model";
+import { allCategory } from "~/src/features/categories/model";
 
 interface Props {
   type: CategorySwiperT;
