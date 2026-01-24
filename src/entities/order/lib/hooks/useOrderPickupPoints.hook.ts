@@ -12,6 +12,7 @@ import { IOrderPickupPointData, IOrderPickupPointResponse } from "../../model";
 
 interface Props {
   needLoad?: boolean;
+  onClose?: () => void;
 }
 
 /**
@@ -19,7 +20,7 @@ interface Props {
  * @param {boolean} needLoad - нужно ли загрузить список ПВЗ
  * @returns {object} - объект с функциями onSavePoint, onPointClick, previewPoint, points, loading
  */
-export const useOrderPickupPoints = ({ needLoad }: Props) => {
+export const useOrderPickupPoints = ({ needLoad, onClose }: Props) => {
   const dispatch = useAppDispatch();
   const { deliveryMethod, deliveryAddressId } = useAppSelector(selectOrder);
   const [loading, setLoading] = useState<boolean>(false);
@@ -71,8 +72,9 @@ export const useOrderPickupPoints = ({ needLoad }: Props) => {
         pickup_point_id: point.id,
       };
       dispatch(setOrderPickupPoint(newPoint));
+      onClose?.();
     },
-    [dispatch],
+    [dispatch, onClose],
   );
 
   useEffect(() => {

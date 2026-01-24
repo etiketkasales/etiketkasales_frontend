@@ -14,9 +14,10 @@ import { OrderStageType } from "~/src/entities/order/model/order.interface";
 interface Props {
   type: OrderType;
   stage: OrderStageType;
+  setStage: (s: OrderStageType) => void;
 }
 
-export default function OrderContent({ type, stage }: Props) {
+export default function OrderContent({ type, stage, setStage }: Props) {
   const { loaded } = useAppSelector(selectNavigation);
   const { isLoggedIn, userInfo, loadingData } = useAppSelector(selectUser);
 
@@ -28,7 +29,11 @@ export default function OrderContent({ type, stage }: Props) {
   return (
     <div className={`flex-column ${classes.container}`}>
       <OrderChoosePvz isActive={stage === "choose_pvz"} />
-      <OrderConfirm isActive={stage === "confirm"} type={type} />
+      <OrderConfirm
+        isActive={stage === "confirm"}
+        type={type}
+        setStage={setStage}
+      />
     </div>
   );
 }

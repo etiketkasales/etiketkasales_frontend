@@ -1,0 +1,19 @@
+.container {
+  border-radius: $space-5;
+  padding: $space-5;
+  box-shadow: $shadow-500;
+
+  gap: $space-4;
+  animation: slideIn $transition alternate;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(125%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

@@ -6,8 +6,14 @@ import { useAppSelector } from "~/src/app/store/hooks";
 import classes from "./delivery.module.scss";
 import OrderContainer from "../../container";
 import DeliveryChosenMethodItem from "./item";
+import { OrderStageType } from "~/src/entities/order/model";
+import Button from "~/src/shared/ui/button";
 
-export default function DeliveryChosenMethod() {
+interface Props {
+  setStage: (s: OrderStageType) => void;
+}
+
+export default function DeliveryChosenMethod({ setStage }: Props) {
   const { deliveryMethod } = useAppSelector(selectOrder);
 
   return (
@@ -21,6 +27,14 @@ export default function DeliveryChosenMethod() {
         address={deliveryMethod.description}
         display={deliveryMethod.display}
       />
+      <Button
+        typeButton="white"
+        onClick={() => setStage("choose_pvz")}
+        className={classes.button}
+        radius={12}
+      >
+        <span className="heading h7">Изменить</span>
+      </Button>
     </OrderContainer>
   );
 }

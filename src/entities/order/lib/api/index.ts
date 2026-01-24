@@ -52,6 +52,8 @@ interface ICreateOrderParams {
   receiver_surname: string;
   receiver_phone: string;
   receiver_email: string;
+  pickup_point_id: string;
+  pickup_point_address: string;
 }
 export const createOrder = async (params: ICreateOrderParams) => {
   return await tryCatch(

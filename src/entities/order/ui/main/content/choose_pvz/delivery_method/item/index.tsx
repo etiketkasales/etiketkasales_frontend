@@ -29,7 +29,10 @@ export default function DeliveryMethodItem({
     <Container
       bgColor={"neutral-200"}
       className={classNames(`flex-column pointer`, classes.container)}
-      onClick={() => chooseDeliveryMethod(method)}
+      onClick={() => {
+        chooseDeliveryMethod(method);
+        openModal();
+      }}
     >
       <DeliveryMethodHeader isActive={isActive} image={method.image_url} />
       <DeliveryMethodText

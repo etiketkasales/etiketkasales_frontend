@@ -36,6 +36,12 @@ export const useYandexMaps = () => {
     setLoaded(true);
   }, []);
 
+  React.useEffect(() => {
+    if ((window as any).ymaps3) {
+      init().catch(console.error);
+    }
+  }, [init]);
+
   return {
     init,
     components,

@@ -33,8 +33,13 @@ const errorMessage = "Не удалось создать заказ";
 export const useCreateOrder = ({ type, stage, setStage }: Props) => {
   const dispatch = useAppDispatch();
   const { push } = useRouter();
-  const { receiver, receiverCompanyId, deliveryAddressId, deliveryMethod } =
-    useAppSelector(selectOrder);
+  const {
+    receiver,
+    receiverCompanyId,
+    deliveryAddressId,
+    deliveryMethod,
+    pickupPoint,
+  } = useAppSelector(selectOrder);
   const [loading, setLoading] = useState<boolean>(false);
   const { isValidOrder } = useValidateOrder({ type });
 
@@ -91,6 +96,7 @@ export const useCreateOrder = ({ type, stage, setStage }: Props) => {
         let res: IGetData<{ id: number }> | null = null;
         const defaultParams = {
           ...receiver,
+          ...pickupPoint,
           delivery_address_id: deliveryAddressId,
           delivery_method: deliveryMethod.code,
         };
@@ -125,6 +131,7 @@ export const useCreateOrder = ({ type, stage, setStage }: Props) => {
     deliveryMethod,
     receiver,
     receiverCompanyId,
+    pickupPoint,
     type,
     createPayment,
   ]);

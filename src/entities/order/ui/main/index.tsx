@@ -38,7 +38,7 @@ export default function OrderMain({ type, stage, onButtonClick }: Props) {
   return (
     <div className={`flex ${classes.container}`}>
       {loading && <Loader radius={0} />}
-      <OrderContent type={type} stage={stage} />
+      <OrderContent type={type} stage={stage} setStage={onButtonClick} />
       <OrderSummary
         discount={itemsDiscount}
         totalItemsCount={itemsToOrder.length}

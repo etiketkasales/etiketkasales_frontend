@@ -67,7 +67,7 @@ export const useValidateOrder = ({ type }: Props) => {
         ) as (keyof IOrderPickupPointData)[],
       });
       if (hasError)
-        return createNotification("Заполните информацию о самовывозе");
+        return createNotification("Заполните информацию о пункте выдачи");
     }
 
     dispatch(setButtonDisabled(false));

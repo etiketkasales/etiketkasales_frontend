@@ -1,6 +1,7 @@
 import React from "react";
 import ClientInitializer from "./client-initializer";
 import NotificationsWidget from "~/src/widgets/notifications/ui";
+import YMapsProvider from "~/src/widgets/yandex-maps/ui/provider";
 
 export default function ClientLayout({
   children,
@@ -12,6 +13,7 @@ export default function ClientLayout({
       {children}
       <ClientInitializer />
       <NotificationsWidget />
+      <YMapsProvider />
     </>
   );
 }

@@ -23,6 +23,7 @@ export default function OrderChoosePvz({ isActive }: Props) {
   const [deliveryModal, setDeliveryModal] = useState<boolean | null>(null);
 
   useEffect(() => {
+    if (deliveryMethod.code && defAddress) return;
     dispatch(
       addNotification({
         message: "Выберите адрес доставки и способ получения",
@@ -30,7 +31,7 @@ export default function OrderChoosePvz({ isActive }: Props) {
         field: "global",
       }),
     );
-  }, [dispatch]);
+  }, [dispatch, deliveryMethod.code, defAddress]);
 
   return (
     <OrderStageWrapper
