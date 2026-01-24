@@ -14,7 +14,7 @@ export default function NoImageAvatar({ loading, onClicK }: Props) {
   return (
     <Container
       bgColor={"yellow-200"}
-      className={`${classes.container} pointer`}
+      className={`${classes.noSrc} ${classes.container} pointer`}
       onClick={onClicK}
     >
       {loading && <Loader radius={100} />}
