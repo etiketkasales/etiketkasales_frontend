@@ -1,8 +1,10 @@
 import React, { memo, useCallback } from "react";
 import TextInput, { TextInputProps } from "../text-input";
 
-export interface PhoneInputProps
-  extends Omit<TextInputProps, "value" | "onChange"> {
+export interface PhoneInputProps extends Omit<
+  TextInputProps,
+  "value" | "onChange"
+> {
   value: string;
   onChange: (value: string) => void;
 }
