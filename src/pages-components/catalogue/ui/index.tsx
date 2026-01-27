@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./catalogue-page.module.scss";
 import PageWrapper from "~/src/entities/page-wrapper/ui";
 import CategoriesSwiper from "~/src/features/categories/ui/swiper/ui";

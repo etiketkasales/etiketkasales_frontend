@@ -4,6 +4,8 @@ import EtiketkaPage from "~/src/pages-components/etiketka/ui";
 import { IEtiketka } from "~/src/entities/etiketka/model";
 import { productSkeleton } from "~/src/entities/etiketka/model/etiketka.skeleton";
 
+export const dynamic = "force-dynamic";
+
 interface IParams {
   slug: string;
   id: string;
