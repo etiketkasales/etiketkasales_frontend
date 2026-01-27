@@ -1,4 +1,4 @@
-name: Autodeploy to Jino
+name: Autodeploy to Jino (PM2 + Standalone)
 
 on:
   push:
@@ -8,32 +8,38 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 20
+          cache: npm
 
       - name: Install dependencies
-        run: npm i
+        run: npm ci
 
-      - name: Build Next.js
+      - name: Build Next.js (standalone)
         run: npm run build
 
-      - name: Copy files to VPS
+      - name: Copy build to VPS
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_GITHUB_ACTIONS }}
           port: ${{ secrets.VPS_PORT }}
-          source: ".next,node_modules,package.json,package-lock.json,public,static"
-          target: "/var/www/etiketkasales_frontend"
+          source: |
+            .next/standalone
+            .next/static
+            public
+            package.json
+          target: /var/www/etiketkasales_frontend
 
-      - name: Restart Next.js service
+      - name: Reload PM2
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -42,7 +48,5 @@ jobs:
           port: ${{ secrets.VPS_PORT }}
           script: |
             cd /var/www/etiketkasales_frontend
-            npm install --production
-            sudo systemctl daemon-reload
-            sudo systemctl restart etiketkasales.service
-            sudo systemctl status etiketkasales.service --no-pager
+            pm2 reload etiketkasales-next || pm2 start ecosystem.config.js
+            pm2 save
