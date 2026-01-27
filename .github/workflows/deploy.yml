@@ -29,8 +29,8 @@ jobs:
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
           NEXT_PUBLIC_YANDEX_MAPS_API_KEY: ${{ secrets.NEXT_PUBLIC_YANDEX_MAPS_API_KEY }}
 
-      - name: Check build
-        run: ls -la etiketkasales_frontend/.next/standalone
+      - name: Check standalone dir
+        run: ls -la .next
 
       - name: Copy build to VPS
         uses: appleboy/scp-action@v0.1.4
