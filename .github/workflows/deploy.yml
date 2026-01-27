@@ -36,7 +36,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_GITHUB_ACTIONS }}
           port: ${{ secrets.VPS_PORT }}
-          source: "etiketkasales_frontend/.next/standalone,etiketkasales_frontend/.next/static,etiketkasales_frontend/public,etiketkasales_frontend/package.json"
+          source: ".next/standalone,.next/static,public,package.json"
           target: /var/www/etiketkasales_frontend
 
       - name: Reload PM2
