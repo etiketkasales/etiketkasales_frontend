@@ -4,6 +4,8 @@ export { layoutMetadata as metadata, viewport } from "~/src/shared/config";
 import HomePage from "../pages-components/home/ui";
 import { IGetRandomCategories } from "../features/categories/model/categories.interface";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   let initialSections: IGetRandomCategories[] = [];
   try {
