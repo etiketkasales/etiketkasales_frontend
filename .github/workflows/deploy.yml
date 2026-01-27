@@ -23,7 +23,7 @@ jobs:
         run: npm ci
 
       - name: Build Next.js (standalone)
-        run: npm run build
+        run: npm run build:dev
 
       - name: Copy build to VPS
         uses: appleboy/scp-action@v0.1.4
