@@ -5,7 +5,8 @@ import classes from "./new-input.module.scss";
 import Button from "../button";
 import { MessageI } from "../../model";
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
   classNameLabel?: string;
 

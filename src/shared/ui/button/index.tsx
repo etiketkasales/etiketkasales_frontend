@@ -16,9 +16,8 @@ export type ButtonTypeButtonT =
   | "gray-border"
   | "yellow-border";
 
-interface Props<
-  T extends ElementType,
-> extends React.HTMLAttributes<HTMLButtonElement> {
+interface Props<T extends ElementType>
+  extends React.HTMLAttributes<HTMLButtonElement> {
   typeButton: ButtonTypeButtonT;
   size?: string; //4-12 6-10 10; в пикселях
   radius?: number;

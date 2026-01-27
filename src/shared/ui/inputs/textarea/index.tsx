@@ -1,7 +1,8 @@
 import React, { forwardRef, TextareaHTMLAttributes } from "react";
 import classNames from "classnames";
 
-export interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+export interface TextAreaProps
+  extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   className?: string;
 }
 

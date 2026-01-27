@@ -12,8 +12,8 @@ const nextConfig: NextConfig = {
   },
 
   sassOptions: {
-    includePaths: [path.join(__dirname, "src")],
-    prependData: `
+    loadPaths: [path.join(__dirname, "src")],
+    additionalData: `
       @use "app/styles/colors.scss" as *;
       @use "app/styles/sizes.scss" as *;
       @use "app/styles/text.scss" as *;
