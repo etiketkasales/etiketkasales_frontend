@@ -37,12 +37,11 @@ jobs:
           key: ${{ secrets.VPS_GITHUB_ACTIONS }}
           port: ${{ secrets.VPS_PORT }}
           source: |
-            .next/standalone
-            .next/static
-            public
-            package.json
+            etiketkasales_frontend/.next/standalone
+            etiketkasales_frontend/.next/static
+            etiketkasales_frontend/public
+            etiketkasales_frontend/package.json
           target: /var/www/etiketkasales_frontend
-          working-directory: ./etiketkasales_frontend
 
       - name: Reload PM2
         uses: appleboy/ssh-action@v0.1.6
