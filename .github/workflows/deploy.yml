@@ -42,6 +42,7 @@ jobs:
             public
             package.json
           target: /var/www/etiketkasales_frontend
+          working-directory: ./etiketkasales_frontend
 
       - name: Reload PM2
         uses: appleboy/ssh-action@v0.1.6
