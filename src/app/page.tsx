@@ -2,7 +2,7 @@ import { getRandomCategories } from "~/src/features/categories/lib/api/categorie
 export { layoutMetadata as metadata, viewport } from "~/src/shared/config";
 
 import HomePage from "../pages-components/home/ui";
-import { IGetRandomCategories } from "../features/categories/model/categories.interface";
+import { IGetRandomCategories } from "../features/categories/model";
 
 export const dynamic = "force-dynamic";
 
