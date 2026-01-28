@@ -21,6 +21,7 @@ const nextConfig: NextConfig = {
   },
 
   images: {
+    loader: "default",
     remotePatterns: [
       {
         protocol: "https",
