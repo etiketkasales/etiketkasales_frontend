@@ -20,8 +20,6 @@ const nextConfig: NextConfig = {
     `,
   },
 
-  assetPrefix: "/",
-
   images: {
     remotePatterns: [
       {
