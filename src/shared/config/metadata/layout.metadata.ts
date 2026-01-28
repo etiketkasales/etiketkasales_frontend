@@ -4,8 +4,8 @@ export const layoutMetadata: Metadata = {
   title: "ЭТИКЕТКАСЕЙЛС",
   description: "Маркетплейс этикеток",
   icons: {
-    icon: "/logo.png",
-    shortcut: "/logo.png",
-    apple: "/logo.png",
+    icon: "/logo.ico",
+    shortcut: "/logo.ico",
+    apple: "/logo.ico",
   }
 };
