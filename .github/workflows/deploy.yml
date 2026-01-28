@@ -23,7 +23,7 @@ jobs:
         run: npm ci
 
       - name: Build Next.js (standalone)
-        run: npm run build:dev
+        run: npm run build:prod
         env:
           SERVER_API_URL: ${{ secrets.SERVER_API_URL }}
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}

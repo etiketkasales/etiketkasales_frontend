@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
-    "build:dev": "npm run prettier && npm run build"
+    "build:dev": "npm run prettier && npm run build",
+    "build:prod": "npm run prettier && npm run build && cp -r public .next/standalone/public"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
