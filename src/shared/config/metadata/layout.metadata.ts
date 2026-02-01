@@ -7,5 +7,5 @@ export const layoutMetadata: Metadata = {
     icon: "/logo.ico",
     shortcut: "/logo.ico",
     apple: "/logo.ico",
-  }
+  },
 };

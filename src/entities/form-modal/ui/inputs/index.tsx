@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import { useCallback } from "react";
 import StringUtils from "~/src/shared/lib/utils/string.util";
 
 import classes from "./inputs.module.scss";
@@ -7,7 +7,10 @@ import TextInput from "~/src/shared/ui/inputs/text-input";
 import PhoneInput from "~/src/shared/ui/inputs/phone";
 import Select from "~/src/shared/ui/select/ui";
 import Button from "~/src/shared/ui/button";
-import { FormModalInputI } from "~/src/entities/form-modal/model/form-modal.interface";
+import {
+  FormModalInputI,
+  IFormModalSelectOption,
+} from "~/src/entities/form-modal/model";
 import { MessageI } from "~/src/shared/model";
 
 interface Props<T> {
@@ -25,6 +28,14 @@ export default function FormModalInputs<T>({
   onChange,
   error,
 }: Props<T>) {
+  const getActiveOption = useCallback(
+    (options: IFormModalSelectOption[], value: string): string => {
+      const activeOption = options.find((option) => option.value === value);
+      return activeOption ? activeOption.label : "";
+    },
+    [],
+  );
+
   return (
     <div className={`flex-column gap-3 ${classes.container}`}>
       {headerText && (
@@ -64,10 +75,11 @@ export default function FormModalInputs<T>({
             return (
               <Select
                 key={index}
-                activeOption={
-                  formData[input.field] ? String(formData[input.field]) : ""
-                }
-                options={input.selectOptions ? input.selectOptions : ["Москва"]}
+                activeOption={getActiveOption(
+                  input.selectOptions || [],
+                  formData[field]?.toString() || "",
+                )}
+                options={input.selectOptions || []}
                 className={`${classes.input} ${classes.select}`}
                 optionsClassName={`${classes.options}`}
                 selectedOptionClassName={`${classes.selectedOption}`}
@@ -81,12 +93,12 @@ export default function FormModalInputs<T>({
                       key={index}
                       typeButton="gray"
                       size="12"
-                      onClick={() => onChange(item, input.field)}
+                      onClick={() => onChange(item.value, input.field)}
                       className={`${classes.option}`}
                       justifyCenter={false}
                     >
                       <span className={`text-body l text-left cursor`}>
-                        {item}
+                        {item.label}
                       </span>
                     </Button>
                   );

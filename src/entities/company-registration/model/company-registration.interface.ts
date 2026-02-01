@@ -15,3 +15,9 @@ export interface RegCommonPropsI {
   companyInfo: IChangeableProfile;
   error: MessageI | null;
 }
+
+export interface IAvailableCity {
+  id: number;
+  name: string;
+  slug: string;
+}

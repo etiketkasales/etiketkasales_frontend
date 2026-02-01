@@ -7,7 +7,8 @@ import FormModalHeader from "./header";
 import Button from "~/src/shared/ui/button";
 import FormModalInputs from "./inputs";
 import Container from "~/src/shared/ui/container/ui";
-import { FormModalInputI } from "../model/form-modal.interface";
+import Loader from "~/src/shared/ui/loader";
+import { FormModalInputI } from "../model";
 import { MessageI } from "~/src/shared/model";
 
 interface Props<T> {
@@ -27,6 +28,7 @@ interface Props<T> {
   children?: React.ReactNode;
   padding?: string;
   classNameContainer?: string;
+  loading?: boolean;
 }
 
 export default function FormModal<T>({
@@ -46,6 +48,7 @@ export default function FormModal<T>({
   padding = "20",
   onBackButtonClick,
   classNameContainer,
+  loading,
 }: Props<T>) {
   return (
     <Container
@@ -63,6 +66,7 @@ export default function FormModal<T>({
         } as CSSProperties
       }
     >
+      {loading && <Loader radius={20} needCircle />}
       <FormModalHeader
         text={headerText}
         subText={subHeader}
@@ -78,7 +82,13 @@ export default function FormModal<T>({
         />
       )}
       {children}
-      <Button typeButton="yellow" size="12" radius={12} onClick={onButtonClick}>
+      <Button
+        typeButton="yellow"
+        size="12"
+        radius={12}
+        onClick={onButtonClick}
+        disabled={loading}
+      >
         <span className="text-16 second-family black semibold">
           {buttonText}
         </span>

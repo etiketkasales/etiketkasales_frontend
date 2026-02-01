@@ -3,5 +3,10 @@ export interface FormModalInputI<T> {
   type: string;
   placeholder?: string;
   label?: string;
-  selectOptions?: Array<string>;
+  selectOptions?: Array<IFormModalSelectOption>;
+}
+
+export interface IFormModalSelectOption {
+  value: string;
+  label: string;
 }

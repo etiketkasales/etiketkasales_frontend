@@ -1,12 +1,10 @@
 "use client";
-import React from "react";
-import { useAppSelector } from "~/src/app/store/hooks";
-import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
+import { useGetAvailableCities } from "../../lib/hooks";
 
 import FormModal from "~/src/entities/form-modal/ui";
-import { RegCommonPropsI } from "~/src/entities/company-registration/model/company-registration.interface";
-import { FormModalInputI } from "~/src/entities/form-modal/model/form-modal.interface";
+import { RegCommonPropsI } from "~/src/entities/company-registration/model";
 import { IChangeableProfile } from "~/src/features/user/model";
+import { FormModalInputI } from "~/src/entities/form-modal/model";
 
 interface Props extends RegCommonPropsI {}
 
@@ -16,13 +14,13 @@ export default function CompanyCity({
   error,
   buttonClick,
 }: Props) {
-  const { cities } = useAppSelector(selectNavigation);
+  const { availableCities, loading } = useGetAvailableCities();
   const inputs: FormModalInputI<IChangeableProfile>[] = [
     {
       field: "storage_city",
       type: "select",
       placeholder: "Город",
-      selectOptions: ["Москва"],
+      selectOptions: [...availableCities],
     },
   ];
   return (
@@ -37,6 +35,7 @@ export default function CompanyCity({
       onInputChange={onInputChange}
       error={error}
       buttonText="Подтвердить и отправить"
+      loading={loading}
     />
   );
 }

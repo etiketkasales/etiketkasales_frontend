@@ -28,7 +28,7 @@ export default function CompanyRegistrationPage() {
     }
   }, [stage, push]);
 
-  if (needRedirect) return redirect("/profile/seller-pending");
+  // if (needRedirect) return redirect("/profile/seller-pending");
 
   if (loading) {
     return <Loader radius={0} />;
