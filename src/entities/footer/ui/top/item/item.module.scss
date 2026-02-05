@@ -2,9 +2,15 @@
     grid-column: 4 span;
 }
 
-.button:hover {
+.button {
     span {
-        opacity: 1;
+        color: $neutral-600;
+    }
+
+    &:hover {
+        span {
+            color: $neutral-300;
+        }
     }
 }
 

@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./item.module.scss";
 import LinkContainer from "~/src/shared/ui/link-container/ui";
 import { FooterLinkListI } from "~/src/entities/footer/model/footer.interface";
@@ -15,7 +13,7 @@ export default function FooterTopItem({ title, links }: Props) {
           return (
             <li key={`${item.link}-${index}`}>
               <LinkContainer link={item.link} className={classes.button}>
-                <span className="body-text l text-neutral-600">
+                <span className="body-text l">
                   {item.title}
                 </span>
               </LinkContainer>

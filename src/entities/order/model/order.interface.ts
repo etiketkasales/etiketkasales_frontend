@@ -78,6 +78,8 @@ export interface IOrderPickupPointResponse {
   name: string;
   full_address: string;
   cost_formatted: string;
+  latitude: number;
+  longitude: number;
   delivery_days: string;
   delivery_time: {
     formatted: string;

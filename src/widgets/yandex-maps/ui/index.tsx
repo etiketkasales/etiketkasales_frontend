@@ -44,12 +44,26 @@ export default function YandexMapsWidget<Marker extends IMarkerBase>({
           {components.YMapDefaultFeaturesLayer && (
             <components.YMapDefaultFeaturesLayer />
           )}
-          {components.YMapMarker && (
-            <components.YMapMarker
-              coordinates={components.reactify.useDefault(mapLocation.center)}
-            >
-              <div className={classes.me}></div>
-            </components.YMapMarker>
+          {components.YMapFeature && markers && (
+            markers.map((item, index) => (
+              <components.YMapFeature
+                key={`${index}-${item.coordinates[0]}`}
+                geometry={{
+                  type: "Point",
+                  coordinates: item.coordinates,
+                }}
+                style={{
+                  icon: {
+                    layout: "default#image",
+                    imageSize: [32, 32],
+                    imageOffset: [-16, -16]
+                  }
+                }}
+                onClick={() => onMarkerClick?.(item)}
+              >
+
+              </components.YMapFeature>
+            ))
           )}
         </components.YMap>
       ) : (

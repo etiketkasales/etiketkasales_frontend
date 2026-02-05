@@ -31,6 +31,7 @@ export const useYandexMaps = () => {
       YMapDefaultSchemeLayer: comps.YMapDefaultSchemeLayer,
       YMapDefaultFeaturesLayer: comps.YMapDefaultFeaturesLayer,
       YMapMarker: comps.YMapMarker,
+      YMapFeature: comps.YMapFeature,
       reactify,
     });
     setLoaded(true);

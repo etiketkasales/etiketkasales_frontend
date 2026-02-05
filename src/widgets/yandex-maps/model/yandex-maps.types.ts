@@ -4,6 +4,7 @@ export type YMapsReactifyComponents = {
   YMap: React.ComponentType<any>;
   YMapDefaultSchemeLayer: React.ComponentType<any>;
   YMapDefaultFeaturesLayer?: React.ComponentType<any>;
+  YMapFeature?: React.ComponentType<any>;
   YMapMarker?: React.ComponentType<any>;
   reactify: {
     useDefault: <T>(value: T) => T;
