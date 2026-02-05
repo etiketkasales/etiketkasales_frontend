@@ -5,6 +5,7 @@ import classes from "./modal.module.scss";
 import YandexMapsWidget from "~/src/widgets/yandex-maps/ui";
 import Modal from "~/src/shared/ui/modals/ui/default";
 import OrderPickupPoint from "./pickup-point";
+import OrderPickupPointMarker from "./marker";
 import Loader from "~/src/shared/ui/loader";
 
 interface Props {
@@ -25,7 +26,15 @@ export default function DeliveryMethodModal({ isOpen, onClose }: Props) {
       loaderRadius={20}
     >
       {loading && <Loader radius={20} />}
-      <YandexMapsWidget wrapperClassName={`relative ${classes.map}`}>
+      <YandexMapsWidget
+        wrapperClassName={`relative ${classes.map}`}
+        markers={points.map((p) => ({
+          coordinates: [p.longitude, p.latitude],
+          ...p,
+        }))}
+        onMarkerClick={(m) => onPointClick(m)}
+        renderMarkerChildren={(m) => <OrderPickupPointMarker {...m} />}
+      >
         <OrderPickupPoint choosePoint={onSavePoint} point={previewPoint} />
       </YandexMapsWidget>
     </Modal>

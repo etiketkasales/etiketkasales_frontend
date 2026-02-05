@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { useDelivery } from "~/src/entities/order/lib/hooks";
 
 import classes from "./delivery.module.scss";

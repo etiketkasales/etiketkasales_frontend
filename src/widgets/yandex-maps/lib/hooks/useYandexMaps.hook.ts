@@ -1,15 +1,20 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 
-import { YMapsReactifyComponents } from "../../model";
+import { useAppDispatch } from "~/src/app/store/hooks";
 import { useUserLocation } from "~/src/shared/lib";
+import { addNotification } from "~/src/app/store/reducers/notifications.slice";
+
+import { YMapsReactifyComponents } from "../../model";
 
 export const useYandexMaps = () => {
+  const dispatch = useAppDispatch();
   const [components, setComponents] = useState<YMapsReactifyComponents | null>(
     null,
   );
   const [loaded, setLoaded] = useState<boolean>(false);
-  const { location, error } = useUserLocation();
+  const [zoom, setZoom] = useState<number>(9);
+  const { location, error, isLoading: loadingLocation } = useUserLocation();
 
   const init = useCallback(async () => {
     if (typeof window === "undefined") return;
@@ -37,7 +42,13 @@ export const useYandexMaps = () => {
     setLoaded(true);
   }, []);
 
-  React.useEffect(() => {
+  const onMapChange = useCallback((e: any) => {
+    if (e.location?.zoom) {
+      setZoom(e.location.zoom);
+    }
+  }, []);
+
+  useEffect(() => {
     if ((window as any).ymaps3) {
       init().catch(console.error);
     }
@@ -48,5 +59,6 @@ export const useYandexMaps = () => {
     components,
     loaded,
     location: error ? null : location,
+    onMapChange,
   };
 };

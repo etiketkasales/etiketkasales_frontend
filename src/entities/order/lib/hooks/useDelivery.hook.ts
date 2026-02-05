@@ -51,7 +51,12 @@ export const useDelivery = ({ deliveryAddressId, canLoad }: Props) => {
 
   const chooseDeliveryMethod = useCallback(
     (method: IDeliveryMethodResponse) => {
+      if (!method.code.includes("sdek")) { // Если поменяется код сдэка - поменять.
+        createMessage("Пока доставка только по СДЭК");
+        return false;
+      };
       dispatch(setOrderDeliveryMethod(method));
+      return true;
     },
     [dispatch],
   );

@@ -8,12 +8,15 @@ export type UserLocation = {
 };
 
 export const useUserLocation = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [location, setLocation] = useState<UserLocation | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    setIsLoading(true);
     if (!navigator.geolocation) {
       setError("Геолокация не поддерживается");
+      setIsLoading(false);
       return;
     }
 
@@ -23,9 +26,11 @@ export const useUserLocation = () => {
           center: [pos.coords.longitude, pos.coords.latitude],
           zoom: 14,
         });
+        setIsLoading(false);
       },
       () => {
         setError("Доступ к геолокации запрещён");
+        setIsLoading(false);
       },
       {
         enableHighAccuracy: true,
@@ -34,5 +39,5 @@ export const useUserLocation = () => {
     );
   }, []);
 
-  return { location, error };
+  return { location, error, isLoading };
 };
