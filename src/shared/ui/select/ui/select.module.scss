@@ -17,6 +17,13 @@
 .input {
   width: 100%;
   background-color: transparent;
+
+  &.inputError {
+    color: $red-1000;
+    &::placeholder {
+      color: $red-900;
+    }
+  }
 }
 
 .selectedOption {

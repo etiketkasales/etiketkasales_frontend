@@ -65,6 +65,7 @@ export default function Select<T>(props: Props<T>) {
       className={classNames(
         `${containerRelative ? "relative" : ""} pointer flex-column`,
         className,
+        error && classes.error,
       )}
     >
       <Button
@@ -77,7 +78,6 @@ export default function Select<T>(props: Props<T>) {
           `grid-column align-center`,
           !isSearchable && "space-between",
           isSearchable && classes.searchable,
-          error && classes.error,
           selectButtonClassName,
           classes.button,
         )}
@@ -99,7 +99,7 @@ export default function Select<T>(props: Props<T>) {
           {isSearchable ? (
             <input
               type="text"
-              className={classes.input}
+              className={classNames(classes.input, error && classes.inputError)}
               placeholder={optionHolder}
               onChange={(e) => onSearch?.(e.target.value)}
               name={optionHolder}
