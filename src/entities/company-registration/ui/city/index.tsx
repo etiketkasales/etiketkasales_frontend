@@ -14,7 +14,7 @@ export default function CompanyCity({
   error,
   buttonClick,
 }: Props) {
-  const { availableCities, loading } = useGetAvailableCities();
+  const { availableCities, loading, setSearchQuery } = useGetAvailableCities();
   const inputs: FormModalInputI<IChangeableProfile>[] = [
     {
       field: "storage_city",
@@ -33,6 +33,7 @@ export default function CompanyCity({
       headerText="Выберите город, в котором храните товары"
       subHeader="3 из 3"
       onInputChange={onInputChange}
+      onSearch={(v) => setSearchQuery(v)}
       error={error}
       buttonText="Подтвердить и отправить"
       loading={loading}

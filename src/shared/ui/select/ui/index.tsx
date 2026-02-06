@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useSelect } from "../hook/useSelect.hook";
 
 import classes from "./select.module.scss";
@@ -7,6 +7,7 @@ import Icon from "~/public/select/icon.svg";
 import Button from "~/src/shared/ui/button";
 import SelectOptions from "./options";
 import classNames from "classnames";
+import TextInput from "../../inputs/text-input";
 
 interface Props<T> {
   activeOption: string;
@@ -27,9 +28,9 @@ interface Props<T> {
   HeadingIconRight?: React.ReactNode;
   doubleHeader?: string;
   doubleHeaderClassName?: string;
+  isSearchable?: boolean;
+  onSearch?: (v: string) => void;
 }
-
-// TO DO: добавить обработку двойного хедера у кнопки
 
 export default function Select<T>(props: Props<T>) {
   const {
@@ -51,12 +52,20 @@ export default function Select<T>(props: Props<T>) {
     doubleHeader,
     doubleHeaderClassName = "text-body xs text-neutral-700",
     error,
+    isSearchable = false,
+    onSearch,
   } = props;
-  const { active, setActive, contentRef, buttonRef } = useSelect();
+
+  const { active, setActive, contentRef, buttonRef, inputRef } = useSelect();
+
+  const displayValue = activeOption || optionHolder;
 
   return (
     <div
-      className={`${containerRelative ? "relative" : ""} pointer flex-column ${className}`}
+      className={classNames(
+        `${containerRelative ? "relative" : ""} pointer flex-column`,
+        className,
+      )}
     >
       <Button
         ref={buttonRef}
@@ -65,31 +74,56 @@ export default function Select<T>(props: Props<T>) {
         justifyCenter={false}
         needActiveScale={false}
         className={classNames(
-          `grid-column space-between align-center`,
+          `grid-column align-center`,
+          !isSearchable && "space-between",
+          isSearchable && classes.searchable,
           error && classes.error,
           selectButtonClassName,
           classes.button,
         )}
         onClick={() => {
           setActive(!active);
+          if (inputRef.current) inputRef.current.focus();
         }}
       >
         {HeadingIconLeft}
-        <div className={`flex-column flex-start ${selectedOptionClassName}`}>
+        <div
+          className={classNames(
+            `flex-column flex-start`,
+            selectedOptionClassName,
+          )}
+        >
           {doubleHeader && (
             <span className={doubleHeaderClassName}>{doubleHeader}</span>
           )}
-          <span className={classes.selectedOption}>
-            {activeOption || optionHolder}
-          </span>
+          {isSearchable ? (
+            <input
+              type="text"
+              className={classes.input}
+              placeholder={optionHolder}
+              onChange={(e) => onSearch?.(e.target.value)}
+              name={optionHolder}
+              ref={inputRef}
+            />
+          ) : (
+            <span className={classes.selectedOption}>{displayValue}</span>
+          )}
         </div>
-        {HeadingIconRight || <Icon className={active ? classes.active : ""} />}
+        {HeadingIconRight || (
+          <Icon
+            className={classNames(
+              active && classes.active,
+              isSearchable && classes.iconSearchable,
+            )}
+          />
+        )}
       </Button>
       {error && (
         <span className={`text-body xs text-red-500 ${classes.errorText}`}>
           {error}
         </span>
       )}
+
       <SelectOptions
         active={active}
         setActive={setActive}

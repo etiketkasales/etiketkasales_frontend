@@ -29,6 +29,7 @@ interface Props<T> {
   padding?: string;
   classNameContainer?: string;
   loading?: boolean;
+  onSearch?: (v: string) => void;
 }
 
 export default function FormModal<T>({
@@ -49,6 +50,7 @@ export default function FormModal<T>({
   onBackButtonClick,
   classNameContainer,
   loading,
+  onSearch,
 }: Props<T>) {
   return (
     <Container
@@ -78,6 +80,7 @@ export default function FormModal<T>({
           inputs={inputs}
           headerText={inputsHeaderText}
           onChange={onInputChange}
+          onSearch={onSearch}
           error={error}
         />
       )}

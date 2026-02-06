@@ -29,6 +29,7 @@ export const useGetAvailableCities = () => {
     await promiseWrapper({
       setLoading,
       callback: async () => {
+        if (searchQuery.length < 3) return;
         const res: { cities: IAvailableCity[] } =
           await getAvailableCities(searchQuery);
 

@@ -13,9 +13,7 @@ export default function FooterTopItem({ title, links }: Props) {
           return (
             <li key={`${item.link}-${index}`}>
               <LinkContainer link={item.link} className={classes.button}>
-                <span className="body-text l">
-                  {item.title}
-                </span>
+                <span className="body-text l">{item.title}</span>
               </LinkContainer>
             </li>
           );

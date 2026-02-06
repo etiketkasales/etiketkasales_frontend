@@ -14,8 +14,22 @@
   outline: 0px solid transparent;
 }
 
+.input {
+  width: 100%;
+  background-color: transparent;
+}
+
 .selectedOption {
   background-color: transparent;
+}
+
+.searchable {
+  width: 100%;
+  flex: 1;
+}
+
+.iconSearchable {
+  justify-self: end;
 }
 
 .error {

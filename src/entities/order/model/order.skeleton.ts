@@ -44,6 +44,8 @@ export const orderPickupPointResponseSkeleton: IOrderPickupPointResponse = {
   id: "",
   code: "",
   name: "",
+  latitude: 0,
+  longitude: 0,
   full_address: "",
   delivery_days: "",
   delivery_time: {

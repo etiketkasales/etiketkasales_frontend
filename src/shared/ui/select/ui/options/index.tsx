@@ -51,9 +51,13 @@ export default function SelectOptions<T>({
           className={`${optionsClassName} flex-column scrollbar absolute options-container ${classes.options}`}
           onClick={() => setActive(false)}
         >
-          {options.map((item, index) => {
-            return renderItem(item, index);
-          })}
+          {options && options.length ? (
+            options.map((item, index) => {
+              return renderItem(item, index);
+            })
+          ) : (
+            <p className="text-neutral-800 text-body l">Пока ничего нет</p>
+          )}
         </motion.div>
       )}
     </AnimatePresence>

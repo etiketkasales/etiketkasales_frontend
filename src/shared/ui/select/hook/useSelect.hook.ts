@@ -4,6 +4,7 @@ export const useSelect = () => {
   const [active, setActive] = useState<boolean>(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -27,5 +28,6 @@ export const useSelect = () => {
     setActive,
     buttonRef,
     contentRef,
+    inputRef,
   };
 };

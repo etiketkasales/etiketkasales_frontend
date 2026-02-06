@@ -18,6 +18,7 @@ interface Props<T> {
   inputs: FormModalInputI<T>[];
   formData: T;
   onChange: (v: string, field: keyof T) => void;
+  onSearch?: (v: string) => void;
   error: MessageI | null;
 }
 
@@ -26,6 +27,7 @@ export default function FormModalInputs<T>({
   headerText,
   formData,
   onChange,
+  onSearch,
   error,
 }: Props<T>) {
   const getActiveOption = useCallback(
@@ -37,7 +39,7 @@ export default function FormModalInputs<T>({
   );
 
   return (
-    <div className={`flex-column gap-3 ${classes.container}`}>
+    <div className={`flex-column gap-3`}>
       {headerText && (
         <p className="text-16 gray-2 second-family regular">{headerText}</p>
       )}
@@ -64,7 +66,6 @@ export default function FormModalInputs<T>({
               <PhoneInput
                 key={index}
                 onChange={(e) => onChange(e, input.field)}
-                className={classes.input}
                 value={StringUtils.formatPhone(
                   formData[field]?.toString() || "",
                 )}
@@ -80,13 +81,15 @@ export default function FormModalInputs<T>({
                   formData[field]?.toString() || "",
                 )}
                 options={input.selectOptions || []}
-                className={`${classes.input} ${classes.select}`}
+                className={classes.select}
                 optionsClassName={`${classes.options}`}
                 selectedOptionClassName={`${classes.selectedOption}`}
                 optionsPosTop={12}
                 doubleHeader="Город"
                 optionHolder="Выберите город из списка"
                 error={error?.field === input.field ? error.message : ""}
+                isSearchable
+                onSearch={onSearch}
                 renderItem={(item, index) => {
                   return (
                     <Button
