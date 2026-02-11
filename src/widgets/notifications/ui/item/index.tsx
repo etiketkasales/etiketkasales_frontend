@@ -30,7 +30,6 @@ export default function Notification({ uuid, message, type, index }: Props) {
             {
               x: offsetX || 0,
               "--index": index,
-              y: -30 * index,
             } as CSSProperties
           }
           className={`flex-row align-center ${classes.container}`}

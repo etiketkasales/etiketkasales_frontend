@@ -4,7 +4,6 @@ import {
   IItemToOrder,
   IOrderPickupPointData,
   IOrderReceiver,
-  IProductForDeliveryMethod,
   orderDeliveryMethodSkeleton,
   orderPickupPointSkeleton,
   orderReceiverSkeleton,

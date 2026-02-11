@@ -20,9 +20,10 @@ export interface GetDataInterface<T> {
   message: string;
 }
 
+export type MessageType = "error" | "success" | "warning";
 export interface MessageI {
   message: string;
-  type: "error" | "success" | "warning";
+  type: MessageType;
   field?: string;
 }
 

@@ -1,5 +1,7 @@
 import { apiClient, tryCatch } from "~/src/shared/lib";
 import {
+  ICreatedOrderDto,
+  ICreatePaymentDto,
   IDeliveryMethodResponse,
   IItemToOrder,
   IOrderPickupPointResponse,
@@ -45,7 +47,7 @@ interface ICreateOrderParams {
 export const createOrder = async (params: ICreateOrderParams) => {
   return await tryCatch(
     async () => {
-      const res = await apiClient.post<IGetData<{ id: number }>>(
+      const res = await apiClient.post<IGetData<ICreatedOrderDto>>(
         `/users/orders/`,
         {
           ...params,
@@ -72,7 +74,7 @@ export const createOrderForCompany = async (
 ) => {
   return await tryCatch(
     async () => {
-      const res = await apiClient.post<IGetData<{ id: number }>>(
+      const res = await apiClient.post<IGetData<ICreatedOrderDto>>(
         `/orders/create-company/`,
         {
           ...params,
@@ -106,7 +108,7 @@ export const getPickupPointsData = async (
 
 export const createOrderPayment = async (order_id: number) => {
   return await tryCatch(async () => {
-    const res = await apiClient.post<IGetData<{ payment_url: string }>>(
+    const res = await apiClient.post<IGetData<ICreatePaymentDto>>(
       `/orders/${order_id}/payment/`,
     );
     return res.data.data;

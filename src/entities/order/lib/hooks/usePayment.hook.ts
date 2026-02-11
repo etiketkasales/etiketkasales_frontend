@@ -1,22 +1,27 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { selectOrder } from "~/src/app/store/reducers/order.slice";
-import { addNotification } from "~/src/app/store/reducers/notifications.slice";
 import { promiseWrapper } from "~/src/shared/lib";
-import { getPaymentMethodsForOrder } from "../api";
+import { createOrderPayment, getPaymentMethodsForOrder } from "../api";
+
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useAppSelector } from "~/src/app/store/hooks";
+import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 
 import { IPaymentMethodResponse } from "../../model";
 
 interface Props {
   isCompany: boolean;
+  needLoad?: boolean;
 }
 
-const errorMessage = "Не удалось получить способы оплаты";
+const errorMessages = {
+  paymentMethods: "Не удалось получить способы оплаты",
+  createPayment: "Не удалось создать платеж",
+};
 
 // Получение и отдача способов оплаты
-export const usePayment = ({ isCompany }: Props) => {
-  const dispatch = useAppDispatch();
+export const usePayment = ({ isCompany, needLoad = true }: Props) => {
   const { itemsToOrder } = useAppSelector(selectOrder);
+  const createNotification = useCreateNotification();
   const [loading, setLoading] = useState<boolean>(false);
   const [methods, setMethods] = useState<IPaymentMethodResponse[]>([]);
   const [chosenMethod, setChosenMethod] = useState<string>("");
@@ -31,6 +36,26 @@ export const usePayment = ({ isCompany }: Props) => {
     setChosenMethod(method);
   }, []);
 
+  const createPaymentForOrder = useCallback(
+    async (orderId: number) => {
+      await promiseWrapper({
+        setLoading,
+        callback: async () => {
+          const res = await createOrderPayment(orderId);
+          if (res) {
+            createNotification("Платёж успешно создан", "success");
+            window.open(res.payment_url);
+          }
+        },
+        fallback: () => {
+          createNotification("Не удалось создать платёж по заказу", "error");
+        },
+        errorMessage: errorMessages.createPayment,
+      });
+    },
+    [createNotification],
+  );
+
   const getPaymentMethods = useCallback(async () => {
     await promiseWrapper({
       setLoading,
@@ -39,27 +64,23 @@ export const usePayment = ({ isCompany }: Props) => {
         if (res && Array.isArray(res)) {
           setMethods(res);
         } else {
-          dispatch(
-            addNotification({
-              message: errorMessage,
-              type: "error",
-              field: "global",
-            }),
-          );
+          createNotification(errorMessages.paymentMethods, "error");
         }
       },
-      errorMessage,
+      errorMessage: errorMessages.paymentMethods,
     });
-  }, [dispatch, amount, isCompany]);
+  }, [amount, isCompany, createNotification]);
 
   useEffect(() => {
+    if (!needLoad) return;
     getPaymentMethods();
-  }, [getPaymentMethods]);
+  }, [getPaymentMethods, needLoad]);
 
   return {
     methods,
     loading,
     onMethodClick,
+    createPaymentForOrder,
     chosenMethod,
   };
 };
