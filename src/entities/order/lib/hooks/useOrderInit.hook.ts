@@ -22,6 +22,7 @@ export const useOrderInit = ({ stage }: Props) => {
   const dispatch = useAppDispatch();
   const { userInfo, companies } = useAppSelector(selectUser);
 
+  // --- Инициализация получателя ---
   const initCompanyOrder = useCallback(() => {
     const receiver: IOrderReceiver = {
       receiver_email: userInfo.email || "",
@@ -29,44 +30,54 @@ export const useOrderInit = ({ stage }: Props) => {
       receiver_phone: userInfo.phone || "",
       receiver_surname: userInfo.surname || "",
     };
+
     const defaultCompany = companies.find((company) => company.is_default);
 
     dispatch(setOrderCompanyId(defaultCompany?.id || 0));
-    dispatch(setOrderReceiverData({ ...receiver }));
+    dispatch(setOrderReceiverData(receiver));
   }, [dispatch, userInfo, companies]);
 
   useEffect(() => {
     initCompanyOrder();
   }, [initCompanyOrder]);
 
-  // Валидация для оформления заказа
-  const { receiver, deliveryMethod, deliveryAddressId, receiverCompanyId } =
-    useAppSelector(selectOrder);
-  const firstStageRequiredFields = useMemo(
-    () => [deliveryMethod, deliveryAddressId],
-    [deliveryMethod, deliveryAddressId],
-  );
+  // --- Валидация стадий ---
+  const {
+    receiver,
+    deliveryMethod,
+    deliveryAddressId,
+    receiverCompanyId,
+    pickupPoint,
+  } = useAppSelector(selectOrder);
+
+  const isFirstStageInvalid = useMemo(() => {
+    return [
+      deliveryMethod,
+      deliveryAddressId,
+      pickupPoint.pickup_point_code,
+    ].some((field) => {
+      if (typeof field === "object" && field !== null) {
+        return FormUtils.getFormError({
+          checkData: field,
+          requiredFields: Object.keys(field) as (keyof typeof field)[],
+        });
+      }
+
+      return FormUtils.checkIfValueEmpty(field);
+    });
+  }, [deliveryMethod, deliveryAddressId, pickupPoint.pickup_point_code]);
+
+  const isConfirmStageInvalid = useMemo(() => {
+    return (
+      Object.values(receiver).some(FormUtils.checkIfValueEmpty) ||
+      !receiverCompanyId
+    );
+  }, [receiver, receiverCompanyId]);
 
   useEffect(() => {
-    let hasEmptyFields: boolean = false;
-    if (stage === "choose_pvz") {
-      hasEmptyFields = firstStageRequiredFields.some((field) => {
-        if (typeof field === "object") {
-          return FormUtils.getFormError({
-            checkData: field,
-            requiredFields: Object.keys(field) as (keyof typeof field)[],
-          });
-        }
+    const disabled =
+      stage === "choose_pvz" ? isFirstStageInvalid : isConfirmStageInvalid;
 
-        return FormUtils.checkIfValueEmpty(field);
-      });
-    } else if (stage === "confirm") {
-      hasEmptyFields =
-        Object.values(receiver).some((field) => {
-          return FormUtils.checkIfValueEmpty(field);
-        }) || !receiverCompanyId;
-    }
-
-    dispatch(setButtonDisabled(hasEmptyFields));
-  }, [dispatch, stage, firstStageRequiredFields, receiver, receiverCompanyId]);
+    dispatch(setButtonDisabled(disabled));
+  }, [stage, isFirstStageInvalid, isConfirmStageInvalid, dispatch]);
 };

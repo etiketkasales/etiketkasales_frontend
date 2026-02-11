@@ -1,10 +1,12 @@
 import { apiClient, tryCatch } from "~/src/shared/lib";
 import {
   IDeliveryMethodResponse,
+  IItemToOrder,
   IOrderPickupPointResponse,
   IPaymentMethodResponse,
 } from "../../model";
 import { IGetData } from "~/src/shared/model";
+import { AxiosError } from "axios";
 
 export const getDeliveryMethodsForOrder = async () => {
   return await tryCatch(async () => {
@@ -37,18 +39,14 @@ export const getPaymentMethodsForOrder = async (
 interface ICreateOrderParams {
   delivery_address_id: number;
   delivery_method: string;
-  receiver_name: string;
-  receiver_surname: string;
-  receiver_phone: string;
-  receiver_email: string;
-  pickup_point_id: string;
-  pickup_point_address: string;
+  items: IItemToOrder[];
+  pickup_point_code: string;
 }
 export const createOrder = async (params: ICreateOrderParams) => {
   return await tryCatch(
     async () => {
       const res = await apiClient.post<IGetData<{ id: number }>>(
-        `/orders/create-from-cart/`,
+        `/users/orders/`,
         {
           ...params,
         },
@@ -63,6 +61,10 @@ export const createOrder = async (params: ICreateOrderParams) => {
 
 interface ICreateOrderForCompanyParams extends ICreateOrderParams {
   company_id: number;
+  receiver_name: string;
+  receiver_surname: string;
+  receiver_phone: string;
+  receiver_email: string;
 }
 
 export const createOrderForCompany = async (
@@ -71,7 +73,7 @@ export const createOrderForCompany = async (
   return await tryCatch(
     async () => {
       const res = await apiClient.post<IGetData<{ id: number }>>(
-        `/orders/create-from-cart-company/`,
+        `/orders/create-company/`,
         {
           ...params,
         },
@@ -85,20 +87,20 @@ export const createOrderForCompany = async (
 };
 
 export const getPickupPointsData = async (
-  delivery_address_id: number,
   delivery_method: string,
+  limit?: number,
 ) => {
   return await tryCatch(async () => {
     const res = await apiClient.get<IGetData<IOrderPickupPointResponse[]>>(
       `/delivery-methods/pickup-points`,
       {
         params: {
-          delivery_address_id,
           delivery_method,
+          limit: limit || 50,
         },
       },
     );
-    return res.data.data;
+    return res.data;
   });
 };
 

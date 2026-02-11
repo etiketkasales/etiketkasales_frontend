@@ -56,8 +56,7 @@ export interface IItemToOrder {
 }
 
 export interface IOrderPickupPointData {
-  pickup_point_id: string;
-  pickup_point_address: string;
+  pickup_point_code: string | null;
 }
 
 export interface IPaymentMethodResponse {

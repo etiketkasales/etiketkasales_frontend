@@ -39,6 +39,7 @@ export const useCreateOrder = ({ type, stage, setStage }: Props) => {
     deliveryAddressId,
     deliveryMethod,
     pickupPoint,
+    itemsToOrder,
   } = useAppSelector(selectOrder);
   const [loading, setLoading] = useState<boolean>(false);
   const { isValidOrder } = useValidateOrder({ type });
@@ -96,7 +97,8 @@ export const useCreateOrder = ({ type, stage, setStage }: Props) => {
         let res: IGetData<{ id: number }> | null = null;
         const defaultParams = {
           ...receiver,
-          ...pickupPoint,
+          pickup_point_code: pickupPoint.pickup_point_code!,
+          items: itemsToOrder,
           delivery_address_id: deliveryAddressId,
           delivery_method: deliveryMethod.code,
         };

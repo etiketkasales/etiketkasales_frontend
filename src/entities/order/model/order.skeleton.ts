@@ -36,8 +36,7 @@ export const orderDeliveryMethodSkeleton: IDeliveryMethodResponse = {
 };
 
 export const orderPickupPointSkeleton: IOrderPickupPointData = {
-  pickup_point_address: "",
-  pickup_point_id: "",
+  pickup_point_code: null,
 };
 
 export const orderPickupPointResponseSkeleton: IOrderPickupPointResponse = {
