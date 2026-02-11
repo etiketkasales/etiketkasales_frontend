@@ -10,51 +10,66 @@ import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 import StringUtils from "~/src/shared/lib/utils/string.util";
 
 import { ICartItem } from "../../model";
+import { IItemToOrder } from "~/src/entities/order/model";
 
 export const useCart = () => {
   const dispatch = useAppDispatch();
-  const { items } = useAppSelector(selectCart);
+  const { items: itemsInCart } = useAppSelector(selectCart);
   const { itemsToOrder } = useAppSelector(selectOrder);
   const [sellerItems, setSellerItems] = useState<Array<ICartItem[]>>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const configureNewItem = useCallback((item: ICartItem) => {
+    const numPrice = StringUtils.formatPriceToNumber(item.price);
+    if (!numPrice) return null;
+
+    return {
+      product_id: item.id,
+      product_name: item.name,
+      quantity: item.quantity,
+      price: numPrice,
+    };
+  }, []);
+
   const handleSelectItem = useCallback(
-    (id: number, weight: number) => {
-      const ids = itemsToOrder.map((item) => item.id);
-      const newItems = ids.includes(id)
-        ? itemsToOrder.filter((item) => item.id !== id)
-        : [...itemsToOrder, { id, weight }];
+    (item: ICartItem) => {
+      const newItem = configureNewItem(item);
+      if (!newItem) return;
+
+      const ids = itemsToOrder.map((item) => item.product_id);
+      const newItems = ids.includes(newItem.product_id)
+        ? itemsToOrder.filter((item) => item.product_id !== newItem.product_id)
+        : [...itemsToOrder, newItem];
 
       dispatch(setOrderItems(newItems));
     },
-    [itemsToOrder, dispatch],
+    [itemsToOrder, dispatch, configureNewItem],
   );
 
   useEffect(() => {
     dispatch(
       setCart({
-        isAllSelected: itemsToOrder.length === items.length,
+        isAllSelected: itemsToOrder.length === itemsInCart.length,
       }),
     );
-  }, [itemsToOrder.length, items.length, dispatch]);
+  }, [itemsToOrder.length, itemsInCart.length, dispatch]);
 
   const onCheckboxChange = useCallback(
     (selectAll: boolean) => {
       const newItems = selectAll
-        ? items.map((item) => {
-            const numPrice = StringUtils.formatPriceToNumber(item.price);
-            if (numPrice <= 0) {
-              throw Error("Не удалось вычислить цену товаров");
+        ? itemsInCart.map((item) => {
+            const newItem = configureNewItem(item);
+            if (!newItem) {
+              throw Error("Ошибка при выборе товара");
             }
 
-            const weight = numPrice * item.quantity;
-            return { id: item.id, weight };
+            return newItem;
           })
         : [];
 
       dispatch(setOrderItems(newItems));
     },
-    [dispatch, items],
+    [dispatch, itemsInCart, configureNewItem],
   );
 
   const updateCart = useCallback(async () => {
@@ -86,7 +101,7 @@ export const useCart = () => {
       setLoading,
       callback: async () => {
         if (itemsToOrder.length === 0) return;
-        await multiDeleteProducts(itemsToOrder.map((i) => i.id));
+        await multiDeleteProducts(itemsToOrder.map((i) => i.product_id));
         await updateCart();
       },
     });
@@ -94,30 +109,30 @@ export const useCart = () => {
 
   // группирует по продавцам
   useEffect(() => {
-    if (!items.length) {
+    if (!itemsInCart.length) {
       dispatch(setOrderItems([]));
       setSellerItems([]);
       return;
     }
 
-    const selected = items.map((item) => {
-      const numPrice = StringUtils.formatPriceToNumber(item.price);
-      if (numPrice <= 0) {
-        throw Error("Не удалось вычислить цену товаров");
+    const selected = itemsInCart.map((item) => {
+      const selectedItem = configureNewItem(item);
+      if (!selectedItem) {
+        throw Error("Ошибка при выборе товара");
       }
-      return {
-        id: item.id,
-        weight: numPrice * item.quantity,
-      };
+      return selectedItem;
     });
-    const sellerIdList = [...new Set(items.map((item) => item.seller_id))];
+
+    const sellerIdList = [
+      ...new Set(itemsInCart.map((item) => item.seller_id)),
+    ];
     const groupedBySeller = sellerIdList.map((id) =>
-      items.filter((item) => item.seller_id === id),
+      itemsInCart.filter((item) => item.seller_id === id),
     );
 
     dispatch(setOrderItems(selected));
     setSellerItems(groupedBySeller);
-  }, [items, dispatch]);
+  }, [itemsInCart, dispatch]);
 
   return {
     selectedItems: itemsToOrder,

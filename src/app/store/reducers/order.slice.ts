@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   IDeliveryMethodResponse,
+  IItemToOrder,
   IOrderPickupPointData,
   IOrderReceiver,
   IProductForDeliveryMethod,
@@ -17,7 +18,7 @@ interface InitialStateI {
   receiver: IOrderReceiver;
   receiverCompanyId: number;
   pickupPoint: IOrderPickupPointData;
-  itemsToOrder: IProductForDeliveryMethod[];
+  itemsToOrder: IItemToOrder[];
   buttonDisabled: boolean;
 }
 
@@ -42,10 +43,7 @@ export const orderSlice = createSlice({
     setButtonDisabled: (state, action: PayloadAction<boolean>) => {
       state.buttonDisabled = action.payload;
     },
-    setOrderItems: (
-      state,
-      action: PayloadAction<IProductForDeliveryMethod[]>,
-    ) => {
+    setOrderItems: (state, action: PayloadAction<IItemToOrder[]>) => {
       state.itemsToOrder = action.payload;
     },
     setOrderReceiverData: (state, action: PayloadAction<IOrderReceiver>) => {

@@ -1,13 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
+import classNames from "classnames";
 import { useSelect } from "../hook/useSelect.hook";
 
 import classes from "./select.module.scss";
 import Icon from "~/public/select/icon.svg";
 import Button from "~/src/shared/ui/button";
 import SelectOptions from "./options";
-import classNames from "classnames";
-import TextInput from "../../inputs/text-input";
 
 interface Props<T> {
   activeOption: string;

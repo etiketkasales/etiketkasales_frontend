@@ -3,26 +3,15 @@ import {
   IDeliveryMethodResponse,
   IOrderPickupPointResponse,
   IPaymentMethodResponse,
-  IProductForDeliveryMethod,
 } from "../../model";
 import { IGetData } from "~/src/shared/model";
 
-export const getDeliveryMethodsForOrder = async (
-  delivery_address_id: number,
-  products: IProductForDeliveryMethod[],
-) => {
+export const getDeliveryMethodsForOrder = async () => {
   return await tryCatch(async () => {
-    const productsParam = JSON.stringify(products);
-    const res = await apiClient.get<IGetData<IDeliveryMethodResponse[]>>(
-      `/delivery-methods/`,
-      {
-        params: {
-          delivery_address_id,
-          products: productsParam,
-        },
-      },
-    );
-
+    const res =
+      await apiClient.get<IGetData<IDeliveryMethodResponse[]>>(
+        `/delivery-methods/`,
+      );
     return res.data.data;
   });
 };

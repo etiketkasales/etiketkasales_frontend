@@ -42,9 +42,17 @@ export interface IDeliveryMethodResponse {
   image_url: string;
 }
 
+// deprecated
 export interface IProductForDeliveryMethod {
   id: number;
   weight: number;
+}
+
+export interface IItemToOrder {
+  product_id: number;
+  product_name: string;
+  quantity: number;
+  price: number;
 }
 
 export interface IOrderPickupPointData {

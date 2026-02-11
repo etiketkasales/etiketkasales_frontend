@@ -1,29 +1,13 @@
-"use client";
-import React from "react";
-
 import CartSellerItems from "./seller";
-import { ICartItem } from "../../../model/cart.interface";
-import { IProductForDeliveryMethod } from "~/src/entities/order/model";
+import { ICartItem } from "~/src/features/cart/model";
 
 interface Props {
   sellersItems: Array<ICartItem[]>;
-  selectedItems: IProductForDeliveryMethod[];
-  selectItem: (id: number, weight: number) => void;
+  selectItem: (item: ICartItem) => void;
 }
 
-export default function CartSellers({
-  sellersItems,
-  selectedItems,
-  selectItem,
-}: Props) {
+export default function CartSellers({ sellersItems, selectItem }: Props) {
   return sellersItems.map((item, index) => {
-    return (
-      <CartSellerItems
-        key={index}
-        items={item}
-        selectedItems={selectedItems}
-        selectItem={selectItem}
-      />
-    );
+    return <CartSellerItems key={index} items={item} selectItem={selectItem} />;
   });
 }

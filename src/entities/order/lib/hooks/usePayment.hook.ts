@@ -22,7 +22,8 @@ export const usePayment = ({ isCompany }: Props) => {
   const [chosenMethod, setChosenMethod] = useState<string>("");
 
   const amount = useMemo(
-    () => itemsToOrder.reduce((acc, item) => acc + item.weight, 0),
+    () =>
+      itemsToOrder.reduce((acc, item) => acc + item.price * item.quantity, 0),
     [itemsToOrder],
   );
 

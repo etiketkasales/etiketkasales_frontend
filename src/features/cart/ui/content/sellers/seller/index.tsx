@@ -1,24 +1,15 @@
-"use client";
-import React from "react";
-
 import classes from "./seller.module.scss";
 import CartWrapper from "~/src/features/cart/ui/wrapper";
 import SellerInfoContainer from "~/src/shared/ui/seller-info/ui";
 import CartSellerItem from "./item";
 import { ICartItem } from "~/src/features/cart/model/cart.interface";
-import { IProductForDeliveryMethod } from "~/src/entities/order/model";
 
 interface Props {
   items: ICartItem[];
-  selectedItems: IProductForDeliveryMethod[];
-  selectItem: (id: number, weight: number) => void;
+  selectItem: (item: ICartItem) => void;
 }
 
-export default function CartSellerItems({
-  items,
-  selectedItems,
-  selectItem,
-}: Props) {
+export default function CartSellerItems({ items, selectItem }: Props) {
   return (
     <CartWrapper className={`flex-column ${classes.container}`}>
       <SellerInfoContainer
@@ -32,7 +23,6 @@ export default function CartSellerItems({
             <CartSellerItem
               key={`${item.id}-${index}`}
               item={item}
-              selectedItems={selectedItems}
               selectItem={selectItem}
             />
           );
