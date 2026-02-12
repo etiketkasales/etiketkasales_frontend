@@ -1,33 +1,29 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { useCartItems } from "~/src/features/cart/lib/hooks/useCartItems.hook";
-import StringUtils from "~/src/shared/lib/utils/string.util";
+import { useEffect, useState } from "react";
+import { useAppSelector } from "~/src/app/store/hooks";
+import { selectOrder } from "~/src/app/store/reducers/order.slice";
+import { useCartItems } from "~/src/features/cart/lib/hooks";
 
 import classes from "./item.module.scss";
 import CheckboxInput from "~/src/shared/ui/inputs/checkbox";
 import CartSellerItemInfo from "./info";
 import SellerItemButtons from "./extra";
-import { ICartItem } from "~/src/features/cart/model/cart.interface";
-import { IProductForDeliveryMethod } from "~/src/entities/order/model";
+import { ICartItem } from "~/src/features/cart/model";
 
 interface Props {
   item: ICartItem;
-  selectedItems: IProductForDeliveryMethod[];
-  selectItem: (id: number, weight: number) => void;
+  selectItem: (item: ICartItem) => void;
 }
 
-export default function CartSellerItem({
-  item,
-  selectedItems,
-  selectItem,
-}: Props) {
+export default function CartSellerItem({ item, selectItem }: Props) {
+  const { itemsToOrder: selectedItems } = useAppSelector(selectOrder);
   const { handleDeleteEtiketka: deleteFromCart } = useCartItems({
     itemId: item.id,
   });
   const [isSelected, setIsSelected] = useState<boolean>(false);
 
   useEffect(() => {
-    const ids = selectedItems.map((i) => i.id);
+    const ids = selectedItems.map((i) => i.product_id);
     if (ids.includes(item.id)) {
       setIsSelected(true);
     } else {
@@ -41,9 +37,7 @@ export default function CartSellerItem({
         <CheckboxInput
           checked={isSelected}
           onChange={() => {
-            const numPrice = StringUtils.formatPriceToNumber(item.price);
-            if (!numPrice) return;
-            selectItem(item.id, numPrice * item.quantity);
+            selectItem(item);
           }}
           className={classes.checkbox}
         />

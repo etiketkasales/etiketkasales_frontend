@@ -1,14 +1,13 @@
 import { useCallback, useState } from "react";
-import { useRouter } from "next/navigation";
-
-import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { selectOrder } from "~/src/app/store/reducers/order.slice";
-import { addNotification } from "~/src/app/store/reducers/notifications.slice";
-import { useValidateOrder } from ".";
 import { createOrder, createOrderForCompany, createOrderPayment } from "../api";
 import { promiseWrapper } from "~/src/shared/lib";
 
-import { OrderType, OrderStageType } from "../../model";
+import { useAppSelector } from "~/src/app/store/hooks";
+import { usePayment, useValidateOrder } from ".";
+import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
+
+import { OrderType, OrderStageType, ICreatedOrderDto } from "../../model";
 import { IGetData } from "~/src/shared/model";
 
 interface Props {
@@ -31,30 +30,21 @@ const errorMessage = "Не удалось создать заказ";
  * }}
  */
 export const useCreateOrder = ({ type, stage, setStage }: Props) => {
-  const dispatch = useAppDispatch();
-  const { push } = useRouter();
   const {
     receiver,
     receiverCompanyId,
     deliveryAddressId,
     deliveryMethod,
     pickupPoint,
+    itemsToOrder,
   } = useAppSelector(selectOrder);
   const [loading, setLoading] = useState<boolean>(false);
   const { isValidOrder } = useValidateOrder({ type });
-
-  const createNotification = useCallback(
-    (msg: string, type?: "error" | "success") => {
-      dispatch(
-        addNotification({
-          message: msg,
-          type: type || "error",
-          field: "global",
-        }),
-      );
-    },
-    [dispatch],
-  );
+  const createNotification = useCreateNotification();
+  const { createPaymentForOrder: createPayment } = usePayment({
+    isCompany: type === "company",
+    needLoad: false,
+  });
 
   // Создание плашек уведомлений
   const requestCallback = useCallback(
@@ -68,24 +58,42 @@ export const useCreateOrder = ({ type, stage, setStage }: Props) => {
     [createNotification],
   );
 
-  // Создание платёжа
-  const createPayment = useCallback(
-    async (orderId: number) => {
-      await promiseWrapper({
-        setLoading,
-        callback: async () => {
-          const res = await createOrderPayment(orderId);
-          if (res?.payment_url) {
-            createNotification("Платёж создан", "success");
-            push(res.payment_url);
-          } else createNotification("Не удалось создать платёж", "error");
-        },
-      });
-    },
-    [createNotification, push],
-  );
+  const createOrderByType = useCallback(async () => {
+    const defaultParams = {
+      ...receiver,
+      pickup_point_code: pickupPoint.pickup_point_code!,
+      items: itemsToOrder,
+      delivery_address_id: deliveryAddressId,
+      delivery_method: deliveryMethod.code,
+    };
 
-  // Создание заказа — после передача айди в платёж и создание
+    let res: IGetData<ICreatedOrderDto> | null = null;
+    switch (type) {
+      case "person":
+        res = await createOrder({
+          ...defaultParams,
+        });
+        return res;
+      case "company":
+        res = await createOrderForCompany({
+          ...defaultParams,
+          company_id: receiverCompanyId,
+        });
+        return res;
+      default:
+        return res;
+    }
+  }, [
+    type,
+    receiverCompanyId,
+    deliveryAddressId,
+    deliveryMethod,
+    itemsToOrder,
+    receiver,
+    pickupPoint,
+  ]);
+
+  // Создание заказа и платежа
   const onCreateOrder = useCallback(async () => {
     await promiseWrapper({
       setLoading,
@@ -93,48 +101,23 @@ export const useCreateOrder = ({ type, stage, setStage }: Props) => {
       callback: async () => {
         if (!isValidOrder()) return;
 
-        let res: IGetData<{ id: number }> | null = null;
-        const defaultParams = {
-          ...receiver,
-          ...pickupPoint,
-          delivery_address_id: deliveryAddressId,
-          delivery_method: deliveryMethod.code,
-        };
-
-        if (type === "person") {
-          res = await createOrder({
-            ...defaultParams,
-          });
-        } else if (type === "company") {
-          res = await createOrderForCompany({
-            ...defaultParams,
-            company_id: receiverCompanyId,
-          });
-        }
-
-        if (res?.success) {
-          if (res.data && res.data.id) {
-            await createPayment(res.data.id);
-          }
+        const res = await createOrderByType();
+        if (!res) {
+          requestCallback(false);
+          return;
         }
 
         requestCallback(true);
+
+        if (res.data && res.data.id) {
+          await createPayment(res.data.id);
+        }
       },
       fallback: () => {
         requestCallback(false);
       },
     });
-  }, [
-    requestCallback,
-    isValidOrder,
-    deliveryAddressId,
-    deliveryMethod,
-    receiver,
-    receiverCompanyId,
-    pickupPoint,
-    type,
-    createPayment,
-  ]);
+  }, [requestCallback, isValidOrder, createPayment, createOrderByType]);
 
   const onCreateButtonClick = useCallback(async () => {
     if (stage === "confirm") {

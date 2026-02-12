@@ -1,3 +1,4 @@
+// calculated order prices data
 export interface OrderPricesI {
   itemsSum: number;
   discountSum: number;
@@ -5,34 +6,20 @@ export interface OrderPricesI {
   total: number;
 }
 
+export type OrderType = "company" | "person";
+
 export type OrderStageType = "choose_pvz" | "confirm";
 
-export interface IOrderDeliveryMethod {
-  name: string;
-  image: string;
+// response for create order api endpoints
+export interface ICreatedOrderDto {
+  id: number;
+  order_number: string;
+  total_amount: string;
+  delivery_cost: string;
+  created_at: string; // "2025-01-07T12:00:00+00:00"
 }
 
-export interface INewOrderAcceptor {
-  name: string;
-  surname: string;
-  phone: string;
-  email: string;
-}
-
-export interface INewOrderInfo {
-  delivery_address: string;
-  delivery_method: string;
-  acceptor: INewOrderAcceptor;
-  purchase_method: string;
-}
-
-export interface INewOrderInput {
-  placeholder: string;
-  field: keyof IOrderReceiver;
-  type: "phone" | "email" | "string";
-}
-
-// API
+// response for getting delivery methods
 export interface IDeliveryMethodResponse {
   id: number;
   code: string;
@@ -42,16 +29,20 @@ export interface IDeliveryMethodResponse {
   image_url: string;
 }
 
-export interface IProductForDeliveryMethod {
-  id: number;
-  weight: number;
+// selected in cart items
+export interface IItemToOrder {
+  product_id: number;
+  product_name: string;
+  quantity: number;
+  price: number;
 }
 
+// data about pickup point for creating order
 export interface IOrderPickupPointData {
-  pickup_point_id: string;
-  pickup_point_address: string;
+  pickup_point_code: string | null;
 }
 
+// response for getting payment methods
 export interface IPaymentMethodResponse {
   code: string;
   name: string;
@@ -60,18 +51,21 @@ export interface IPaymentMethodResponse {
   image_url: string;
 }
 
+// data for creating order
 export interface IOrderReceiver {
   receiver_name: string;
   receiver_surname: string;
   receiver_phone: string;
   receiver_email: string;
 }
-
-export interface ICreateOrderForCompany {
-  company_id: number;
-  receiver: IOrderReceiver;
+// input in form for create order for company
+export interface INewOrderInput {
+  placeholder: string;
+  field: keyof IOrderReceiver;
+  type: "phone" | "email" | "string";
 }
 
+// response for getting pickup points
 export interface IOrderPickupPointResponse {
   id: string;
   code: string;
@@ -87,4 +81,10 @@ export interface IOrderPickupPointResponse {
   work_hours: string;
 }
 
-export type OrderType = "company" | "person";
+// response on creating payment api endpoint
+export interface ICreatePaymentDto {
+  payment_id: string;
+  payment_method: string;
+  payment_url: string;
+  amount: number;
+}

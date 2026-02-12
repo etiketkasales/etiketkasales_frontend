@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
+import { useAppDispatch } from "~/src/app/store/hooks";
 import { addNotification } from "~/src/app/store/reducers/notifications.slice";
 import {
-  selectOrder,
   setOrderDeliveryAddressId,
   setOrderDeliveryMethod,
 } from "~/src/app/store/reducers/order.slice";
@@ -14,7 +13,6 @@ import { promiseWrapper } from "~/src/shared/lib";
 import { IDeliveryMethodResponse } from "../../model";
 
 const messageTexts = {
-  noItemsToOrder: "Нет товаров к заказу",
   cantGetMethods: "Не удалось получить способы доставки",
   noDeliveryAddress: "Не выбран адрес доставки",
 };
@@ -32,7 +30,6 @@ interface Props {
  */
 export const useDelivery = ({ deliveryAddressId, canLoad }: Props) => {
   const dispatch = useAppDispatch();
-  const { itemsToOrder } = useAppSelector(selectOrder);
   const [methods, setMethods] = useState<IDeliveryMethodResponse[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -67,20 +64,7 @@ export const useDelivery = ({ deliveryAddressId, canLoad }: Props) => {
     await promiseWrapper({
       setLoading,
       callback: async () => {
-        if (!itemsToOrder) {
-          createMessage(messageTexts.noItemsToOrder);
-          return;
-        }
-
-        if (!deliveryAddressId) {
-          createMessage(messageTexts.noDeliveryAddress);
-          return;
-        }
-
-        const res = await getDeliveryMethodsForOrder(
-          deliveryAddressId,
-          itemsToOrder,
-        );
+        const res = await getDeliveryMethodsForOrder();
 
         if (res) {
           setMethods(res);
@@ -89,10 +73,14 @@ export const useDelivery = ({ deliveryAddressId, canLoad }: Props) => {
         }
       },
     });
-  }, [deliveryAddressId, createMessage, itemsToOrder]);
+  }, []);
 
   useEffect(() => {
-    if (!deliveryAddressId) return;
+    if (!deliveryAddressId) {
+      createMessage(messageTexts.noDeliveryAddress);
+      return;
+    }
+
     dispatch(setOrderDeliveryAddressId(deliveryAddressId));
   }, [deliveryAddressId, dispatch]);
 

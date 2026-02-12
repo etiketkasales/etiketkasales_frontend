@@ -1,14 +1,12 @@
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
-
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
+import { useFormValidate } from "~/src/shared/lib/hooks/useFormValidate.hook";
+import { useUser } from "~/src/features/user/lib/hooks";
+
 import { setStage } from "~/src/app/store/reducers/company.slice";
 import { selectUser, setUser } from "~/src/app/store/reducers/user.slice";
-
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
-import { useFormValidate } from "~/src/shared/lib/hooks/useFormValidate.hook";
-
-import { useUser } from "~/src/features/user/lib/hooks";
 import { changePersonalData } from "~/src/entities/profile-section/lib/api";
 
 import { IChangeableProfile } from "~/src/features/user/model";
@@ -84,7 +82,7 @@ export const useCompanyRegister = ({ stage }: Props) => {
         const res = await changePersonalData(changeableUserInfo);
         if (res.user) {
           setUserData(res.user);
-          push("/profile/seller-pending");
+          push("/profile/seller-pending?active_section=quote");
         }
       },
     });

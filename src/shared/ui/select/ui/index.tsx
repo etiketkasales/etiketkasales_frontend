@@ -1,13 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
+import classNames from "classnames";
 import { useSelect } from "../hook/useSelect.hook";
 
 import classes from "./select.module.scss";
 import Icon from "~/public/select/icon.svg";
 import Button from "~/src/shared/ui/button";
 import SelectOptions from "./options";
-import classNames from "classnames";
-import TextInput from "../../inputs/text-input";
 
 interface Props<T> {
   activeOption: string;
@@ -56,7 +55,15 @@ export default function Select<T>(props: Props<T>) {
     onSearch,
   } = props;
 
-  const { active, setActive, contentRef, buttonRef, inputRef } = useSelect();
+  const {
+    active,
+    setActive,
+    contentRef,
+    buttonRef,
+    inputRef,
+    inputValue,
+    setInputValue,
+  } = useSelect({ activeOption });
 
   const displayValue = activeOption || optionHolder;
 
@@ -101,9 +108,13 @@ export default function Select<T>(props: Props<T>) {
               type="text"
               className={classNames(classes.input, error && classes.inputError)}
               placeholder={optionHolder}
-              onChange={(e) => onSearch?.(e.target.value)}
+              onChange={(e) => {
+                onSearch?.(e.target.value);
+                setInputValue(e.target.value);
+              }}
               name={optionHolder}
               ref={inputRef}
+              value={inputValue}
             />
           ) : (
             <span className={classes.selectedOption}>{displayValue}</span>

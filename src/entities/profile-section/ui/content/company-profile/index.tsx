@@ -1,4 +1,3 @@
-import React from "react";
 import { useChangePersonal } from "~/src/entities/profile-section/lib/hooks";
 
 import classes from "./company-profile.module.scss";
@@ -25,6 +24,7 @@ export default function CompanyProfile({ userInfo }: Props) {
     onKeyDown,
     error,
   } = useChangePersonal({ userInfo });
+
   return (
     <ProfileContentContainer
       className={`flex-column ${classes.container}`}

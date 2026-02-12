@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useProfileSections } from "~/src/entities/profile-section/lib/hooks";
 import { useAppSelector } from "~/src/app/store/hooks";
 import { selectUser } from "~/src/app/store/reducers/user.slice";
@@ -15,6 +15,7 @@ import {
   ProfileActionType,
   profileTitlesMap,
 } from "~/src/entities/profile-section/model";
+import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 
 interface Props {
   paramsRole: UserRoleType | "seller-pending";
@@ -30,11 +31,17 @@ export default function ProfileRolePage({ paramsRole }: Props) {
     useProfileSections({
       defaultSection,
     });
+  const createNotification = useCreateNotification();
   const [modalType, setModalType] = useState<ProfileActionType | null>(null);
 
   if (!isLoggedIn) return redirect("/login");
 
   if (paramsRole !== userInfo.role) {
+    if (!userInfo.role) {
+      createNotification("Не удалось определить роль пользователя", "error");
+      return redirect("/login");
+    }
+
     if (paramsRole !== "seller-pending") {
       return redirect("/profile");
     }

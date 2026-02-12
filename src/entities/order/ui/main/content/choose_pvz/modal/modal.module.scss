@@ -18,4 +18,7 @@
 
 .map {
     flex: 1;
+    max-height: 616px;
+    border-radius: $space-3;
+    overflow: hidden;
 }

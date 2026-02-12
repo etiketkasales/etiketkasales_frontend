@@ -15,7 +15,7 @@ interface Props {
 
 export default function DeliveryMethodModal({ isOpen, onClose }: Props) {
   const { loading, onSavePoint, onPointClick, previewPoint, points } =
-    useOrderPickupPoints({ needLoad: true, onClose });
+    useOrderPickupPoints({ needLoad: true, onClose, isOpen });
 
   return (
     <Modal

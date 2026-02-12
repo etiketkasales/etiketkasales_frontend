@@ -1,10 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 
-export const useSelect = () => {
+interface Props {
+  activeOption: string;
+}
+
+export const useSelect = ({ activeOption }: Props) => {
   const [active, setActive] = useState<boolean>(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const [inputValue, setInputValue] = useState<string>(activeOption ?? "");
+
+  useEffect(() => {
+    if (activeOption) {
+      setInputValue(activeOption);
+    }
+  }, [activeOption]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -29,5 +41,7 @@ export const useSelect = () => {
     buttonRef,
     contentRef,
     inputRef,
+    inputValue,
+    setInputValue,
   };
 };

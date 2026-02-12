@@ -13,7 +13,7 @@ export default function NotificationsWidget() {
 
   return (
     <div
-      className={classNames(`flex-column ${classes.container}`, {
+      className={classNames(`flex-column--reverse ${classes.container}`, {
         [classes.noDisplay]: !notifications.length,
       })}
     >

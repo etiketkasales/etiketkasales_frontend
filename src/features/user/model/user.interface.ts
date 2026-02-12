@@ -16,6 +16,12 @@ export type SellerStatusType =
   | "approved"
   | "failed";
 
+export type CompanyVerificationStatusType =
+  | "draft"
+  | "pending"
+  | "verified"
+  | "failed";
+
 export interface IChangeableProfile {
   email: string | null;
   name: string | null;
@@ -49,7 +55,7 @@ export interface IProfile extends IChangeableProfile {
   id: number;
   phone: string;
   seller_status: SellerStatusType;
-  company_verification_status: string;
+  company_verification_status: CompanyVerificationStatusType;
   seller_rejection_reason: string | null;
   seller_approved_at: string | null; //2025-01-29T10:00:00Z
   agreement_accepted_at: string | null; //2025-01-29T10:00:00Z

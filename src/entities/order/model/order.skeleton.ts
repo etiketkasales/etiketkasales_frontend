@@ -1,5 +1,4 @@
 import {
-  ICreateOrderForCompany,
   IDeliveryMethodResponse,
   IOrderPickupPointData,
   IOrderPickupPointResponse,
@@ -21,11 +20,6 @@ export const orderReceiverSkeleton: IOrderReceiver = {
   receiver_email: "",
 };
 
-export const createOrderForCompanySkeleton: ICreateOrderForCompany = {
-  company_id: 0,
-  receiver: orderReceiverSkeleton,
-};
-
 export const orderDeliveryMethodSkeleton: IDeliveryMethodResponse = {
   id: 0,
   code: "",
@@ -36,8 +30,7 @@ export const orderDeliveryMethodSkeleton: IDeliveryMethodResponse = {
 };
 
 export const orderPickupPointSkeleton: IOrderPickupPointData = {
-  pickup_point_address: "",
-  pickup_point_id: "",
+  pickup_point_code: null,
 };
 
 export const orderPickupPointResponseSkeleton: IOrderPickupPointResponse = {

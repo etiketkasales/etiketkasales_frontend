@@ -9,8 +9,10 @@ import { promiseWrapper } from "~/src/shared/lib";
 import { getPickupPointsData } from "../api";
 
 import { IOrderPickupPointData, IOrderPickupPointResponse } from "../../model";
+import { MessageI } from "~/src/shared/model";
 
 interface Props {
+  isOpen: boolean;
   needLoad?: boolean;
   onClose?: () => void;
 }
@@ -20,10 +22,11 @@ interface Props {
  * @param {boolean} needLoad - нужно ли загрузить список ПВЗ
  * @returns {object} - объект с функциями onSavePoint, onPointClick, previewPoint, points, loading
  */
-export const useOrderPickupPoints = ({ needLoad, onClose }: Props) => {
+export const useOrderPickupPoints = ({ needLoad, onClose, isOpen }: Props) => {
   const dispatch = useAppDispatch();
-  const { deliveryMethod, deliveryAddressId } = useAppSelector(selectOrder);
+  const { deliveryMethod } = useAppSelector(selectOrder);
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<MessageI | null>(null);
   const [points, setPoints] = useState<IOrderPickupPointResponse[]>([]);
   const [previewPoint, setPreviewPoint] =
     useState<IOrderPickupPointResponse | null>(null);
@@ -41,24 +44,26 @@ export const useOrderPickupPoints = ({ needLoad, onClose }: Props) => {
     [dispatch],
   );
 
-  // Получение массивоа ПВЗ и установка в стейт
+  // Получение массива ПВЗ и установка в стейт
   const getPickupPoints = useCallback(async () => {
     await promiseWrapper({
       setLoading,
+      setError,
       callback: async () => {
-        if (!deliveryAddressId || !deliveryMethod?.code) {
-          createNotification("Выберите адрес доставки и способ доставки");
+        if (!deliveryMethod?.code) {
+          createNotification("Выберите способ доставки");
           return;
         }
 
-        const res = await getPickupPointsData(
-          deliveryAddressId,
-          deliveryMethod.code,
-        );
-        if (res && res.length) setPoints(res);
+        const res = await getPickupPointsData(deliveryMethod.code);
+        if (!res.data || !res.data.length) {
+          createNotification("ПВЗ не найдены");
+          return;
+        }
+        setPoints(res.data);
       },
     });
-  }, [deliveryAddressId, deliveryMethod.code, createNotification]);
+  }, [deliveryMethod?.code, createNotification]);
 
   const onPointClick = useCallback((point: IOrderPickupPointResponse) => {
     setPreviewPoint(point);
@@ -68,8 +73,7 @@ export const useOrderPickupPoints = ({ needLoad, onClose }: Props) => {
   const onSavePoint = useCallback(
     (point: IOrderPickupPointResponse) => {
       const newPoint: IOrderPickupPointData = {
-        pickup_point_address: point.full_address,
-        pickup_point_id: point.id,
+        pickup_point_code: point.code,
       };
       dispatch(setOrderPickupPoint(newPoint));
       onClose?.();
@@ -78,10 +82,16 @@ export const useOrderPickupPoints = ({ needLoad, onClose }: Props) => {
   );
 
   useEffect(() => {
-    if (needLoad) {
+    if (needLoad && isOpen) {
       getPickupPoints();
     }
-  }, [needLoad, getPickupPoints]);
+  }, [needLoad, getPickupPoints, isOpen]);
+
+  useEffect(() => {
+    if (error) {
+      createNotification(error.message, "error");
+    }
+  }, [error, createNotification]);
 
   return {
     onSavePoint,

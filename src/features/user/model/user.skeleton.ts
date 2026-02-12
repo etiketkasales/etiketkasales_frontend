@@ -44,7 +44,7 @@ export const SProfile: IProfile = {
   accountant_name: null,
   accountant_patronymic: null,
   seller_status: "approved",
-  company_verification_status: "",
+  company_verification_status: "verified",
   seller_approved_at: null,
   seller_rejection_reason: null,
   agreement_accepted: false,

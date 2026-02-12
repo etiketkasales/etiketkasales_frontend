@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./profile-content.module.scss";
 import ProfilePersonal from "./personal";
 import ProfileContentContainer from "./container";
@@ -11,7 +9,8 @@ import CompanyProfile from "./company-profile";
 import SellerOrders from "./seller-orders";
 import ProfileProducts from "./products";
 import ProfileQuote from "./quote";
-import { ProfileActionType } from "~/src/entities/profile-section/model/profile.interface";
+import ProfileContentFallback from "./fallback";
+import { ProfileActionType } from "~/src/entities/profile-section/model";
 import { IProfile } from "~/src/features/user/model";
 import { profileInDev } from "../../model";
 
@@ -39,7 +38,7 @@ export default function ProfileContent({
 
   switch (activeSection) {
     default:
-      return null;
+      return <ProfileContentFallback />;
     case "personal":
       return <ProfilePersonal userInfo={userInfo} />;
     case "orders":
@@ -55,8 +54,9 @@ export default function ProfileContent({
     case "quote":
       return (
         <ProfileQuote
-          userInfo={userInfo}
-          moderationStage={userInfo.seller_status}
+          moderationStage={
+            userInfo.company_verification_status || userInfo.seller_status
+          }
           rejectReason={userInfo.seller_rejection_reason}
         />
       );

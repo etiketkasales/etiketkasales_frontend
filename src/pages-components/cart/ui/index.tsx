@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { useCart } from "~/src/features/cart/lib/hooks/useCart.hook";
 
 import CartHeader from "~/src/entities/cart-header/ui";

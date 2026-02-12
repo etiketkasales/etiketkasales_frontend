@@ -6,8 +6,7 @@ import { selectUser } from "~/src/app/store/reducers/user.slice";
 import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
 
 export default function ProfilePage() {
-  const { currentRole, isLoggedIn, loadingData, userInfo } =
-    useAppSelector(selectUser);
+  const { isLoggedIn, loadingData, userInfo } = useAppSelector(selectUser);
   const { loaded } = useAppSelector(selectNavigation);
 
   if (!loadingData && loaded) {
@@ -15,10 +14,13 @@ export default function ProfilePage() {
       redirect("/login");
     }
 
-    if (userInfo.seller_status === "seller_pending") {
+    if (
+      userInfo.seller_status === "seller_pending" ||
+      userInfo.company_verification_status === "pending"
+    ) {
       redirect("/profile/seller-pending");
     }
   }
 
-  return redirect(`/profile/${currentRole}`);
+  return redirect(`/profile/${userInfo.role ?? "buyer"}`);
 }
