@@ -1,5 +1,3 @@
-import React from "react";
-
 import QuoteInput from "./input";
 import { IQuoteInput } from "~/src/entities/profile-section/model";
 import { IChangeableProfile } from "~/src/features/user/model";

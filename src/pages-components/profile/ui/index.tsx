@@ -6,8 +6,7 @@ import { selectUser } from "~/src/app/store/reducers/user.slice";
 import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
 
 export default function ProfilePage() {
-  const { currentRole, isLoggedIn, loadingData, userInfo } =
-    useAppSelector(selectUser);
+  const { isLoggedIn, loadingData, userInfo } = useAppSelector(selectUser);
   const { loaded } = useAppSelector(selectNavigation);
 
   if (!loadingData && loaded) {
@@ -20,5 +19,5 @@ export default function ProfilePage() {
     }
   }
 
-  return redirect(`/profile/${currentRole}`);
+  return redirect(`/profile/${userInfo.role ?? "buyer"}`);
 }

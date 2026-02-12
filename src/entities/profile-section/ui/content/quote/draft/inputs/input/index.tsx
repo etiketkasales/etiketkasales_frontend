@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./input.module.scss";
 import TextInput from "~/src/shared/ui/inputs/text-input";
 import CheckboxInput from "~/src/shared/ui/inputs/checkbox";
@@ -40,7 +38,8 @@ export default function QuoteInput({
 
   return (
     <TextInput
-      inputClassName={`text-body l text-neutral-900 ${classes.input} ${classes.inputWrapper}`}
+      inputClassName={`text-body l text-neutral-900 ${classes.inputWrapper}`}
+      wrapperClassName={classes.input}
       value={changeData[field]?.toString() ?? ""}
       onChange={(e) => {
         if (type === "number") {

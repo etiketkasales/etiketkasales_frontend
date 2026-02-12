@@ -1,5 +1,3 @@
-import React from "react";
-
 import containerClasses from "../quote.module.scss";
 import classes from "./rejected.module.scss";
 import Container from "~/src/shared/ui/container/ui";

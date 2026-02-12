@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { useRegisterCompany } from "~/src/entities/profile-section/lib/hooks";
 
 import classes from "./draft.module.scss";

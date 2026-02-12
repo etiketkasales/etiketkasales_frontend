@@ -12,7 +12,6 @@ import {
 interface InitialStateI {
   userInfo: IProfile;
   changeableUserInfo: IChangeableProfile;
-  currentRole: UserRoleType;
   isLoggedIn: boolean;
   needRemember: boolean;
   loadingData: boolean;
@@ -25,7 +24,6 @@ interface InitialStateI {
 
 const initialState: InitialStateI = {
   userInfo: SProfile,
-  currentRole: "buyer",
   changeableUserInfo: SChangeableProfile,
   userId: 0,
   needRemember: true,

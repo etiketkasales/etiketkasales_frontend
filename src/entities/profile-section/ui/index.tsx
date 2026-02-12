@@ -1,6 +1,3 @@
-"use client";
-import React from "react";
-
 import classes from "./profile.module.scss";
 import ProfileAside from "./aside";
 import ProfileContent from "./content";

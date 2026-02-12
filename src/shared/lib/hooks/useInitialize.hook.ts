@@ -21,7 +21,6 @@ export const useInitialize = () => {
 
   useEffect(() => {
     handleGetCities();
-    updateCart();
     let remember = false;
     if (typeof window !== "undefined") {
       remember = localStorage.getItem("needRemember") === "true";
@@ -32,5 +31,6 @@ export const useInitialize = () => {
     } else {
       dispatch(setUser({ isLoggedIn: false }));
     }
+    updateCart();
   }, [handleGetCities, handleGetUser, updateCart, dispatch]);
 };

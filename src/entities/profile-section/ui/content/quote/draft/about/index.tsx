@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./about.module.scss";
 import QuoteStageContainer from "../stage-container";
 import QuoteInputs from "../inputs";

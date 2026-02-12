@@ -1,5 +1,3 @@
-import React from "react";
-
 import AddressesModal from "~/src/entities/addresses-modal/ui";
 import LogoutModal from "~/src/entities/profile-section/ui/modals/logout";
 import DeleteCompanyModal from "~/src/entities/profile-section/ui/modals/delete";
