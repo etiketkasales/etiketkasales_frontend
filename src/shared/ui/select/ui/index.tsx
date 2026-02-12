@@ -55,7 +55,15 @@ export default function Select<T>(props: Props<T>) {
     onSearch,
   } = props;
 
-  const { active, setActive, contentRef, buttonRef, inputRef } = useSelect();
+  const {
+    active,
+    setActive,
+    contentRef,
+    buttonRef,
+    inputRef,
+    inputValue,
+    setInputValue,
+  } = useSelect({ activeOption });
 
   const displayValue = activeOption || optionHolder;
 
@@ -100,9 +108,13 @@ export default function Select<T>(props: Props<T>) {
               type="text"
               className={classes.input}
               placeholder={optionHolder}
-              onChange={(e) => onSearch?.(e.target.value)}
+              onChange={(e) => {
+                onSearch?.(e.target.value);
+                setInputValue(e.target.value);
+              }}
               name={optionHolder}
               ref={inputRef}
+              value={inputValue}
             />
           ) : (
             <span className={classes.selectedOption}>{displayValue}</span>
