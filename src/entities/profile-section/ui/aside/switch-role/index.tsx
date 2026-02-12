@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import classNames from "classnames";
 import { useRouter } from "next/navigation";
 import { useSwitchRole } from "~/src/entities/profile-section/lib/hooks";
@@ -28,7 +27,7 @@ export default function ProfileSwitchRole({ userRole }: Props) {
       bgColor="neutral-100"
       onClick={() => {
         if (userRole === "seller-pending") {
-          push("/profile/buyer");
+          push("/profile/buyer?active_section=personal");
         } else {
           handleSwitchRole(userRole === "buyer" ? "seller" : "buyer");
         }

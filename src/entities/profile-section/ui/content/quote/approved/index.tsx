@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./approved.module.scss";
 import Container from "~/src/shared/ui/container/ui";
 import Button from "~/src/shared/ui/button";

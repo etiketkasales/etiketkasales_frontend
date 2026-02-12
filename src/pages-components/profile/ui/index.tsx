@@ -14,7 +14,10 @@ export default function ProfilePage() {
       redirect("/login");
     }
 
-    if (userInfo.seller_status === "seller_pending") {
+    if (
+      userInfo.seller_status === "seller_pending" ||
+      userInfo.company_verification_status === "pending"
+    ) {
       redirect("/profile/seller-pending");
     }
   }

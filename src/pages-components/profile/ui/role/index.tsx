@@ -15,6 +15,7 @@ import {
   ProfileActionType,
   profileTitlesMap,
 } from "~/src/entities/profile-section/model";
+import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 
 interface Props {
   paramsRole: UserRoleType | "seller-pending";
@@ -30,11 +31,17 @@ export default function ProfileRolePage({ paramsRole }: Props) {
     useProfileSections({
       defaultSection,
     });
+  const createNotification = useCreateNotification();
   const [modalType, setModalType] = useState<ProfileActionType | null>(null);
 
   if (!isLoggedIn) return redirect("/login");
 
   if (paramsRole !== userInfo.role) {
+    if (!userInfo.role) {
+      createNotification("Не удалось определить роль пользователя", "error");
+      return redirect("/login");
+    }
+
     if (paramsRole !== "seller-pending") {
       return redirect("/profile");
     }

@@ -9,10 +9,10 @@ import CompanyProfile from "./company-profile";
 import SellerOrders from "./seller-orders";
 import ProfileProducts from "./products";
 import ProfileQuote from "./quote";
-import { ProfileActionType } from "~/src/entities/profile-section/model/profile.interface";
+import ProfileContentFallback from "./fallback";
+import { ProfileActionType } from "~/src/entities/profile-section/model";
 import { IProfile } from "~/src/features/user/model";
 import { profileInDev } from "../../model";
-import ProfileContentFallback from "./fallback";
 
 interface Props {
   activeSection: ProfileActionType | null;
@@ -54,7 +54,9 @@ export default function ProfileContent({
     case "quote":
       return (
         <ProfileQuote
-          moderationStage={userInfo.seller_status}
+          moderationStage={
+            userInfo.company_verification_status || userInfo.seller_status
+          }
           rejectReason={userInfo.seller_rejection_reason}
         />
       );
