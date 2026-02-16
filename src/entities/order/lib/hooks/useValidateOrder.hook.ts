@@ -65,7 +65,7 @@ export const useValidateOrder = ({ type }: Props) => {
     return true;
   }, [receiver, pickupPoint, createNotification]);
 
-  const isValidParams = useCallback(() => {
+  const isValidParams = useCallback((): boolean => {
     const checkData = {
       receiverCompanyId,
       deliveryAddressId,
@@ -88,7 +88,9 @@ export const useValidateOrder = ({ type }: Props) => {
         : alwaysRequired,
     });
 
-    if (hasErrors) return createNotification("Заполните информацию о доставке");
+    if (hasErrors) {
+      return createNotification("Заполните информацию о доставке");
+    }
 
     return true;
   }, [

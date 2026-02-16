@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAppSelector } from "~/src/app/store/hooks";
 import { useCartSum } from "~/src/features/cart/lib/hooks";
 import { selectOrder } from "~/src/app/store/reducers/order.slice";
@@ -11,6 +11,7 @@ import OrderSummary from "~/src/entities/order-summary/ui";
 import CheckboxInput from "~/src/shared/ui/inputs/checkbox";
 import LinkContainer from "~/src/shared/ui/link-container/ui";
 import Loader from "~/src/shared/ui/loader";
+import Button from "~/src/shared/ui/button";
 import { OrderStageType } from "~/src/entities/order/model";
 import { OrderType } from "~/src/entities/order/model";
 
@@ -72,6 +73,9 @@ export default function OrderMain({ type, stage, onButtonClick }: Props) {
           name="etitketka-agree-terms"
         />
       </OrderSummary>
+      {/* <Button typeButton="yellow" onClick={onCreateButtonClick}>
+        <span>следующий этап</span>
+      </Button> */}
     </div>
   );
 }

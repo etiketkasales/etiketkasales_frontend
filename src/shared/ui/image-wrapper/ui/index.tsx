@@ -1,3 +1,4 @@
+"use client";
 import React, { CSSProperties } from "react";
 import classNames from "classnames";
 import { useImageWrapper } from "../lib/hooks/useImageWrapper.hook";

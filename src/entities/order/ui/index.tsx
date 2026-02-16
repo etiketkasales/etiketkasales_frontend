@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useOrderInit } from "../lib/hooks";
 
 import classes from "./order.module.scss";

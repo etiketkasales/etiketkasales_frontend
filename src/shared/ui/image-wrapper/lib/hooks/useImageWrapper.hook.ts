@@ -9,6 +9,7 @@ export const useImageWrapper = ({ src }: Props) => {
 
   const checkCanLoad = useCallback(
     async (signal: AbortSignal): Promise<boolean> => {
+      if (!src) return false;
       if (!src.startsWith("http")) return true;
       try {
         const res = await fetch(src, { signal });

@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./confirm.module.scss";
 import OrderStageWrapper from "../stage-wrapper";
 import DeliveryChosenMethod from "./delivery";
