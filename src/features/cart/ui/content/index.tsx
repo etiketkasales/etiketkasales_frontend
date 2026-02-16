@@ -1,5 +1,6 @@
 import classes from "./content.module.scss";
 import CartFunctional from "./functional";
+import CartNoData from "./no-data";
 import CartSellers from "./sellers";
 import { ICartItem } from "~/src/features/cart/model";
 
@@ -23,7 +24,11 @@ export default function CartContent({
         onCheckboxChange={onCheckboxChange}
         onDeleteClick={onDeleteClick}
       />
-      <CartSellers sellersItems={sellersItems} selectItem={selectItem} />
+      {sellersItems && sellersItems.length ? (
+        <CartSellers sellersItems={sellersItems} selectItem={selectItem} />
+      ) : (
+        <CartNoData />
+      )}
     </div>
   );
 }
