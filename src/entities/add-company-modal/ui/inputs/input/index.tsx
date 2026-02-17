@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 
 import TextInput from "~/src/shared/ui/inputs/text-input";
 import { IAddCompanyInput } from "~/src/entities/add-company-modal/model";
@@ -43,7 +43,6 @@ export default function AddCompanyInput({
       onChange={(e) => onChange(e.target.value, field, type)}
       placeholder={placeholder}
       errorText={getError()}
-      autoComplete={"off"}
       id={`buyer_company_${field}`}
       name={`buyer_company_${field}`}
       maxLength={maxWidth}

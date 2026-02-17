@@ -8,3 +8,4 @@ export * from "./useUpdateSearchParams.hook";
 export * from "./useSwipeToDismiss.hook";
 export * from "./useFileResize.hook";
 export * from "./useUserLocation.hook";
+export * from "./useCreateNew.hook";

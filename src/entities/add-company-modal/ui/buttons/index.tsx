@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./buttons.module.scss";
 import Button from "~/src/shared/ui/button";
 
@@ -13,6 +11,7 @@ interface IButton {
   title: string;
   onClick: () => void;
   type: "yellow" | "white";
+  textColor: string;
 }
 
 export default function AddCompanyButtons({
@@ -25,11 +24,13 @@ export default function AddCompanyButtons({
       title: "Добавить",
       onClick: onSave,
       type: "yellow",
+      textColor: "yellow-1000",
     },
     {
       title: "Отмена",
       onClick: onClose,
       type: "white",
+      textColor: "neutral-800",
     },
   ];
 
@@ -49,9 +50,7 @@ export default function AddCompanyButtons({
           }
           radius={12}
         >
-          <span
-            className={`heading h7 text-${item.type === "yellow" ? "yellow-1000" : "neutral-800"}`}
-          >
+          <span className={`heading h7 text-${item.textColor}`}>
             {item.title}
           </span>
         </Button>

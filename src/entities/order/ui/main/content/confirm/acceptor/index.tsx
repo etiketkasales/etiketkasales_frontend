@@ -27,18 +27,20 @@ export default function OrderAcceptor({ type }: Props) {
       title="Получатель"
       className={`flex-column ${classes.container}`}
     >
-      {type === "company" ? chosenCompany && chosenCompany.id ? (
-        <UserCompany {...chosenCompany} />
-      ) : (
-        <Button
-          typeButton="yellow"
-          onClick={onButtonClick}
-          className={classes.button}
-          href="/profile/buyer?active_section=as_legal"
-          radius={12}
-        >
-          <span className="heading h7">Добавить организацию</span>
-        </Button>
+      {type === "company" ? (
+        chosenCompany && chosenCompany.id ? (
+          <UserCompany {...chosenCompany} />
+        ) : (
+          <Button
+            typeButton="yellow"
+            onClick={onButtonClick}
+            className={classes.button}
+            href="/profile/buyer?active_section=as_legal"
+            radius={12}
+          >
+            <span className="heading h7">Добавить организацию</span>
+          </Button>
+        )
       ) : null}
       <NewOrderInputs
         canChange={canChange}

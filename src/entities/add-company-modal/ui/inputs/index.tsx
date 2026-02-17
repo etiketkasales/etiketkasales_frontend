@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./inputs.module.scss";
 import AddCompanyInput from "./input";
 import { IUserCompanyBase } from "~/src/features/user/model";

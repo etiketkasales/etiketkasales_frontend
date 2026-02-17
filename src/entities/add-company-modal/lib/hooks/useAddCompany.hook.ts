@@ -1,15 +1,28 @@
 import { useCallback, useEffect, useState } from "react";
-import { useCreateNew } from "~/src/shared/lib/hooks/useCreateNew.hook";
-import { useUserCompanies } from "~/src/features/user/lib/hooks/useUserCompanies.hook";
+import { useCreateNew } from "~/src/shared/lib/hooks";
+import { useUserCompanies } from "~/src/features/user/lib/hooks";
 import FormUtils from "~/src/shared/lib/utils/form.util";
 
 import {
   addCompanyRequiredFields,
+  AddCompanySpecificFields,
   addCompanySpecificFields,
   newCompanySkeleton,
 } from "../../model";
 import { IUserCompanyBase } from "~/src/features/user/model";
 import { MessageI } from "~/src/shared/model";
+
+const specificErrorDetectors: Record<
+  AddCompanySpecificFields,
+  (newCompany: IUserCompanyBase) => MessageI | null
+> = {
+  inn: (newCompany: IUserCompanyBase) =>
+    FormUtils.getINNError(newCompany.inn, "inn"),
+  ogrn: (newCompany: IUserCompanyBase) =>
+    FormUtils.getOGRNError(newCompany.ogrn, "ogrn"),
+  kpp: (newCompany: IUserCompanyBase) =>
+    FormUtils.getKPPError(newCompany.kpp, "kpp"),
+};
 
 export const useAddCompany = (onClose: () => void) => {
   const {
@@ -38,20 +51,14 @@ export const useAddCompany = (onClose: () => void) => {
   const hasSpecificError = useCallback((): boolean => {
     let newError: MessageI | null = null;
 
-    for (const field of addCompanySpecificFields) {
-      if (field === "inn") {
-        newError = FormUtils.getINNError(newCompany[field], field);
-        if (newError) break;
+    addCompanySpecificFields.forEach((field) => {
+      const errorDetector =
+        specificErrorDetectors[field as AddCompanySpecificFields];
+      if (errorDetector) {
+        newError = errorDetector(newCompany);
+        if (newError) return;
       }
-      if (field === "ogrn") {
-        newError = FormUtils.getOGRNError(newCompany[field], field);
-        if (newError) break;
-      }
-      if (field === "kpp") {
-        newError = FormUtils.getKPPError(newCompany[field], field);
-        if (newError) break;
-      }
-    }
+    });
 
     setSpecificError(newError);
     return newError !== null;

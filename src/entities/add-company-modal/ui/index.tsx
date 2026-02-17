@@ -1,4 +1,4 @@
-import React from "react";
+"use client";
 import { useAddCompany } from "../lib/hooks/useAddCompany.hook";
 
 import classes from "./add-company.module.scss";

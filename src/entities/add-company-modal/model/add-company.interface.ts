@@ -6,3 +6,5 @@ export interface IAddCompanyInput {
   type: "string" | "number";
   maxWidth?: number;
 }
+
+export type AddCompanySpecificFields = "inn" | "ogrn" | "kpp";
