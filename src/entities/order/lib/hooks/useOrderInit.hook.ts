@@ -47,6 +47,7 @@ export const useOrderInit = ({ stage }: Props) => {
     deliveryAddressId,
     receiverCompanyId,
     pickupPoint,
+    paymentMethod,
   } = useAppSelector(selectOrder);
 
   const isFirstStageInvalid = useMemo(() => {
@@ -69,9 +70,10 @@ export const useOrderInit = ({ stage }: Props) => {
   const isConfirmStageInvalid = useMemo(() => {
     return (
       Object.values(receiver).some(FormUtils.checkIfValueEmpty) ||
-      !receiverCompanyId
+      !receiverCompanyId ||
+      !paymentMethod
     );
-  }, [receiver, receiverCompanyId]);
+  }, [receiver, receiverCompanyId, paymentMethod]);
 
   useEffect(() => {
     const disabled =

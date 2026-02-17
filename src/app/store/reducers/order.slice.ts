@@ -19,7 +19,7 @@ interface InitialStateI {
   pickupPoint: IOrderPickupPointData;
   itemsToOrder: IItemToOrder[];
   buttonDisabled: boolean;
-  paymentMethod: string;
+  paymentMethod: string | null;
   [key: string]: any;
 }
 
@@ -32,7 +32,7 @@ const initialState: InitialStateI = {
   pickupPoint: orderPickupPointSkeleton,
   receiver: orderReceiverSkeleton,
   buttonDisabled: false,
-  paymentMethod: "",
+  paymentMethod: null,
 };
 
 export const orderSlice = createSlice({

@@ -36,10 +36,13 @@ export const usePayment = ({ isCompany, needLoad = true }: Props) => {
     [itemsToOrder],
   );
 
-  const onMethodClick = useCallback((method: string) => {
-    setChosenMethod(method);
-    dispatch(setOrderInfo({ paymentMethod: method }));
-  }, []);
+  const onMethodClick = useCallback(
+    (method: string) => {
+      setChosenMethod(method);
+      dispatch(setOrderInfo({ paymentMethod: method }));
+    },
+    [dispatch],
+  );
 
   const createPaymentForOrder = useCallback(
     async (orderId: number) => {

@@ -29,6 +29,7 @@ export const useValidateOrder = ({ type }: Props) => {
     deliveryAddressId,
     deliveryMethod,
     pickupPoint,
+    paymentMethod,
   } = useAppSelector(selectOrder);
 
   const createNotification = useCallback(
@@ -69,6 +70,7 @@ export const useValidateOrder = ({ type }: Props) => {
     const checkData = {
       receiverCompanyId,
       deliveryAddressId,
+      paymentMethod,
       deliveryMethod: deliveryMethod.code,
       pickupPoint: pickupPoint.pickup_point_code,
     };
@@ -79,6 +81,7 @@ export const useValidateOrder = ({ type }: Props) => {
       "deliveryAddressId",
       "deliveryMethod",
       "pickupPoint",
+      "paymentMethod",
     ];
 
     const hasErrors = FormUtils.getFormError({
@@ -98,6 +101,7 @@ export const useValidateOrder = ({ type }: Props) => {
     deliveryAddressId,
     deliveryMethod,
     pickupPoint,
+    paymentMethod,
     type,
     createNotification,
   ]);
