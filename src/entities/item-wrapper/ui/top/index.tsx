@@ -1,8 +1,7 @@
-import { IEtiketka } from "~/src/entities/etiketka/model";
-
 import classes from "./item-wrapper-top.module.scss";
 import CartButton from "~/src/entities/cart-button/ui";
 import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
+import { IEtiketka } from "~/src/entities/etiketka/model";
 
 interface Props {
   item: IEtiketka;

@@ -10,7 +10,6 @@ import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 import StringUtils from "~/src/shared/lib/utils/string.util";
 
 import { ICartItem } from "../../model";
-import { IItemToOrder } from "~/src/entities/order/model";
 
 export const useCart = () => {
   const dispatch = useAppDispatch();
@@ -24,7 +23,7 @@ export const useCart = () => {
     if (!numPrice) return null;
 
     return {
-      product_id: item.id,
+      product_id: item.product_id,
       product_name: item.name,
       quantity: item.quantity,
       price: numPrice,

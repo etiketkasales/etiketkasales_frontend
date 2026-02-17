@@ -1,5 +1,4 @@
 "use client";
-
 import classNames from "classnames";
 
 import SectionWrapperBody from "./body";
@@ -19,7 +18,6 @@ export default function SectionWrapper({
   title,
   categoryId,
   className,
-  loading,
 }: Props) {
   if (!Array.isArray(arrayProducts)) return null;
   return (

@@ -4,7 +4,7 @@ import SellerItemDouble from "../actions/double";
 import SellerItemButton from "../actions/button";
 
 interface Props {
-  itemId: number;
+  inCartId: number;
   itemStock: number;
   itemMin: number;
   itemQuantity: number;
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default function SellerItemButtons({
-  itemId,
+  inCartId,
   itemStock,
   itemMin,
   itemQuantity,
@@ -23,7 +23,7 @@ export default function SellerItemButtons({
   deleteFromCart,
 }: Props) {
   const cartButtonProps = {
-    itemId,
+    itemId: inCartId,
     itemStock,
     itemMin,
     itemQuantity,

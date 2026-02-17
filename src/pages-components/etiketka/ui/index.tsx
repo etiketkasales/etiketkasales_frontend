@@ -1,6 +1,5 @@
 "use client";
-
-import { useEtiketka } from "~/src/entities/etiketka/lib/hooks/useEtiketka.hook";
+import { useEtiketka } from "~/src/entities/etiketka/lib/hooks";
 
 import EtiketkaSection from "~/src/entities/etiketka/ui";
 import PageWrapper from "~/src/entities/page-wrapper/ui";

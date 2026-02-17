@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAppSelector } from "~/src/app/store/hooks";
 import { selectOrder } from "~/src/app/store/reducers/order.slice";
 import { useCartItems } from "~/src/features/cart/lib/hooks";
@@ -16,20 +16,25 @@ interface Props {
 }
 
 export default function CartSellerItem({ item, selectItem }: Props) {
+  // Это для взаимодействия с апи для оформления заказа
+  const itemProductId = useMemo(() => item.product_id, [item.product_id]);
+  // Это для взаимодействия с апи корзины
+  const itemInCartId = useMemo(() => item.id, [item.id]);
+
   const { itemsToOrder: selectedItems } = useAppSelector(selectOrder);
   const { handleDeleteEtiketka: deleteFromCart } = useCartItems({
-    itemId: item.id,
+    itemId: itemInCartId,
   });
   const [isSelected, setIsSelected] = useState<boolean>(false);
 
   useEffect(() => {
     const ids = selectedItems.map((i) => i.product_id);
-    if (ids.includes(item.id)) {
+    if (ids.includes(item.product_id)) {
       setIsSelected(true);
     } else {
       setIsSelected(false);
     }
-  }, [selectedItems, item.id]);
+  }, [selectedItems, item.product_id]);
 
   return (
     <li className={`flex ${classes.container}`}>
@@ -48,11 +53,11 @@ export default function CartSellerItem({ item, selectItem }: Props) {
           slug={item.slug}
           name={item.name}
           deleteFromCart={deleteFromCart}
-          id={item.product_id}
+          productId={itemProductId}
         />
       </div>
       <SellerItemButtons
-        itemId={item.id}
+        inCartId={itemInCartId}
         itemMin={item.min_order_quantity}
         itemStock={item.stock_quantity}
         itemQuantity={item.quantity}

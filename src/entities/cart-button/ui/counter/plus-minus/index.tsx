@@ -1,8 +1,7 @@
 "use client";
-
 import classNames from "classnames";
 import { useCartItems } from "~/src/features/cart/lib/hooks/useCartItems.hook";
-import { useCartButton } from "~/src/entities/cart-button/lib/hooks/useCartButton.hook";
+import { useCartButton } from "~/src/entities/cart-button/lib/hooks";
 
 import classes from "./plus-minus.module.scss";
 import Plus from "~/public/cart/plus.svg";

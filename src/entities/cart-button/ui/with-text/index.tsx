@@ -1,5 +1,5 @@
-import { useCartItems } from "~/src/features/cart/lib/hooks/useCartItems.hook";
-import { useCartButton } from "~/src/entities/cart-button/lib/hooks/useCartButton.hook";
+import { useCartItems } from "~/src/features/cart/lib/hooks";
+import { useCartButton } from "~/src/entities/cart-button/lib/hooks";
 
 import Button from "~/src/shared/ui/button";
 import { ICommonCartButton } from "..";

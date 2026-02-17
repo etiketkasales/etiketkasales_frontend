@@ -1,5 +1,4 @@
 "use client";
-
 import classes from "./price-cart.module.scss";
 import EtiketkaMainContainer from "~/src/entities/etiketka/ui/container";
 import Price from "~/src/shared/ui/price/ui";
