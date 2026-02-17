@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { selectOrder } from "~/src/app/store/reducers/order.slice";
-import { createOrder, createOrderForCompany, createOrderPayment } from "../api";
+import { createOrder, createOrderForCompany } from "../api";
 import { promiseWrapper } from "~/src/shared/lib";
 
 import { useAppSelector } from "~/src/app/store/hooks";

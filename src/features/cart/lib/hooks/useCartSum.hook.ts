@@ -22,7 +22,9 @@ export const useCartSum = () => {
     let discount = 0;
 
     itemsToOrder.forEach((itemFromSlice) => {
-      const item = items.find((item) => item.product_id === itemFromSlice.product_id);
+      const item = items.find(
+        (item) => item.product_id === itemFromSlice.product_id,
+      );
       if (!item) return;
 
       const count = item.quantity || 0;

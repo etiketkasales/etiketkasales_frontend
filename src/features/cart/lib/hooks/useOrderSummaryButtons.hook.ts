@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { selectUser } from "~/src/app/store/reducers/user.slice";
-import { setOrderType } from "~/src/app/store/reducers/order.slice";
+import { setOrderInfo } from "~/src/app/store/reducers/order.slice";
 
 import { IOrderSummaryButton } from "~/src/entities/order-summary/model";
 
@@ -17,7 +17,7 @@ export const useOrderSummaryButtons = ({ openModal }: Props) => {
 
   const pushToOrder = useCallback(
     (type: "person" | "company") => {
-      dispatch(setOrderType(type));
+      dispatch(setOrderInfo({ type }));
       push("/order/create");
     },
     [push, dispatch],

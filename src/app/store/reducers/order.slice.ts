@@ -19,6 +19,8 @@ interface InitialStateI {
   pickupPoint: IOrderPickupPointData;
   itemsToOrder: IItemToOrder[];
   buttonDisabled: boolean;
+  paymentMethod: string;
+  [key: string]: any;
 }
 
 const initialState: InitialStateI = {
@@ -30,26 +32,30 @@ const initialState: InitialStateI = {
   pickupPoint: orderPickupPointSkeleton,
   receiver: orderReceiverSkeleton,
   buttonDisabled: false,
+  paymentMethod: "",
 };
 
 export const orderSlice = createSlice({
   name: "order",
   initialState,
   reducers: {
-    setOrderType: (state, action: PayloadAction<OrderType>) => {
-      state.type = action.payload;
-    },
-    setButtonDisabled: (state, action: PayloadAction<boolean>) => {
-      state.buttonDisabled = action.payload;
+    setOrderInfo: (state, action: PayloadAction<Partial<InitialStateI>>) => {
+      let key: keyof InitialStateI;
+      const valueArg = action.payload;
+      for (key in valueArg) {
+        if (
+          Object.hasOwnProperty.call(valueArg, key) &&
+          Object.hasOwnProperty.call(state, key)
+        ) {
+          state[key] = valueArg[key];
+        }
+      }
     },
     setOrderItems: (state, action: PayloadAction<IItemToOrder[]>) => {
       state.itemsToOrder = action.payload;
     },
     setOrderReceiverData: (state, action: PayloadAction<IOrderReceiver>) => {
       state.receiver = action.payload;
-    },
-    setOrderDeliveryAddressId: (state, action: PayloadAction<number>) => {
-      state.deliveryAddressId = action.payload;
     },
     setOrderDeliveryMethod: (
       state,
@@ -63,21 +69,15 @@ export const orderSlice = createSlice({
     ) => {
       state.pickupPoint = action.payload;
     },
-    setOrderCompanyId: (state, action: PayloadAction<number>) => {
-      state.receiverCompanyId = action.payload;
-    },
   },
 });
 
 export const {
-  setOrderType,
   setOrderReceiverData,
-  setOrderDeliveryAddressId,
   setOrderDeliveryMethod,
   setOrderItems,
-  setOrderCompanyId,
-  setButtonDisabled,
   setOrderPickupPoint,
+  setOrderInfo,
 } = orderSlice.actions;
 export const selectOrder = (state: { order: InitialStateI }) => state.order;
 export default orderSlice.reducer;

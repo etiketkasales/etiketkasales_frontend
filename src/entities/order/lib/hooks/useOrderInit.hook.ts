@@ -4,8 +4,7 @@ import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { selectUser } from "~/src/app/store/reducers/user.slice";
 import {
   selectOrder,
-  setButtonDisabled,
-  setOrderCompanyId,
+  setOrderInfo,
   setOrderReceiverData,
 } from "~/src/app/store/reducers/order.slice";
 import FormUtils from "~/src/shared/lib/utils/form.util";
@@ -33,7 +32,7 @@ export const useOrderInit = ({ stage }: Props) => {
 
     const defaultCompany = companies.find((company) => company.is_default);
 
-    dispatch(setOrderCompanyId(defaultCompany?.id || 0));
+    dispatch(setOrderInfo({ receiverCompanyId: defaultCompany?.id || 0 }));
     dispatch(setOrderReceiverData(receiver));
   }, [dispatch, userInfo, companies]);
 
@@ -78,6 +77,6 @@ export const useOrderInit = ({ stage }: Props) => {
     const disabled =
       stage === "choose_pvz" ? isFirstStageInvalid : isConfirmStageInvalid;
 
-    dispatch(setButtonDisabled(disabled));
+    dispatch(setOrderInfo({ buttonDisabled: disabled }));
   }, [stage, isFirstStageInvalid, isConfirmStageInvalid, dispatch]);
 };

@@ -3,8 +3,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch } from "~/src/app/store/hooks";
 import { addNotification } from "~/src/app/store/reducers/notifications.slice";
 import {
-  setOrderDeliveryAddressId,
   setOrderDeliveryMethod,
+  setOrderInfo,
 } from "~/src/app/store/reducers/order.slice";
 import { getDeliveryMethodsForOrder } from "../api";
 
@@ -81,7 +81,7 @@ export const useDelivery = ({ deliveryAddressId, canLoad }: Props) => {
       return;
     }
 
-    dispatch(setOrderDeliveryAddressId(deliveryAddressId));
+    dispatch(setOrderInfo({ deliveryAddressId }));
   }, [deliveryAddressId, dispatch]);
 
   useEffect(() => {

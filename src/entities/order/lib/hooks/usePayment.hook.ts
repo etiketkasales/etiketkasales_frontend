@@ -1,9 +1,12 @@
-import { selectOrder } from "~/src/app/store/reducers/order.slice";
+import {
+  selectOrder,
+  setOrderInfo,
+} from "~/src/app/store/reducers/order.slice";
 import { promiseWrapper } from "~/src/shared/lib";
 import { createOrderPayment, getPaymentMethodsForOrder } from "../api";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useAppSelector } from "~/src/app/store/hooks";
+import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 
 import { IPaymentMethodResponse } from "../../model";
@@ -20,6 +23,7 @@ const errorMessages = {
 
 // Получение и отдача способов оплаты
 export const usePayment = ({ isCompany, needLoad = true }: Props) => {
+  const dispatch = useAppDispatch();
   const { itemsToOrder } = useAppSelector(selectOrder);
   const createNotification = useCreateNotification();
   const [loading, setLoading] = useState<boolean>(false);
@@ -34,6 +38,7 @@ export const usePayment = ({ isCompany, needLoad = true }: Props) => {
 
   const onMethodClick = useCallback((method: string) => {
     setChosenMethod(method);
+    dispatch(setOrderInfo({ paymentMethod: method }));
   }, []);
 
   const createPaymentForOrder = useCallback(
