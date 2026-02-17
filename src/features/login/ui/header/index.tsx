@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 import classes from "./header.module.scss";
 import ArrowLeft from "~/public/login/arrow-left-short.svg";

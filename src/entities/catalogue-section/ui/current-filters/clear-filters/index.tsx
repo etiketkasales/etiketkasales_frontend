@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import { useAppDispatch } from "~/src/app/store/hooks";
 import { setCatalogueActiveCategories } from "~/src/app/store/reducers/catalogue.slice";
 import { useRouter } from "next/navigation";

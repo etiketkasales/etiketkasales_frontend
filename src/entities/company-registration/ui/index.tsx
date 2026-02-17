@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import { useCompanyRegister } from "~/src/entities/company-registration/lib/hooks";
 
 import CompanyPersonal from "./personal";

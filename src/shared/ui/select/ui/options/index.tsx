@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./select-options.module.scss";
 import { motion, AnimatePresence } from "framer-motion";
 

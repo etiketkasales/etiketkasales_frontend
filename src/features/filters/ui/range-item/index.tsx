@@ -1,4 +1,3 @@
-import React from "react";
 import { useFiltersRange } from "~/src/features/filters/lib/hooks/useFiltersRange.hook";
 
 import classes from "./range-item.module.scss";

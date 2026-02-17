@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import classNames from "classnames";
 import { useGetAgreement } from "~/src/entities/profile-section/lib/hooks";
 

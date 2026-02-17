@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./item-buttons.module.scss";
 import Price from "~/src/shared/ui/price/ui";
 import SellerItemDouble from "../actions/double";

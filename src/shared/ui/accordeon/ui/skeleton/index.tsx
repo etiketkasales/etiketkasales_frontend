@@ -1,5 +1,3 @@
-import React from "react";
-
 import Arrow from "~/public/shared/chevron-compact-down.svg";
 import SkeletonWrapper from "~/src/shared/ui/skeleton/ui";
 

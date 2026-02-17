@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./inputs.module.scss";
 import NewProductInputSeparator from "../../../input-separator";
 import { INewProduct } from "~/src/entities/profile-section/model";

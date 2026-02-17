@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./header-links.module.scss";
 import Container from "~/src/shared/ui/container/ui";
 import HeaderLinksSect from "./links-sect";

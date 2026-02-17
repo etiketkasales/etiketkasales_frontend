@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 import CatalogueItemWrapper from "./catalogue";
 import HomeItemWrapper from "./home";

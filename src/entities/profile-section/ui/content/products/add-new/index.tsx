@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./add-new.module.scss";
 import Button from "~/src/shared/ui/button";
 import classNames from "classnames";

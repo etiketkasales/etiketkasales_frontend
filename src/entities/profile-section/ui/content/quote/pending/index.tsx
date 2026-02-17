@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./pending.module.scss";
 import containerClasses from "../quote.module.scss";
 import Container from "~/src/shared/ui/container/ui";

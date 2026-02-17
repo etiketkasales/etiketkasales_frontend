@@ -1,4 +1,3 @@
-import React from "react";
 import classNames from "classnames";
 
 import TrashCan from "~/public/cart/yellow-trash.svg";

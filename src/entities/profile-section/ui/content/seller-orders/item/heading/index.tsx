@@ -1,4 +1,3 @@
-import React from "react";
 import classNames from "classnames";
 import StringUtils from "~/src/shared/lib/utils/string.util";
 

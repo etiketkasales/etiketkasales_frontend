@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./header-default-media.module.scss";
 import HeaderMediaMain from "./main";
 import HeaderSearch from "../search";

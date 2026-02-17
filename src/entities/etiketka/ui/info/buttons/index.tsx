@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 import classes from "./buttons.module.scss";
 import Button from "~/src/shared/ui/button";

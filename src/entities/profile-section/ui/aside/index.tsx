@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 import classes from "./aside.module.scss";
 import ProfileAsideItems from "./items";

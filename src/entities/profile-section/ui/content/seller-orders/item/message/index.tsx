@@ -1,5 +1,3 @@
-import React from "react";
-
 import SellerOrderInfoContainer from "../info-container";
 import {
   sellerOrderColors,

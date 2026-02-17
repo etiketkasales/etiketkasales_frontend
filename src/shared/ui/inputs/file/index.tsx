@@ -1,5 +1,3 @@
-import React from "react";
-
 interface Props {
   ref: React.Ref<HTMLInputElement>;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void | Promise<void>;

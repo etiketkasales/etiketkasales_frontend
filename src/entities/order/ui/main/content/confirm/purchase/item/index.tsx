@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./purchase-item.module.scss";
 import Container from "~/src/shared/ui/container/ui";
 import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
@@ -27,13 +25,15 @@ export default function OrderPurchaseItem({
       onClick={onClick}
     >
       <div className={`flex ${classes.innerContainer}`}>
-        <ImageWrapper
-          src={image}
-          width={32}
-          height={32}
-          needDummy={false}
-          className={classes.image}
-        />
+        {image && (
+          <ImageWrapper
+            src={image}
+            width={32}
+            height={32}
+            needDummy={false}
+            className={classes.image}
+          />
+        )}
         <div className={`flex-column ${classes.text}`}>
           <p className="text-body xl text-neutral-1000 nowrap-text">{name}</p>
           <p className="text-body m text-neutral-700 nowrap-text">

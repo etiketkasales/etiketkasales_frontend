@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./item-skeleton.module.scss";
 import CurrentFiltersItemWrapper from "../../item-wrapper";
 import SkeletonWrapper from "~/src/shared/ui/skeleton/ui";

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import { useSellerProducts } from "~/src/entities/profile-section/lib/hooks";
 
 import classes from "./products.module.scss";

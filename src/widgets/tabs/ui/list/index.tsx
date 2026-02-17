@@ -1,4 +1,3 @@
-import React from "react";
 import TabsItem from "./item";
 import { tabsItems } from "~/src//widgets/tabs/model";
 import { ICartItem } from "~/src/features/cart/model";

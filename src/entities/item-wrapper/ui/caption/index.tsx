@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 import classes from "./item-caption.module.scss";
 import Price from "~/src/shared/ui/price/ui";

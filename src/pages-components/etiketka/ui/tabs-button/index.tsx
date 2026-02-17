@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./tabs-button.module.scss";
 import CartButton from "~/src/entities/cart-button/ui";
 import Button from "~/src/shared/ui/button";

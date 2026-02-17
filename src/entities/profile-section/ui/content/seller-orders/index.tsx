@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import classNames from "classnames";
 import { useSellerOrders } from "~/src/entities/profile-section/lib/hooks";
 

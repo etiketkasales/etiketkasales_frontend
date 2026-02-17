@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./inputs.module.scss";
 import OrderAcceptorInput from "./input";
 import { IOrderReceiver, newOrderInputs } from "~/src/entities/order/model";

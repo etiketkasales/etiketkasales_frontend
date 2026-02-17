@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./features-item.module.scss";
 import Container from "~/src/shared/ui/container/ui";
 import LinkContainer from "~/src/shared/ui/link-container/ui";

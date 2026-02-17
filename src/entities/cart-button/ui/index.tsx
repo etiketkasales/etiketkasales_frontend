@@ -1,5 +1,3 @@
-import React from "react";
-
 import CartButtonWithIcon from "./with-icon";
 import CartCounter from "./counter";
 import CartButtonWithText from "./with-text";

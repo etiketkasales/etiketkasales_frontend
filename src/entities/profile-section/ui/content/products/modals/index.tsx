@@ -1,5 +1,3 @@
-import React from "react";
-
 import NewSellerProductModal from "./new";
 import EditSellerProductModal from "./edit";
 import {

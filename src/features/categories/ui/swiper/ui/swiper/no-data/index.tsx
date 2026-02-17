@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./no-data.module.scss";
 
 export default function CategoriesSwiperNoData() {

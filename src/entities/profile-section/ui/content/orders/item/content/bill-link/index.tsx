@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./bill-link.module.scss";
 import Container from "~/src/shared/ui/container/ui";
 

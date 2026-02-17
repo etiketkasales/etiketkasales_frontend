@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./delivery.module.scss";
 import SellerOrderInfoContainer from "../info-container";
 import {

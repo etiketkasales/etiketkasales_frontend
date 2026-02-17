@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./range-input.module.scss";
 import TextInput from "~/src/shared/ui/inputs/text-input";
 import { RangeInputType } from "~/src/features/filters/model";

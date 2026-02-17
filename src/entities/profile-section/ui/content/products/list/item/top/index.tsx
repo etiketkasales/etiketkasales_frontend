@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./product-top.module.scss";
 import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
 import ProfileProductButton from "./button";

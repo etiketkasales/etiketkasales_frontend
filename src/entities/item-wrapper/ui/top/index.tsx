@@ -1,4 +1,3 @@
-import React from "react";
 import { IEtiketka } from "~/src/entities/etiketka/model";
 
 import classes from "./item-wrapper-top.module.scss";

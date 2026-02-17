@@ -1,4 +1,3 @@
-import React from "react";
 import StringUtils from "~/src/shared/lib/utils/string.util";
 
 import Dot from "~/public/profile/dot.svg";

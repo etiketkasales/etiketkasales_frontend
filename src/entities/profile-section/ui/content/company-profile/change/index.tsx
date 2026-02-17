@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./company-change.module.scss";
 import ProfileInputsSeparator from "~/src/entities/profile-section/ui/input-separator";
 import ProfileSaveButton from "~/src/entities/profile-section/ui/save-button";

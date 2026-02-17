@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 import classes from "./wrapper.module.scss";
 import LoginHeader from "../header";

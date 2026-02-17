@@ -1,5 +1,4 @@
 import React from "react";
-
 import classes from "./legal.module.scss";
 import Dot from "~/public/profile/dot.svg";
 

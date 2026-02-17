@@ -1,13 +1,12 @@
 "use client";
-import React from "react";
 import { selectOrder } from "~/src/app/store/reducers/order.slice";
 import { useAppSelector } from "~/src/app/store/hooks";
 
 import classes from "./delivery.module.scss";
 import OrderContainer from "../../container";
 import DeliveryChosenMethodItem from "./item";
-import { OrderStageType } from "~/src/entities/order/model";
 import Button from "~/src/shared/ui/button";
+import { OrderStageType } from "~/src/entities/order/model";
 
 interface Props {
   setStage: (s: OrderStageType) => void;

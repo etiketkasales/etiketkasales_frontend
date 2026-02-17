@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./change-button.module.scss";
 import Button from "~/src/shared/ui/button";
 

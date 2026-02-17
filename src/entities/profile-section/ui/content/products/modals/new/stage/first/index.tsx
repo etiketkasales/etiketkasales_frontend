@@ -1,5 +1,3 @@
-import React from "react";
-
 import ProductsModalMainInputs from "./main-inputs";
 import ProductsModalImages from "./images";
 import NewProductModalStage from "..";

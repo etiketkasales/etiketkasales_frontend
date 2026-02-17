@@ -1,5 +1,3 @@
-import React from "react";
-
 import Image from "next/image";
 import LinkContainer from "~/src/shared/ui/link-container/ui";
 

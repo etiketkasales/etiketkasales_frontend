@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./button.module.scss";
 import Pencil from "~/public/profile/products/pencil-square.svg";
 import Button from "~/src/shared/ui/button";

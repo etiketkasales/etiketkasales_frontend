@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./select-location.module.scss";
 import Geo from "~/public/header/geo.svg";
 import Select from "~/src/shared/ui/select/ui";

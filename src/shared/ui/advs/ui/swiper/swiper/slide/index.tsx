@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import { useWindowSize } from "react-use";
 
 import classes from "./slide.module.scss";

@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 import classes from "./seller.module.scss";
 import SellerInfo from "~/src/shared/ui/seller-info/ui";

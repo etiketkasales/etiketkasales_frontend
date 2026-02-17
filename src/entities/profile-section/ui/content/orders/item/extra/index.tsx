@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./order-extra.module.scss";
 import OrderImages from "./images";
 import OrderPrice from "./price";

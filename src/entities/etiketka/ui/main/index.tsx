@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 import classes from "./etiketka-main.module.scss";
 import EtiketkaImages from "./images";

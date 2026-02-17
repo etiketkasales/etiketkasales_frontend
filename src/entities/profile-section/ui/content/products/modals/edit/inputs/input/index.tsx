@@ -1,5 +1,3 @@
-import React from "react";
-
 import TextInput from "~/src/shared/ui/inputs/text-input";
 import TextAreaInput from "~/src/shared/ui/inputs/textarea-input";
 import {

@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./products-list.module.scss";
 import ProfileProduct from "./item";
 import { ISellerProduct } from "~/src/entities/profile-section/model";

@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 import classes from "./other.module.scss";
 import EtiketkaSeller from "./seller";

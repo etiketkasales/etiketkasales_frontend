@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import { useWindowSize } from "react-use";
 
 import ViewAllButton from "~/src/entities/view-all-button/ui";

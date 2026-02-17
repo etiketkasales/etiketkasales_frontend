@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 import classes from "./swiper-buttons.module.scss";
 import ChevronCompactLeft from "~/public/categories/chevron-compact-left.svg";

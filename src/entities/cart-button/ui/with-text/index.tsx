@@ -1,4 +1,3 @@
-import React from "react";
 import { useCartItems } from "~/src/features/cart/lib/hooks/useCartItems.hook";
 import { useCartButton } from "~/src/entities/cart-button/lib/hooks/useCartButton.hook";
 

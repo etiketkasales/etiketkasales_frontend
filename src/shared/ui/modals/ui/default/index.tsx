@@ -1,4 +1,3 @@
-import React from "react";
 import classNames from "classnames";
 import { useModal } from "~/src/shared/ui/modals/lib/hooks";
 

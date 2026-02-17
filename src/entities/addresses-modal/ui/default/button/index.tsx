@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./add-new-button.module.scss";
 import Icon from "~/public/addresses/plus.svg";
 import Button from "~/src/shared/ui/button";

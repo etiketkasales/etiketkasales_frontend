@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./seller-item.module.scss";
 import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
 import Link from "next/link";

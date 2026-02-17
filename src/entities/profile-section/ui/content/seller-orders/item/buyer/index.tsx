@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./buyer.module.scss";
 import SellerOrderInfoContainer from "../info-container";
 import BuyerInfo from "./info";

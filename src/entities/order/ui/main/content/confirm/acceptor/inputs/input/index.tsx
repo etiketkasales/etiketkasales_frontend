@@ -1,4 +1,3 @@
-import React from "react";
 import StringUtils from "~/src/shared/lib/utils/string.util";
 
 import classes from "./input.module.scss";

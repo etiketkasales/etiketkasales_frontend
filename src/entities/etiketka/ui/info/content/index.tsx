@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 import EtiketkaInfoDescription from "./description";
 import EtiketkaInDev from "./in-dev";

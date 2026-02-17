@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import { useFiltersCheckbox } from "~/src/features/filters/lib/hooks/useFiltersCheckbox.hook";
 
 import FiltersItem from "~/src/features/filters/ui/item";

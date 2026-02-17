@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import { useGetSortOptions } from "~/src/entities/catalogue-section/lib/hooks/useGetSortOptions.hook";
 import { useSort } from "~/src/entities/catalogue-section/lib/hooks/useSort.hook";
 

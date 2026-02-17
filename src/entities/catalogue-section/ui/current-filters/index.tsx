@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import { useCurrentFilters } from "~/src/entities/catalogue-section/lib/hooks/useCurrentFIlters.hook";
 
 import classes from "./current-filters.module.scss";

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import { useAdvs } from "~/src/shared/ui/advs/lib/hooks/useAdvs.hook";
 
 import classes from "./three-ads.module.scss";

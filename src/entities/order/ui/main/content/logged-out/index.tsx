@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./logged-out.module.scss";
 import OrderContainer from "../container";
 import LoggedOutButton from "./button";

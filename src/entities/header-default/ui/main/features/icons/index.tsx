@@ -1,4 +1,3 @@
-import React from "react";
 import FeaturesSwitcher from "./switcher";
 
 const items: { type: "cart" | "favourites" }[] = [

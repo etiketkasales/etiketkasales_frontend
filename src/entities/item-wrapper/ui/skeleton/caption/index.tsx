@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./skeleton-caption.module.scss";
 import SkeletonWrapper from "~/src/shared/ui/skeleton/ui";
 

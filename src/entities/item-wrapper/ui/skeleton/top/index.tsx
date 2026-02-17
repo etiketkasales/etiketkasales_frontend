@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./skeleton-top.module.scss";
 import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
 

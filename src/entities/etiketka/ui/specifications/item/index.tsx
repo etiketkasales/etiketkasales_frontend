@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./specs-item.module.scss";
 import { ISpecification } from "~/src/entities/etiketka/model";
 

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import classNames from "classnames";
 import { useTabsItem } from "~/src/widgets/tabs/lib/hooks/useTabsItem.hook";
 

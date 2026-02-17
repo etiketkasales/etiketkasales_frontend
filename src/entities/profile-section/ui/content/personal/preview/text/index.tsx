@@ -1,5 +1,3 @@
-import React from "react";
-
 import StringUtils from "~/src/shared/lib/utils/string.util";
 
 interface Props {

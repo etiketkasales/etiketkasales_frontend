@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./preview-avatar.module.scss";
 import NoImageAvatar from "./no-image";
 import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";

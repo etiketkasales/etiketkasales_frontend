@@ -1,4 +1,3 @@
-import React from "react";
 import CartButton from "~/src/entities/cart-button/ui";
 
 interface Props {

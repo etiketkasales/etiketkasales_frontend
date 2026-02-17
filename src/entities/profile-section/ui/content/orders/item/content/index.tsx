@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./order-content.module.scss";
 import OrderInfo from "./info";
 import OrderStatus from "./status";

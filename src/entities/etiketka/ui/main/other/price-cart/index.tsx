@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 import classes from "./price-cart.module.scss";
 import EtiketkaMainContainer from "~/src/entities/etiketka/ui/container";

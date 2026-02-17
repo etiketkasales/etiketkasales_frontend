@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import Container from "~/src/shared/ui/container/ui";
 
 interface Props {

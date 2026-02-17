@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 import CheckboxInput from "~/src/shared/ui/inputs/checkbox";
 

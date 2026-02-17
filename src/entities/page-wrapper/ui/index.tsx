@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./page-wrapper.module.scss";
 import Tabs from "~/src/widgets/tabs/ui";
 import Footer from "~/src/entities/footer/ui";

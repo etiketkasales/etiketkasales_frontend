@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "../catalogue-products.module.scss";
 import ItemWrapperSkeleton from "~/src/entities/item-wrapper/ui/skeleton";
 import Container from "~/src/shared/ui/container/ui";

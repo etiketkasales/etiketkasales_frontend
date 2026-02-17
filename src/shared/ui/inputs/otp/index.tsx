@@ -1,5 +1,3 @@
-import React from "react";
-
 import OtpInput from "react-otp-input";
 
 interface Props {

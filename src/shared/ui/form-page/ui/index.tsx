@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 import classes from "./form-page.module.scss";
 

@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./product.module.scss";
 import ProfileProductTop from "./top";
 import ProfileProductBottom from "./bottom";

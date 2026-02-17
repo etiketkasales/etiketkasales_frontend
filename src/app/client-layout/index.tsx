@@ -1,5 +1,3 @@
-import React from "react";
-
 import ClientLayout from "~/src/entities/client-layout/ui";
 import { StoreProvider } from "~/src/app/store/store-provider";
 

@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./profile-in-dev.module.scss";
 import ProfileContentContainer from "../container";
 import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";

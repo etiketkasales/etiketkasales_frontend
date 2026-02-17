@@ -1,5 +1,3 @@
-import React from "react";
-
 import ProfileSaveButton from "~/src/entities/profile-section/ui/save-button";
 import ProfilePersonalInputs from "./inputs";
 import { IChangeableProfile } from "~/src/features/user/model";

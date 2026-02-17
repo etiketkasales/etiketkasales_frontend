@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./bottom.module.scss";
 import StringUtils from "~/src/shared/lib/utils/string.util";
 import LinkContainer from "~/src/shared/ui/link-container/ui";

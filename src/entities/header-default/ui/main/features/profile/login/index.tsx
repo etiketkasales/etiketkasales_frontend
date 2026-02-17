@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./header-login.module.scss";
 import Icon from "~/public/header/person-gray.svg";
 import LinkContainer from "~/src/shared/ui/link-container/ui";

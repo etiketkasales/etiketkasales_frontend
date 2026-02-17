@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./download.module.scss";
 import Button from "~/src/shared/ui/button";
 import LinkContainer from "~/src/shared/ui/link-container/ui";

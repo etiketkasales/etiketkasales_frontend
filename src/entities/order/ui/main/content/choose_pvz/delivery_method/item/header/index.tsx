@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./header.module.scss";
 import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
 import RadioButton from "~/src/shared/ui/radio-button/ui";

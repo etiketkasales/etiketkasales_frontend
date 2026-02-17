@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import classNames from "classnames";
 import { useCatalogueProducts } from "~/src/entities/catalogue-section/lib/hooks/useCatalogueProducts.hook";
 

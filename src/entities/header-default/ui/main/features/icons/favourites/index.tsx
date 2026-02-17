@@ -1,5 +1,3 @@
-import React from "react";
-
 import Icon from "~/public/header/heart.svg";
 import HeaderFeaturesItem from "../item";
 

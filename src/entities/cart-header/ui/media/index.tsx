@@ -1,4 +1,3 @@
-import React from "react";
 import classNames from "classnames";
 
 import classes from "./cart-header-media.module.scss";

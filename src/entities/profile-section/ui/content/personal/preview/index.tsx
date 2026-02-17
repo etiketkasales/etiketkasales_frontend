@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 import ProfileAvatar from "./avatar";
 import ProfilePreviewText from "./text";

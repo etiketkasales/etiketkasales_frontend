@@ -1,5 +1,3 @@
-import React from "react";
-
 import LinkContainer from "~/src/shared/ui/link-container/ui";
 import { IHeaderLink } from "~/src/entities/header-default/model/header-default.interface";
 

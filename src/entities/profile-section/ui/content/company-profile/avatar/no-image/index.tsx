@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "../company-avatar.module.scss";
 import ShopWindow from "~/public/profile/shop-window.svg";
 import Container from "~/src/shared/ui/container/ui";

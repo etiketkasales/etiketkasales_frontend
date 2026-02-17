@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./cart-header.module.scss";
 import HeaderDefault from "../../header-default/ui";
 import CartHeaderMedia from "./media";

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import { useEtiketka } from "~/src/entities/etiketka/lib/hooks/useEtiketka.hook";
 
 import EtiketkaSection from "~/src/entities/etiketka/ui";

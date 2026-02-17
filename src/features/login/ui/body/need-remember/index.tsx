@@ -1,4 +1,3 @@
-import React from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import {
   selectUser,

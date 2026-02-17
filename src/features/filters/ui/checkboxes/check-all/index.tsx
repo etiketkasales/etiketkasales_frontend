@@ -1,5 +1,3 @@
-import React from "react";
-
 import CheckboxInput from "~/src/shared/ui/inputs/checkbox";
 
 interface Props {

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import classNames from "classnames";
 import { useCategoryItem } from "~/src/features/categories/lib/hooks/useCategoryItem.hook";
 
