@@ -95,3 +95,16 @@ export const quoteNextStages: Record<QuoteStageType, QuoteStageType | null> = {
   requisites: "agreement",
   agreement: null,
 };
+
+export const quoteStageFieldsMap: Record<
+  QuoteStageType,
+  | (keyof IChangeableProfile)[]
+  | ((data: IChangeableProfile) => (keyof IChangeableProfile)[])
+> = {
+  about: quoteRequiredFields,
+  requisites: (data: IChangeableProfile) => {
+    const needAccountant = !data.accountant_is_director;
+    return quoteRequisitsRequiredFields(needAccountant);
+  },
+  agreement: [],
+};

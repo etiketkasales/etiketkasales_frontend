@@ -6,7 +6,6 @@ import { useChangeUserData } from ".";
 import { uploadAvatar } from "~/src/entities/profile-section/lib/api";
 import { selectUser } from "~/src/app/store/reducers/user.slice";
 
-
 /**
  * @hook useChangeAvatar
  * @description Hook for changing user avatar

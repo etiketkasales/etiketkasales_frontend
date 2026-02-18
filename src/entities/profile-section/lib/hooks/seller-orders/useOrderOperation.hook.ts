@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch } from "~/src/app/store/hooks";
-import { addNotification } from "~/src/app/store/reducers/notifications.slice";
+import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 import { useOrderOperations } from ".";
-import FormUtils from "~/src/shared/lib/utils/form.util";
+
 import { promiseWrapper } from "~/src/shared/lib";
+import FormUtils from "~/src/shared/lib/utils/form.util";
 
 import {
   OrderOperationFormMap,
@@ -35,11 +36,11 @@ export const useOrderOperation = <T extends SellerOrderOperationType>({
 }: Props<T>) => {
   const dispatch = useAppDispatch();
   const { orderOperationsMap } = useOrderOperations();
-  const [formData, setFormData] = useState<OrderOperationFormMap[T] | null>(
-    initialData,
-  );
+  const [formData, setFormData] =
+    useState<OrderOperationFormMap[T]>(initialData);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<MessageI | null>(null);
+  const createNotification = useCreateNotification();
 
   const onInputChange = useCallback(
     <K extends keyof OrderOperationFormMap[T]>(
@@ -47,8 +48,6 @@ export const useOrderOperation = <T extends SellerOrderOperationType>({
       field: K,
     ) => {
       setFormData((prev) => {
-        if (!prev) return prev;
-
         return {
           ...prev,
           [field]: value,
@@ -60,7 +59,6 @@ export const useOrderOperation = <T extends SellerOrderOperationType>({
 
   const isValidForm = useCallback((): boolean => {
     const fd = formData;
-    if (!fd) return true;
     const keys = Object.keys(fd || {});
     if (!keys.length) return true;
 
@@ -77,7 +75,7 @@ export const useOrderOperation = <T extends SellerOrderOperationType>({
 
     setError(null);
     return true;
-  }, [formData, error]);
+  }, [formData, error, createNotification]);
 
   const onSubmit = useCallback(async () => {
     const callback = orderOperationsMap[type];
@@ -87,13 +85,7 @@ export const useOrderOperation = <T extends SellerOrderOperationType>({
       callback: async () => {
         if (isValidForm()) {
           await callback(orderId, formData).then(closeModal);
-          dispatch(
-            addNotification({
-              message: "Данные заказа обновлены",
-              type: "success",
-              field: "global",
-            }),
-          );
+          createNotification("Данные заказа обновлены", "success");
         }
       },
     });
@@ -101,18 +93,19 @@ export const useOrderOperation = <T extends SellerOrderOperationType>({
     type,
     orderId,
     formData,
+    orderOperationsMap,
     isValidForm,
     closeModal,
-    orderOperationsMap,
     dispatch,
+    createNotification,
   ]);
 
   useEffect(() => {
     if (error) {
       isValidForm();
-      dispatch(addNotification(error));
+      createNotification(error.message, error.type);
     }
-  }, [error, isValidForm, dispatch]);
+  }, [error, isValidForm, createNotification]);
 
   return {
     onSubmit,
