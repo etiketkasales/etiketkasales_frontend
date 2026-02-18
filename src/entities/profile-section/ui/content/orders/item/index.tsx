@@ -13,6 +13,8 @@ export default function ProfileOrdersItem({
   order_number,
   total_amount,
   status,
+  comment,
+  preview_image,
   invoice_url,
 }: Props) {
   return (
@@ -26,8 +28,9 @@ export default function ProfileOrdersItem({
         order_number={order_number}
         status={status}
         bill_url={invoice_url}
+        comment={comment}
       />
-      <OrderExtra total_amount={total_amount} />
+      <OrderExtra total_amount={total_amount} previewImage={preview_image} />
     </Container>
   );
 }

@@ -20,7 +20,7 @@ export const useOrders = ({ role }: Props) => {
   const [sellerOrders, setSellerOrders] = useState<ISellerOrder[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleGetOrders = useCallback(async () => {
+  const getBuyerOrders = useCallback(async () => {
     await promiseWrapper({
       setLoading,
       callback: async () => {
@@ -43,14 +43,17 @@ export const useOrders = ({ role }: Props) => {
     await promiseWrapper({
       setLoading,
       callback: async () => {
-        if (role === "buyer") {
-          await handleGetOrders();
-        } else if (role === "seller") {
-          await getSellerOrders();
+        switch (role) {
+          case "buyer":
+            await getBuyerOrders();
+            break;
+          case "seller":
+            await getSellerOrders();
+            break;
         }
       },
     });
-  }, [role, handleGetOrders, getSellerOrders]);
+  }, [role, getBuyerOrders, getSellerOrders]);
 
   useEffect(() => {
     getRoleOrders();

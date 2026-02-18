@@ -1,10 +1,19 @@
 .container {
-    flex-direction: column;
-    gap: $space-6;
+  flex-direction: column;
+  gap: $space-6;
 
-    @media screen and (width <= 560px) {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: flex-end;
-    }
+  @media screen and (width <= 560px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+}
+
+.image {
+  width: 70px;
+  height: 70px;
+
+  img {
+    border-radius: $space-5;
+  }
 }

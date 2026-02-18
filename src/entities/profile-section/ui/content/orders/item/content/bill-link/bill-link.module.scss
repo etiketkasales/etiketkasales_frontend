@@ -13,4 +13,8 @@
   &:hover {
     background-color: $yellow-300;
   }
+
+  @media screen and (width <= 560px) {
+    padding: $space-2 $space-3;
+  }
 }

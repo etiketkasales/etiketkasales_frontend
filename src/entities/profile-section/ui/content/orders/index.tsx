@@ -1,5 +1,6 @@
-import classNames from "classnames";
+"use client";
 import { useOrders } from "~/src/entities/profile-section/lib/hooks";
+import classNames from "classnames";
 
 import classes from "./profile-orders.module.scss";
 import ProfileContentContainer from "../container";
@@ -21,7 +22,10 @@ export default function ProfileOrders() {
         <ul className={`flex-column ${classes.list}`}>
           {orders.map((item) => {
             return (
-              <ProfileOrdersItem {...item} key={`${item.id} ${item.user_id}`} />
+              <ProfileOrdersItem
+                {...item}
+                key={`${item.id}-${item.order_number}`}
+              />
             );
           })}
         </ul>

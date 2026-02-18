@@ -23,7 +23,7 @@ const buttons: IButton[] = [
   },
 ];
 
-export default function OrderErrorButtons() {
+export default function OrderSuccessButtons() {
   const { push } = useRouter();
 
   return (

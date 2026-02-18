@@ -16,9 +16,10 @@ interface Props {
   needLoad?: boolean;
 }
 
-const errorMessages = {
-  paymentMethods: "Не удалось получить способы оплаты",
-  createPayment: "Не удалось создать платеж",
+const notificationMessages = {
+  paymentMethodsError: "Не удалось получить способы оплаты",
+  createPaymentError: "Не удалось создать платеж по заказу",
+  createPaymentSuccess: "Платёж успешно создан",
 };
 
 // Получение и отдача способов оплаты
@@ -51,14 +52,17 @@ export const usePayment = ({ isCompany, needLoad = true }: Props) => {
         callback: async () => {
           const res = await createOrderPayment(orderId);
           if (res) {
-            createNotification("Платёж успешно создан", "success");
+            createNotification(
+              notificationMessages.createPaymentSuccess,
+              "success",
+            );
             window.open(res.payment_url);
           }
         },
         fallback: () => {
-          createNotification("Не удалось создать платёж по заказу", "error");
+          createNotification(notificationMessages.createPaymentError, "error");
         },
-        errorMessage: errorMessages.createPayment,
+        errorMessage: notificationMessages.createPaymentError,
       });
     },
     [createNotification],
@@ -72,10 +76,10 @@ export const usePayment = ({ isCompany, needLoad = true }: Props) => {
         if (res && Array.isArray(res)) {
           setMethods(res);
         } else {
-          createNotification(errorMessages.paymentMethods, "error");
+          createNotification(notificationMessages.paymentMethodsError, "error");
         }
       },
-      errorMessage: errorMessages.paymentMethods,
+      errorMessage: notificationMessages.paymentMethodsError,
     });
   }, [amount, isCompany, createNotification]);
 

@@ -6,18 +6,31 @@ export interface IProfileInput {
   type: "string" | "phone" | "email" | "checkbox";
 }
 
+export interface IOrderResponseItem {
+  id: number;
+  name: string;
+  preview_image: string;
+  price: string;
+  product_id: number;
+  product_name: string;
+  quantity: string;
+  total: string;
+}
+
 export interface IOrder {
   id: number;
-  user_id: number;
+  comment: string;
+  items: IOrderResponseItem[];
   order_number: string;
+  payment_method: string | null;
+  preview_image: string;
+  receiver_phone: string;
   status: string;
+  status_code: string;
   total_amount: string;
-  delivery_method: string;
   delivery_address: string;
   created_at: string; //2025-01-07T12:00:00Z
   updated_at: string; //2025-01-07T12:00:00Z
-  user_name: string;
-  user_surname: string;
   invoice_url?: string;
 }
 

@@ -7,6 +7,7 @@ interface Props {
   created_at: string;
   order_number: string;
   status: string;
+  comment: string;
   bill_url?: string;
 }
 
@@ -15,11 +16,12 @@ export default function OrderContent({
   order_number,
   status,
   bill_url,
+  comment,
 }: Props) {
   return (
     <div className={`flex-column ${classes.container}`}>
       <OrderInfo created_at={created_at} order_number={order_number} />
-      <OrderStatus status={status} />
+      <OrderStatus status={status} comment={comment} />
       {bill_url && <OrderBillUrl url={bill_url} />}
     </div>
   );

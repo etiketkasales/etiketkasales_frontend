@@ -13,6 +13,7 @@ interface Props {
 export default function OrderPurchase({ type }: Props) {
   const { methods, loading, onMethodClick, chosenMethod } = usePayment({
     isCompany: type === "company",
+    needLoad: true,
   });
 
   return (
