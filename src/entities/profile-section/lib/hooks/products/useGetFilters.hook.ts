@@ -1,4 +1,6 @@
 import { useCallback, useState } from "react";
+import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
+
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 import { getNewProductFilters } from "~/src/entities/profile-section/lib/api";
 
@@ -27,6 +29,7 @@ export const useGetFilters = ({ setRequiredFields }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<MessageI | null>(null);
   const [filtersToMap, setFiltersToMap] = useState<INewProductInput[]>([]);
+  const createNotification = useCreateNotification();
 
   const parseFilters = useCallback(
     (filters: INewProductFilter[]): INewProductInput[] => {
@@ -60,8 +63,10 @@ export const useGetFilters = ({ setRequiredFields }: Props) => {
           setRequiredFields(parseFilters(res).map((item) => item.field) || []);
         }
       },
+      fallback: () =>
+        createNotification("Не удалось получить фильтры", "error"),
     });
-  }, [parseFilters, setRequiredFields]);
+  }, [parseFilters, setRequiredFields, createNotification]);
 
   return {
     filtersToMap,

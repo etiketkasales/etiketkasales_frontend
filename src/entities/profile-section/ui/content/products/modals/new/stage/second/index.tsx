@@ -1,9 +1,7 @@
 "use client";
-import React, { useEffect } from "react";
-import classNames from "classnames";
+import { useEffect } from "react";
 import { useGetFilters } from "~/src/entities/profile-section/lib/hooks";
 
-import classes from "./second-stage.module.scss";
 import NewProductModalStage from "..";
 import NewProductInputSeparator from "../../input-separator";
 import Loader from "~/src/shared/ui/loader";
@@ -57,7 +55,7 @@ export default function NewProductSecondStage({
         ))
       ) : !loading ? (
         <span className={`text-body m text-neutral-1000`}>
-          Не удалось найти подходящих фильтров
+          Не удалось найти фильтров для продолжения
         </span>
       ) : null}
     </NewProductModalStage>

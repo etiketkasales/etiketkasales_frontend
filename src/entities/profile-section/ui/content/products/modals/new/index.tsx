@@ -7,7 +7,6 @@ import Modal from "~/src/shared/ui/modals/ui/default";
 import NewProductModalButtons from "./buttons";
 import NewProductFirstStage from "./stage/first";
 import NewProductSecondStage from "./stage/second";
-import { INewProduct } from "~/src/entities/profile-section/model";
 
 interface Props {
   isActive: boolean;
