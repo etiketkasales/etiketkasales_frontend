@@ -1,5 +1,8 @@
+"use client";
 import { useCallback, useEffect, useRef } from "react";
 import scrollLock from "scroll-lock";
+import { useAppSelector } from "~/src/app/store/hooks";
+import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
 
 interface Props {
   isOpen: boolean;
@@ -8,9 +11,9 @@ interface Props {
 }
 
 export const useModal = ({ isOpen, onClose, customClickOutside }: Props) => {
+  const { modalCloseOnOutsideClick } = useAppSelector(selectNavigation);
   const contentRef = useRef<HTMLDivElement>(null);
-
-  const closingByPopState = useRef(false);
+  const closingByPopState = useRef<boolean>(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -52,24 +55,26 @@ export const useModal = ({ isOpen, onClose, customClickOutside }: Props) => {
   const clickOutside = useCallback(
     (event: MouseEvent) => {
       if (customClickOutside) return;
+      if (!modalCloseOnOutsideClick) return;
       if (
         contentRef.current &&
         !contentRef.current.contains(event.target as Node)
       )
         onClose();
     },
-    [contentRef, onClose, customClickOutside],
+    [contentRef, onClose, customClickOutside, modalCloseOnOutsideClick],
   );
 
   const touchOutside = useCallback(
     (event: TouchEvent) => {
       if (
         contentRef.current &&
-        !contentRef.current.contains(event.target as Node)
+        !contentRef.current.contains(event.target as Node) &&
+        modalCloseOnOutsideClick
       )
         onClose();
     },
-    [contentRef, onClose],
+    [contentRef, onClose, modalCloseOnOutsideClick],
   );
 
   useEffect(() => {

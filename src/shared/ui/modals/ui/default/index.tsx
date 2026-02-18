@@ -1,3 +1,4 @@
+"use client";
 import classNames from "classnames";
 import { useModal } from "~/src/shared/ui/modals/lib/hooks";
 
@@ -5,8 +6,8 @@ import classes from "./modal.module.scss";
 import { AnimatePresence, motion } from "framer-motion";
 import Container from "~/src/shared/ui/container/ui";
 import ModalTitle from "../title";
-import { IModalBaseProps } from "~/src/shared/ui/modals/model";
 import Loader from "../../../loader";
+import { IModalBaseProps } from "~/src/shared/ui/modals/model";
 
 interface Props extends IModalBaseProps {
   wrapperClassName?: string;
@@ -15,6 +16,7 @@ interface Props extends IModalBaseProps {
   titleClassName?: string;
   titleTextClassName?: string;
   needBackButton?: boolean;
+  backButtonClassName?: string;
   loading?: boolean;
   loaderRadius?: number;
 }
@@ -31,6 +33,7 @@ export default function Modal({
   titleClassName,
   titleTextClassName,
   needBackButton = false,
+  backButtonClassName,
   loading = false,
   loaderRadius = 20,
 }: Props) {
@@ -57,6 +60,7 @@ export default function Modal({
               className={titleClassName}
               textClassName={titleTextClassName}
               needButton={needBackButton}
+              backButtonClassName={backButtonClassName}
             />
             {children}
           </Container>

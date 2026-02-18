@@ -1,3 +1,9 @@
 .heading {
     gap: $space-1;
 }
+
+.container {
+    @media screen and (width <=768px) {
+        padding-inline: $space-3;
+    }
+}

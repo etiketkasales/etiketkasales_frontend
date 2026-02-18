@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface NavigationStateI {
   modalOpen: boolean;
+  modalCloseOnOutsideClick: boolean;
   deviceType: "android" | "ios" | "default";
   headerHeight: number;
   tabsHeight: number | null;
@@ -13,6 +14,7 @@ interface NavigationStateI {
 
 const initialState: NavigationStateI = {
   modalOpen: false,
+  modalCloseOnOutsideClick: true,
   deviceType: "android",
   headerHeight: 0,
   tabsHeight: null,

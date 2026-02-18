@@ -1,10 +1,11 @@
+import classNames from "classnames";
+
 import classes from "./pickup-point.module.scss";
 import Container from "~/src/shared/ui/container/ui";
 import PickupPointText from "./text";
 import PickupPointButton from "./button";
-import { IOrderPickupPointResponse } from "~/src/entities/order/model";
 import PickupPointFallback from "./fallback";
-import classNames from "classnames";
+import { IOrderPickupPointResponse } from "~/src/entities/order/model";
 
 interface Props {
   choosePoint: (point: IOrderPickupPointResponse) => void;

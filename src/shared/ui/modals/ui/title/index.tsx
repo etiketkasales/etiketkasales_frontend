@@ -11,6 +11,7 @@ interface Props {
   needButton?: boolean;
   className?: string;
   textClassName?: string;
+  backButtonClassName?: string;
 }
 
 export default function ModalTitle({
@@ -18,6 +19,7 @@ export default function ModalTitle({
   onClose,
   needButton,
   className,
+  backButtonClassName,
   textClassName,
 }: Props) {
   return (
@@ -36,7 +38,7 @@ export default function ModalTitle({
             typeButton="ghost"
             size="0"
             onClick={onClose}
-            className={classes.button}
+            className={classNames(classes.button, backButtonClassName)}
             needActiveScale={false}
           >
             <Icon />

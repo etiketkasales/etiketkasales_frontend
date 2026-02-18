@@ -24,6 +24,9 @@ export default function DeliveryMethodModal({ isOpen, onClose }: Props) {
       title="Способ доставки"
       containerClassName={`flex-column ${classes.container}`}
       loaderRadius={20}
+      needBackButton
+      backButtonClassName={classes.backButton}
+      titleClassName={classes.title}
     >
       {loading && <Loader radius={20} />}
       <YandexMapsWidget
