@@ -91,3 +91,10 @@ export const sellerProductStatusColors: Record<
   draft: "blue-600",
   pending: "red-700",
 };
+
+export const sellerProductsMessages = {
+  formError: "Неверные данные",
+  fileUploaded: "Изображение успешно загружено",
+  productSaved: "Данные о товаре сохранены",
+  productArchived: "Товар отправлен в архив",
+};

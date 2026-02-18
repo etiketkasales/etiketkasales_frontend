@@ -1,5 +1,5 @@
 "use client";
-
+import { useState } from "react";
 import { useSellerProducts } from "~/src/entities/profile-section/lib/hooks";
 
 import classes from "./products.module.scss";
@@ -9,6 +9,7 @@ import ProfileProductsList from "./list";
 import Loader from "~/src/shared/ui/loader";
 import SellerProductModal from "./modals";
 import {
+  ISellerProductsModal,
   modalTitles,
   profileTitlesMap,
 } from "~/src/entities/profile-section/model";
@@ -16,14 +17,12 @@ import {
 interface Props {}
 
 export default function ProfileProducts({}: Props) {
-  const {
-    sellerProducts,
-    loading,
-    modal,
-    setModal,
-    editProductId,
-    setEditProductId,
-  } = useSellerProducts({ needLoad: true });
+  const { sellerProducts, loading, editProductId, setEditProductId } =
+    useSellerProducts({ needLoad: true });
+  const [modal, setModal] = useState<ISellerProductsModal>({
+    active: null,
+    type: "new",
+  });
 
   return (
     <ProfileContentContainer

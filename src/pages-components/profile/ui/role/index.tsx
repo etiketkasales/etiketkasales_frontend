@@ -42,9 +42,9 @@ export default function ProfileRolePage({ paramsRole }: Props) {
       return redirect("/login");
     }
 
-    if (paramsRole !== "seller-pending") {
-      return redirect("/profile");
-    }
+    // if (paramsRole !== "seller-pending") {
+    //   return redirect("/profile");
+    // }
   }
 
   return (

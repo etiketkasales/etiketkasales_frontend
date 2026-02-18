@@ -45,10 +45,6 @@ export const useSellerProducts = ({ onClose, needLoad }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<MessageI | null>(null);
   const [sellerProducts, setSellerProducts] = useState<ISellerProduct[]>([]);
-  const [modal, setModal] = useState<ISellerProductsModal>({
-    active: null,
-    type: "new",
-  });
   const [editProductId, setEditProductId] = useState<number>(0);
 
   const promiseCallback = useCallback(async (callback: () => Promise<void>) => {
@@ -116,8 +112,6 @@ export const useSellerProducts = ({ onClose, needLoad }: Props) => {
     setError,
     sellerProducts,
     updateSellerProducts,
-    modal,
-    setModal,
     editProductId,
     setEditProductId,
     updateProduct,

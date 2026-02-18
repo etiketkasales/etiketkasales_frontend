@@ -1,8 +1,8 @@
 "use client";
+import { useChangeAvatar } from "~/src/entities/profile-section/lib/hooks/profile";
 
 import ProfileAvatar from "./avatar";
 import ProfilePreviewText from "./text";
-import useChangeAvatar from "~/src/entities/profile-section/lib/hooks/profile/useChangeAvatar.hook";
 import FileInput from "~/src/shared/ui/inputs/file";
 
 interface Props {
@@ -41,6 +41,7 @@ export default function ProfileUserPreview({
           if (!file) return;
           onFileLoad(file);
         }}
+        name="profile-avatar"
       />
     </div>
   );

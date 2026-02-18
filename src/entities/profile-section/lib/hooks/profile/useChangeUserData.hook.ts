@@ -1,16 +1,17 @@
 import React, { useCallback, useState } from "react";
+import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 import { useAppDispatch } from "~/src/app/store/hooks";
 import { useUser } from "~/src/features/user/lib/hooks/useUser.hook";
+
 import { setUser } from "~/src/app/store/reducers/user.slice";
 import { changePersonalData } from "~/src/entities/profile-section/lib/api";
-import { addNotification } from "~/src/app/store/reducers/notifications.slice";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 
 import { IChangeableProfile } from "~/src/features/user/model";
 import { MessageI } from "~/src/shared/model";
 
 interface Props {
-  userInfo: IChangeableProfile;
+  userInfo?: IChangeableProfile;
   validationFunction?: () => boolean;
   onInputChangeCustom?: (v: string, field: keyof IChangeableProfile) => void;
   onSaveCallback?: () => void;
@@ -42,6 +43,7 @@ export const useChangeUserData = ({
   const dispatch = useAppDispatch();
   const { setUserData } = useUser();
   const [loading, setLoading] = useState<boolean>(false);
+  const createNotification = useCreateNotification();
 
   const onInputChange = useCallback(
     (v: string, field: keyof IChangeableProfile) => {
@@ -76,23 +78,18 @@ export const useChangeUserData = ({
   );
 
   const onSave = useCallback(
-    async (customMessage?: string) => {
+    async (customMessage?: string, overrideUserInfo?: IChangeableProfile) => {
       await promiseWrapper({
         setLoading,
         callback: async () => {
-          if (!userInfo) return;
+          const data = overrideUserInfo || userInfo;
+          if (!data) return;
           const validation = validationFunction;
           if (validation && !validation()) return;
 
-          const res = await changePersonalData(userInfo);
+          const res = await changePersonalData(data);
           if (res) {
-            dispatch(
-              addNotification({
-                message: customMessage || "Профиль обновлён",
-                type: "success",
-                field: "global",
-              }),
-            );
+            createNotification(customMessage || "Профиль обновлён", "success");
             setUserData(res.user);
             onSaveCallback?.();
           }
@@ -102,6 +99,7 @@ export const useChangeUserData = ({
     },
     [
       userInfo,
+      createNotification,
       validationFunction,
       setUserData,
       onSaveCallback,

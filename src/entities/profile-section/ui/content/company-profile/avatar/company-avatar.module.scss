@@ -1,10 +1,29 @@
 .image {
-    width: 80px !important;
-    height: 80px !important;
-    border-radius: 50%;
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 50%;
 
-    @media screen and (width <= 560px) {
-        width: 50px !important;
-        height: 50px !important;
+  @media screen and (width <= 560px) {
+    width: 50px !important;
+    height: 50px !important;
+  }
+}
+
+.button {
+  opacity: 1;
+  transition: opacity $transition;
+
+  @media screen and (any-hover: hover) {
+    &:hover {
+      opacity: 0.9;
+
+      span {
+        color: $neutral-1000;
+      }
     }
+  }
+}
+
+.loading {
+  opacity: 0.8;
 }

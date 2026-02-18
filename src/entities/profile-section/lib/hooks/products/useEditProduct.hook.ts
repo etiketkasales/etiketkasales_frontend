@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { useFileLoad } from "~/src/shared/lib/hooks";
-import { useSellerProducts } from ".";
-import { uploadProductImage } from "~/src/entities/profile-section/lib/api";
+import { useSellerProducts, useUploadImage } from ".";
+import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 import FormUtils from "~/src/shared/lib/utils/form.util";
 
 import {
@@ -9,6 +8,7 @@ import {
   editSellerProductSkeleton,
   IEditSellerProduct,
   ISellerProduct,
+  sellerProductsMessages,
 } from "~/src/entities/profile-section/model";
 
 interface Props {
@@ -48,17 +48,8 @@ export const useEditProduct = ({ initialData, onClose }: Props) => {
     onClose,
     needLoad: false,
   });
-
-  const fileLoadingCallback = useCallback(async (file: File) => {
-    if (!file) return null;
-    const formData = new FormData();
-    formData.append("image", file);
-    const res = await uploadProductImage(formData);
-    return res;
-  }, []);
-  const { file, fileLoading, onFileLoad } = useFileLoad({
-    callback: fileLoadingCallback,
-  });
+  const { file, fileLoading, onFileLoad } = useUploadImage();
+  const createNotification = useCreateNotification();
 
   const onInputChange = useCallback(
     (field: keyof IEditSellerProduct, v: string) => {
@@ -78,8 +69,9 @@ export const useEditProduct = ({ initialData, onClose }: Props) => {
     });
     setError(newError);
     setDisableSave(!!newError);
+    createNotification(sellerProductsMessages.formError, "error");
     return !!newError;
-  }, [editProductData, error, setError]);
+  }, [editProductData, error, setError, createNotification]);
 
   const onSave = useCallback(async () => {
     await promiseCallback(async () => {
@@ -87,6 +79,7 @@ export const useEditProduct = ({ initialData, onClose }: Props) => {
       if (getFormError()) return;
 
       await updateProduct(editProductData, initialData.id);
+      createNotification(sellerProductsMessages.productSaved, "success");
       onClose();
     });
   }, [
@@ -96,6 +89,7 @@ export const useEditProduct = ({ initialData, onClose }: Props) => {
     getFormError,
     onClose,
     promiseCallback,
+    createNotification,
   ]);
 
   const toArchive = useCallback(async () => {
@@ -106,12 +100,14 @@ export const useEditProduct = ({ initialData, onClose }: Props) => {
         status_code: "archived",
       };
       await updateProduct(newProduct, initialData.id);
+      createNotification(sellerProductsMessages.productArchived, "success");
       onClose();
     });
   }, [
     promiseCallback,
     updateProduct,
     onClose,
+    createNotification,
     initialData.id,
     editProductData,
   ]);

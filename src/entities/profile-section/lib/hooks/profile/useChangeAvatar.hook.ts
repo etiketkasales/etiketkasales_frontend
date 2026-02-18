@@ -1,38 +1,43 @@
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
-import {
-  selectUser,
-  setProfileAvatar,
-} from "~/src/app/store/reducers/user.slice";
 import { useFileLoad } from "~/src/shared/lib/hooks";
 import { useChangeUserData } from ".";
+
 import { uploadAvatar } from "~/src/entities/profile-section/lib/api";
+import { selectUser } from "~/src/app/store/reducers/user.slice";
+
 
 /**
- * UseChangeAvatar is a hook that provides functionality for changing user's avatar.
- * It uses useFileLoad and useChangeUserData hooks from shared lib.
- * It takes no arguments and returns an object with inputRef, onFileLoad and fileLoading properties.
- * inputRef is a reference to an input element where the user can input their avatar.
- * onFileLoad is a function that calls a callback with the loaded file.
- * fileLoading is a boolean that indicates whether the file is being loaded.
+ * @hook useChangeAvatar
+ * @description Hook for changing user avatar
+ * @param {void}
+ * @return {{inputRef: React.MutableRefObject<HTMLInputElement>, onFileLoad: (file: File) => void, fileLoading: boolean}}
  */
-export default function useChangeAvatar() {
+export const useChangeAvatar = () => {
   const dispatch = useAppDispatch();
   const { changeableUserInfo } = useAppSelector(selectUser);
-  const { onFileLoad, fileLoading } = useFileLoad({
-    callback: async (file: File) => {
+  const { onSave } = useChangeUserData({});
+
+  const fileLoadCallback = useCallback(
+    async (file: File) => {
       if (!file) return null;
       const data = new FormData();
       data.append("avatar", file);
       const res = await uploadAvatar(data);
       if (res.url) {
-        dispatch(setProfileAvatar({ avatar: res.url }));
-        onSave("Аватар изменён");
+        await onSave("Аватар изменён", {
+          ...changeableUserInfo,
+          avatar: res.url,
+        });
       }
       return res;
     },
+    [changeableUserInfo, dispatch, onSave],
+  );
+
+  const { onFileLoad, fileLoading } = useFileLoad({
+    callback: fileLoadCallback,
   });
-  const { onSave } = useChangeUserData({ userInfo: changeableUserInfo });
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -41,4 +46,4 @@ export default function useChangeAvatar() {
     onFileLoad,
     fileLoading,
   };
-}
+};

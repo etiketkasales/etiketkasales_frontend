@@ -3,7 +3,6 @@ import {
   IChangeableProfile,
   IProfile,
   SChangeableProfile,
-  UserRoleType,
   SProfile,
   IUserAddress,
   IUserCompany,
