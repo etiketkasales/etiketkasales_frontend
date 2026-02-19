@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { useAddresses } from "~/src/features/user/lib/hooks";
 import { addNotification } from "~/src/app/store/reducers/notifications.slice";

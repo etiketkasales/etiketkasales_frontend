@@ -30,6 +30,7 @@
   max-height: 616px;
   border-radius: $space-3;
   overflow: hidden;
+  background-color: $neutral-100;
 
   @media screen and (width <= 768px) {
     max-height: 100dvh;

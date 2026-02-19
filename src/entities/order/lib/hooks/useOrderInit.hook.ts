@@ -60,16 +60,16 @@ export const useOrderInit = ({ stage }: Props) => {
         return FormUtils.getFormError({
           checkData: field,
           requiredFields: Object.keys(field) as (keyof typeof field)[],
+          checkOnlyPrimitives: true,
         });
       }
-
       return FormUtils.checkIfValueEmpty(field);
     });
   }, [deliveryMethod, deliveryAddressId, pickupPoint.pickup_point_code]);
 
   const isConfirmStageInvalid = useMemo(() => {
     return (
-      Object.values(receiver).some(FormUtils.checkIfValueEmpty) ||
+      Object.values(receiver).some((v) => FormUtils.checkIfValueEmpty(v)) ||
       !receiverCompanyId ||
       !paymentMethod
     );
@@ -78,7 +78,6 @@ export const useOrderInit = ({ stage }: Props) => {
   useEffect(() => {
     const disabled =
       stage === "choose_pvz" ? isFirstStageInvalid : isConfirmStageInvalid;
-
     dispatch(setOrderInfo({ buttonDisabled: disabled }));
   }, [stage, isFirstStageInvalid, isConfirmStageInvalid, dispatch]);
 };

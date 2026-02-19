@@ -2,12 +2,13 @@ import InputUtils from "./input.util";
 import { MessageI } from "~/src/shared/model";
 
 class FormUtils {
-  static checkIfValueEmpty(value: any): boolean {
+  static checkIfValueEmpty(value: any, checkOnlyPrimitives?: boolean): boolean {
+    const onlyPrimitives = checkOnlyPrimitives || false;
     if (value === null || value === undefined) return true;
     if (typeof value === "string") return value.trim().length === 0;
     if (typeof value === "number") return Number.isNaN(value);
-    if (Array.isArray(value)) return value.length === 0;
-    if (typeof value === "object")
+    if (Array.isArray(value) && !onlyPrimitives) return value.length === 0;
+    if (typeof value === "object" && !onlyPrimitives)
       return Object.keys(value as object).length === 0;
     return false;
   }
@@ -69,15 +70,17 @@ class FormUtils {
     requiredFields,
     checkData,
     currentError,
+    checkOnlyPrimitives,
   }: {
     requiredFields: (keyof T)[];
     checkData: T;
     currentError?: MessageI | null;
+    checkOnlyPrimitives?: boolean;
   }): MessageI | null {
     for (const field of requiredFields) {
       const value = checkData[field as keyof T];
 
-      if (FormUtils.checkIfValueEmpty(value)) {
+      if (FormUtils.checkIfValueEmpty(value, checkOnlyPrimitives)) {
         if (!currentError || currentError.field !== field) {
           return {
             message: "Это поле обязательно",

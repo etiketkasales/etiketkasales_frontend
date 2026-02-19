@@ -1,4 +1,3 @@
-"use client";
 import classes from "./pickup-point-info.module.scss";
 import Container from "~/src/shared/ui/container/ui";
 import PickupPointInfoText from "./info";
