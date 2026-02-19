@@ -1,11 +1,11 @@
 "use client";
 import React, { useRef } from "react";
 import { useWindowSize } from "react-use";
+import classNames from "classnames";
 
 import classes from "./checkbox.module.scss";
-import ChecboxChecked from "~/public/shared/checkbox-checked.svg";
 import CheckboxChecked24 from "~/public/shared/checkbox-checked-24.svg";
-import classNames from "classnames";
+import ChecboxChecked from "~/public/shared/checkbox-checked.svg";
 
 interface Props {
   onChange: (e: boolean) => void;
@@ -64,9 +64,15 @@ export default function CheckboxInput({
       {nodeLabel}
       {checked &&
         (width > 460 ? (
-          <ChecboxChecked className={classes.icon} />
+          <ChecboxChecked
+            className={classes.icon}
+            onClick={() => inputRef.current?.click()}
+          />
         ) : (
-          <CheckboxChecked24 className={classes.icon} />
+          <CheckboxChecked24
+            className={classes.icon}
+            onClick={() => inputRef.current?.click()}
+          />
         ))}
     </label>
   );

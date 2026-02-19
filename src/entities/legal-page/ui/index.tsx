@@ -11,7 +11,11 @@ const headerClassName = "heading h7 text-neutral-700";
 
 export default function LegalPage({ title, content }: Props) {
   return (
-    <PageWrapper CustomHeader={<HeaderWithText text={title} />}>
+    <PageWrapper
+      CustomHeader={
+        <HeaderWithText text={title || "Не удалось получить данные"} />
+      }
+    >
       <Container className={`flex-column ${classes.container}`}>
         <div className={`flex-column gap-3 ${classes.content}`}>
           <ReactMarkDown

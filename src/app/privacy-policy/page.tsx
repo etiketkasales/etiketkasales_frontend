@@ -6,8 +6,14 @@ import { legalPageSkeleton } from "~/src/entities/legal-page/model";
 export const dynamic = "force-dynamic";
 
 export default async function Page() {
-  const pageData = await getLegalPage("privacy-policy");
-  const props = pageData || legalPageSkeleton;
+  try {
+    const pageData = await getLegalPage("privacy-policy");
+    const props = pageData || legalPageSkeleton;
 
-  return <LegalPage {...props} />;
+    return <LegalPage {...props} />;
+  } catch (error) {
+    console.error("Failed to load legal page:", error);
+
+    return <LegalPage {...legalPageSkeleton} />;
+  }
 }

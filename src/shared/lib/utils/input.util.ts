@@ -25,6 +25,20 @@ class InputUtils {
       createNumberInput: this.createNumberInput,
     };
   }
+
+  static createArbitraryInput<InputType, FieldsType>(
+    field: keyof FieldsType,
+    placeholder: string,
+    options?: any,
+  ): InputType {
+    const input: InputType = {
+      field,
+      placeholder,
+      ...options,
+    };
+    return input;
+  }
+
   static createNumberInput<T, Fields>(
     field: keyof Fields,
     placeholder: string,

@@ -8,12 +8,6 @@
   div {
     max-width: 761px;
   }
-
-  @media screen and (width <=460px) {
-    & {
-      margin-bottom: -$space-3 - 15px;
-    }
-  }
 }
 
 .link {

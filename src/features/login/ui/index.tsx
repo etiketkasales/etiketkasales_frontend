@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLogIn } from "../lib/hooks";
 import { useAppSelector } from "~/src/app/store/hooks";
 import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";

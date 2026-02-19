@@ -1,5 +1,4 @@
 "use client";
-
 import classes from "./wrapper.module.scss";
 import LoginHeader from "../header";
 import Container from "~/src/shared/ui/container/ui";

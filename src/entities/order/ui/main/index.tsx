@@ -11,7 +11,6 @@ import OrderSummary from "~/src/entities/order-summary/ui";
 import CheckboxInput from "~/src/shared/ui/inputs/checkbox";
 import LinkContainer from "~/src/shared/ui/link-container/ui";
 import Loader from "~/src/shared/ui/loader";
-import Button from "~/src/shared/ui/button";
 import { OrderStageType } from "~/src/entities/order/model";
 import { OrderType } from "~/src/entities/order/model";
 
@@ -61,11 +60,11 @@ export default function OrderMain({ type, stage, onButtonClick }: Props) {
           nodeLabel={
             <span className="text-neutral-700 text-body l">
               Я принимаю{" "}
-              <LinkContainer link="/" className="text-blue-500">
+              <LinkContainer link="/personal-data-policy" className="blue-link">
                 Условия обработки персональных данных
               </LinkContainer>
               , а также{" "}
-              <LinkContainer link="/" className="text-blue-500">
+              <LinkContainer link="/payment-info" className="blue-link">
                 Условия продажи
               </LinkContainer>
             </span>
