@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
-import { addNotification } from "~/src/app/store/reducers/notifications.slice";
+import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
+
 import { selectUser, setUser } from "~/src/app/store/reducers/user.slice";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 import {
@@ -10,7 +11,11 @@ import {
   setDefaultAddress,
 } from "~/src/features/user/lib/api";
 
-import { IUserAddress, IUserAddressBase } from "~/src/features/user/model";
+import {
+  addressesMessages,
+  IUserAddress,
+  IUserAddressBase,
+} from "~/src/features/user/model";
 import { AxiosError } from "axios";
 
 /**
@@ -35,6 +40,7 @@ export const useAddresses = (needLoad?: boolean) => {
     addresses[0] || null,
   );
   const hasBeenLoaded = useRef<boolean>(false);
+  const createNotification = useCreateNotification();
 
   const setAddresses = useCallback(
     (addresses: IUserAddress[]) => {
@@ -56,17 +62,11 @@ export const useAddresses = (needLoad?: boolean) => {
           callback,
         });
       } catch (err: AxiosError<{ message?: string }> | any) {
-        dispatch(
-          addNotification({
-            message: err.message || "Произошла ошибка",
-            type: "error",
-            field: "global",
-          }),
-        );
+        createNotification(err.message || "Произошла ошибка", "error");
         throw err;
       }
     },
-    [needLoad, dispatch],
+    [needLoad, createNotification],
   );
 
   const getAddresses = useCallback(async () => {
@@ -82,9 +82,10 @@ export const useAddresses = (needLoad?: boolean) => {
       await promiseCallback(async () => {
         await deleteAddress(id);
         await getAddresses();
+        createNotification(addressesMessages.deleted, "success");
       });
     },
-    [getAddresses, promiseCallback],
+    [getAddresses, promiseCallback, createNotification],
   );
 
   const handleAddNewAddress = useCallback(
@@ -92,9 +93,11 @@ export const useAddresses = (needLoad?: boolean) => {
       await promiseCallback(async () => {
         await addNewAddress(address);
         await getAddresses();
+        createNotification(addressesMessages.added, "success");
+        createNotification(addressesMessages.settedDefault, "warning");
       });
     },
-    [getAddresses, promiseCallback],
+    [getAddresses, promiseCallback, createNotification],
   );
 
   const handleSetDefaultAddress = useCallback(
@@ -102,9 +105,10 @@ export const useAddresses = (needLoad?: boolean) => {
       await promiseCallback(async () => {
         await setDefaultAddress(id);
         await getAddresses();
+        createNotification(addressesMessages.settedDefault, "success");
       });
     },
-    [getAddresses, promiseCallback],
+    [getAddresses, promiseCallback, createNotification],
   );
 
   useEffect(() => {
