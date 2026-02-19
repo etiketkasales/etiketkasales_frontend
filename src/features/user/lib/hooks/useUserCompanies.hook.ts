@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
+import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 import { selectUser, setUser } from "~/src/app/store/reducers/user.slice";
 import {
   addNewCompany,
@@ -18,6 +19,7 @@ export const useUserCompanies = () => {
   const dispatch = useAppDispatch();
   const { companies } = useAppSelector(selectUser);
   const [loading, setLoading] = useState<boolean>(false);
+  const createNotification = useCreateNotification();
 
   const setCompanies = useCallback(
     (data: IUserCompany[]) => {
@@ -26,44 +28,60 @@ export const useUserCompanies = () => {
     [dispatch],
   );
 
-  const promiseCallback = useCallback(async (callback: () => Promise<void>) => {
-    await promiseWrapper({
-      setLoading,
-      callback,
-    });
-  }, []);
+  const promiseCallback = useCallback(
+    async (callback: () => Promise<void>, fallback?: () => void) => {
+      await promiseWrapper({
+        setLoading,
+        callback,
+        fallback,
+      });
+    },
+    [],
+  );
 
   const handleGetCompanies = useCallback(async () => {
-    await promiseCallback(async () => {
-      const res = await getCompanies();
-      setCompanies(res.filter((item) => item.is_active) || []);
-    });
-  }, [setCompanies, promiseCallback]);
+    await promiseCallback(
+      async () => {
+        const res = await getCompanies();
+        setCompanies(res.filter((item) => item.is_active) || []);
+      },
+      () =>
+        createNotification("Не удалось получить список организаций", "error"),
+    );
+  }, [setCompanies, promiseCallback, createNotification]);
 
   const addCompany = useCallback(
     async (data: IUserCompanyBase, closeModal?: () => void) => {
-      await promiseCallback(async () => {
-        const mainRes = await addNewCompany(data);
-        if (mainRes.success) {
-          const res = await getCompanies();
-          if (Array.isArray(res)) {
-            setCompanies(res);
+      await promiseCallback(
+        async () => {
+          const mainRes = await addNewCompany(data);
+          if (mainRes.success) {
+            const res = await getCompanies();
+            if (Array.isArray(res)) {
+              setCompanies(res);
+              createNotification("Организация добавлена", "success");
+            }
+            closeModal?.();
           }
-          closeModal?.();
-        }
-      });
+        },
+        () => createNotification("Не удалось добавить организацию", "error"),
+      );
     },
-    [promiseCallback, setCompanies],
+    [promiseCallback, setCompanies, createNotification],
   );
 
   const handleDeleteCompany = useCallback(
     async (id: number) => {
-      await promiseCallback(async () => {
-        await deleteCompany(id);
-        await handleGetCompanies();
-      });
+      await promiseCallback(
+        async () => {
+          await deleteCompany(id);
+          await handleGetCompanies();
+          createNotification("Организация удалена", "success");
+        },
+        () => createNotification("Не удалось удалить организацию", "error"),
+      );
     },
-    [promiseCallback, handleGetCompanies],
+    [promiseCallback, handleGetCompanies, createNotification],
   );
 
   return {
