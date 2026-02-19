@@ -30,9 +30,15 @@ export default function OrderPickupPointMarker({
       <p className="heading h7 text-neutral-1000 nowrap-text">{name}</p>
       <p className={`heading h8 nowrap-text`}>
         {info.map((item, index) => (
-          <span key={`${item.text}-${index}`} className={`text-${item.color}`}>
-            {item.text}
-          </span>
+          <>
+            <span
+              key={`${item.text}-${index}`}
+              className={`text-${item.color}`}
+            >
+              {item.text}
+            </span>
+            <br />
+          </>
         ))}
       </p>
     </Container>

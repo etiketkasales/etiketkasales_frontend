@@ -23,10 +23,8 @@ export default function ProductsModalMainInputs({
             key={`${index}-${item.placeholder}`}
             newProduct={newProduct}
             onChange={onInputChange}
-            type={item.type}
-            placeholder={item.placeholder}
-            field={item.field}
             error={error}
+            {...item}
           />
         );
       })}

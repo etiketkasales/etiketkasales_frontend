@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { getAddressSuggestions } from "~/src/features/user/lib/api";
 import { ISuggestedAddress, IUserAddressBase } from "~/src/features/user/model";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";

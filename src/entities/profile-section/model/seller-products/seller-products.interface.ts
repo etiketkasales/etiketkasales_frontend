@@ -44,15 +44,19 @@ export interface INewProductCurrentImage {
   fileBinary: string;
 }
 
+export type InputTypeFromApi = "text" | "select" | "numeric";
+export type InputTypeForUi = "text" | "select" | "textarea" | "numeric";
+
 export interface INewProductFilter {
   field: keyof INewProduct;
   placeholder: string;
   for_empty_value?: string | null;
   options?: string[] | null;
+  type?: InputTypeFromApi;
 }
 
 export interface INewProductInput extends INewProductFilter {
-  type?: "text" | "select" | "textarea" | "numeric";
+  inputType?: InputTypeForUi;
 }
 
 export type SellerProductsModalType = "edit" | "new";

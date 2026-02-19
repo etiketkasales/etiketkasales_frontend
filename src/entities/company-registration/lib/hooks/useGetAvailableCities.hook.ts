@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch } from "~/src/app/store/hooks";
-import { addNotification } from "~/src/app/store/reducers/notifications.slice";
-import { promiseWrapper } from "~/src/shared/lib";
+import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 
+import { promiseWrapper } from "~/src/shared/lib";
 import { getAvailableCities } from "../api";
 
 import { IAvailableCity } from "../../model";
@@ -15,6 +15,7 @@ export const useGetAvailableCities = () => {
     IFormModalSelectOption[]
   >([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const createNotification = useCreateNotification();
 
   const formatCities = useCallback((cities: IAvailableCity[]) => {
     return cities.map((city) => {
@@ -34,13 +35,7 @@ export const useGetAvailableCities = () => {
           await getAvailableCities(searchQuery);
 
         if (!res.cities) {
-          dispatch(
-            addNotification({
-              message: "Произошла ошибка при получении городов",
-              type: "error",
-              field: "global",
-            }),
-          );
+          createNotification("Не удалось получить города", "error");
           return;
         }
 

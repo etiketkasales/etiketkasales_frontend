@@ -1,5 +1,5 @@
 import { createStringInput } from "~/src/shared/lib/utils";
-import { INewOrderInput, IOrderReceiver } from "./order.interface";
+import { INewOrderInput, IOrderReceiver } from ".";
 
 const stringInput = (field: keyof IOrderReceiver, placeholder: string) =>
   createStringInput<INewOrderInput, IOrderReceiver>(field, placeholder);

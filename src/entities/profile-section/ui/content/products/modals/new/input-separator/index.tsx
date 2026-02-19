@@ -18,7 +18,7 @@ export interface Props extends INewProductInput {
 
 export default function NewProductInputSeparator({
   placeholder,
-  type,
+  inputType,
   field,
   newProduct,
   onChange,
@@ -29,7 +29,7 @@ export default function NewProductInputSeparator({
     ? ""
     : newProduct[field];
 
-  switch (type) {
+  switch (inputType) {
     default:
     case "text":
     case "numeric":
@@ -37,13 +37,13 @@ export default function NewProductInputSeparator({
         <TextInput
           value={value ?? ""}
           onChange={(e) => {
-            if (type === "numeric") {
-              const numValue = Number(e.target.value);
+            const value = e.target.value;
+            if (inputType === "numeric") {
+              const numValue = Number(value);
               if (isNaN(numValue)) return;
             }
-            onChange(e.target.value, field);
+            onChange(value, field);
           }}
-          type={type}
           placeholder={placeholder}
           wrapperClassName={classNames(classes.input)}
           errorText={error && error.field === field ? error.message : ""}

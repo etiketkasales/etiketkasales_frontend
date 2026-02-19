@@ -8,6 +8,7 @@ import {
   INewProduct,
   INewProductFilter,
   INewProductInput,
+  InputTypeForUi,
 } from "~/src/entities/profile-section/model";
 import { MessageI } from "~/src/shared/model";
 
@@ -36,15 +37,20 @@ export const useGetFilters = ({ setRequiredFields }: Props) => {
     (filters: INewProductFilter[]): INewProductInput[] => {
       if (!filters) return [];
       const newFilters = filters.map((filter): INewProductInput => {
-        let type: "select" | "numeric" = "select";
-        if (Array.isArray(filter.options)) {
-          type = "select";
+        let type: InputTypeForUi = "select";
+        const typeFromFilter = filter.type;
+        if (typeFromFilter) {
+          type = typeFromFilter;
         } else {
-          type = "numeric";
+          if (Array.isArray(filter.options)) {
+            type = "select";
+          } else {
+            type = "numeric";
+          }
         }
 
         return {
-          type,
+          inputType: type,
           ...filter,
         };
       });

@@ -1,9 +1,8 @@
 import { useCallback, useState } from "react";
 import { useUserPersonal } from "~/src/features/user/lib/hooks";
-import { useAddresses } from "~/src/features/user/lib/hooks";
-import { addNotification } from "~/src/app/store/reducers/notifications.slice";
 import { useAddressSuggestions } from ".";
-import { useAppDispatch } from "~/src/app/store/hooks";
+import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
+import { useAddresses } from "~/src/features/user/lib/hooks";
 
 import {
   AddressesModalStage,
@@ -12,9 +11,9 @@ import {
 } from "~/src/entities/addresses-modal/model";
 import { ISuggestedAddress } from "~/src/features/user/model";
 import { AxiosError } from "axios";
+import { useDebounce } from "react-use";
 
 export const useAddressesModal = (onModalClose: () => void) => {
-  const dispatch = useAppDispatch();
   const {
     addresses,
     loading,
@@ -23,6 +22,7 @@ export const useAddressesModal = (onModalClose: () => void) => {
     handleSetDefaultAddress,
   } = useAddresses();
   const hasPersonalData = useUserPersonal();
+  const createNotification = useCreateNotification();
   const {
     loading: suggestionsLoading,
     suggestions,
@@ -43,32 +43,29 @@ export const useAddressesModal = (onModalClose: () => void) => {
         forDisplay: v,
       }));
       setSgnsOpen(true);
-      await getSuggestions(v);
     },
     [getSuggestions],
+  );
+
+  useDebounce(
+    async () => {
+      if (newAddress.forDisplay.trim().length >= 3) {
+        await getSuggestions(newAddress.forDisplay);
+      }
+    },
+    500,
+    [newAddress.forDisplay],
   );
 
   const onSuggestionClick = useCallback(
     (sgn: ISuggestedAddress) => {
       if (!hasPersonalData) {
-        dispatch(
-          addNotification({
-            message: "Заполните персональные данные в профиле",
-            type: "error",
-            field: "global",
-          }),
-        );
+        createNotification("Заполните персональные данные в профиле", "error");
         return;
       }
       const hasSameAddress = addresses.some((a) => a.id === sgn.id);
       if (hasSameAddress) {
-        dispatch(
-          addNotification({
-            message: "Такой адрес уже добавлен",
-            type: "error",
-            field: "global",
-          }),
-        );
+        createNotification("Такой адрес уже добавлен", "error");
         return;
       }
 
@@ -77,7 +74,7 @@ export const useAddressesModal = (onModalClose: () => void) => {
         forDisplay: sgn.full_address,
       });
     },
-    [formatSuggestion, hasPersonalData, addresses, dispatch],
+    [formatSuggestion, hasPersonalData, addresses, createNotification],
   );
 
   const onAddressClick = useCallback(

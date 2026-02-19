@@ -1,6 +1,6 @@
 .container {
-  max-width: 60px;
-  padding: $space-1;
+  padding: $space-2;
   border-radius: $space-2;
   box-shadow: $shadow-200;
+  transform: translate(0, -50%);
 }

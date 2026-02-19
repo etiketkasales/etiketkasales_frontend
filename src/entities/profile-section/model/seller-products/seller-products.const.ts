@@ -19,17 +19,17 @@ export const newProductMainInputs: INewProductInput[] = [
   {
     placeholder: "Название товара",
     field: "name",
-    type: "text",
+    inputType: "text",
   },
   {
     placeholder: "Цена за единицу",
     field: "price",
-    type: "numeric",
+    inputType: "numeric",
   },
   {
     placeholder: "Описание товара",
     field: "description",
-    type: "textarea",
+    inputType: "textarea",
   },
 ];
 

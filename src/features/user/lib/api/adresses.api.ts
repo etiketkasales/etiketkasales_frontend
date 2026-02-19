@@ -6,7 +6,7 @@ import { AxiosError } from "axios";
 export const getUserAddresses = async () => {
   return await tryCatch(async () => {
     const res =
-      await apiClient.get<IGetData<IUserAddress[]>>(`/users/addresses/`);
+      await apiClient.get<IGetData<IUserAddress[]>>(`/users/addresses`);
     return res.data.data;
   });
 };
@@ -45,14 +45,13 @@ export const deleteAddress = async (id: number) => {
   });
 };
 
-export const getAddressSuggestions = async (q: string, limit?: number) => {
+export const getAddressSuggestions = async (q: string) => {
   return await tryCatch(async () => {
     const res = await apiClient.get<IGetData<ISuggestedAddress[]>>(
-      `/users/address-suggestions/`,
+      `/users/address-cities/`,
       {
         params: {
           query: q,
-          limit: limit || 5,
         },
       },
     );

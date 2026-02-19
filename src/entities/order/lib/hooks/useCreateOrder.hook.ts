@@ -35,6 +35,7 @@ export const useCreateOrder = ({ type, stage, setStage }: Props) => {
     receiverCompanyId,
     deliveryAddressId,
     deliveryMethod,
+    paymentMethod,
     pickupPoint,
     itemsToOrder,
   } = useAppSelector(selectOrder);
@@ -65,6 +66,7 @@ export const useCreateOrder = ({ type, stage, setStage }: Props) => {
       items: itemsToOrder,
       delivery_address_id: deliveryAddressId,
       delivery_method: deliveryMethod.code,
+      payment_method: paymentMethod!,
     };
 
     let res: IGetData<ICreatedOrderDto> | null = null;
@@ -91,6 +93,7 @@ export const useCreateOrder = ({ type, stage, setStage }: Props) => {
     itemsToOrder,
     receiver,
     pickupPoint,
+    paymentMethod,
   ]);
 
   // Создание заказа и платежа

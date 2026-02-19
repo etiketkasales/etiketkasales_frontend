@@ -8,7 +8,6 @@ import {
   IPaymentMethodResponse,
 } from "../../model";
 import { IGetData } from "~/src/shared/model";
-import { AxiosError } from "axios";
 
 export const getDeliveryMethodsForOrder = async () => {
   return await tryCatch(async () => {
@@ -43,6 +42,7 @@ interface ICreateOrderParams {
   delivery_method: string;
   items: IItemToOrder[];
   pickup_point_code: string;
+  payment_method: string;
 }
 export const createOrder = async (params: ICreateOrderParams) => {
   return await tryCatch(
