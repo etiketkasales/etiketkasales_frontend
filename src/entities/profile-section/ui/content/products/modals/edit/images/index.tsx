@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useRef } from "react";
+import { useRef } from "react";
 
 import classes from "./images.module.scss";
 import FileInput from "~/src/shared/ui/inputs/file";
@@ -28,6 +28,7 @@ export default function EditProductImage({
     <div
       className={`flex ${classes.container}`}
       onClick={() => {
+        if (loading) return;
         inputRef.current?.click();
       }}
     >
@@ -45,13 +46,7 @@ export default function EditProductImage({
         height={160}
         className={classes.image}
       />
-      <Button
-        typeButton="ghost"
-        onClick={() => {
-          inputRef.current?.click();
-        }}
-        disabled={loading}
-      >
+      <Button typeButton="ghost" disabled={loading}>
         <span
           className={`text-body l text-${hasError ? "red-700" : "neutral-700"} underline`}
         >

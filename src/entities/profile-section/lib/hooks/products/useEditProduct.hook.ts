@@ -34,7 +34,6 @@ interface Props {
  */
 export const useEditProduct = ({ initialData, onClose }: Props) => {
   const productId = initialData?.id;
-
   const [disableSave, setDisableSave] = useState<boolean>(false);
 
   const createNotification = useCreateNotification();

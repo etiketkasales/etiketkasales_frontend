@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useAppDispatch } from "~/src/app/store/hooks";
-import { addNotification } from "~/src/app/store/reducers/notifications.slice";
+import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 import {
   deleteSellerProduct,
@@ -40,63 +39,64 @@ interface Props {
  *     deleteProduct - a function to delete a product.
  */
 export const useSellerProducts = ({ onClose, needLoad }: Props) => {
-  const dispatch = useAppDispatch();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<MessageI | null>(null);
   const [sellerProducts, setSellerProducts] = useState<ISellerProduct[]>([]);
   const [editProductId, setEditProductId] = useState<number>(0);
+  const createNotification = useCreateNotification();
 
-  const promiseCallback = useCallback(async (callback: () => Promise<void>) => {
-    await promiseWrapper({
-      setLoading,
-      setError,
-      callback,
-    });
-  }, []);
+  const promiseCallback = useCallback(
+    async (callback: () => Promise<void>, fallback?: () => void) => {
+      await promiseWrapper({
+        setLoading,
+        setError,
+        callback,
+        fallback,
+      });
+    },
+    [],
+  );
 
   const updateSellerProducts = useCallback(async () => {
-    await promiseCallback(async () => {
-      const res = await getSellerProducts();
-      if (res) {
-        setSellerProducts(res.products);
-      }
-    });
-  }, [promiseCallback]);
+    await promiseCallback(
+      async () => {
+        const res = await getSellerProducts();
+        if (res) {
+          setSellerProducts(res.products);
+        }
+      },
+      () => createNotification("Не удалось обновить товары", "error"),
+    );
+  }, [promiseCallback, createNotification]);
 
   const deleteProduct = useCallback(
     async (id: number) => {
-      await promiseCallback(async () => {
-        await deleteSellerProduct(id);
-        dispatch(
-          addNotification({
-            message: "Товар удалён",
-            type: "success",
-            field: "global",
-          }),
-        );
-        await updateSellerProducts();
-        onClose?.();
-      });
+      await promiseCallback(
+        async () => {
+          await deleteSellerProduct(id);
+          createNotification("Товар удалён", "success");
+          await updateSellerProducts();
+          onClose?.();
+        },
+        () => createNotification("Не удалось удалить товар", "error"),
+      );
     },
-    [promiseCallback, updateSellerProducts, onClose, dispatch],
+    [promiseCallback, updateSellerProducts, onClose, createNotification],
   );
 
   const updateProduct = useCallback(
     async (data: IEditSellerProduct, id: number) => {
-      await promiseCallback(async () => {
-        await editSellerProduct(data, id);
-        await updateSellerProducts();
-        dispatch(
-          addNotification({
-            message: "Товар изменён",
-            type: "success",
-            field: "global",
-          }),
-        );
-        onClose?.();
-      });
+      await promiseCallback(
+        async () => {
+          await editSellerProduct(data, id);
+          await updateSellerProducts();
+          createNotification("Товар изменён", "success");
+          onClose?.();
+        },
+        () => createNotification("Не удалось изменить товар", "error"),
+      );
     },
-    [promiseCallback, updateSellerProducts, onClose, dispatch],
+    [promiseCallback, updateSellerProducts, onClose],
   );
 
   useEffect(() => {

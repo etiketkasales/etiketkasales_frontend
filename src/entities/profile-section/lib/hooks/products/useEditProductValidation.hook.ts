@@ -30,18 +30,16 @@ export const useEditProductValidation = ({
       requiredFields: editProductRequiredFields,
       checkData: editProductData,
     });
+    if (newError) createNotification(sellerProductsMessages.formError, "error");
     setError(newError);
     setDisableSave(!!newError);
-    createNotification(sellerProductsMessages.formError, "error");
     return !!newError;
   }, [editProductData, error, setError, createNotification]);
 
   useEffect(() => {
-    if (!error) return;
-    getFormError();
-
-    //eslint-disable-next-line
-  }, [getFormError]);
-
+    if (error) {
+      getFormError();
+    }
+  }, [getFormError, error]);
   return getFormError;
 };

@@ -1,8 +1,9 @@
 import { useCallback, useState } from "react";
+import { useDebounce } from "react-use";
 import { useUserPersonal } from "~/src/features/user/lib/hooks";
-import { useAddressSuggestions } from ".";
 import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 import { useAddresses } from "~/src/features/user/lib/hooks";
+import { useAddressSuggestions } from ".";
 
 import {
   AddressesModalStage,
@@ -11,7 +12,6 @@ import {
 } from "~/src/entities/addresses-modal/model";
 import { ISuggestedAddress } from "~/src/features/user/model";
 import { AxiosError } from "axios";
-import { useDebounce } from "react-use";
 
 export const useAddressesModal = (onModalClose: () => void) => {
   const {
@@ -36,16 +36,13 @@ export const useAddressesModal = (onModalClose: () => void) => {
     forDisplay: "",
   });
 
-  const onInputChange = useCallback(
-    async (v: string) => {
-      setNewAddress((prev) => ({
-        ...prev,
-        forDisplay: v,
-      }));
-      setSgnsOpen(true);
-    },
-    [getSuggestions],
-  );
+  const onInputChange = useCallback(async (v: string) => {
+    setNewAddress((prev) => ({
+      ...prev,
+      forDisplay: v,
+    }));
+    setSgnsOpen(true);
+  }, []);
 
   useDebounce(
     async () => {
