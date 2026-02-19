@@ -1,14 +1,13 @@
 "use client";
-
 import { useEditProduct } from "~/src/entities/profile-section/lib/hooks/products/useEditProduct.hook";
 
 import classes from "./edit.module.scss";
-import Loader from "~/src/shared/ui/loader";
 import Modal from "~/src/shared/ui/modals/ui/default";
 import EditProductImage from "./images";
 import EditProductInputs from "./inputs";
 import EditProductModalButtons from "./buttons";
 import { ISellerProduct } from "~/src/entities/profile-section/model";
+import { useEditProductImages } from "~/src/entities/profile-section/lib/hooks";
 
 interface Props {
   isActive: boolean;
@@ -26,17 +25,19 @@ export default function EditSellerProductModal({
   const {
     loading,
     editProductData,
+    setEditProductData,
     onInputChange,
     onSave,
     toArchive,
-    fileLoading,
-    onFileLoad,
     deleteProduct,
     disableSave,
     error,
   } = useEditProduct({
     initialData: productData,
     onClose,
+  });
+  const { fileLoading, onFileLoad } = useEditProductImages({
+    setEditProductData,
   });
 
   return (

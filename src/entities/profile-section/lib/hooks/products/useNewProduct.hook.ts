@@ -1,19 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useValidation } from ".";
-import { addNotification } from "~/src/app/store/reducers/notifications.slice";
-import { useFileLoad } from "~/src/shared/lib/hooks";
-import { useSellerProducts } from "./useSellerProducts.hook";
-import { useAppDispatch } from "~/src/app/store/hooks";
-import {
-  createNewProduct,
-  uploadProductImage,
-} from "~/src/entities/profile-section/lib/api";
-import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
+import { useCallback, useEffect, useState } from "react";
+import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
+import { useSellerProducts, useNewProductImages, useValidation } from ".";
 
-import {
-  INewProduct,
-  INewProductCurrentImage,
-} from "~/src/entities/profile-section/model";
+import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
+import { createNewProduct } from "~/src/entities/profile-section/lib/api";
+
+import { INewProduct } from "~/src/entities/profile-section/model";
 import { newProductSkeleton } from "~/src/entities/profile-section/model";
 
 interface Props {
@@ -39,43 +31,17 @@ interface Props {
  *   onDeleteImage - a callback that is called when the user deletes an image.
  */
 export const useNewProduct = ({ onClose }: Props) => {
-  const dispatch = useAppDispatch();
-  const { updateSellerProducts } = useSellerProducts({ needLoad: false });
   const [modalStage, setModalStage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [newProduct, setNewProduct] = useState<INewProduct>(newProductSkeleton);
-  const [currentImages, setCurrentImages] = useState<INewProductCurrentImage[]>(
-    [],
-  );
 
-  const fileUploadCallback = useCallback(
-    async (file: File, fileBinary?: string) => {
-      if (!file) return null;
-      const formData = new FormData();
-      formData.append("image", file);
-      const res = await uploadProductImage(formData);
-      if (fileBinary) {
-        setCurrentImages((prev) => [
-          ...prev,
-          {
-            upload_id: res.upload_id,
-            url: res.url,
-            fileBinary,
-          },
-        ]);
-      }
-      return res;
-    },
-    [],
-  );
-
-  const { onFileLoad, fileLoading } = useFileLoad({
-    callback: fileUploadCallback,
-  });
-
+  const createNotification = useCreateNotification();
+  const { updateSellerProducts } = useSellerProducts({ needLoad: false });
   const { error, getStageError, setRequiredFilters } = useValidation({
     checkData: newProduct,
   });
+  const { fileLoading, onFileLoad, currentImages, onDeleteImage } =
+    useNewProductImages({ setNewProduct });
 
   const onInputChange = useCallback(
     (v: string, field: keyof INewProduct) => {
@@ -93,17 +59,12 @@ export const useNewProduct = ({ onClose }: Props) => {
       callback: async () => {
         await createNewProduct(newProduct);
         await updateSellerProducts();
-        dispatch(
-          addNotification({
-            message: "Товар добавлен",
-            type: "success",
-            field: "global",
-          }),
-        );
+        createNotification("Товар добавлен", "success");
         onClose();
       },
+      fallback: () => createNotification("Не удалось добавить товар", "error"),
     });
-  }, [onClose, updateSellerProducts, newProduct, dispatch]);
+  }, [onClose, updateSellerProducts, newProduct, createNotification]);
 
   const onNextBtnClick = useCallback(async () => {
     const hasError = getStageError(modalStage);
@@ -115,27 +76,6 @@ export const useNewProduct = ({ onClose }: Props) => {
       setModalStage(2);
     }
   }, [modalStage, onSave, getStageError]);
-
-  const onDeleteImage = useCallback((image: INewProductCurrentImage) => {
-    setCurrentImages((prev) =>
-      prev.filter((i) => i.upload_id !== image.upload_id),
-    );
-    setNewProduct((n) => ({
-      ...n,
-      image_upload_ids: n.image_upload_ids.filter(
-        (id: number) => id !== image.upload_id,
-      ),
-      images: n.images.filter((i) => i !== image.url),
-    }));
-  }, []);
-
-  useEffect(() => {
-    setNewProduct((n) => ({
-      ...n,
-      image_upload_ids: [...new Set(currentImages.map((i) => i.upload_id))],
-      images: [...new Set(currentImages.map((i) => i.url))],
-    }));
-  }, [currentImages]);
 
   useEffect(() => {
     if (!error) return;

@@ -1,11 +1,12 @@
-import { useCallback, useEffect, useState } from "react";
-import { useSellerProducts, useUploadImage } from ".";
+import { useCallback, useState } from "react";
+import {
+  useEditProductInit,
+  useEditProductValidation,
+  useSellerProducts,
+} from ".";
 import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
-import FormUtils from "~/src/shared/lib/utils/form.util";
 
 import {
-  editProductRequiredFields,
-  editSellerProductSkeleton,
   IEditSellerProduct,
   ISellerProduct,
   sellerProductsMessages,
@@ -17,26 +18,31 @@ interface Props {
 }
 
 /**
- * Hook to edit a product in the seller profile section.
- * @param {Object} initialData - Initial product data to be edited.
- * @param {Function} onClose - Function to be called when the edit modal is closed.
- * @returns {Object} - An object containing the following properties:
- *  - loading: boolean indicating if there is a pending request.
- *  - disableSave: boolean indicating if the save button should be disabled.
- *  - editProductData: IEditSellerProduct containing the current product data to be edited.
- *  - onSave: function to be called when the save button is clicked.
- *  - fileLoading: boolean indicating if there is a pending file upload.
- *  - onFileLoad: function to be called when a file is selected to be uploaded.
- *  - onInputChange: function to be called when the input field changes.
- *  - deleteProduct: function to be called when the delete button is clicked.
- *  - error: MessageI containing the error message.
- *  - toArchive: function to be called when the archive button is clicked.
+ * Hook for editing a product.
+ * @param {Props} initialData - the initial data of the product to edit.
+ * @param {Props} onClose - a callback that is called when the modal is closed.
+ * @returns {Object} - an object containing the following properties:
+ *   loading - a boolean indicating whether the modal is loading or not.
+ *   disableSave - a boolean indicating whether the "Save" button is disabled or not.
+ *   editProductData - the data of the product to edit.
+ *   setEditProductData - a callback that is called when the user changes the product data.
+ *   onSave - a callback that is called when the user clicks the "Save" button.
+ *   onInputChange - a callback that is called when the user changes an input field.
+ *   deleteProduct - a callback that is called when the user deletes a product.
+ *   error - a string indicating the error message of the current modal stage.
+ *   toArchive - a callback that is called when the user archives a product.
  */
 export const useEditProduct = ({ initialData, onClose }: Props) => {
-  const [editProductData, setEditProductData] = useState<IEditSellerProduct>(
-    editSellerProductSkeleton,
-  );
+  const productId = initialData?.id;
+
   const [disableSave, setDisableSave] = useState<boolean>(false);
+
+  const createNotification = useCreateNotification();
+  // Инициализация editProductData
+  const { editProductData, setEditProductData } = useEditProductInit({
+    initialData,
+  });
+  // Основные действия с товаром
   const {
     updateProduct,
     deleteProduct,
@@ -48,8 +54,13 @@ export const useEditProduct = ({ initialData, onClose }: Props) => {
     onClose,
     needLoad: false,
   });
-  const { file, fileLoading, onFileLoad } = useUploadImage();
-  const createNotification = useCreateNotification();
+  // Валидация формы
+  const getFormError = useEditProductValidation({
+    editProductData,
+    setDisableSave,
+    error,
+    setError,
+  });
 
   const onInputChange = useCallback(
     (field: keyof IEditSellerProduct, v: string) => {
@@ -61,93 +72,44 @@ export const useEditProduct = ({ initialData, onClose }: Props) => {
     [],
   );
 
-  const getFormError = useCallback((): boolean => {
-    const newError = FormUtils.getFormError({
-      currentError: error,
-      requiredFields: editProductRequiredFields,
-      checkData: editProductData,
-    });
-    setError(newError);
-    setDisableSave(!!newError);
-    createNotification(sellerProductsMessages.formError, "error");
-    return !!newError;
-  }, [editProductData, error, setError, createNotification]);
+  // Сохранение изменений в общем
+  const handleSave = useCallback(
+    async (data: IEditSellerProduct, message: string) => {
+      await promiseCallback(async () => {
+        if (!productId) return;
 
+        await updateProduct(data, productId);
+        createNotification(message, "success");
+        onClose();
+      });
+    },
+    [productId, promiseCallback, updateProduct, createNotification, onClose],
+  );
+
+  // Сохранение измененных полей
   const onSave = useCallback(async () => {
-    await promiseCallback(async () => {
-      if (!initialData || !initialData.id) return;
-      if (getFormError()) return;
+    if (getFormError()) return;
 
-      await updateProduct(editProductData, initialData.id);
-      createNotification(sellerProductsMessages.productSaved, "success");
-      onClose();
-    });
-  }, [
-    editProductData,
-    initialData,
-    updateProduct,
-    getFormError,
-    onClose,
-    promiseCallback,
-    createNotification,
-  ]);
+    await handleSave(editProductData, sellerProductsMessages.productSaved);
+  }, [editProductData, getFormError, handleSave]);
 
+  // Отправление в архив отдельно для удобства
   const toArchive = useCallback(async () => {
-    await promiseCallback(async () => {
-      if (!initialData?.id) return;
-      const newProduct: IEditSellerProduct = {
+    await handleSave(
+      {
         ...editProductData,
         status_code: "archived",
-      };
-      await updateProduct(newProduct, initialData.id);
-      createNotification(sellerProductsMessages.productArchived, "success");
-      onClose();
-    });
-  }, [
-    promiseCallback,
-    updateProduct,
-    onClose,
-    createNotification,
-    initialData.id,
-    editProductData,
-  ]);
-
-  useEffect(() => {
-    if (!error) return;
-    getFormError();
-
-    //eslint-disable-next-line
-  }, [getFormError]);
-
-  useEffect(() => {
-    if (!initialData) return;
-    setEditProductData({
-      name: initialData.name,
-      description: initialData.description,
-      price: initialData.price,
-      status_code: initialData.status_code,
-      images: initialData.images,
-      image_upload_ids: [],
-    });
-  }, [initialData]);
-
-  useEffect(() => {
-    if (file) {
-      setEditProductData((prev) => ({
-        ...prev,
-        images: [...prev.images, file.url],
-        image_upload_ids: [...prev.image_upload_ids, file.upload_id],
-      }));
-    }
-  }, [file]);
+      },
+      sellerProductsMessages.productArchived,
+    );
+  }, [editProductData, handleSave]);
 
   return {
     loading,
     disableSave,
     editProductData,
+    setEditProductData,
     onSave,
-    fileLoading,
-    onFileLoad,
     onInputChange,
     deleteProduct,
     error,

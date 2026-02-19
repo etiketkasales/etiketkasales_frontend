@@ -12,7 +12,6 @@ import { MessageI } from "~/src/shared/model";
 import {
   IEditSellerProduct,
   ISellerProduct,
-  ISellerProductsModal,
 } from "~/src/entities/profile-section/model";
 
 interface Props {
