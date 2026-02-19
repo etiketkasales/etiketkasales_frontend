@@ -23,6 +23,7 @@ interface Props<T> {
   optionsClassName?: string;
   optionHolder?: string;
   error?: string | null;
+  errorClassOnWrapper?: boolean;
   HeadingIconLeft?: React.ReactNode;
   HeadingIconRight?: React.ReactNode;
   doubleHeader?: string;
@@ -51,6 +52,7 @@ export default function Select<T>(props: Props<T>) {
     doubleHeader,
     doubleHeaderClassName = "text-body xs text-neutral-700",
     error,
+    errorClassOnWrapper = true,
     isSearchable = false,
     onSearch,
   } = props;
@@ -72,7 +74,7 @@ export default function Select<T>(props: Props<T>) {
       className={classNames(
         `${containerRelative ? "relative" : ""} pointer flex-column`,
         className,
-        error && classes.error,
+        error && errorClassOnWrapper && classes.error,
       )}
     >
       <Button
@@ -86,6 +88,7 @@ export default function Select<T>(props: Props<T>) {
           !isSearchable && "space-between",
           isSearchable && classes.searchable,
           selectButtonClassName,
+          error && classes.error,
           classes.button,
         )}
         onClick={() => {

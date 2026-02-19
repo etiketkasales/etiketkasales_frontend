@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
@@ -30,13 +30,14 @@ export const useGetFilters = ({ setRequiredFields }: Props) => {
   const [error, setError] = useState<MessageI | null>(null);
   const [filtersToMap, setFiltersToMap] = useState<INewProductInput[]>([]);
   const createNotification = useCreateNotification();
+  const isFetched = useRef<boolean>(false);
 
   const parseFilters = useCallback(
     (filters: INewProductFilter[]): INewProductInput[] => {
       if (!filters) return [];
       const newFilters = filters.map((filter): INewProductInput => {
         let type: "select" | "numeric" = "select";
-        if (Array.isArray(filter.options) && filter.for_empty_value) {
+        if (Array.isArray(filter.options)) {
           type = "select";
         } else {
           type = "numeric";
@@ -53,20 +54,28 @@ export const useGetFilters = ({ setRequiredFields }: Props) => {
   );
 
   const getFilters = useCallback(async () => {
+    if (isFetched.current) return;
+    isFetched.current = true;
+
     await promiseWrapper({
       setLoading,
       setError,
       callback: async () => {
         const res = await getNewProductFilters();
         if (res && Array.isArray(res)) {
-          setFiltersToMap(parseFilters(res) || []);
-          setRequiredFields(parseFilters(res).map((item) => item.field) || []);
+          const parsed = parseFilters(res);
+          setFiltersToMap(parsed || []);
+          setRequiredFields(parsed.map((item) => item.field) || []);
         }
       },
       fallback: () =>
         createNotification("Не удалось получить фильтры", "error"),
     });
   }, [parseFilters, setRequiredFields, createNotification]);
+
+  useEffect(() => {
+    getFilters();
+  }, [getFilters]);
 
   return {
     filtersToMap,

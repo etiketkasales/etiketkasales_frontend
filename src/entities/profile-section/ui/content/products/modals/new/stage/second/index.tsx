@@ -27,13 +27,7 @@ export default function NewProductSecondStage({
     filtersToMap,
     loading,
     error: loadingError,
-    getFilters,
   } = useGetFilters({ setRequiredFields });
-
-  useEffect(() => {
-    if (modalStage !== 2) return;
-    getFilters();
-  }, [getFilters, modalStage]);
 
   const noFilters = !filtersToMap.length || loadingError !== null;
 

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useGetFilters } from "./useGetFIlters.hook";
+import { useGetFilters } from ".";
 import { getProductsByFilters } from "~/src/entities/etiketka/lib/api/etiketka.api";
 
 import { ISearchEtiketka } from "~/src/entities/etiketka/model";

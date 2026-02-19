@@ -35,7 +35,7 @@ export default function NewProductInputSeparator({
     case "numeric":
       return (
         <TextInput
-          value={value}
+          value={value ?? ""}
           onChange={(e) => {
             if (type === "numeric") {
               const numValue = Number(e.target.value);
@@ -52,7 +52,7 @@ export default function NewProductInputSeparator({
     case "textarea":
       return (
         <TextAreaInput
-          value={value}
+          value={value ?? ""}
           onChange={(e) => onChange(e.target.value, field)}
           placeholder={placeholder}
           textareaClassName={classNames(classes.textarea)}
@@ -79,6 +79,7 @@ export default function NewProductInputSeparator({
           )}
           optionsPosTop={12}
           error={error && error.field === field ? error.message : ""}
+          errorClassOnWrapper={false}
         />
       );
   }
