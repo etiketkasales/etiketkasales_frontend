@@ -1,12 +1,18 @@
 import { useCallback, useState } from "react";
 import { getAddressSuggestions } from "~/src/features/user/lib/api";
-import { ISuggestedAddress, IUserAddressBase } from "~/src/features/user/model";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
+
+import {
+  IAddressSuggestionResponse,
+  IUserAddressBase,
+} from "~/src/features/user/model";
 import { newAddressSkeleton } from "../../model";
 
 export const useAddressSuggestions = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [suggestions, setSuggestions] = useState<ISuggestedAddress[]>([]);
+  const [suggestions, setSuggestions] = useState<IAddressSuggestionResponse[]>(
+    [],
+  );
 
   const getSuggestions = useCallback(async (v: string) => {
     await promiseWrapper({
@@ -20,13 +26,11 @@ export const useAddressSuggestions = () => {
   }, []);
 
   const formatSuggestion = useCallback(
-    (suggestion: ISuggestedAddress): IUserAddressBase => {
+    (suggestion: IAddressSuggestionResponse): IUserAddressBase => {
       const newAddress: IUserAddressBase = { ...newAddressSkeleton };
-      Object.keys(newAddress).forEach((key) => {
-        if (key in suggestion) {
-          newAddress[key as keyof IUserAddressBase] = (suggestion as any)[key];
-        }
-      });
+      newAddress.city = suggestion.name;
+      newAddress.region = suggestion.region;
+      newAddress.country = suggestion.country;
       return newAddress;
     },
     [],

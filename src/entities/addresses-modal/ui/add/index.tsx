@@ -5,16 +5,16 @@ import TextInput from "~/src/shared/ui/inputs/text-input";
 import Button from "~/src/shared/ui/button";
 import AddressModalSuggestions from "./suggestions";
 import { AddressesModalStage } from "../../model";
-import { ISuggestedAddress } from "~/src/features/user/model";
+import { IAddressSuggestionResponse } from "~/src/features/user/model";
 
 interface Props {
   stage: AddressesModalStage;
   newAddress: string;
   onInputChange: (v: string) => void;
   onButtonClick: () => void | Promise<void>;
-  suggestions: ISuggestedAddress[];
+  suggestions: IAddressSuggestionResponse[];
   suggestionsLoading: boolean;
-  onSgnClick: (address: ISuggestedAddress) => void;
+  onSgnClick: (address: IAddressSuggestionResponse) => void;
   sgnsOpen: boolean;
   setSgnsOpen: (b: boolean) => void;
 }

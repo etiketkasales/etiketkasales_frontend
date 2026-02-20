@@ -1,6 +1,8 @@
 import { createStringInput } from "~/src/shared/lib/utils";
-import { IAddCompanyInput } from "./add-company.interface";
+import { AddCompanySpecificFields, IAddCompanyInput } from "./add-company.interface";
 import { IUserCompanyBase } from "~/src/features/user/model";
+import { MessageI } from "~/src/shared/model";
+import FormUtils from "~/src/shared/lib/utils/form.util";
 
 const createInput = (
   field: keyof IUserCompanyBase,
@@ -48,3 +50,15 @@ export const addCompanySpecificFields: (keyof IUserCompanyBase)[] = [
   "kpp",
   "ogrn",
 ];
+
+export const specificErrorDetectors: Record<
+  AddCompanySpecificFields,
+  (newCompany: IUserCompanyBase) => MessageI | null
+> = {
+  inn: (newCompany: IUserCompanyBase) =>
+    FormUtils.getINNError(newCompany.inn, "inn"),
+  ogrn: (newCompany: IUserCompanyBase) =>
+    FormUtils.getOGRNError(newCompany.ogrn, "ogrn"),
+  kpp: (newCompany: IUserCompanyBase) =>
+    FormUtils.getKPPError(newCompany.kpp, "kpp"),
+};

@@ -56,11 +56,11 @@ export const useModal = ({ isOpen, onClose, customClickOutside }: Props) => {
     (event: MouseEvent) => {
       if (customClickOutside) return;
       if (!modalCloseOnOutsideClick) return;
-      if (
-        contentRef.current &&
-        !contentRef.current.contains(event.target as Node)
-      )
+
+      const path = event.composedPath();
+      if (!path.includes(contentRef.current as EventTarget)) {
         onClose();
+      }
     },
     [contentRef, onClose, customClickOutside, modalCloseOnOutsideClick],
   );
@@ -79,10 +79,10 @@ export const useModal = ({ isOpen, onClose, customClickOutside }: Props) => {
 
   useEffect(() => {
     if (!isOpen) return;
-    document.addEventListener("click", clickOutside);
+    document.addEventListener("mousedown", clickOutside);
     document.addEventListener("touchend", touchOutside);
     return () => {
-      document.removeEventListener("click", clickOutside);
+      document.removeEventListener("mousedown", clickOutside);
       document.removeEventListener("touchend", touchOutside);
     };
   }, [clickOutside, touchOutside, isOpen]);

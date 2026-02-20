@@ -29,9 +29,9 @@ export default function ProfileOrders() {
             );
           })}
         </ul>
-      ) : (
+      ) : !loading ? (
         <h6 className="heading h7 text-neutral-700">У вас пока нет заказов</h6>
-      )}
+      ) : null}
     </ProfileContentContainer>
   );
 }

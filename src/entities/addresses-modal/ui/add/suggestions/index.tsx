@@ -2,11 +2,11 @@ import classNames from "classnames";
 
 import classes from "./suggestion.module.scss";
 import Container from "~/src/shared/ui/container/ui";
-import { ISuggestedAddress } from "~/src/features/user/model";
+import { IAddressSuggestionResponse } from "~/src/features/user/model";
 
 interface Props {
-  suggestions: ISuggestedAddress[];
-  onClick: (address: ISuggestedAddress) => void;
+  suggestions: IAddressSuggestionResponse[];
+  onClick: (address: IAddressSuggestionResponse) => void;
   loading: boolean;
   open: boolean;
 }
@@ -36,7 +36,7 @@ export default function AddressModalSuggestions({
           }}
         >
           <span className={`text-body base text-neutral-1000 ${classes.text}`}>
-            {item.full_address}
+            {item.name}
           </span>
         </div>
       ))}

@@ -10,7 +10,7 @@ import {
   INewAddress,
   newAddressSkeleton,
 } from "~/src/entities/addresses-modal/model";
-import { ISuggestedAddress } from "~/src/features/user/model";
+import { IAddressSuggestionResponse } from "~/src/features/user/model";
 import { AxiosError } from "axios";
 
 export const useAddressesModal = (onModalClose: () => void) => {
@@ -55,12 +55,12 @@ export const useAddressesModal = (onModalClose: () => void) => {
   );
 
   const onSuggestionClick = useCallback(
-    (sgn: ISuggestedAddress) => {
+    (sgn: IAddressSuggestionResponse) => {
       if (!hasPersonalData) {
         createNotification("Заполните персональные данные в профиле", "error");
         return;
       }
-      const hasSameAddress = addresses.some((a) => a.id === sgn.id);
+      const hasSameAddress = addresses.some((a) => a.id.toString() === sgn.id);
       if (hasSameAddress) {
         createNotification("Такой адрес уже добавлен", "error");
         return;
@@ -68,7 +68,7 @@ export const useAddressesModal = (onModalClose: () => void) => {
 
       setNewAddress({
         forApi: formatSuggestion(sgn),
-        forDisplay: sgn.full_address,
+        forDisplay: sgn.name,
       });
     },
     [formatSuggestion, hasPersonalData, addresses, createNotification],

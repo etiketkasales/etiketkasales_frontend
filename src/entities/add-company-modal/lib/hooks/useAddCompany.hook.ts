@@ -1,28 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { useCreateNew } from "~/src/shared/lib/hooks";
 import { useUserCompanies } from "~/src/features/user/lib/hooks";
-import FormUtils from "~/src/shared/lib/utils/form.util";
 
 import {
   addCompanyRequiredFields,
   AddCompanySpecificFields,
   addCompanySpecificFields,
   newCompanySkeleton,
+  specificErrorDetectors,
 } from "../../model";
 import { IUserCompanyBase } from "~/src/features/user/model";
 import { MessageI } from "~/src/shared/model";
-
-const specificErrorDetectors: Record<
-  AddCompanySpecificFields,
-  (newCompany: IUserCompanyBase) => MessageI | null
-> = {
-  inn: (newCompany: IUserCompanyBase) =>
-    FormUtils.getINNError(newCompany.inn, "inn"),
-  ogrn: (newCompany: IUserCompanyBase) =>
-    FormUtils.getOGRNError(newCompany.ogrn, "ogrn"),
-  kpp: (newCompany: IUserCompanyBase) =>
-    FormUtils.getKPPError(newCompany.kpp, "kpp"),
-};
 
 export const useAddCompany = (onClose: () => void) => {
   const {

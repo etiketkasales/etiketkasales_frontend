@@ -1,6 +1,10 @@
 import { apiClient, tryCatch } from "~/src/shared/lib/api";
 import { IGetData } from "~/src/shared/model";
-import { ISuggestedAddress, IUserAddress, IUserAddressBase } from "../../model";
+import {
+  IAddressSuggestionResponse,
+  IUserAddress,
+  IUserAddressBase,
+} from "../../model";
 import { AxiosError } from "axios";
 
 export const getUserAddresses = async () => {
@@ -47,7 +51,7 @@ export const deleteAddress = async (id: number) => {
 
 export const getAddressSuggestions = async (q: string) => {
   return await tryCatch(async () => {
-    const res = await apiClient.get<IGetData<ISuggestedAddress[]>>(
+    const res = await apiClient.get<{ cities: IAddressSuggestionResponse[] }>(
       `/users/address-cities/`,
       {
         params: {
@@ -56,6 +60,6 @@ export const getAddressSuggestions = async (q: string) => {
       },
     );
 
-    return res.data.data;
+    return res.data.cities;
   });
 };

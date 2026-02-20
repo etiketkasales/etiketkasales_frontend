@@ -18,6 +18,7 @@ export default function AddCompanyCheckBox({
       onChange={onChange}
       gap={"10px"}
       error={error}
+      name="agreement"
       nodeLabel={
         <span className="text-body l text-neutral-700">
           Я принимаю{" "}
