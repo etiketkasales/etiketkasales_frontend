@@ -21,7 +21,7 @@ export interface IUserAddress extends IUserAddressBase {
   is_active: boolean;
   created_at: string; //2025-01-07T12:00:00+00:00
   updated_at: string; //2025-01-07T12:00:00+00:00
-};
+}
 
 export interface IAddressSuggestionResponse {
   id: string;

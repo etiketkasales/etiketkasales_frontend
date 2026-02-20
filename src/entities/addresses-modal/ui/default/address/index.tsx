@@ -5,7 +5,7 @@ import Container from "~/src/shared/ui/container/ui";
 import { IUserAddress } from "~/src/features/user/model";
 
 interface Props extends IUserAddress {
-  onClick: (id: number) => void;
+  onClick: (id: string) => void;
 }
 
 export default function ModalAddress({
@@ -29,7 +29,7 @@ export default function ModalAddress({
   return (
     <Container
       bgColor={"neutral-300"}
-      onClick={() => onClick(id)}
+      onClick={() => onClick(id.toString())}
       as="li"
       className={classNames(
         classes.container,

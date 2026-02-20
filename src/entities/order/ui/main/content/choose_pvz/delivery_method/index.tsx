@@ -9,7 +9,7 @@ import { IDeliveryMethodResponse } from "~/src/entities/order/model";
 
 interface Props {
   canChoosePvz: boolean;
-  deliveryAddressId: number;
+  deliveryAddressId: string | number;
   chosenDeliveryMethod: IDeliveryMethodResponse;
   openModal: () => void;
 }

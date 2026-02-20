@@ -15,7 +15,7 @@ export const getUserAddresses = async () => {
   });
 };
 
-export const setDefaultAddress = async (id: number) => {
+export const setDefaultAddress = async (id: string) => {
   return await tryCatch(async () => {
     const res = await apiClient.put(`/users/addresses/${id}/default/`);
     return res.data;
@@ -42,7 +42,7 @@ export const addNewAddress = async (data: IUserAddressBase) => {
   );
 };
 
-export const deleteAddress = async (id: number) => {
+export const deleteAddress = async (id: string) => {
   return await tryCatch(async () => {
     const res = await apiClient.delete(`/users/addresses/${id}/`);
     return res.data;

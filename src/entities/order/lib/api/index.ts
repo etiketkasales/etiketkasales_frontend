@@ -38,7 +38,7 @@ export const getPaymentMethodsForOrder = async (
 };
 
 interface ICreateOrderParams {
-  delivery_address_id: number;
+  delivery_address_id: number | string;
   delivery_method: string;
   items: IItemToOrder[];
   pickup_point_code: string;

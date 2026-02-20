@@ -13,7 +13,7 @@ import {
 interface InitialStateI {
   type: OrderType;
   deliveryMethod: IDeliveryMethodResponse;
-  deliveryAddressId: number;
+  deliveryAddressId: string | number;
   receiver: IOrderReceiver;
   receiverCompanyId: number;
   pickupPoint: IOrderPickupPointData;

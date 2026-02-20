@@ -10,7 +10,7 @@ interface Props {
   stage: AddressesModalStage;
   setStage: (stage: AddressesModalStage) => void;
   addresses: IUserAddress[];
-  onAddressClick: (type: "delete" | "default", id: number) => void;
+  onAddressClick: (type: "delete" | "default", id: string) => void;
   addressClickType: "delete" | "default";
 }
 

@@ -75,7 +75,7 @@ export const useAddressesModal = (onModalClose: () => void) => {
   );
 
   const onAddressClick = useCallback(
-    async (type: "delete" | "default", id: number) => {
+    async (type: "delete" | "default", id: string) => {
       if (type === "delete") {
         await handleDeleteAddress(id);
       } else if (type === "default") {

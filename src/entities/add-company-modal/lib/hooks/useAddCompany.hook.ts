@@ -4,10 +4,10 @@ import { useUserCompanies } from "~/src/features/user/lib/hooks";
 
 import {
   addCompanyRequiredFields,
-  AddCompanySpecificFields,
   addCompanySpecificFields,
   newCompanySkeleton,
   specificErrorDetectors,
+  AddCompanySpecificFields,
 } from "../../model";
 import { IUserCompanyBase } from "~/src/features/user/model";
 import { MessageI } from "~/src/shared/model";

@@ -1,5 +1,8 @@
 import { createStringInput } from "~/src/shared/lib/utils";
-import { AddCompanySpecificFields, IAddCompanyInput } from "./add-company.interface";
+import {
+  AddCompanySpecificFields,
+  IAddCompanyInput,
+} from "./add-company.interface";
 import { IUserCompanyBase } from "~/src/features/user/model";
 import { MessageI } from "~/src/shared/model";
 import FormUtils from "~/src/shared/lib/utils/form.util";

@@ -78,7 +78,7 @@ export const useAddresses = (needLoad?: boolean) => {
   }, [promiseCallback, setAddresses]);
 
   const handleDeleteAddress = useCallback(
-    async (id: number) => {
+    async (id: string) => {
       await promiseCallback(async () => {
         await deleteAddress(id);
         await getAddresses();
@@ -101,7 +101,7 @@ export const useAddresses = (needLoad?: boolean) => {
   );
 
   const handleSetDefaultAddress = useCallback(
-    async (id: number) => {
+    async (id: string) => {
       await promiseCallback(async () => {
         await setDefaultAddress(id);
         await getAddresses();

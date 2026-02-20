@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-
 import { useAppDispatch } from "~/src/app/store/hooks";
-import { addNotification } from "~/src/app/store/reducers/notifications.slice";
+import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
+
 import {
   setOrderDeliveryMethod,
   setOrderInfo,
@@ -18,7 +18,7 @@ const messageTexts = {
 };
 
 interface Props {
-  deliveryAddressId: number;
+  deliveryAddressId: string | number;
   canLoad: boolean;
 }
 
@@ -33,18 +33,7 @@ export const useDelivery = ({ deliveryAddressId, canLoad }: Props) => {
   const [methods, setMethods] = useState<IDeliveryMethodResponse[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const createMessage = useCallback(
-    (message: string, type?: "error" | "warning") => {
-      dispatch(
-        addNotification({
-          type: type || "error",
-          message,
-          field: "global",
-        }),
-      );
-    },
-    [dispatch],
-  );
+  const createMessage = useCreateNotification();
 
   const chooseDeliveryMethod = useCallback(
     (method: IDeliveryMethodResponse) => {

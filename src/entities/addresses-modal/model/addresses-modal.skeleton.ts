@@ -1,4 +1,4 @@
-import {  IUserAddressBase } from "~/src/features/user/model";
+import { IUserAddressBase } from "~/src/features/user/model";
 
 export const newAddressSkeleton: IUserAddressBase = {
   name: "",
