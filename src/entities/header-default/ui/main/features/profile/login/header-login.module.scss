@@ -1,7 +1,17 @@
 .container {
-    &:hover {
-        svg path {
-            fill: $neutral-700;
-        }
+  &:hover {
+    svg path {
+      fill: $neutral-700;
     }
+  }
+}
+
+.loading {
+  cursor: default !important;
+
+  &:hover {
+    svg path {
+      fill: initial;
+    }
+  }
 }

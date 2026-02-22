@@ -1,5 +1,4 @@
 "use client";
-
 import classNames from "classnames";
 import { useSellerOrders } from "~/src/entities/profile-section/lib/hooks";
 
@@ -25,7 +24,7 @@ export default function SellerOrders() {
               <SellerOrder key={`${item.order_number}-${index}`} {...item} />
             );
           })
-        ) : (
+        ) : loading ? null : (
           <p className="text-body xl text-neutral-1000">
             У вас пока нет заказов
           </p>

@@ -1,76 +1,40 @@
-import { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
+import { useCallback, useState } from "react";
+import { useAppSelector } from "~/src/app/store/hooks";
+import { useLogInEffects, useLogInValidation } from ".";
+
+import { sendCode, verifyCode } from "~/src/features/login/lib/api/login.api";
 import { selectLogIn } from "~/src/app/store/reducers/login.slice";
-import { useUser } from "~/src/features/user/lib/hooks/useUser.hook";
-import { useCart } from "~/src/features/cart/lib/hooks/useCart.hook";
-import { setUser } from "~/src/app/store/reducers/user.slice";
-import { usePhoneInput } from "~/src/shared/ui/inputs/phone/hooks/usePhoneInput.hook";
-import { addNotification } from "~/src/app/store/reducers/notifications.slice";
-import { sendCode, verifyCode } from "../api/login.api";
-import InputUtils from "~/src/shared/lib/utils/input.util";
 import { promiseWrapper } from "~/src/shared/lib";
+import { formatPhoneForApi } from "~/src/shared/ui/inputs/phone/lib/utils";
 
-import { MessageI } from "~/src/shared/model";
+interface Props {
+  isCodePage: boolean;
+}
 
-//Раздутый хук. TODO: рефактор этого хука
-
-/**
- * useLogIn - хук для логина на странице входа
- * @param {Object} options - объект с параметрами
- * @param {boolean} options.isCodePage - флаг, указывающий, является ли страница страницей кода
- * @returns {Object} - объект с параметрами, которые возвращаются из хука
- * @property {string} phone - номер телефона, который отправлен на сервер
- * @property {string} code - код, который отправлен на сервер
- * @property {function} setCode - функция для смены кода
- * @property {function} handleSendData - функция для отправки данных на сервер
- * @property {function} handleSendPhone - функция для отправки номера телефона на сервер
- * @property {MessageI | null} message - сообщение об ошибке
- * @property {boolean} loading - флаг, указывающий, загружка ли страница
- */
-export const useLogIn = ({ isCodePage }: { isCodePage: boolean }) => {
-  const dispatch = useAppDispatch();
-  const { setUserData } = useUser();
-  const { cartMerging } = useCart();
-  const { push } = useRouter();
+export const useLogIn = ({ isCodePage }: Props) => {
   const { phoneNumber } = useAppSelector(selectLogIn);
   const [code, setCode] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [message, setMessage] = useState<MessageI | null>(null);
+  const { message, setMessage, hasPhoneError } = useLogInValidation();
+  const { sendPhoneEffect, sendCodeEffect } = useLogInEffects();
 
-  const { formatForApi } = usePhoneInput();
-
-  const hasPhoneError = useCallback((phone: string): boolean => {
-    return !InputUtils.isPhoneLengthValid(phone);
-  }, []);
+  const validatePhone = useCallback(() => {
+    if (message !== null) {
+      hasPhoneError(phoneNumber);
+    }
+  }, [message, phoneNumber, hasPhoneError]);
 
   const handleSendPhone = useCallback(async () => {
-    await promiseWrapper({
+    return await promiseWrapper({
       setLoading,
       setError: setMessage,
       callback: async () => {
-        if (hasPhoneError(phoneNumber)) {
-          setMessage({
-            message: "Введите корректный номер",
-            type: "error",
-            field: "phone",
-          });
-          return;
-        }
-        const res = await sendCode(formatForApi(phoneNumber));
-        if (res?.success) {
-          dispatch(
-            addNotification({
-              type: "success",
-              message: res?.message || "Код отправлен",
-              field: "global",
-            }),
-          );
-          push("/login/code");
-        }
+        if (hasPhoneError(phoneNumber)) return;
+        const res = await sendCode(formatPhoneForApi(phoneNumber));
+        if (res?.success) sendPhoneEffect(res?.message);
       },
     });
-  }, [phoneNumber, formatForApi, hasPhoneError, push, dispatch]);
+  }, [phoneNumber, hasPhoneError, sendPhoneEffect]);
 
   const handleSendCode = useCallback(
     async (codeParam?: string) => {
@@ -78,85 +42,36 @@ export const useLogIn = ({ isCodePage }: { isCodePage: boolean }) => {
         setLoading,
         setError: setMessage,
         callback: async () => {
-          if (hasPhoneError(phoneNumber)) {
-            setMessage({
-              message: "Введите корректный номер",
-              type: "error",
-              field: "phone",
-            });
-            return;
-          }
+          if (hasPhoneError(phoneNumber)) return;
           const res = await verifyCode(
-            formatForApi(phoneNumber),
+            formatPhoneForApi(phoneNumber),
             codeParam ?? code,
           );
-          if (res && res.success) {
-            dispatch(
-              setUser({
-                isLoggedIn: true,
-              }),
-            );
-            dispatch(
-              addNotification({
-                type: "success",
-                message: res?.message || "Вы вошли в систему",
-                field: "global",
-              }),
-            );
-            await cartMerging();
-            setUserData(res.user);
-          }
+          if (res && res.success) sendCodeEffect(res.message);
         },
       });
     },
-    [
-      code,
-      phoneNumber,
-      formatForApi,
-      hasPhoneError,
-      dispatch,
-      setUserData,
-      cartMerging,
-    ],
+    [code, phoneNumber, hasPhoneError, sendCodeEffect],
   );
 
-  const promiseCallback = useCallback(
-    async (codeParam?: string) => {
-      if (isCodePage) {
-        await handleSendCode(codeParam);
-      } else {
-        await handleSendPhone();
-      }
-    },
-    [isCodePage, handleSendPhone, handleSendCode],
-  );
-
-  const handleSendData = useCallback(
-    async (codeParam?: string) => {
+  const handleSubmit = useCallback(
+    async (codeParam?: string) =>
       await promiseWrapper({
         setLoading,
         setError: setMessage,
-        callback: async () => await promiseCallback(codeParam),
-      });
-    },
-    [promiseCallback],
+        callback: async () =>
+          isCodePage ? handleSendCode(codeParam) : handleSendPhone(),
+      }),
+    [isCodePage, handleSendCode, handleSendPhone],
   );
-
-  useEffect(() => {
-    if (message) {
-      dispatch(addNotification(message));
-      if (InputUtils.isPhoneLengthValid(phoneNumber)) {
-        setMessage(null);
-      }
-    }
-  }, [phoneNumber, message, dispatch]);
 
   return {
     phone: phoneNumber,
     code,
     setCode,
-    handleSendData,
+    handleSendData: handleSubmit,
     handleSendPhone,
+    validatePhone,
     message,
     loading,
   };

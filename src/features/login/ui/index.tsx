@@ -15,8 +15,15 @@ export default function LoginMain() {
   const { loaded } = useAppSelector(selectNavigation);
   const { phoneNumber } = useAppSelector(selectLogIn);
   const [isCodePage, setIsCodePage] = useState<boolean>(false);
-  const { handleSendData, handleSendPhone, loading, message, code, setCode } =
-    useLogIn({ isCodePage });
+  const {
+    handleSendData,
+    handleSendPhone,
+    loading,
+    message,
+    code,
+    setCode,
+    validatePhone,
+  } = useLogIn({ isCodePage });
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -39,7 +46,11 @@ export default function LoginMain() {
           onComplete={handleSendData}
         />
       ) : (
-        <LoginMainBody phone={phoneNumber} message={message} />
+        <LoginMainBody
+          phone={phoneNumber}
+          message={message}
+          validate={validatePhone}
+        />
       )}
       <LoginBottom
         buttonText={isCodePage ? "Подтвердить" : "Продолжить"}

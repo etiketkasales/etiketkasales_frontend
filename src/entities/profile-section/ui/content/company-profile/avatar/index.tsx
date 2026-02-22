@@ -1,6 +1,8 @@
 "use client";
-import { useChangeAvatar } from "~/src/entities/profile-section/lib/hooks";
 import classNames from "classnames";
+import { useChangeAvatar } from "~/src/entities/profile-section/lib/hooks";
+import { useAppSelector } from "~/src/app/store/hooks";
+import { selectUser } from "~/src/app/store/reducers/user.slice";
 
 import classes from "./company-avatar.module.scss";
 import CompanyProfileAvatarNoImage from "./no-image";
@@ -13,6 +15,7 @@ interface Props {
 }
 
 export default function CompanyProfileAvatar({ initCompanyAvatar }: Props) {
+  const { loadingData } = useAppSelector(selectUser);
   const { inputRef, onFileLoad, fileLoading } = useChangeAvatar();
 
   return (
@@ -24,11 +27,12 @@ export default function CompanyProfileAvatar({ initCompanyAvatar }: Props) {
         className={classNames(
           "grid-column gap-4 align-center left-element",
           classes.button,
-          fileLoading && classes.loading,
+          fileLoading || loadingData && classes.loading,
         )}
         onClick={() => {
           if (inputRef.current) inputRef.current.click();
         }}
+        disabled={loadingData || fileLoading}
       >
         {initCompanyAvatar ? (
           <ImageWrapper

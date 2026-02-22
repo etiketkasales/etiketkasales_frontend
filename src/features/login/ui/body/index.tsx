@@ -1,5 +1,4 @@
 "use client";
-
 import { useAppDispatch } from "~/src/app/store/hooks";
 import { setPhoneNumber } from "~/src/app/store/reducers/login.slice";
 
@@ -10,9 +9,10 @@ import { MessageI } from "~/src/shared/model";
 interface Props {
   phone: string;
   message: MessageI | null;
+  validate: () => void;
 }
 
-export default function LoginMainBody({ phone, message }: Props) {
+export default function LoginMainBody({ phone, message, validate }: Props) {
   const dispatch = useAppDispatch();
   return (
     <>
@@ -21,7 +21,9 @@ export default function LoginMainBody({ phone, message }: Props) {
         name="etiketka-phone"
         onChange={(e) => {
           dispatch(setPhoneNumber(e));
+          validate();
         }}
+        onBlur={validate}
         value={phone}
         onKeyDown={(e) => e.key === "Enter" && e.preventDefault()}
         errorText={message && message.field === "phone" ? message.message : ""}

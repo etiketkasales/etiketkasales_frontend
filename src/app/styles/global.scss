@@ -2,6 +2,15 @@
   overflow: hidden;
 }
 
+.loadable {
+  transition: opacity $transition;
+
+  &.loading {
+    opacity: 0.7;
+    cursor: default !important;
+  }
+}
+
 .wrapper {
   max-width: $container-width;
   margin: 0 auto;

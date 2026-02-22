@@ -1,3 +1,4 @@
+import { useLogout } from "~/src/features/login/lib/hooks";
 import classes from "./change-button.module.scss";
 import Button from "~/src/shared/ui/button";
 
@@ -7,11 +8,12 @@ interface Props {
 }
 
 export default function ProfileSaveButton({ onSave, disabled }: Props) {
+  const { handleLogout } = useLogout();
   return (
     <Button
       typeButton="yellow"
       size="16-24"
-      onClick={onSave}
+      onClick={handleLogout}
       disabled={disabled}
       className={classes.container}
       radius={12}
