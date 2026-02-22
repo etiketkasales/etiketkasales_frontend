@@ -57,8 +57,10 @@ export const useNewProduct = ({ onClose }: Props) => {
     await promiseWrapper({
       setLoading,
       callback: async () => {
-        await createNewProduct(newProduct);
-        await updateSellerProducts();
+        await Promise.all([
+          createNewProduct(newProduct),
+          updateSellerProducts(),
+        ]);
         createNotification("Товар добавлен", "success");
         onClose();
       },
