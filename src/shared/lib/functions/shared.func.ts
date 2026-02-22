@@ -9,7 +9,7 @@ interface PromiseWrapperProps {
   errorMessage?: string;
   setErrBool?: Dispatch<SetStateAction<boolean>>;
   needLoad?: boolean;
-  fallback?: () => void;
+  fallback?: (err?: string) => void;
 }
 
 export async function promiseWrapper({
@@ -38,7 +38,7 @@ export async function promiseWrapper({
     });
     setErrBool?.(true);
     console.error(error);
-    fallback?.();
+    fallback?.(errorMessage);
     throw error;
   } finally {
     setLoading(false);

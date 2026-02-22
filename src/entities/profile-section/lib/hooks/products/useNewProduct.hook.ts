@@ -62,7 +62,8 @@ export const useNewProduct = ({ onClose }: Props) => {
         createNotification("Товар добавлен", "success");
         onClose();
       },
-      fallback: () => createNotification("Не удалось добавить товар", "error"),
+      fallback: (errMessage) =>
+        createNotification(errMessage || "Не удалось добавить товар", "error"),
     });
   }, [onClose, updateSellerProducts, newProduct, createNotification]);
 

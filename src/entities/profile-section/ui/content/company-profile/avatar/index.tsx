@@ -27,7 +27,7 @@ export default function CompanyProfileAvatar({ initCompanyAvatar }: Props) {
         className={classNames(
           "grid-column gap-4 align-center left-element",
           classes.button,
-          fileLoading || loadingData && classes.loading,
+          fileLoading || (loadingData && classes.loading),
         )}
         onClick={() => {
           if (inputRef.current) inputRef.current.click();
