@@ -29,17 +29,21 @@ export default function ProfileProducts({}: Props) {
       title={profileTitlesMap.products}
       className={`flex-column ${classes.container}`}
     >
-      {loading && <Loader radius={20} className={classes.loader} />}
-      <ProfileProductsList
-        products={sellerProducts}
-        setModalId={(n) => setEditProductId(n)}
-        setModalActive={() =>
-          setModal({
-            active: true,
-            type: "edit",
-          })
-        }
-      />
+      {loading ? (
+        <Loader radius={20} className={classes.loader} />
+      ) : (
+        <ProfileProductsList
+          products={sellerProducts}
+          setModalId={(n) => setEditProductId(n)}
+          setModalActive={() =>
+            setModal({
+              active: true,
+              type: "edit",
+            })
+          }
+        />
+      )}
+
       <AddNewProductButton
         onClick={() =>
           setModal({

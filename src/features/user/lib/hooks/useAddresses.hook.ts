@@ -1,22 +1,13 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
+import { useAddressActions } from ".";
 
 import { selectUser, setUser } from "~/src/app/store/reducers/user.slice";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
-import {
-  addNewAddress,
-  deleteAddress,
-  getUserAddresses,
-  setDefaultAddress,
-} from "~/src/features/user/lib/api";
+import { getUserAddresses } from "~/src/features/user/lib/api";
 
-import {
-  addressesMessages,
-  IUserAddress,
-  IUserAddressBase,
-} from "~/src/features/user/model";
-import { AxiosError } from "axios";
+import { addressesMessages, IUserAddress } from "~/src/features/user/model";
 
 /**
  * A hook that returns functions to get, add, delete, and set default addresses, as well as the current addresses and a boolean indicating whether the addresses are loading.
@@ -39,7 +30,6 @@ export const useAddresses = (needLoad?: boolean) => {
   const [defAddress, setDefAddress] = useState<IUserAddress | null>(
     addresses[0] || null,
   );
-  const hasBeenLoaded = useRef<boolean>(false);
   const createNotification = useCreateNotification();
 
   const setAddresses = useCallback(
@@ -54,61 +44,35 @@ export const useAddresses = (needLoad?: boolean) => {
   );
 
   const promiseCallback = useCallback(
-    async (callback: () => Promise<void>) => {
-      try {
-        await promiseWrapper({
-          setLoading,
-          needLoad,
-          callback,
-        });
-      } catch (err: AxiosError<{ message?: string }> | any) {
-        createNotification(err.message || "Произошла ошибка", "error");
-        throw err;
-      }
+    async (
+      callback: () => Promise<void>,
+      fallback?: (msg?: string) => void,
+    ) => {
+      await promiseWrapper({
+        setLoading,
+        needLoad,
+        callback,
+        fallback,
+      });
     },
-    [needLoad, createNotification],
+    [needLoad],
   );
 
   const getAddresses = useCallback(async () => {
-    await promiseCallback(async () => {
-      hasBeenLoaded.current = true;
-      const res = await getUserAddresses();
-      setAddresses(res || []);
-    });
-  }, [promiseCallback, setAddresses]);
+    await promiseCallback(
+      async () => {
+        const res = await getUserAddresses();
+        setAddresses(res || []);
+      },
+      (msg) => createNotification(msg || addressesMessages.cantGet, "error"),
+    );
+  }, [promiseCallback, setAddresses, createNotification]);
 
-  const handleDeleteAddress = useCallback(
-    async (id: string) => {
-      await promiseCallback(async () => {
-        await deleteAddress(id);
-        await getAddresses();
-        createNotification(addressesMessages.deleted, "success");
-      });
+  const { addNewAddress, deleteAddress, setDefaultAddress } = useAddressActions(
+    {
+      promiseCallback,
+      getAddresses,
     },
-    [getAddresses, promiseCallback, createNotification],
-  );
-
-  const handleAddNewAddress = useCallback(
-    async (address: IUserAddressBase) => {
-      await promiseCallback(async () => {
-        await addNewAddress(address);
-        await getAddresses();
-        createNotification(addressesMessages.added, "success");
-        createNotification(addressesMessages.settedDefault, "warning");
-      });
-    },
-    [getAddresses, promiseCallback, createNotification],
-  );
-
-  const handleSetDefaultAddress = useCallback(
-    async (id: string) => {
-      await promiseCallback(async () => {
-        await setDefaultAddress(id);
-        await getAddresses();
-        createNotification(addressesMessages.settedDefault, "success");
-      });
-    },
-    [getAddresses, promiseCallback, createNotification],
   );
 
   useEffect(() => {
@@ -128,8 +92,8 @@ export const useAddresses = (needLoad?: boolean) => {
     loading,
     getAddresses,
     setAddresses,
-    handleAddNewAddress,
-    handleDeleteAddress,
-    handleSetDefaultAddress,
+    handleAddNewAddress: addNewAddress,
+    handleDeleteAddress: deleteAddress,
+    handleSetDefaultAddress: setDefaultAddress,
   };
 };

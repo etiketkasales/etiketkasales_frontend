@@ -11,7 +11,6 @@ interface PromiseWrapperProps {
   needLoad?: boolean;
   fallback?: (err?: string) => void;
 }
-
 export async function promiseWrapper({
   setLoading,
   callback,

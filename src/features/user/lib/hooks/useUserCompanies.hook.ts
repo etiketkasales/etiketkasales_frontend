@@ -29,7 +29,10 @@ export const useUserCompanies = () => {
   );
 
   const promiseCallback = useCallback(
-    async (callback: () => Promise<void>, fallback?: () => void) => {
+    async (
+      callback: () => Promise<void>,
+      fallback?: (errMsg?: string) => void,
+    ) => {
       await promiseWrapper({
         setLoading,
         callback,
@@ -45,8 +48,11 @@ export const useUserCompanies = () => {
         const res = await getCompanies();
         setCompanies(res.filter((item) => item.is_active) || []);
       },
-      () =>
-        createNotification("Не удалось получить список организаций", "error"),
+      (errMsg) =>
+        createNotification(
+          errMsg || "Не удалось получить список организаций",
+          "error",
+        ),
     );
   }, [setCompanies, promiseCallback, createNotification]);
 
@@ -64,7 +70,8 @@ export const useUserCompanies = () => {
             closeModal?.();
           }
         },
-        () => createNotification("Не удалось добавить организацию", "error"),
+        (err) =>
+          createNotification(err || "Не удалось добавить организацию", "error"),
       );
     },
     [promiseCallback, setCompanies, createNotification],
@@ -78,7 +85,8 @@ export const useUserCompanies = () => {
           await handleGetCompanies();
           createNotification("Организация удалена", "success");
         },
-        () => createNotification("Не удалось удалить организацию", "error"),
+        (err) =>
+          createNotification(err || "Не удалось удалить организацию", "error"),
       );
     },
     [promiseCallback, handleGetCompanies, createNotification],
