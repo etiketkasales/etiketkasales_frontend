@@ -51,15 +51,14 @@ export const deleteAddress = async (id: string) => {
 
 export const getAddressSuggestions = async (q: string) => {
   return await tryCatch(async () => {
-    const res = await apiClient.get<{ cities: IAddressSuggestionResponse[] }>(
-      `/users/address-cities/`,
-      {
-        params: {
-          query: q,
-        },
+    const res = await apiClient.get<{
+      suggestions: IAddressSuggestionResponse[];
+    }>(`/address/suggest/`, {
+      params: {
+        query: q,
       },
-    );
+    });
 
-    return res.data.cities;
+    return res.data.suggestions;
   });
 };

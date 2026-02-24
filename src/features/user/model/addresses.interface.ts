@@ -24,9 +24,12 @@ export interface IUserAddress extends IUserAddressBase {
 }
 
 export interface IAddressSuggestionResponse {
-  id: string;
-  name: string;
+  label: string;
+  city: string;
   region: string;
-  slug: string;
+  street: string;
+  house: string;
+  apartment: string;
+  postal_code: string;
   country: string;
 }

@@ -1,14 +1,18 @@
 import { useCallback, useState } from "react";
-import { getAddressSuggestions } from "~/src/features/user/lib/api";
+import { useAppSelector } from "~/src/app/store/hooks";
+
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
+import { selectUser } from "~/src/app/store/reducers/user.slice";
+import { getAddressSuggestions } from "~/src/features/user/lib/api";
 
 import {
   IAddressSuggestionResponse,
   IUserAddressBase,
 } from "~/src/features/user/model";
-import { newAddressSkeleton } from "../../model";
+import { addressesSimilarFieldsRecord, newAddressSkeleton } from "../../model";
 
 export const useAddressSuggestions = () => {
+  const { userInfo } = useAppSelector(selectUser);
   const [loading, setLoading] = useState<boolean>(false);
   const [suggestions, setSuggestions] = useState<IAddressSuggestionResponse[]>(
     [],
@@ -28,12 +32,18 @@ export const useAddressSuggestions = () => {
   const formatSuggestion = useCallback(
     (suggestion: IAddressSuggestionResponse): IUserAddressBase => {
       const newAddress: IUserAddressBase = { ...newAddressSkeleton };
-      newAddress.city = suggestion.name;
-      newAddress.region = suggestion.region;
-      newAddress.country = suggestion.country;
+      Object.keys(addressesSimilarFieldsRecord).forEach((key) => {
+        if (key in suggestion) {
+          const value = suggestion[key as keyof IAddressSuggestionResponse];
+          newAddress[key as keyof IUserAddressBase] = value;
+        }
+      });
+
+      newAddress.phone = userInfo.phone;
+      newAddress.full_name = userInfo.name!;
       return newAddress;
     },
-    [],
+    [userInfo.phone, userInfo.name],
   );
 
   return {

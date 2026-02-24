@@ -1,4 +1,7 @@
-import { IUserAddressBase } from "~/src/features/user/model";
+import {
+  IAddressSuggestionResponse,
+  IUserAddressBase,
+} from "~/src/features/user/model";
 
 export const newAddressSkeleton: IUserAddressBase = {
   name: "",

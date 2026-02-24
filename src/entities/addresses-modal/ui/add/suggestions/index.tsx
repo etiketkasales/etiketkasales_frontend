@@ -28,15 +28,15 @@ export default function AddressModalSuggestions({
       {loading && <div className={classes.loader}></div>}
       {suggestions.map((item, index) => (
         <div
-          key={`${index}-${item.id}`}
-          className={`${classes.item} pointer`}
+          key={`${index}-${item.label}`}
+          className={`${classes.item} pointer no-scrollbar`}
           role="listitem"
           onClick={() => {
             if (!loading) onClick(item);
           }}
         >
           <span className={`text-body base text-neutral-1000 ${classes.text}`}>
-            {item.name}
+            {item.label}
           </span>
         </div>
       ))}

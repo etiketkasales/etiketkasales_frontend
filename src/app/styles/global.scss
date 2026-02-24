@@ -11,6 +11,15 @@
   }
 }
 
+.no-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none;
+  scrollbar-width: 0;
+}
+
 .wrapper {
   max-width: $container-width;
   margin: 0 auto;

@@ -60,15 +60,10 @@ export const useAddressesModal = (onModalClose: () => void) => {
         createNotification("Заполните персональные данные в профиле", "error");
         return;
       }
-      const hasSameAddress = addresses.some((a) => a.id.toString() === sgn.id);
-      if (hasSameAddress) {
-        createNotification("Такой адрес уже добавлен", "error");
-        return;
-      }
 
       setNewAddress({
         forApi: formatSuggestion(sgn),
-        forDisplay: sgn.name,
+        forDisplay: sgn.label,
       });
     },
     [formatSuggestion, hasPersonalData, addresses, createNotification],
