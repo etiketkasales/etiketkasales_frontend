@@ -1,15 +1,25 @@
-import { useCallback, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 import { useSellerProducts, useNewProductImages, useValidation } from ".";
 
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 import { createNewProduct } from "~/src/entities/profile-section/lib/api";
 
-import { INewProduct } from "~/src/entities/profile-section/model";
+import {
+  INewProduct,
+  ISellerProduct,
+} from "~/src/entities/profile-section/model";
 import { newProductSkeleton } from "~/src/entities/profile-section/model";
 
 interface Props {
   onClose: () => void;
+  setSellerProducts: Dispatch<SetStateAction<ISellerProduct[]>>;
 }
 
 /**
@@ -30,18 +40,26 @@ interface Props {
  *   setRequiredFilters - a callback that is called when the user sets the required filters.
  *   onDeleteImage - a callback that is called when the user deletes an image.
  */
-export const useNewProduct = ({ onClose }: Props) => {
+export const useNewProduct = ({ onClose, setSellerProducts }: Props) => {
   const [modalStage, setModalStage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [newProduct, setNewProduct] = useState<INewProduct>(newProductSkeleton);
 
   const createNotification = useCreateNotification();
-  const { updateSellerProducts } = useSellerProducts({ needLoad: false });
+  const { updateSellerProducts } = useSellerProducts({
+    needLoad: false,
+    setSellerProducts,
+  });
   const { error, getStageError, setRequiredFilters } = useValidation({
     checkData: newProduct,
   });
-  const { fileLoading, onFileLoad, currentImages, onDeleteImage } =
-    useNewProductImages({ setNewProduct });
+  const {
+    fileLoading,
+    onFileLoad,
+    currentImages,
+    setCurrentImages,
+    onDeleteImage,
+  } = useNewProductImages({ setNewProduct });
 
   const onInputChange = useCallback(
     (v: string, field: keyof INewProduct) => {
@@ -57,11 +75,12 @@ export const useNewProduct = ({ onClose }: Props) => {
     await promiseWrapper({
       setLoading,
       callback: async () => {
-        await Promise.all([
-          createNewProduct(newProduct),
-          updateSellerProducts(),
-        ]);
+        await createNewProduct(newProduct);
+        await updateSellerProducts();
         createNotification("Товар добавлен", "success");
+        setNewProduct(newProductSkeleton);
+        setCurrentImages([]);
+        setModalStage(1);
         onClose();
       },
       fallback: (errMessage) =>

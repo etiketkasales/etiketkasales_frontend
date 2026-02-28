@@ -4,6 +4,7 @@ import {
   ISellerProduct,
   ISellerProductsModal,
 } from "~/src/entities/profile-section/model";
+import { Dispatch, SetStateAction } from "react";
 
 interface Props {
   onClose: () => void;
@@ -11,6 +12,7 @@ interface Props {
   title: string;
   editProductId: number;
   products: ISellerProduct[];
+  setSellerProducts: Dispatch<SetStateAction<ISellerProduct[]>>;
 }
 
 export default function SellerProductModal({
@@ -19,6 +21,7 @@ export default function SellerProductModal({
   modal,
   editProductId,
   products,
+  setSellerProducts,
 }: Props) {
   switch (modal.type) {
     case "new":
@@ -27,6 +30,7 @@ export default function SellerProductModal({
           isActive={modal.active!}
           onClose={onClose}
           title={title}
+          setSellerProducts={setSellerProducts}
         />
       );
     case "edit":
@@ -38,6 +42,7 @@ export default function SellerProductModal({
           onClose={onClose}
           title={title}
           productData={editProduct}
+          setSellerProducts={setSellerProducts}
         />
       );
   }

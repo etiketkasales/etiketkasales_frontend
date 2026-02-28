@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import {
   useEditProductInit,
   useEditProductValidation,
@@ -15,6 +15,7 @@ import {
 interface Props {
   initialData: ISellerProduct;
   onClose: () => void;
+  setSellerProducts: Dispatch<SetStateAction<ISellerProduct[]>>;
 }
 
 /**
@@ -32,7 +33,11 @@ interface Props {
  *   error - a string indicating the error message of the current modal stage.
  *   toArchive - a callback that is called when the user archives a product.
  */
-export const useEditProduct = ({ initialData, onClose }: Props) => {
+export const useEditProduct = ({
+  initialData,
+  onClose,
+  setSellerProducts,
+}: Props) => {
   const productId = initialData?.id;
   const [disableSave, setDisableSave] = useState<boolean>(false);
 
@@ -52,6 +57,7 @@ export const useEditProduct = ({ initialData, onClose }: Props) => {
   } = useSellerProducts({
     onClose,
     needLoad: false,
+    setSellerProducts,
   });
   // Валидация формы
   const getFormError = useEditProductValidation({

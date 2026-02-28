@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { promiseWrapper } from "~/src/shared/lib";
 
 interface Props {
   updateInfo?: () => Promise<void>;
@@ -6,17 +7,18 @@ interface Props {
 
 export const useCartButton = ({ updateInfo }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const handleButtonClick = async (callback: () => Promise<void>) => {
-    try {
-      setLoading(true);
-      await callback();
-      await updateInfo?.();
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const handleButtonClick = useCallback(
+    async (callback: () => Promise<void>) => {
+      await promiseWrapper({
+        setLoading,
+        callback: async () => {
+          await callback();
+          await updateInfo?.();
+        },
+      });
+    },
+    [updateInfo],
+  );
 
   return {
     handleButtonClick,

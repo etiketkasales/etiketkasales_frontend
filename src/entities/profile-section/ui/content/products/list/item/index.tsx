@@ -11,6 +11,7 @@ interface Props extends ISellerProduct {
 export default function ProfileProduct({
   id,
   image,
+  images,
   openProductModal,
   setModalActive,
   ...rest
@@ -18,7 +19,7 @@ export default function ProfileProduct({
   return (
     <li className={`flex-column ${classes.container}`}>
       <ProfileProductTop
-        image={image}
+        image={image || images[images.length - 1]}
         onButtonClick={() => {
           openProductModal(id);
           setModalActive();

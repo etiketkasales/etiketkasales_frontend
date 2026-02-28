@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 import {
@@ -14,6 +20,7 @@ import {
 } from "~/src/entities/profile-section/model";
 
 interface Props {
+  setSellerProducts: Dispatch<SetStateAction<ISellerProduct[]>>;
   onClose?: () => void;
   needLoad?: boolean;
 }
@@ -38,10 +45,13 @@ interface Props {
  *     updateProduct - a function to update a product,
  *     deleteProduct - a function to delete a product.
  */
-export const useSellerProducts = ({ onClose, needLoad }: Props) => {
+export const useSellerProducts = ({
+  onClose,
+  needLoad,
+  setSellerProducts,
+}: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<MessageI | null>(null);
-  const [sellerProducts, setSellerProducts] = useState<ISellerProduct[]>([]);
   const [editProductId, setEditProductId] = useState<number>(0);
   const createNotification = useCreateNotification();
 
@@ -109,7 +119,6 @@ export const useSellerProducts = ({ onClose, needLoad }: Props) => {
     promiseCallback,
     error,
     setError,
-    sellerProducts,
     updateSellerProducts,
     editProductId,
     setEditProductId,

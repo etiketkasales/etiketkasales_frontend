@@ -1,5 +1,6 @@
 "use client";
 import { useEditProduct } from "~/src/entities/profile-section/lib/hooks/products/useEditProduct.hook";
+import { useEditProductImages } from "~/src/entities/profile-section/lib/hooks";
 
 import classes from "./edit.module.scss";
 import Modal from "~/src/shared/ui/modals/ui/default";
@@ -7,13 +8,14 @@ import EditProductImage from "./images";
 import EditProductInputs from "./inputs";
 import EditProductModalButtons from "./buttons";
 import { ISellerProduct } from "~/src/entities/profile-section/model";
-import { useEditProductImages } from "~/src/entities/profile-section/lib/hooks";
+import { Dispatch, SetStateAction } from "react";
 
 interface Props {
   isActive: boolean;
   onClose: () => void;
   title: string;
   productData: ISellerProduct;
+  setSellerProducts: Dispatch<SetStateAction<ISellerProduct[]>>;
 }
 
 export default function EditSellerProductModal({
@@ -21,6 +23,7 @@ export default function EditSellerProductModal({
   onClose,
   title,
   productData,
+  setSellerProducts,
 }: Props) {
   const {
     loading,
@@ -35,6 +38,7 @@ export default function EditSellerProductModal({
   } = useEditProduct({
     initialData: productData,
     onClose,
+    setSellerProducts,
   });
   const { fileLoading, onFileLoad } = useEditProductImages({
     setEditProductData,

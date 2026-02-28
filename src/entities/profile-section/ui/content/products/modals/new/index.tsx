@@ -1,5 +1,4 @@
 "use client";
-
 import { useNewProduct } from "~/src/entities/profile-section/lib/hooks";
 
 import classes from "./products-modal.module.scss";
@@ -7,16 +6,20 @@ import Modal from "~/src/shared/ui/modals/ui/default";
 import NewProductModalButtons from "./buttons";
 import NewProductFirstStage from "./stage/first";
 import NewProductSecondStage from "./stage/second";
+import { Dispatch, SetStateAction } from "react";
+import { ISellerProduct } from "~/src/entities/profile-section/model";
 
 interface Props {
   isActive: boolean;
   onClose: () => void;
+  setSellerProducts: Dispatch<SetStateAction<ISellerProduct[]>>;
   title?: string;
 }
 
 export default function NewSellerProductModal({
   isActive,
   onClose,
+  setSellerProducts,
   title = "Добавить товар",
 }: Props) {
   const {
@@ -33,6 +36,7 @@ export default function NewSellerProductModal({
     setRequiredFilters,
   } = useNewProduct({
     onClose,
+    setSellerProducts,
   });
 
   return (

@@ -9,6 +9,7 @@ import ProfileProductsList from "./list";
 import Loader from "~/src/shared/ui/loader";
 import SellerProductModal from "./modals";
 import {
+  ISellerProduct,
   ISellerProductsModal,
   modalTitles,
   profileTitlesMap,
@@ -17,8 +18,11 @@ import {
 interface Props {}
 
 export default function ProfileProducts({}: Props) {
-  const { sellerProducts, loading, editProductId, setEditProductId } =
-    useSellerProducts({ needLoad: true });
+  const [sellerProducts, setSellerProducts] = useState<ISellerProduct[]>([]);
+  const { loading, editProductId, setEditProductId } = useSellerProducts({
+    needLoad: true,
+    setSellerProducts,
+  });
   const [modal, setModal] = useState<ISellerProductsModal>({
     active: null,
     type: "new",
@@ -61,6 +65,7 @@ export default function ProfileProducts({}: Props) {
           title={modalTitles[modal.type] || ""}
           editProductId={editProductId}
           products={sellerProducts}
+          setSellerProducts={setSellerProducts}
         />
       )}
     </ProfileContentContainer>

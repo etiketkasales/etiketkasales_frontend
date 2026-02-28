@@ -73,5 +73,6 @@ export const useNewProductImages = ({ setNewProduct }: Props) => {
     fileLoading,
     onDeleteImage,
     currentImages,
+    setCurrentImages,
   };
 };
