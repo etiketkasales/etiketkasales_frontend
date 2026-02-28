@@ -1,5 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
+import { useCartInit } from ".";
+
 import { selectCart, setCart } from "~/src/app/store/reducers/cart.slice";
 import {
   selectOrder,
@@ -7,7 +9,7 @@ import {
 } from "~/src/app/store/reducers/order.slice";
 import { getCart, mergeCart, multiDeleteProducts } from "../api/cart.api";
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
-import StringUtils from "~/src/shared/lib/utils/string.util";
+import { configureNewItem } from "~/src/features/cart/lib/utils";
 
 import { ICartItem } from "../../model";
 
@@ -15,20 +17,7 @@ export const useCart = () => {
   const dispatch = useAppDispatch();
   const { items: itemsInCart } = useAppSelector(selectCart);
   const { itemsToOrder } = useAppSelector(selectOrder);
-  const [sellerItems, setSellerItems] = useState<Array<ICartItem[]>>([]);
   const [loading, setLoading] = useState<boolean>(false);
-
-  const configureNewItem = useCallback((item: ICartItem) => {
-    const numPrice = StringUtils.formatPriceToNumber(item.price);
-    if (!numPrice) return null;
-
-    return {
-      product_id: item.product_id,
-      product_name: item.name,
-      quantity: item.quantity,
-      price: numPrice,
-    };
-  }, []);
 
   const handleSelectItem = useCallback(
     (item: ICartItem) => {
@@ -42,16 +31,8 @@ export const useCart = () => {
 
       dispatch(setOrderItems(newItems));
     },
-    [itemsToOrder, dispatch, configureNewItem],
+    [itemsToOrder, dispatch],
   );
-
-  useEffect(() => {
-    dispatch(
-      setCart({
-        isAllSelected: itemsToOrder.length === itemsInCart.length,
-      }),
-    );
-  }, [itemsToOrder.length, itemsInCart.length, dispatch]);
 
   const onCheckboxChange = useCallback(
     (selectAll: boolean) => {
@@ -106,32 +87,7 @@ export const useCart = () => {
     });
   }, [updateCart, itemsToOrder]);
 
-  // группирует по продавцам
-  useEffect(() => {
-    if (!itemsInCart.length) {
-      dispatch(setOrderItems([]));
-      setSellerItems([]);
-      return;
-    }
-
-    const selected = itemsInCart.map((item) => {
-      const selectedItem = configureNewItem(item);
-      if (!selectedItem) {
-        throw Error("Ошибка при выборе товара");
-      }
-      return selectedItem;
-    });
-
-    const sellerIdList = [
-      ...new Set(itemsInCart.map((item) => item.seller_id)),
-    ];
-    const groupedBySeller = sellerIdList.map((id) =>
-      itemsInCart.filter((item) => item.seller_id === id),
-    );
-
-    dispatch(setOrderItems(selected));
-    setSellerItems(groupedBySeller);
-  }, [itemsInCart, dispatch]);
+  const sellerItems = useCartInit({ updateCart });
 
   return {
     selectedItems: itemsToOrder,

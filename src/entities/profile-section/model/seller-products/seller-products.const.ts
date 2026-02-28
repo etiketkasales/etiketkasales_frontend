@@ -56,7 +56,6 @@ export const editProductRequiredFields: (keyof IEditSellerProduct)[] = [
   "price",
   "description",
   "images",
-  "image_upload_ids",
 ];
 
 export const newProductRequiredFields: (keyof INewProduct)[] = [

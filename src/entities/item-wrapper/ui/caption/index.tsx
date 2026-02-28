@@ -1,5 +1,3 @@
-"use client";
-
 import classes from "./item-caption.module.scss";
 import Price from "~/src/shared/ui/price/ui";
 

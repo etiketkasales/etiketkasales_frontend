@@ -1,27 +1,28 @@
 .container {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .button {
-    position: absolute;
-    z-index: 2;
-    right: $space-10px;
-    bottom: -$space-4;
-    cursor: pointer;
+  position: absolute;
+  z-index: 2;
+  right: $space-10px;
+  bottom: -$space-4;
+  cursor: pointer;
 }
 
 .image {
-    border-radius: $space-4;
+  border-radius: $space-4;
+  max-height: 222px;
 }
 
 @media screen and (any-hover: hover) {
-    .button:hover {
-        rotate: 0deg;
-        filter: brightness(0.95);
+  .button:hover {
+    rotate: 0deg;
+    filter: brightness(0.95);
 
-        svg {
-            rotate: 0deg;
-        }
+    svg {
+      rotate: 0deg;
     }
+  }
 }
