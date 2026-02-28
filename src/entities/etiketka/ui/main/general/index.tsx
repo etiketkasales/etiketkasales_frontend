@@ -25,7 +25,7 @@ export default function EtiketkaGeneral({ name, characteristics }: Props) {
       >
         {name}
       </h1>
-      {Array.isArray(characteristics) && (
+      {Array.isArray(characteristics) && characteristics.length > 0 && (
         <CharacteristicsSection
           characteristics={characteristics}
           loaded={loaded}
