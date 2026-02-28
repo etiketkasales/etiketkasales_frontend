@@ -22,22 +22,7 @@ export default function OtpInputCustom({
       numInputs={numInputs}
       containerStyle={classNameContainer}
       renderInput={(props) => {
-        return (
-          <input
-            {...props}
-            className={classNameInput}
-            onFocus={(e) => {
-              if (props.onFocus) props.onFocus(e);
-
-              // снимаем выделение текста
-              const el = e.target;
-              requestAnimationFrame(() => {
-                const len = el.value.length;
-                el.setSelectionRange(len, len);
-              });
-            }}
-          />
-        );
+        return <input {...props} className={classNameInput} />;
       }}
       inputType="tel"
     />
