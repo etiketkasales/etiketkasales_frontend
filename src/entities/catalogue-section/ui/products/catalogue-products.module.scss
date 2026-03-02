@@ -17,26 +17,24 @@
 }
 
 .list {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  flex-wrap: wrap;
+  
   column-gap: $space-5;
   row-gap: $space-8;
-
+  
   @media screen and (width <= 768px) {
+    justify-content: space-evenly;
+    
     column-gap: $space-2;
     row-gap: $space-4;
+  }
+
+  @media screen and (width <= 360px) {
+    justify-content: center;
   }
 }
 
 .item {
-  grid-column: span 3;
   height: 100%;
   max-height: 307px;
-  @media screen and (width <= 1024px) {
-    grid-column: span 4;
-  }
-
-  @media screen and (width <= 460px) {
-    grid-column: span 6;
-  }
 }

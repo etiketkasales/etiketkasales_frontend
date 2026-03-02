@@ -2,6 +2,8 @@
     grid-column: 4 span;
     border-radius: $space-5;
 
+    min-height: 100px;
+
     img {
         transition: transform $transition;
     }

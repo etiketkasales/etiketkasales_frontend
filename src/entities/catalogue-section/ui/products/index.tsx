@@ -22,7 +22,7 @@ export default function CatalogueProducts() {
       })}
     >
       {loading && <Loader radius={20} className={classes.loader} />}
-      <ul className={classes.list}>
+      <ul className={classNames(classes.list, "flex-row")}>
         {products &&
           products.map((item) => {
             return (
