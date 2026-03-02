@@ -22,17 +22,11 @@ export default function AddressesModal({
   const {
     stage,
     setStage,
-    newAddress,
-    onInputChange,
     loading,
     addresses,
     onSaveButtonClick,
     onAddressClick,
-    suggestions,
-    suggestionsLoading,
     onSuggestionClick,
-    sgnsOpen,
-    setSgnsOpen,
   } = useAddressesModal(onClose);
 
   return (
@@ -52,7 +46,7 @@ export default function AddressesModal({
       titleTextClassName={classes.title}
     >
       {loading && <Loader radius={20} />}
-      <div className={`flex-row relative ${classes.content}`}>
+      <div className={classNames(`flex-row relative`, classes.content)}>
         <AddressesModalDefault
           stage={stage}
           setStage={(s) => setStage(s)}
@@ -62,14 +56,8 @@ export default function AddressesModal({
         />
         <AddressesModalAdd
           stage={stage}
-          newAddress={newAddress}
-          onInputChange={onInputChange}
           onButtonClick={onSaveButtonClick}
-          suggestions={suggestions}
-          suggestionsLoading={suggestionsLoading}
           onSgnClick={onSuggestionClick}
-          sgnsOpen={sgnsOpen}
-          setSgnsOpen={(b) => setSgnsOpen(b)}
         />
       </div>
     </Modal>

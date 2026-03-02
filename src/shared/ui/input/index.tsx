@@ -21,7 +21,7 @@ export interface InputProps
   separatedPlaceholder?: boolean;
   separatedPlaceholderClassName?: string;
 
-  ref?: RefObject<HTMLInputElement>;
+  ref?: RefObject<HTMLInputElement | null>;
   errorText?: string;
   error?: MessageI | null;
 }

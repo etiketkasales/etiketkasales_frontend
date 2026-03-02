@@ -20,5 +20,9 @@
 }
 
 .button {
-    padding: $space-3;
+  padding: $space-3;
+}
+
+.suggestions {
+  max-height: 150px;
 }

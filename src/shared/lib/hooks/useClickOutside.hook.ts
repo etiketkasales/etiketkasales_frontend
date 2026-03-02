@@ -1,18 +1,21 @@
 "use client";
-import { RefObject, useEffect } from "react";
+import { RefObject, useEffect, useRef } from "react";
 
 export const useClickOutside = <T extends HTMLElement>(
-  ref: RefObject<T | null>,
   onClickOutside: () => void,
+  ref?: RefObject<T | null>,
   disabled?: boolean,
 ) => {
+  const defaultRef = useRef<T | null>(null);
+
   useEffect(() => {
     if (disabled) return;
 
     const handler = (event: MouseEvent | PointerEvent | TouchEvent) => {
       const target = event.target as Node | null;
-      if (!ref.current || !target) return;
-      if (ref.current.contains(target)) return;
+      const currentRef = defaultRef.current ?? ref?.current;
+      if (!currentRef || !target) return;
+      if (currentRef.contains(target)) return;
       onClickOutside();
     };
 
@@ -24,4 +27,6 @@ export const useClickOutside = <T extends HTMLElement>(
       document.removeEventListener("mousedown", handler as EventListener);
     };
   }, [ref, onClickOutside, disabled]);
+
+  return defaultRef;
 };

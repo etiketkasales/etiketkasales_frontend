@@ -1,2 +1,2 @@
 export * from "./useAddressesModal.hook";
-export * from "./useAddressSuggestions.hook";
+export * from "./useFormatSuggestion.hook";

@@ -13,8 +13,8 @@ export const useAccordeon = <T extends HTMLElement>(
   }, []);
 
   useClickOutside(
-    (clickRef as RefObject<T | null>) ?? internalRef,
     () => setOpen(false),
+    (clickRef as RefObject<T | null>) ?? internalRef,
     !clickOutsideControl ? true : false,
   );
 

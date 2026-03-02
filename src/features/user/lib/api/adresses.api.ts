@@ -48,17 +48,3 @@ export const deleteAddress = async (id: string) => {
     return res.data;
   });
 };
-
-export const getAddressSuggestions = async (q: string) => {
-  return await tryCatch(async () => {
-    const res = await apiClient.get<{
-      suggestions: IAddressSuggestionResponse[];
-    }>(`/address/suggest/`, {
-      params: {
-        query: q,
-      },
-    });
-
-    return res.data.suggestions;
-  });
-};

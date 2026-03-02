@@ -1,34 +1,21 @@
 import classNames from "classnames";
 
 import classes from "./add.module.scss";
-import TextInput from "~/src/shared/ui/inputs/text-input";
 import Button from "~/src/shared/ui/button";
-import AddressModalSuggestions from "./suggestions";
+import AddressInput from "~/src/entities/address-input/ui";
 import { AddressesModalStage } from "../../model";
 import { IAddressSuggestionResponse } from "~/src/features/user/model";
 
 interface Props {
   stage: AddressesModalStage;
-  newAddress: string;
-  onInputChange: (v: string) => void;
   onButtonClick: () => void | Promise<void>;
-  suggestions: IAddressSuggestionResponse[];
-  suggestionsLoading: boolean;
   onSgnClick: (address: IAddressSuggestionResponse) => void;
-  sgnsOpen: boolean;
-  setSgnsOpen: (b: boolean) => void;
 }
 
 export default function AddressesModalAdd({
   stage,
-  newAddress,
-  onInputChange,
   onButtonClick,
-  suggestions,
-  suggestionsLoading,
   onSgnClick,
-  sgnsOpen,
-  setSgnsOpen,
 }: Props) {
   return (
     <div
@@ -41,22 +28,10 @@ export default function AddressesModalAdd({
         },
       )}
     >
-      <TextInput
-        placeholder="Начните вводить адрес"
-        onChange={(e) => onInputChange(e.target.value)}
-        value={newAddress}
-        separatedPlaceholder={false}
-      >
-        <AddressModalSuggestions
-          suggestions={suggestions}
-          onClick={(i) => {
-            onSgnClick(i);
-            setSgnsOpen(false);
-          }}
-          loading={suggestionsLoading}
-          open={sgnsOpen}
-        />
-      </TextInput>
+      <AddressInput
+        onSuggestionClick={onSgnClick}
+        classNameSuggestions={classes.suggestions}
+      />
       <Button
         typeButton="yellow"
         onClick={onButtonClick}

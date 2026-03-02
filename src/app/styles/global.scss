@@ -17,7 +17,11 @@
   }
 
   -ms-overflow-style: none;
-  scrollbar-width: 0;
+  scrollbar-width: none;
+}
+
+.overflow-hidden {
+  overflow: hidden;
 }
 
 .wrapper {

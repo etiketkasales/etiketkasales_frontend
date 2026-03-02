@@ -1,7 +1,8 @@
 "use client";
 import { useCallback, useEffect, useRef } from "react";
-import scrollLock from "scroll-lock";
 import { useAppSelector } from "~/src/app/store/hooks";
+
+import scrollLock from "scroll-lock";
 import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
 
 interface Props {
@@ -56,9 +57,17 @@ export const useModal = ({ isOpen, onClose, customClickOutside }: Props) => {
     (event: MouseEvent) => {
       if (customClickOutside) return;
       if (!modalCloseOnOutsideClick) return;
+      if (!contentRef.current) return;
 
-      const path = event.composedPath();
-      if (!path.includes(contentRef.current as EventTarget)) {
+      const path = event.composedPath?.() || [];
+
+      const clickedInsideModal = path.includes(contentRef.current);
+      const clickedInsidePortal = path.some(
+        (el) =>
+          el instanceof HTMLElement && el.dataset?.modalLayer !== undefined,
+      );
+
+      if (!clickedInsideModal && !clickedInsidePortal) {
         onClose();
       }
     },

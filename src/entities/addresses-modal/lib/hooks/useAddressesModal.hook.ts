@@ -1,16 +1,17 @@
 import { useCallback, useState } from "react";
-import { useDebounce } from "react-use";
 import { useUserPersonal } from "~/src/features/user/lib/hooks";
 import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 import { useAddresses } from "~/src/features/user/lib/hooks";
-import { useAddressSuggestions } from ".";
+import { useFormatSuggestion } from ".";
 
 import {
   AddressesModalStage,
-  INewAddress,
   newAddressSkeleton,
 } from "~/src/entities/addresses-modal/model";
-import { IAddressSuggestionResponse } from "~/src/features/user/model";
+import {
+  IAddressSuggestionResponse,
+  IUserAddressBase,
+} from "~/src/features/user/model";
 import { AxiosError } from "axios";
 
 export const useAddressesModal = (onModalClose: () => void) => {
@@ -23,36 +24,11 @@ export const useAddressesModal = (onModalClose: () => void) => {
   } = useAddresses();
   const hasPersonalData = useUserPersonal();
   const createNotification = useCreateNotification();
-  const {
-    loading: suggestionsLoading,
-    suggestions,
-    getSuggestions,
-    formatSuggestion,
-  } = useAddressSuggestions();
+  const formatSuggestion = useFormatSuggestion();
+
   const [stage, setStage] = useState<AddressesModalStage>("default");
-  const [sgnsOpen, setSgnsOpen] = useState<boolean>(false); // для показа/скрытия списка подсказок
-  const [newAddress, setNewAddress] = useState<INewAddress>({
-    forApi: newAddressSkeleton,
-    forDisplay: "",
-  });
-
-  const onInputChange = useCallback(async (v: string) => {
-    setNewAddress((prev) => ({
-      ...prev,
-      forDisplay: v,
-    }));
-    setSgnsOpen(true);
-  }, []);
-
-  useDebounce(
-    async () => {
-      if (newAddress.forDisplay.trim().length >= 3) {
-        await getSuggestions(newAddress.forDisplay);
-      }
-    },
-    500,
-    [newAddress.forDisplay],
-  );
+  const [newAddress, setNewAddress] =
+    useState<IUserAddressBase>(newAddressSkeleton);
 
   const onSuggestionClick = useCallback(
     (sgn: IAddressSuggestionResponse) => {
@@ -61,12 +37,9 @@ export const useAddressesModal = (onModalClose: () => void) => {
         return;
       }
 
-      setNewAddress({
-        forApi: formatSuggestion(sgn),
-        forDisplay: sgn.label,
-      });
+      setNewAddress(formatSuggestion(sgn));
     },
-    [formatSuggestion, hasPersonalData, addresses, createNotification],
+    [hasPersonalData, createNotification, formatSuggestion],
   );
 
   const onAddressClick = useCallback(
@@ -83,30 +56,21 @@ export const useAddressesModal = (onModalClose: () => void) => {
 
   const onSaveButtonClick = useCallback(async () => {
     try {
-      await handleAddNewAddress(newAddress.forApi);
+      await handleAddNewAddress(newAddress);
       setStage("default");
-      setNewAddress({
-        forApi: newAddressSkeleton,
-        forDisplay: "",
-      });
+      setNewAddress(newAddressSkeleton);
     } catch (err: AxiosError<{ message?: string }> | any) {
       console.error(err);
     }
-  }, [handleAddNewAddress, newAddress.forApi]);
+  }, [handleAddNewAddress, newAddress]);
 
   return {
     addresses,
     loading,
-    onInputChange,
-    newAddress: newAddress.forDisplay,
     stage,
     setStage,
     onSaveButtonClick,
     onAddressClick,
     onSuggestionClick,
-    suggestions,
-    suggestionsLoading,
-    sgnsOpen,
-    setSgnsOpen,
   };
 };
