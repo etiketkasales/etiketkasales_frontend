@@ -67,7 +67,7 @@ export const editSellerProduct = async (
   id: number,
 ) => {
   return await tryCatch(async () => {
-    const res = await apiClient.put(`/proructs/${id}`, {
+    const res = await apiClient.put(`/products/${id}`, {
       ...data,
     });
     return res.data;

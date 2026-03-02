@@ -19,7 +19,7 @@ export interface ISellerProduct extends ISellerProductBase {
   status_code: SellerProductStatusCode;
   slug: string;
   specifications: {
-    [key: string]: boolean;
+    [key: string]: boolean | string;
   };
 }
 
