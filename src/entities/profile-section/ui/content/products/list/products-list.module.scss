@@ -1,15 +1,17 @@
 .container {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: $space-8;
-
-    max-width: max-content;
-};
+  flex-wrap: wrap;
+  gap: $space-8;
+}
 
 @media screen and (width <= 768px) {
-    .container {
-        gap: $space-4;
-        justify-content: space-between;
-        max-width: unset;
-    }
+  .container {
+    gap: $space-4;
+    justify-content: space-evenly;
+  }
+}
+
+@media screen and (width <= 360px) {
+  .container {
+    justify-content: center;
+  }
 }

@@ -26,24 +26,20 @@ interface Props {
 }
 
 /**
- * useSellerProducts - a hook that provides functions and state to
- *   interact with seller products.
- * @param {Object} props - an object containing the onClose
- *   function to close the modal and a boolean indicating whether to
- *   load the seller products initially.
+ * useSellerProducts - a hook that provides functions and state to interact
+ *   with seller products.
+ *
+ * @param {Props} onClose - a callback that is called when the modal is closed.
+ * @param {Props} needLoad - a boolean indicating whether the orders should be loaded.
+ * @param {Props} setSellerProducts - a callback that is called when the seller products are updated.
  * @returns {Object} - an object containing the following properties:
- *   loading - a boolean indicating whether the products are being loaded,
- *   promiseCallback - a function that wraps a promise with a
- *     callback, error - a string indicating the error message,
- *     setError - a function to set the error message,
- *     sellerProducts - an array of ISellerProduct,
- *     updateSellerProducts - a function to update the seller products,
- *     modal - an object containing the modal state,
- *     setModal - a function to set the modal state,
- *     editProductId - a number indicating the ID of the product to edit,
- *     setEditProductId - a function to set the ID of the product to edit,
- *     updateProduct - a function to update a product,
- *     deleteProduct - a function to delete a product.
+ *   loading - a boolean indicating whether the orders are being loaded,
+ *   error - a string indicating the error message,
+ *   updateSellerProducts - a function to update the seller products,
+ *   editProductId - a number indicating the id of the product being edited,
+ *   setEditProductId - a callback that is called when the product id is changed,
+ *   updateProduct - a function to update a product,
+ *   deleteProduct - a function to delete a product.
  */
 export const useSellerProducts = ({
   onClose,
@@ -100,7 +96,6 @@ export const useSellerProducts = ({
         async () => {
           await editSellerProduct(data, id);
           await updateSellerProducts();
-          createNotification("Товар изменён", "success");
           onClose?.();
         },
         () => createNotification("Не удалось изменить товар", "error"),

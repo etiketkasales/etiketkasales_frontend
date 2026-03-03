@@ -35,13 +35,14 @@ export interface IEditSellerProductInput {
 }
 
 export interface INewProduct extends ISellerProductBase {
+  image_upload_ids: number[];
   [key: string]: any; // поля для фильтров, заранее неизвестны
 }
 
-export interface INewProductCurrentImage {
-  upload_id: number;
+export interface IProductCurrentImage {
   url: string;
-  fileBinary: string;
+  fileBinary?: string;
+  upload_id?: number;
 }
 
 export type InputTypeFromApi = "text" | "select" | "numeric";

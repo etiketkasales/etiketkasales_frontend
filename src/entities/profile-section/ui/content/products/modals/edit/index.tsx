@@ -1,13 +1,19 @@
 "use client";
-import { useEditProduct } from "~/src/entities/profile-section/lib/hooks/products/useEditProduct.hook";
-import { useEditProductImages } from "~/src/entities/profile-section/lib/hooks";
+import {
+  useEditProduct,
+  useProductImages,
+} from "~/src/entities/profile-section/lib/hooks/products";
 
 import classes from "./edit.module.scss";
 import Modal from "~/src/shared/ui/modals/ui/default";
-import EditProductImage from "./images";
 import EditProductInputs from "./inputs";
 import EditProductModalButtons from "./buttons";
-import { ISellerProduct } from "~/src/entities/profile-section/model";
+import ProductImagesEditor from "~/src/entities/product-images-editor/ui";
+import EditProductImage from "./image";
+import {
+  IEditSellerProduct,
+  ISellerProduct,
+} from "~/src/entities/profile-section/model";
 import { Dispatch, SetStateAction } from "react";
 
 interface Props {
@@ -17,6 +23,11 @@ interface Props {
   productData: ISellerProduct;
   setSellerProducts: Dispatch<SetStateAction<ISellerProduct[]>>;
 }
+
+const imagesErrorFields: (keyof IEditSellerProduct)[] = [
+  "images",
+  "image_upload_ids",
+];
 
 export default function EditSellerProductModal({
   isActive,
@@ -40,25 +51,42 @@ export default function EditSellerProductModal({
     onClose,
     setSellerProducts,
   });
-  const { fileLoading, onFileLoad } = useEditProductImages({
-    setEditProductData,
-  });
+  const { fileLoading, onFileLoad, onDeleteImage, currentImages, clearImages } =
+    useProductImages({
+      setProduct: setEditProductData,
+      initialImages: editProductData.images,
+    });
 
   return (
     <Modal
       isOpen={isActive}
-      onClose={() => onClose()}
+      onClose={onClose}
       title={title}
       containerClassName={`flex-column space-between ${classes.container}`}
-      needBackButton={false}
+      needBackButton={true}
       loading={loading}
       loaderRadius={20}
     >
-      <EditProductImage
-        onFileUpload={onFileLoad}
-        imagePreview={editProductData.images?.[0] || ""}
+      <ProductImagesEditor
+        images={currentImages}
+        renderImage={(image, index) => (
+          <EditProductImage
+            key={`${image}-${index}`}
+            src={image.fileBinary ?? image.url}
+            onDeleteImage={onDeleteImage}
+            deleteKey={image.url}
+          />
+        )}
+        onFileLoad={onFileLoad}
         loading={fileLoading}
-        error={error}
+        error={
+          error !== null &&
+          imagesErrorFields.includes(
+            (error.field as keyof IEditSellerProduct) || "",
+          )
+        }
+        containerClassName={classes.images}
+        imagesListClassName={`gap-2`}
       />
       <EditProductInputs
         editData={editProductData}
@@ -67,7 +95,10 @@ export default function EditSellerProductModal({
         error={error}
       />
       <EditProductModalButtons
-        onSave={onSave}
+        onSave={async () => {
+          await onSave();
+          clearImages();
+        }}
         onDelete={async () => await deleteProduct(productData.id)}
         toArchive={toArchive}
         disableSave={disableSave}

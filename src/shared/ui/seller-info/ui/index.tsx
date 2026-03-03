@@ -22,6 +22,8 @@ export default function SellerInfo({
 }: Props) {
   const { sellerInfo, loading, error } = useSellerInfo({ sellerId });
 
+  if (!sellerInfo && !loading) return null;
+
   return (
     <Container
       className={classNames(wrapperClassName, classes.container)}

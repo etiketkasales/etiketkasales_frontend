@@ -7,6 +7,7 @@ import {
 import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 
 import {
+  editSellerProductSkeleton,
   IEditSellerProduct,
   ISellerProduct,
   sellerProductsMessages,
@@ -38,6 +39,7 @@ export const useEditProduct = ({
   onClose,
   setSellerProducts,
 }: Props) => {
+  console.log(initialData);
   const productId = initialData?.id;
   const [disableSave, setDisableSave] = useState<boolean>(false);
 
@@ -85,6 +87,7 @@ export const useEditProduct = ({
 
         await updateProduct(data, productId);
         createNotification(message, "success");
+        setEditProductData(editSellerProductSkeleton);
         onClose();
       });
     },

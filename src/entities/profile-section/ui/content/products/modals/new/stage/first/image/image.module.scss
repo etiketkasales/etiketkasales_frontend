@@ -1,0 +1,42 @@
+.image {
+  position: relative;
+  max-width: 160px;
+  max-height: 160px;
+  aspect-ratio: 1;
+  border-radius: $space-5;
+  z-index: 0;
+
+  @media screen and (any-hover: hover) {
+    &:hover .icon {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+  }
+}
+
+.icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+
+  cursor: pointer;
+
+  background-color: $neutral-300;
+  border-radius: $space-2 0 $space-2 $space-3;
+  padding: $space-2;
+
+  opacity: 0;
+  transform: translate(50%, -50%);
+
+  svg path {
+    fill: $red-800;
+  }
+}
+
+@media screen and (any-hover: none) {
+    .icon {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+}

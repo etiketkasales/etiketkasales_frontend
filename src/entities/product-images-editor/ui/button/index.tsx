@@ -1,43 +1,38 @@
 import classNames from "classnames";
 
-import classes from "./load-button.module.scss";
+import classes from "./button.module.scss";
 import ImageIcon from "~/public/profile/products/image.svg";
-import { MessageI } from "~/src/shared/model";
+import Button from "~/src/shared/ui/button";
 
 interface Props {
   onClick: () => void;
   disabled?: boolean;
-  error: MessageI | null;
+  error?: boolean;
 }
 
-export default function ProductModalLoadButton({
+export default function ProductImagesEditorButton({
   onClick,
   disabled,
   error,
 }: Props) {
   return (
-    <div
+    <Button
+      typeButton="ghost"
       className={classNames(
-        `flex-column align-center gap-10px pointer ${classes.container}`,
+        "grid-row gap-10px pointer",
         classes.container,
-        {
-          [classes.error]:
-            error &&
-            (error.field === "images" || error.field === "image_upload_ids"),
-        },
+        error && classes.error,
       )}
       onClick={() => {
-        if (!disabled) {
-          onClick();
-        }
+        if (!disabled) onClick();
       }}
     >
-      <ImageIcon />
+      <ImageIcon className={classes.icon} />
       <p className="text-body l text-yellow-600 text-center">
         Добавить изображение
         <br />
         (в формате 1:1)
       </p>
-    </div>
+    </Button>
   );
 }

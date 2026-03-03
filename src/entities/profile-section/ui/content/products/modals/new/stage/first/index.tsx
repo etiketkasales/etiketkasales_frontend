@@ -1,21 +1,26 @@
+import classes from "./first-stage.module.scss";
 import ProductsModalMainInputs from "./main-inputs";
-import ProductsModalImages from "./images";
 import NewProductModalStage from "..";
+import ProductImagesEditor from "~/src/entities/product-images-editor/ui";
 import { MessageI } from "~/src/shared/model";
 import {
   INewProduct,
-  INewProductCurrentImage,
+  IProductCurrentImage,
 } from "~/src/entities/profile-section/model";
+import ProductsModalImage from "./image";
 
 interface Props {
   modalStage: number;
   onFileLoad: (file: File) => Promise<void>;
-  currentImages: INewProductCurrentImage[];
+  currentImages: IProductCurrentImage[];
   onInputChange: (v: string, field: keyof INewProduct) => void;
   newProduct: INewProduct;
   error: MessageI | null;
-  onDeleteImage: (image: INewProductCurrentImage) => void;
+  loading: boolean;
+  onDeleteImage: (key: string) => void;
 }
+
+const imagesErrorFields = ["images", "image_upload_ids"];
 
 export default function NewProductFirstStage({
   modalStage,
@@ -24,6 +29,7 @@ export default function NewProductFirstStage({
   onInputChange,
   newProduct,
   error,
+  loading,
   onDeleteImage,
 }: Props) {
   return (
@@ -31,11 +37,21 @@ export default function NewProductFirstStage({
       isActive={modalStage === 1}
       className={`flex-column gap-6`}
     >
-      <ProductsModalImages
+      <ProductImagesEditor
         onFileLoad={onFileLoad}
-        currentImages={currentImages}
-        onDeleteImage={onDeleteImage}
-        error={error}
+        images={currentImages}
+        error={error !== null && imagesErrorFields.includes(error.field || "")}
+        loading={loading}
+        containerClassName={classes.images}
+        imagesListClassName={classes.imagesList}
+        renderImage={(item, index) => (
+          <ProductsModalImage
+            key={`${item.upload_id}=${index}`}
+            deleteKey={item.url}
+            src={item.fileBinary ?? item.url}
+            onDeleteImage={onDeleteImage}
+          />
+        )}
       />
       <ProductsModalMainInputs
         onInputChange={onInputChange}

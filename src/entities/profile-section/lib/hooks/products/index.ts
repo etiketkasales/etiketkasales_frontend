@@ -4,7 +4,6 @@ export * from "./useGetFilters.hook";
 export * from "./useSellerProducts.hook";
 export * from "./useUploadImage.hook";
 export * from "./useEditProduct.hook";
-export * from "./useNewProductImages.hook";
-export * from "./useEditProductImages.hook";
+export * from "./useProductImages.hook";
 export * from "./useEditProductValidation.hook";
 export * from "./useEditProductInit.hook";

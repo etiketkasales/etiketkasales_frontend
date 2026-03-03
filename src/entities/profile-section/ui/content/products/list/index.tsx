@@ -18,7 +18,7 @@ export default function ProfileProductsList({
   }
 
   return (
-    <ul className={`${classes.container}`}>
+    <ul className={`flex-row align-center ${classes.container}`}>
       {products.map((item, index) => (
         <ProfileProduct
           key={`${item.slug}-${index}`}

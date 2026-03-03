@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
-import { useSellerProducts, useNewProductImages, useValidation } from ".";
+import { useSellerProducts, useProductImages, useValidation } from ".";
 
 import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 import { createNewProduct } from "~/src/entities/profile-section/lib/api";
@@ -23,22 +23,21 @@ interface Props {
 }
 
 /**
- * Hook for creating a new product.
- *
- * @param {Props} onClose - callback that is called when the modal is closed.
- *
- * @returns {Object} An object containing the following properties:
+ * Hook for adding a new product.
+ * @param {Props} onClose - a callback that is called when the modal is closed.
+ * @param {Props} setSellerProducts - a callback that is called when the seller products are updated.
+ * @returns {Object} - an object containing the following properties:
  *   loading - a boolean indicating whether the modal is loading or not.
  *   onInputChange - a callback that is called when the user changes an input field.
  *   newProduct - the data of the new product.
- *   onFileLoad - a callback that is called when the user uploads a file.
- *   currentImages - an array of objects containing the image data of the new product.
+ *   onFileLoad - a callback that is called when the user loads a product image.
+ *   currentImages - an array of product images.
  *   onNextBtnClick - a callback that is called when the user clicks the "Next" button.
  *   setModalStage - a callback that is called when the user changes the modal stage.
  *   modalStage - a number indicating the current modal stage.
- *   error - a string containing the error message of the current modal stage.
+ *   error - a string indicating the error message of the current modal stage.
  *   setRequiredFilters - a callback that is called when the user sets the required filters.
- *   onDeleteImage - a callback that is called when the user deletes an image.
+ *   onDeleteImage - a callback that is called when the user deletes a product image.
  */
 export const useNewProduct = ({ onClose, setSellerProducts }: Props) => {
   const [modalStage, setModalStage] = useState<number>(1);
@@ -59,7 +58,7 @@ export const useNewProduct = ({ onClose, setSellerProducts }: Props) => {
     currentImages,
     setCurrentImages,
     onDeleteImage,
-  } = useNewProductImages({ setNewProduct });
+  } = useProductImages<INewProduct>({ setProduct: setNewProduct });
 
   const onInputChange = useCallback(
     (v: string, field: keyof INewProduct) => {

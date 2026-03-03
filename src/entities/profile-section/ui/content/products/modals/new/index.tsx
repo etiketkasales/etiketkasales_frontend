@@ -45,7 +45,7 @@ export default function NewSellerProductModal({
       onClose={() => onClose()}
       title={title}
       containerClassName={`flex-column space-between ${classes.container}`}
-      needBackButton={false}
+      needBackButton={true}
       loading={loading}
       loaderRadius={20}
     >
@@ -57,6 +57,7 @@ export default function NewSellerProductModal({
         newProduct={newProduct}
         error={error}
         onDeleteImage={onDeleteImage}
+        loading={loading}
       />
       <NewProductSecondStage
         modalStage={modalStage}

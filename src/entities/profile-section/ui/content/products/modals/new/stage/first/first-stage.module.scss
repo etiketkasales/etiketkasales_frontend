@@ -1,0 +1,19 @@
+.images {
+  flex-direction: row;
+  flex: 1;
+  max-height: 160px;
+  gap: $space-4;
+  flex-shrink: 0;
+
+  @media screen and (width <= 400px) {
+    flex-direction: column;
+    max-height: unset;
+    gap: $space-2;
+    flex: 1 0;
+    align-items: flex-start;
+  }
+}
+
+.imagesList {
+    gap: $space-2;
+}
