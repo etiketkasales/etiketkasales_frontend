@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
-import { useFormValidate } from "~/src/shared/lib/hooks/useFormValidate.hook";
+import { useFormValidate } from "~/src/shared/lib/hooks";
 import { useUser } from "~/src/features/user/lib/hooks";
 
 import { setStage } from "~/src/app/store/reducers/company.slice";
