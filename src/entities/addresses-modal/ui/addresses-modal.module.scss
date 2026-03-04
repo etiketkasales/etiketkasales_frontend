@@ -1,5 +1,5 @@
 .container {
-  transition: height 0.3s ease-in-out;
+  transition: height $transition;
   border-radius: $space-5;
   padding: $space-5;
   width: 360px;

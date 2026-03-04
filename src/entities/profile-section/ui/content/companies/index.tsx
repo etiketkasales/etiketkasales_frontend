@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import classNames from "classnames";
 import { useCompanies } from "~/src/entities/profile-section/lib/hooks";
 

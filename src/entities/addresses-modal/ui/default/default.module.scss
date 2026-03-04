@@ -1,7 +1,7 @@
 .container {
     position: absolute;
     inset: 0;
-    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    transition: transform $transition, opacity $transition;
     transform: translate(0, -30%);
     max-height: 100%;
     overflow-y: auto;

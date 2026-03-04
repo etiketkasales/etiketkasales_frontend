@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 
 import classes from "./aside-items.module.scss";
 import ProfileContainer from "~/src/entities/profile-section/ui/container";

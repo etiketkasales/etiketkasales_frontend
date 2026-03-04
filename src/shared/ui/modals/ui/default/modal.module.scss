@@ -1,9 +1,23 @@
 .wrapper {
-    position: fixed;
+  position: fixed;
+  inset: 0;
+  z-index: $z-high;
+  
+  display: grid;
+  place-content: center;
+  
+  &::after {
+    content: "";
+    position: absolute;
     inset: 0;
     background-color: rgba(17, 24, 39, 0.8);
-    z-index: 999;
+    z-index: 0;
+    pointer-events: all;
+  }
+}
 
-    display: grid;
-    place-content: center;
+.content {
+  z-index: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }

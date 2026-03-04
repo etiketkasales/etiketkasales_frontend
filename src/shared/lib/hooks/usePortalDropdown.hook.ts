@@ -39,7 +39,7 @@ export const usePortalDropdown = <AnchorType extends HTMLElement>({
     const width = anchorRef.current.offsetWidth;
 
     setPosition({
-      top: rect.bottom + gap + window.scrollY,
+      top: rect.bottom + gap,
       left: rect.left + window.scrollX,
       width,
     });
@@ -73,7 +73,6 @@ export const usePortalDropdown = <AnchorType extends HTMLElement>({
       top: position.top,
       left: position.left,
       width: position.width,
-      zIndex: 999,
     } as CSSProperties,
   };
 };

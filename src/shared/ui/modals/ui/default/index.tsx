@@ -47,11 +47,12 @@ export default function Modal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          onClick={(e) => e.preventDefault()}
         >
           <Container
             ref={contentRef}
             bgColor={bgColor}
-            className={classNames(containerClassName, "relative scrollbar")}
+            className={classNames(containerClassName, classes.content, "relative scrollbar")}
           >
             {loading && <Loader radius={loaderRadius} />}
             <ModalTitle

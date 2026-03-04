@@ -1,12 +1,12 @@
 "use client";
 import { useAddressSuggestions } from "~/src/entities/address-input/lib/hooks";
-
-import TextInput from "~/src/shared/ui/inputs/text-input";
-import AddressInputSuggestions from "./suggestions";
-import { IAddressSuggestionResponse } from "~/src/features/user/model";
 import { usePortalDropdown } from "~/src/shared/lib";
 
-interface Props {
+import TextInput, { TextInputProps } from "~/src/shared/ui/inputs/text-input";
+import AddressInputSuggestions from "./suggestions";
+import { IAddressSuggestionResponse } from "~/src/features/user/model";
+
+interface Props extends TextInputProps {
   onSuggestionClick: (s: IAddressSuggestionResponse) => void;
   classNameSuggestions?: string;
   inputPlaceholder?: string;
@@ -16,6 +16,9 @@ export default function AddressInput({
   onSuggestionClick,
   classNameSuggestions,
   inputPlaceholder,
+  placeholder,
+  name,
+  ...rest
 }: Props) {
   const {
     isOpened: sgnsOpen,
@@ -34,12 +37,12 @@ export default function AddressInput({
 
   return (
     <TextInput
-      placeholder={inputPlaceholder ?? "Начните вводить адрес"}
+      {...rest}
+      placeholder={inputPlaceholder ?? placeholder ?? "Начните вводить адрес"}
       onChange={(e) => setSearchQuery(e.target.value)}
       value={searchQuery}
-      separatedPlaceholder={false}
       wrapperRef={anchorRef}
-      name="delivery-address"
+      name={name || "delivery-address"}
     >
       <AddressInputSuggestions
         suggestions={suggestions}

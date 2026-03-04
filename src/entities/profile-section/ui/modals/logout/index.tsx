@@ -1,5 +1,4 @@
 "use client";
-
 import { useLogout } from "~/src/features/login/lib/hooks";
 
 import ProfileConfirmModal from "~/src/pages-components/profile/ui/role/modal/confirm";

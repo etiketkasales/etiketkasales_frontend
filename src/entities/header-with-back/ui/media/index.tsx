@@ -30,6 +30,7 @@ export default function HeaderWithBackMedia({
           }
         }}
         className={classNames(classNameBackButton, classes.button)}
+        needActiveScale={false}
       >
         <BackIcon />
       </Button>

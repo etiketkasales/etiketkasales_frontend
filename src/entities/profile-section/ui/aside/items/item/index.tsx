@@ -26,9 +26,7 @@ export default function ProfileAsideItem({
           [classes.dangerous]: isDangerous,
         },
       )}
-      onClick={() => {
-        onClick();
-      }}
+      onClick={onClick}
     >
       <p className="text-body xl text-yellow-1000">{title}</p>
     </Container>

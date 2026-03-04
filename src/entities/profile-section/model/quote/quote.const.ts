@@ -17,8 +17,16 @@ export const quoteAboutInputs: IQuoteInput[] = [
   stringInput("company_name", "Наименование компании"),
   numberInput("kpp", "КПП", 9),
   numberInput("ogrn", "ОГРН / ОГРНИП", 13),
-  stringInput("legal_address", "Юридический адрес"),
-  stringInput("actual_address", "Фактический адрес"),
+  {
+    field: "legal_address",
+    placeholder: "Юридический адрес",
+    type: "address",
+  },
+  {
+    field: "actual_address",
+    placeholder: "Фактический адрес",
+    type: "address",
+  },
 ];
 
 export const quoteRequisitsInputs: IQuoteInput[] = [

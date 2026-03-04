@@ -1,8 +1,6 @@
 "use client";
 import { useCallback, useEffect, useRef } from "react";
 import { useAppSelector } from "~/src/app/store/hooks";
-
-import scrollLock from "scroll-lock";
 import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
 
 interface Props {
@@ -14,44 +12,36 @@ interface Props {
 export const useModal = ({ isOpen, onClose, customClickOutside }: Props) => {
   const { modalCloseOnOutsideClick } = useAppSelector(selectNavigation);
   const contentRef = useRef<HTMLDivElement>(null);
-  const closingByPopState = useRef<boolean>(false);
 
-  useEffect(() => {
-    if (isOpen) {
-      history.pushState({ modal: true }, "");
-    }
-  }, [isOpen]);
+  const lockScroll = useCallback(() => {
+    const scrollY = window.scrollY;
 
-  useEffect(() => {
-    const handlePop = () => {
-      if (isOpen) {
-        closingByPopState.current = true;
-        onClose();
-      }
-    };
-
-    window.addEventListener("popstate", handlePop);
-    return () => window.removeEventListener("popstate", handlePop);
-  }, [isOpen, onClose]);
-
-  useEffect(() => {
-    if (isOpen) {
-      if (document) {
-        scrollLock.disablePageScroll(document.body);
-      }
-      window.history.pushState(null, "", window.location.href);
-    } else {
-      if (document) {
-        scrollLock.enablePageScroll(document.body);
-      }
-    }
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = "100%";
 
     return () => {
-      if (document) {
-        scrollLock.enablePageScroll(document.body);
-      }
+      const scrollY = document.body.style.top;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+
+      window.scrollTo({
+        top: parseInt(scrollY || "0") * -1,
+        left: 0,
+        behavior: "instant",
+      });
     };
-  }, [isOpen]);
+  }, []);
+
+  useEffect(() => {
+    let enableScroll: () => void;
+    if (isOpen) {
+      enableScroll = lockScroll();
+    }
+
+    return () => enableScroll?.();
+  }, [isOpen, lockScroll]);
 
   const clickOutside = useCallback(
     (event: MouseEvent) => {

@@ -1,3 +1,4 @@
+"use client";
 import { useDeleteShop } from "~/src/entities/profile-section/lib/hooks";
 
 import ProfileConfirmModal from "~/src/pages-components/profile/ui/role/modal/confirm";

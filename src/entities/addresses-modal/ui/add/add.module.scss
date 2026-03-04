@@ -2,8 +2,8 @@
   position: absolute;
   inset: 0;
   transition:
-    transform 0.3s ease-in-out,
-    opacity 0.3s ease-in-out;
+    transform $transition,
+    opacity $transition;
   transform: translate(0, -100%);
 
   &.active {
