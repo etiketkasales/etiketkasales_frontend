@@ -19,8 +19,7 @@ export default function ProfileQuote({ moderationStage, rejectReason }: Props) {
     default:
       return null;
     case "failed":
-      // return <QuoteRejected reason={rejectReason} />;
-      return <QuoteDraft />;
+      return <QuoteRejected reason={rejectReason} />;
     case "seller_pending":
     case "pending":
       return <QuotePending />;
