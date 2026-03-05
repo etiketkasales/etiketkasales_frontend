@@ -48,6 +48,7 @@ export default function AddressInputSuggestions({
       style={portalStyle}
       data-modal-layer
       onTouchStart={preventModalClose}
+      onTouchEnd={preventModalClose}
       onMouseDown={preventModalClose}
     >
       {loading && <div className={classes.loader}></div>}
