@@ -12,11 +12,9 @@ export const useNotifications = () => {
       if (needTimeout) {
         timeout = setTimeout(() => {
           dispatch(setNavigation({ modalCloseOnOutsideClick: true }));
+          clearTimeout(timeout);
         }, 1000);
       }
-      return () => {
-        if (timeout) clearTimeout(timeout);
-      };
     },
     [dispatch],
   );

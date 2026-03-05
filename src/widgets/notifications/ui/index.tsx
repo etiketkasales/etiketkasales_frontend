@@ -1,8 +1,8 @@
 "use client";
-import classNames from "classnames";
-import { selectNotifications } from "~/src/app/store/reducers/notifications.slice";
 import { useAppSelector } from "~/src/app/store/hooks";
 import { useNotifications } from "../lib/hooks";
+import classNames from "classnames";
+import { selectNotifications } from "~/src/app/store/reducers/notifications.slice";
 
 import classes from "./notifications.module.scss";
 import Notification from "./item";
