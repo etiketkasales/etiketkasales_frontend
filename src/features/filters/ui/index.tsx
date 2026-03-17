@@ -1,7 +1,6 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
-import { useFiltersParse } from "~/src/features/filters/lib/hooks/useFiltersParse.hook";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import {
   selectCatalogue,
@@ -11,7 +10,6 @@ import {
 import classes from "./filters.module.scss";
 import Container from "~/src/shared/ui/container/ui";
 import FiltersSeparator from "./separator";
-import { IFilters } from "~/src/features/filters/model";
 
 interface Props {
   className?: string;

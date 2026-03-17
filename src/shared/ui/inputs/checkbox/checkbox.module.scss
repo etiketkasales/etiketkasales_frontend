@@ -16,6 +16,7 @@
 
 .icon {
   position: absolute;
+  pointer-events: none;
   svg rect {
     fill: transparent;
   }

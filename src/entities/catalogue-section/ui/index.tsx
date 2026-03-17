@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 
 import classes from "./catalogue-section.module.scss";
 import CatalogueProducts from "./products";

@@ -1,5 +1,5 @@
 "use client";
-import React, { Dispatch, SetStateAction, Suspense } from "react";
+import { Dispatch, SetStateAction, Suspense } from "react";
 
 import classes from "../filters.module.scss";
 import AccordeonSkeleton from "~/src/shared/ui/accordeon/ui/skeleton";

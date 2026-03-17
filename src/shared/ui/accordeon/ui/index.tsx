@@ -16,6 +16,7 @@ interface Props<T extends HTMLElement> {
   classNameChildren?: string;
   clickOutsideControl?: boolean;
   style?: React.CSSProperties;
+  defaultOpen?: boolean;
 }
 
 export default function Accordeon<T extends HTMLElement>({
@@ -27,8 +28,10 @@ export default function Accordeon<T extends HTMLElement>({
   clickOutsideControl = true,
   classNameChildren,
   style,
+  defaultOpen = false,
 }: Props<T>) {
   const { open, handleClick, ref } = useAccordeon(
+    defaultOpen,
     clickRef,
     clickOutsideControl,
   );
@@ -58,11 +61,11 @@ export default function Accordeon<T extends HTMLElement>({
       <AnimatePresence initial={false}>
         {open && (
           <motion.div
-            initial={{ height: 0, opacity: 0, scaleY: 0 }}
-            animate={{ height: "auto", opacity: 1, scaleY: 1 }}
-            exit={{ height: 0, opacity: 0, scaleY: 0 }}
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
             transition={{ ease: "easeInOut", duration: 0.4 }}
-            style={{ transformOrigin: "top center" }}
+            style={{ transformOrigin: "top center", overflowY: "hidden" }}
             className={classNameChildren}
           >
             {children}

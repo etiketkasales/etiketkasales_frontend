@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import classes from "./filters-modal.module.scss";
 import Icon from "~/public/catalogue/filters.svg";

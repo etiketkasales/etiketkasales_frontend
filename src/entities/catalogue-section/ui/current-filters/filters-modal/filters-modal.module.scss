@@ -1,19 +1,24 @@
 .container {
-    display: none;
-    @media screen and (width <=  1024px) {
-        display: flex;
-    }
+  display: none;
+  @media screen and (width <= 1024px) {
+    display: flex;
+  }
 }
 
 .container,
 .filters {
-    display: none;
-    @media screen and (width <=  1024px) {
-        display: flex;
-    }
+  display: none;
+  @media screen and (width <= 1024px) {
+    display: flex;
+  }
 }
 
 .filters {
-    max-height: 100%;
-    overflow-y: auto;
+  $buttons-height: 68px;
+  max-height: 100%;
+  overflow-y: auto;
+
+  @media screen and (width <= 1024px) {
+    padding-bottom: $space-5 + $buttons-height !important;
+  }
 }

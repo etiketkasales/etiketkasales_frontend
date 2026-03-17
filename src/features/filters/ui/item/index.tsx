@@ -31,6 +31,7 @@ export default function FiltersItem({
           "--order": order,
         } as CSSProperties
       }
+      defaultOpen={true}
     >
       {children}
     </Accordeon>
