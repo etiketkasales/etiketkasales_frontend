@@ -4,7 +4,7 @@ import { selectUser } from "~/src/app/store/reducers/user.slice";
 import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
 import FormUtils from "~/src/shared/lib/utils/form.util";
 
-import { companyRegFieldsRequired } from "~/src/entities/company-registration/model/company-registration.const";
+import { companyRegFieldsRequired } from "~/src/entities/company-registration/model";
 
 export const useCheckRegInfo = () => {
   const { loaded } = useAppSelector(selectNavigation);

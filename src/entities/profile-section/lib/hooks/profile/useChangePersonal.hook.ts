@@ -6,6 +6,7 @@ import FormUtils from "~/src/shared/lib/utils/form.util";
 
 import { IChangeableProfile, IProfile } from "~/src/features/user/model";
 import { MessageI } from "~/src/shared/model";
+import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 
 interface Props {
   userInfo: IProfile;
@@ -36,6 +37,7 @@ export const useChangePersonal = ({ userInfo }: Props) => {
   >([]);
 
   // Валидация
+  const createNotification = useCreateNotification();
   const [error, setError] = useState<MessageI | null>(null);
   const isValidEmail = useCallback(
     (email: string | null): boolean => {

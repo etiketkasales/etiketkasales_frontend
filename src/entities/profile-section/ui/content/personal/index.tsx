@@ -1,5 +1,4 @@
 "use client";
-
 import { useChangePersonal } from "~/src/entities/profile-section/lib/hooks";
 
 import classes from "./personal.module.scss";

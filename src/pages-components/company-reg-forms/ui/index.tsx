@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { redirect, useRouter } from "next/navigation";
 import { useAppSelector } from "~/src/app/store/hooks";
 import { selectCompany } from "~/src/app/store/reducers/company.slice";
@@ -28,7 +28,7 @@ export default function CompanyRegistrationPage() {
     }
   }, [stage, push]);
 
-  // if (needRedirect) return redirect("/profile/seller-pending");
+  if (needRedirect) return redirect("/profile/seller-pending");
 
   if (loading) {
     return <Loader radius={0} />;

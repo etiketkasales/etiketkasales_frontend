@@ -1,5 +1,4 @@
 "use client";
-
 import FormModal from "~/src/entities/form-modal/ui";
 import CheckboxInput from "~/src/shared/ui/inputs/checkbox";
 import PersonalLabel from "./label";

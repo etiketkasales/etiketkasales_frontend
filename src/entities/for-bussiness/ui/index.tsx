@@ -1,10 +1,10 @@
 "use client";
 import classNames from "classnames";
 import { useAppDispatch } from "~/src/app/store/hooks";
+import { setForwardHref } from "~/src/app/store/reducers/login.slice";
 
 import classes from "./for-bussiness.module.scss";
 import Button from "~/src/shared/ui/button";
-import { setForwardHref } from "~/src/app/store/reducers/login.slice";
 
 export default function ForBussinessSection() {
   const dispatch = useAppDispatch();

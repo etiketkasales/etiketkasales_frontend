@@ -52,7 +52,11 @@ export default function Modal({
           <Container
             ref={contentRef}
             bgColor={bgColor}
-            className={classNames(containerClassName, classes.content, "relative scrollbar")}
+            className={classNames(
+              containerClassName,
+              classes.content,
+              "relative scrollbar",
+            )}
           >
             {loading && <Loader radius={loaderRadius} />}
             <ModalTitle

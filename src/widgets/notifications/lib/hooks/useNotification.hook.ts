@@ -18,7 +18,6 @@ export const useNotification = ({ uuid }: Props) => {
       dispatch(deleteNotification(uuid));
       clearTimeout(timer);
     }, 500);
-
   }, [uuid, dispatch]);
   const { offsetX, handlers } = useSwipeToDismiss({
     onDismiss: (_) => onDelete(),

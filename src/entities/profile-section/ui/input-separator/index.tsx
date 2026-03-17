@@ -51,11 +51,13 @@ export default function ProfileInputsSeparator({
       },
     ),
     inputClassName: `${classes.input} text-body l text-neutral-900`,
+    classNameLabel: classes.label,
     wrapperClassName: classNames(classes.inputContainer, className),
     disabled,
     RightIcon: disabled ? RightIcon : undefined,
     onRightIconClick: () => enableInput(field),
     onKeyDown: onKeyDown,
+    errorText: error && error.field === field ? error.message : "",
   };
 
   switch (type) {
