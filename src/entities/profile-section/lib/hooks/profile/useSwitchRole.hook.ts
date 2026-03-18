@@ -29,11 +29,12 @@ export const useSwitchRole = () => {
         if (
           !res.success &&
           (Array.isArray(res.missing_fields) ||
-            res.error?.includes("not verified")) // TODO: придумать, как улучшить эту проверку. Обсудить с бэком
+            res.error?.includes("not verified") ||
+            res.error?.includes("required fields")) // TODO: придумать, как улучшить эту проверку. Обсудить с бэком
         ) {
           push("/company/registrate");
           createNotification(
-            res.message || "Для смены роли необходимо пройти регистрацию",
+            res.message || "Для смены роли необходимо завершить регистрацию",
           );
         } else if (res.user) {
           setUserData(res.user);
