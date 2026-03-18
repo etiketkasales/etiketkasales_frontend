@@ -1,11 +1,12 @@
-import React, { CSSProperties } from "react";
+import { CSSProperties } from "react";
 
 import classes from "./buttons.module.scss";
 import Button from "~/src/shared/ui/button";
+import { IOnSaveChangesProps } from "~/src/entities/profile-section/model";
 
 interface Props {
   setPrevStage: () => void;
-  onSave: () => Promise<void>;
+  onSave: (args: IOnSaveChangesProps) => Promise<void>;
   needBackButton: boolean;
   stageNumber: number;
   loading: boolean;
@@ -32,7 +33,15 @@ export default function QuoteButtons({
     {
       title:
         stageNumber === stagesCount ? "Согласиться и отправить" : "Продолжить",
-      onClick: onSave,
+      onClick: async () =>
+        await onSave({
+          customMessage:
+            stageNumber === stagesCount
+              ? "Заявка отправлена на проверку и модерацию"
+              : undefined,
+          skipSave: stageNumber === 2 ? true : false,
+          needChanges: true,
+        }),
       type: "yellow",
       forBack: false,
       order: 1,

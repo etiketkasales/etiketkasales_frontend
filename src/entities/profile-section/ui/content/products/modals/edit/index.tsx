@@ -66,6 +66,7 @@ export default function EditSellerProductModal({
       needBackButton={true}
       loading={loading}
       loaderRadius={20}
+      needPreventOnClick={false}
     >
       <ProductImagesEditor
         images={currentImages}

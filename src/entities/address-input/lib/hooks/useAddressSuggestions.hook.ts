@@ -22,6 +22,9 @@ export const useAddressSuggestions = ({ defaultValue }: Props) => {
   );
   const skipNextRequest = useRef<boolean>(false);
 
+  // Для того, чтобы не значение по умолчанию не менялось от каждого ввода
+  const firstDefaultValue = useRef<string>(defaultValue);
+
   const getSuggestions = useCallback(
     async (q: string) => {
       await promise(async () => {
@@ -64,8 +67,7 @@ export const useAddressSuggestions = ({ defaultValue }: Props) => {
 
   useDebounce(
     async () => {
-      if (searchQuery === defaultValue) return;
-
+      if (searchQuery === firstDefaultValue.current) return;
       if (searchQuery.trim().length >= 3) {
         if (skipNextRequest.current) {
           skipNextRequest.current = false;

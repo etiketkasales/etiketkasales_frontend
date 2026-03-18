@@ -51,7 +51,7 @@ export const useRegisterCompany = () => {
     },
   );
 
-  // TODO: добавить проверку на соотвествие, чтобы было меньше ререндера
+  // TODO: добавить проверку на соотвествие, чтобы было меньше ререндеров
   useEffect(() => {
     const isAccountantDirector = changeableUserInfo.accountant_is_director;
     if (isAccountantDirector) {

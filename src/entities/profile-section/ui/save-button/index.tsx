@@ -1,8 +1,9 @@
 import classes from "./change-button.module.scss";
 import Button from "~/src/shared/ui/button";
+import { IOnSaveChangesProps } from "../../model";
 
 interface Props {
-  onSave: () => void;
+  onSave: (args: IOnSaveChangesProps) => void;
   disabled: boolean;
 }
 
@@ -11,7 +12,7 @@ export default function ProfileSaveButton({ onSave, disabled }: Props) {
     <Button
       typeButton="yellow"
       size="16-24"
-      onClick={onSave}
+      onClick={async () => await onSave({})}
       disabled={disabled}
       className={classes.container}
       radius={12}

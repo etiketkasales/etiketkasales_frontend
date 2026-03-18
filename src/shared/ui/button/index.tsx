@@ -89,6 +89,7 @@ export default function Button<T extends ElementType>({
       }}
       disabled={disabled}
       ref={ref}
+      {...rest}
     >
       {children}
     </Tag>

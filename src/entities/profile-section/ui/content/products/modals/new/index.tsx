@@ -42,12 +42,13 @@ export default function NewSellerProductModal({
   return (
     <Modal
       isOpen={isActive}
-      onClose={() => onClose()}
+      onClose={onClose}
       title={title}
       containerClassName={`flex-column space-between ${classes.container}`}
       needBackButton={true}
       loading={loading}
       loaderRadius={20}
+      needPreventOnClick={false}
     >
       <NewProductFirstStage
         modalStage={modalStage}

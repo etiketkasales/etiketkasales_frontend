@@ -7,6 +7,7 @@ import { getAvailableCities } from "../api";
 
 import { IAvailableCity } from "../../model";
 import { IFormModalSelectOption } from "~/src/entities/form-modal/model";
+import { useDebounce } from "react-use";
 
 export const useGetAvailableCities = () => {
   const dispatch = useAppDispatch();
@@ -45,9 +46,7 @@ export const useGetAvailableCities = () => {
     });
   }, [dispatch, searchQuery, formatCities]);
 
-  useEffect(() => {
-    getCities();
-  }, [getCities]);
+  useDebounce(async () => await getCities(), 500, [getCities]);
 
   return {
     availableCities,

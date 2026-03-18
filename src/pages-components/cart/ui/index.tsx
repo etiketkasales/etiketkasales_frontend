@@ -15,7 +15,7 @@ export default function CartPage() {
     onCheckboxChange,
     deleteMarked,
     loading,
-  } = useCart();
+  } = useCart({ needInitialize: true });
   const [modal, setModal] = useState<boolean | null>(null);
 
   const openModal = useCallback(() => {

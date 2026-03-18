@@ -39,7 +39,6 @@ export const useEditProduct = ({
   onClose,
   setSellerProducts,
 }: Props) => {
-  console.log(initialData);
   const productId = initialData?.id;
   const [disableSave, setDisableSave] = useState<boolean>(false);
 

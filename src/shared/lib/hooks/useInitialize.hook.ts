@@ -10,7 +10,7 @@ export const useInitialize = () => {
   const dispatch = useAppDispatch();
   useFiltersInit();
   const { handleGetUser } = useUser();
-  const { updateCart } = useCart();
+  const { updateCart } = useCart({ needInitialize: false });
 
   const handleGetCities = useCallback(async () => {
     try {

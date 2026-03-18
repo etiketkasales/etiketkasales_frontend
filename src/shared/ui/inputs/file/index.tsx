@@ -3,6 +3,7 @@ interface Props {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void | Promise<void>;
   multiple?: boolean;
   name?: string;
+  id?: string;
 }
 
 export default function FileInput({
@@ -10,6 +11,7 @@ export default function FileInput({
   onChange,
   multiple = false,
   name,
+  id,
 }: Props) {
   return (
     <input
@@ -20,6 +22,7 @@ export default function FileInput({
       onChange={onChange}
       ref={ref}
       name={name}
+      id={id}
     />
   );
 }

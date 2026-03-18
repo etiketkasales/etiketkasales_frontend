@@ -19,6 +19,7 @@ interface Props extends IModalBaseProps {
   backButtonClassName?: string;
   loading?: boolean;
   loaderRadius?: number;
+  needPreventOnClick?: boolean;
 }
 
 export default function Modal({
@@ -36,6 +37,7 @@ export default function Modal({
   backButtonClassName,
   loading = false,
   loaderRadius = 20,
+  needPreventOnClick = true,
 }: Props) {
   const { contentRef } = useModal({ isOpen, onClose, customClickOutside });
 
@@ -47,7 +49,7 @@ export default function Modal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onClick={(e) => e.preventDefault()}
+          onClick={(e) => needPreventOnClick && e.preventDefault()}
         >
           <Container
             ref={contentRef}

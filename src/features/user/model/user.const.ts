@@ -21,6 +21,7 @@ export const profileChangeableFields: (keyof IProfile)[] = [
   "bank_name",
   "director_surname",
   "director_name",
+  "director_patronymic",
   "accountant_is_director",
   "accountant_surname",
   "accountant_name",

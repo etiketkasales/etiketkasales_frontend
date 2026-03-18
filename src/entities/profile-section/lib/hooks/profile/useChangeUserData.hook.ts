@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 import { useAppDispatch } from "~/src/app/store/hooks";
 import { useUser } from "~/src/features/user/lib/hooks/useUser.hook";
@@ -9,6 +9,7 @@ import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
 
 import { IChangeableProfile } from "~/src/features/user/model";
 import { MessageI } from "~/src/shared/model";
+import { IOnSaveChangesProps } from "../../../model";
 
 interface Props {
   userInfo?: IChangeableProfile;
@@ -44,10 +45,12 @@ export const useChangeUserData = ({
   const { setUserData } = useUser();
   const [loading, setLoading] = useState<boolean>(false);
   const createNotification = useCreateNotification();
+  const smthChanged = useRef<boolean>(false);
 
   const onInputChange = useCallback(
     (v: string, field: keyof IChangeableProfile) => {
       onInputChangeCustom?.(v, field);
+      if (!smthChanged.current) smthChanged.current = true;
       dispatch(
         setUser({
           changeableUserInfo: {
@@ -65,6 +68,7 @@ export const useChangeUserData = ({
       if (error) {
         validationFunction?.();
       }
+      if (!smthChanged.current) smthChanged.current = true;
       dispatch(
         setUser({
           changeableUserInfo: {
@@ -78,20 +82,31 @@ export const useChangeUserData = ({
   );
 
   const onSave = useCallback(
-    async (customMessage?: string, overrideUserInfo?: IChangeableProfile) => {
+    async ({
+      customMessage,
+      overrideUserInfo,
+      skipSave,
+      needChanges,
+    }: IOnSaveChangesProps) => {
       await promiseWrapper({
         setLoading,
         callback: async () => {
           const data = overrideUserInfo || userInfo;
           if (!data) return;
-          const hasError = !validationFunction?.();
+          const hasError = validationFunction && !validationFunction();
           if (hasError) return;
+          if ((!smthChanged.current || skipSave) && needChanges) {
+            onSaveCallback?.();
+            smthChanged.current = false;
+            return;
+          }
 
           const res = await changePersonalData(data);
           if (res) {
             createNotification(customMessage || "Профиль обновлён", "success");
             setUserData(res.user);
             onSaveCallback?.();
+            smthChanged.current = false;
           }
         },
         setError,
@@ -114,7 +129,7 @@ export const useChangeUserData = ({
     (e: React.KeyboardEvent) => {
       if (e.key === "Enter") {
         e.preventDefault();
-        onSave();
+        onSave({});
       }
     },
     [onSave],

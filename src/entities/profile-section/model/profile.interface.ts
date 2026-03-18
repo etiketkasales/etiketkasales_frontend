@@ -63,3 +63,10 @@ export interface IProfileLegalInputsSection {
   title: string;
   inputs: IProfileInput[];
 }
+
+export interface IOnSaveChangesProps {
+  customMessage?: string;
+  overrideUserInfo?: IChangeableProfile;
+  skipSave?: boolean;
+  needChanges?: boolean;
+}

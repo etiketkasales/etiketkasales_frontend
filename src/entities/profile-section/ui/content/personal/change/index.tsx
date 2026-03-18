@@ -2,11 +2,12 @@ import ProfileSaveButton from "~/src/entities/profile-section/ui/save-button";
 import ProfilePersonalInputs from "./inputs";
 import { IChangeableProfile } from "~/src/features/user/model";
 import { MessageI } from "~/src/shared/model";
+import { IOnSaveChangesProps } from "~/src/entities/profile-section/model";
 
 interface Props {
   changeableProfileData: IChangeableProfile;
   phone: string;
-  onSave: () => void;
+  onSave: (args: IOnSaveChangesProps) => void;
   isDisabled: boolean;
   onInputChange: (v: string, f: keyof IChangeableProfile) => void;
   enabledInputs: string[];

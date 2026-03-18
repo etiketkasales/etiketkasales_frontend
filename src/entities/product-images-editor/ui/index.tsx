@@ -2,7 +2,6 @@
 import { useRef } from "react";
 import classNames from "classnames";
 
-import classes from "./product-images-editor.module.scss";
 import ProductImagesEditorButton from "./button";
 import FileInput from "~/src/shared/ui/inputs/file";
 
@@ -25,7 +24,7 @@ export default function ProductImagesEditor<ImageType>({
   containerClassName,
   imagesListClassName,
 }: Props<ImageType>) {
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className={classNames("flex", containerClassName)}>
@@ -38,7 +37,6 @@ export default function ProductImagesEditor<ImageType>({
         <div
           className={classNames(
             imagesListClassName,
-            classes.images,
             "flex-row align-center scrollbar mandatory-x-container",
           )}
         >
@@ -52,6 +50,7 @@ export default function ProductImagesEditor<ImageType>({
           onFileLoad(file);
         }}
         ref={inputRef}
+        name="new-etiketka-images"
       />
     </div>
   );

@@ -13,7 +13,11 @@ import { configureNewItem } from "~/src/features/cart/lib/utils";
 
 import { ICartItem } from "../../model";
 
-export const useCart = () => {
+interface Props {
+  needInitialize?: boolean;
+}
+
+export const useCart = ({ needInitialize }: Props) => {
   const dispatch = useAppDispatch();
   const { items: itemsInCart } = useAppSelector(selectCart);
   const { itemsToOrder } = useAppSelector(selectOrder);
@@ -87,7 +91,7 @@ export const useCart = () => {
     });
   }, [updateCart, itemsToOrder]);
 
-  const sellerItems = useCartInit({ updateCart });
+  const sellerItems = useCartInit({ updateCart, needInitialize });
 
   return {
     selectedItems: itemsToOrder,

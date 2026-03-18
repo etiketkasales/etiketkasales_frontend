@@ -14,6 +14,7 @@ import {
   modalTitles,
   profileTitlesMap,
 } from "~/src/entities/profile-section/model";
+import ProductImagesEditor from "~/src/entities/product-images-editor/ui";
 
 interface Props {}
 
@@ -47,7 +48,6 @@ export default function ProfileProducts({}: Props) {
           }
         />
       )}
-
       <AddNewProductButton
         onClick={() =>
           setModal({

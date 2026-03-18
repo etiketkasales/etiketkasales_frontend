@@ -24,7 +24,8 @@ export default function ProductImagesEditorButton({
         error && classes.error,
       )}
       onClick={() => {
-        if (!disabled) onClick();
+        if (disabled) return;
+        onClick();
       }}
     >
       <ImageIcon className={classes.icon} />

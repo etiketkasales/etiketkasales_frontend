@@ -52,7 +52,6 @@ export const useValidateQuote = ({ stage, userInfo }: Props) => {
   const isValidFields = useCallback(() => {
     const err = validateStage(userInfo);
     validateAndSetError(err);
-    console.log(err, err === null);
     return err === null;
   }, [userInfo, validateStage, validateAndSetError]);
 

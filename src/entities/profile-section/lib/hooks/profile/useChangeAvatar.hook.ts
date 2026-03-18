@@ -24,9 +24,13 @@ export const useChangeAvatar = () => {
       data.append("avatar", file);
       const res = await uploadAvatar(data);
       if (res.url) {
-        await onSave("Аватар изменён", {
-          ...changeableUserInfo,
-          avatar: res.url,
+        await onSave({
+          customMessage: "Аватар изменён",
+          overrideUserInfo: {
+            ...changeableUserInfo,
+            avatar: res.url,
+          },
+          needChanges: false,
         });
       }
       return res;

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch } from "~/src/app/store/hooks";
 import { useSwipeToDismiss } from "~/src/shared/lib";
+
 import { deleteNotification } from "~/src/app/store/reducers/notifications.slice";
 
 interface Props {
@@ -19,7 +20,7 @@ export const useNotification = ({ uuid }: Props) => {
       clearTimeout(timer);
     }, 500);
   }, [uuid, dispatch]);
-  const { offsetX, handlers } = useSwipeToDismiss({
+  const { offsetX, handlers, direction, isGrabbing } = useSwipeToDismiss({
     onDismiss: (_) => onDelete(),
   });
 
@@ -34,5 +35,7 @@ export const useNotification = ({ uuid }: Props) => {
     offsetX,
     handlers,
     isActive,
+    isGrabbing,
+    direction,
   };
 };

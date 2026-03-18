@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
-import { useCart } from ".";
 
 import { selectUser } from "~/src/app/store/reducers/user.slice";
 import { selectCart, setCart } from "~/src/app/store/reducers/cart.slice";
@@ -13,9 +12,10 @@ import { configureNewItem } from "../utils";
 
 interface Props {
   updateCart: () => Promise<void>;
+  needInitialize?: boolean;
 }
 
-export const useCartInit = ({ updateCart }: Props) => {
+export const useCartInit = ({ updateCart, needInitialize }: Props) => {
   const dispatch = useAppDispatch();
   const { items } = useAppSelector(selectCart);
   const { itemsToOrder } = useAppSelector(selectOrder);
@@ -25,8 +25,9 @@ export const useCartInit = ({ updateCart }: Props) => {
   useEffect(() => {
     if (!isLoggedIn) return;
     if (items.length !== 0) return;
+    if (!needInitialize) return;
     updateCart();
-  }, [updateCart, isLoggedIn]);
+  }, [updateCart, isLoggedIn, needInitialize]);
 
   useEffect(() => {
     dispatch(

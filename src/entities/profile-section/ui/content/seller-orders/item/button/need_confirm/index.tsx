@@ -22,7 +22,6 @@ export default function SellerOrderNeedConfirmButton({
   return (
     <SellerOrderConfirmationButton
       onConfirm={async () => {
-        console.log("click");
         await onSubmit();
       }}
       onCancel={() => setModalType("reject")}

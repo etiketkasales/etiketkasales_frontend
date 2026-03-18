@@ -23,6 +23,12 @@ export default function QuoteInput({
   error,
   maxLength,
 }: Props) {
+  const commonStringProps = {
+    name: `etiketka-${field}`,
+    id: `etiketka-${field}`,
+    errorText: error?.field === field ? error.message || "" : "",
+  };
+
   switch (type) {
     default:
     case "string":
@@ -31,7 +37,7 @@ export default function QuoteInput({
         <TextInput
           inputClassName={`text-body l text-neutral-900 ${classes.inputWrapper}`}
           wrapperClassName={classes.input}
-          value={changeData[field]?.toString() ?? ""}
+          value={(changeData[field] as string) ?? ""}
           onChange={(e) => {
             if (type === "number") {
               const numValue = Number(e.target.value);
@@ -40,10 +46,8 @@ export default function QuoteInput({
             onChange(e.target.value, field);
           }}
           placeholder={placeholder}
-          errorText={error?.field === field ? error.message || "" : ""}
           maxLength={maxLength}
-          name={`etiketka-${field}`}
-          id={`etiketka-${field}`}
+          {...commonStringProps}
         />
       );
     case "checkbox":
@@ -54,8 +58,8 @@ export default function QuoteInput({
           label={placeholder}
           className={`flex-row gap-10px flex-start ${classes.input}`}
           classNameLabel={`text-body l text-neutral-700 ${classes.checkboxLabel}`}
-          name={`etiketka-${field}`}
-          id={`etiketka-${field}`}
+          error={error?.field === field}
+          {...commonStringProps}
         />
       );
     case "address":
@@ -64,9 +68,9 @@ export default function QuoteInput({
           onSuggestionClick={(suggestion) => onChange(suggestion.label, field)}
           inputPlaceholder={placeholder}
           wrapperClassName={classes.input}
-          name={`etiketka-${field}`}
-          id={`etiketka-${field}`}
           defaultValue={changeData[field] as string}
+          onChange={(e) => onChange(e.target.value, field)}
+          {...commonStringProps}
         />
       );
   }

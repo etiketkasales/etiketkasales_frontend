@@ -23,7 +23,7 @@ export const useLoginFinalStage = () => {
   });
 
   const onSaveCustom = useCallback(
-    async () => await onSave("Регистрация прошла успешно"),
+    async () => await onSave({ customMessage: "Регистрация прошла успешно" }),
     [onSave],
   );
 

@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const useCartItems = ({ itemId }: Props) => {
-  const { updateCart } = useCart();
+  const { updateCart } = useCart({ needInitialize: false });
   const [loading, setLoading] = useState<boolean>(false);
   const createNotification = useCreateNotification();
 

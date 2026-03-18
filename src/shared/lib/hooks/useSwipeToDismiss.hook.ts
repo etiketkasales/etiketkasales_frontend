@@ -20,6 +20,7 @@ export function useSwipeToDismiss({
 
   const [offsetX, setOffsetX] = useState<number>(0);
   const [direction, setDirection] = useState<SwipeDirection | null>(null);
+  const [isGrabbing, setIsGrabbing] = useState<boolean>(false);
 
   const getX = (e: React.MouseEvent | React.TouchEvent) =>
     "touches" in e ? e.touches[0].clientX : e.clientX;
@@ -28,6 +29,7 @@ export function useSwipeToDismiss({
     isActive.current = true;
     startX.current = getX(e);
     startTime.current = performance.now();
+    setIsGrabbing(true);
   }, []);
 
   const onMove = useCallback((e: React.MouseEvent | React.TouchEvent) => {
@@ -59,6 +61,7 @@ export function useSwipeToDismiss({
         setOffsetX(0);
         setDirection(null);
       }
+      setIsGrabbing(false);
     },
     [distanceThreshold, velocityThreshold, onDismiss],
   );
@@ -66,6 +69,7 @@ export function useSwipeToDismiss({
   return {
     offsetX,
     direction,
+    isGrabbing,
     handlers: {
       onMouseDown: onStart,
       onMouseMove: onMove,

@@ -20,6 +20,7 @@ export default function AddressInput({
   placeholder,
   name,
   defaultValue,
+  onChange,
   ...rest
 }: Props) {
   const {
@@ -41,7 +42,10 @@ export default function AddressInput({
     <TextInput
       {...rest}
       placeholder={inputPlaceholder ?? placeholder ?? "Начните вводить адрес"}
-      onChange={(e) => setSearchQuery(e.target.value)}
+      onChange={(e) => {
+        setSearchQuery(e.target.value);
+        onChange?.(e);
+      }}
       value={searchQuery}
       wrapperRef={anchorRef}
       name={name || "delivery-address"}

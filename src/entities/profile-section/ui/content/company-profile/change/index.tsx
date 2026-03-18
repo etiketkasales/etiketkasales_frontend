@@ -3,9 +3,10 @@ import ProfileInputsSeparator from "~/src/entities/profile-section/ui/input-sepa
 import ProfileSaveButton from "~/src/entities/profile-section/ui/save-button";
 import { IChangeableProfile } from "~/src/features/user/model";
 import { MessageI } from "~/src/shared/model";
+import { IOnSaveChangesProps } from "~/src/entities/profile-section/model";
 
 interface Props {
-  onSave: () => void;
+  onSave: (args: IOnSaveChangesProps) => void;
   changeableProfileData: IChangeableProfile;
   enabledInputs: string[];
   onInputChange: (v: string, f: keyof IChangeableProfile) => void;
