@@ -37,7 +37,7 @@ export const useValidateQuote = ({ stage, userInfo }: Props) => {
   );
 
   // проверка на соответствие ошибки уже существующей и установка новой ошибки
-  const validateAndSetError = useCallback((err: MessageI | null) => {
+  const validateAndSetError = useCallback((err: MessageI | null): boolean => {
     setError((prev) => {
       if (prev?.message === err?.message && prev?.field === err?.field) {
         return prev;
@@ -51,15 +51,15 @@ export const useValidateQuote = ({ stage, userInfo }: Props) => {
   // функция для полной валидации в зависимости от стадии
   const isValidFields = useCallback(() => {
     const err = validateStage(userInfo);
-    return validateAndSetError(err);
+    validateAndSetError(err);
+    console.log(err, err === null);
+    return err === null;
   }, [userInfo, validateStage, validateAndSetError]);
 
   // проверка валидности полей если ошибка уже есть
   useEffect(() => {
     if (!error) return;
-
     const err = validateStage(userInfo);
-
     setError((prev) => {
       if (prev?.message === err?.message && prev?.field === err?.field) {
         return prev;

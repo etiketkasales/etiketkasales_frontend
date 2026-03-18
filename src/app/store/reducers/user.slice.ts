@@ -78,10 +78,23 @@ export const userSlice = createSlice({
         localStorage.setItem("needRemember", String(action.payload));
       }
     },
+    setAccountantAsDirector: (state) => {
+      state.changeableUserInfo.accountant_name =
+        state.changeableUserInfo.director_name;
+      state.changeableUserInfo.accountant_patronymic =
+        state.changeableUserInfo.director_patronymic;
+      state.changeableUserInfo.accountant_surname =
+        state.changeableUserInfo.director_surname;
+    },
   },
 });
 
-export const { setUser, setNeedRemember, clearUserData, setProfileAvatar } =
-  userSlice.actions;
+export const {
+  setUser,
+  setNeedRemember,
+  clearUserData,
+  setProfileAvatar,
+  setAccountantAsDirector,
+} = userSlice.actions;
 export const selectUser = (state: { user: InitialStateI }) => state.user;
 export default userSlice.reducer;

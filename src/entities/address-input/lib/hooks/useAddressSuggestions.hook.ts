@@ -3,15 +3,19 @@ import { useDebounce } from "react-use";
 import { useAppDispatch } from "~/src/app/store/hooks";
 import { useAsyncFn } from "~/src/shared/lib";
 
+import { setNavigation } from "~/src/app/store/reducers/navigation.slice";
 import { getAddressSuggestions } from "~/src/entities/address-input/lib/api";
 
 import { IAddressSuggestionResponse } from "~/src/features/user/model";
-import { setNavigation } from "~/src/app/store/reducers/navigation.slice";
 
-export const useAddressSuggestions = () => {
+interface Props {
+  defaultValue: string;
+}
+
+export const useAddressSuggestions = ({ defaultValue }: Props) => {
   const dispatch = useAppDispatch();
   const { loading, promise } = useAsyncFn();
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>(defaultValue);
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const [suggestions, setSuggestions] = useState<IAddressSuggestionResponse[]>(
     [],
@@ -60,6 +64,8 @@ export const useAddressSuggestions = () => {
 
   useDebounce(
     async () => {
+      if (searchQuery === defaultValue) return;
+
       if (searchQuery.trim().length >= 3) {
         if (skipNextRequest.current) {
           skipNextRequest.current = false;

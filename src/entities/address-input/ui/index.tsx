@@ -10,6 +10,7 @@ interface Props extends TextInputProps {
   onSuggestionClick: (s: IAddressSuggestionResponse) => void;
   classNameSuggestions?: string;
   inputPlaceholder?: string;
+  defaultValue?: string;
 }
 
 export default function AddressInput({
@@ -18,6 +19,7 @@ export default function AddressInput({
   inputPlaceholder,
   placeholder,
   name,
+  defaultValue,
   ...rest
 }: Props) {
   const {
@@ -29,7 +31,7 @@ export default function AddressInput({
     loading,
     suggestions,
     preventModalClose,
-  } = useAddressSuggestions();
+  } = useAddressSuggestions({ defaultValue: defaultValue || "" });
   const { anchorRef, portalStyle } = usePortalDropdown<HTMLInputElement>({
     isOpen: sgnsOpen,
     gap: 8,

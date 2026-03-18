@@ -84,8 +84,8 @@ export const useChangeUserData = ({
         callback: async () => {
           const data = overrideUserInfo || userInfo;
           if (!data) return;
-          const validation = validationFunction;
-          if (validation && !validation()) return;
+          const hasError = !validationFunction?.();
+          if (hasError) return;
 
           const res = await changePersonalData(data);
           if (res) {
@@ -95,6 +95,8 @@ export const useChangeUserData = ({
           }
         },
         setError,
+        fallback: (e) =>
+          createNotification(e || "Не удалось сохранить изменения", "error"),
       });
     },
     [

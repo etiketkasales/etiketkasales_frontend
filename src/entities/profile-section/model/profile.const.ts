@@ -84,7 +84,7 @@ export const profileTitlesMap: Record<ProfileActionType, string> = {
   seller_orders: "Заказы",
   as_legal: "Покупать как юр. лицо",
   addresses: "Адреса",
-  quote: "Заявка на активаци",
+  quote: "Заявка на активацию",
   profile: "Профиль магазина",
   reviews: "Отзывы",
   products: "Карточки товаров",

@@ -1,9 +1,10 @@
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
-import { useAppDispatch } from "~/src/app/store/hooks";
-import { addNotification } from "~/src/app/store/reducers/notifications.slice";
-import { switchRole } from "~/src/features/user/lib/api/user.api";
+import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 import { useUser } from "~/src/features/user/lib/hooks";
+
+import { switchRole } from "~/src/features/user/lib/api/user.api";
+
 import { UserRoleType } from "~/src/features/user/model";
 
 /**
@@ -15,9 +16,9 @@ import { UserRoleType } from "~/src/features/user/model";
  * @param {UserRoleType} roleToSwitch - Роль, на которую нужно перейти.
  */
 export const useSwitchRole = () => {
-  const dispatch = useAppDispatch();
   const { push } = useRouter();
   const { setUserData } = useUser();
+  const createNotification = useCreateNotification();
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleSwitchRole = useCallback(
@@ -31,37 +32,21 @@ export const useSwitchRole = () => {
             res.error?.includes("not verified")) // TODO: придумать, как улучшить эту проверку. Обсудить с бэком
         ) {
           push("/company/registrate");
-          dispatch(
-            addNotification({
-              message: "Заполните все поля",
-              type: "error",
-              field: "global",
-            }),
+          createNotification(
+            res.message || "Для смены роли необходимо пройти регистрацию",
           );
         } else if (res.user) {
           setUserData(res.user);
-          dispatch(
-            addNotification({
-              message: "Роль изменена",
-              type: "success",
-              field: "global",
-            }),
-          );
+          createNotification(res.message || "Роль изменена", "success");
         }
       } catch (err) {
         console.error(err);
-        dispatch(
-          addNotification({
-            message: "Непредвиденная ошибка",
-            type: "error",
-            field: "global",
-          }),
-        );
+        createNotification("Непредвиденная ошибка", "error");
       } finally {
         setLoading(false);
       }
     },
-    [setUserData, push, dispatch],
+    [setUserData, push, createNotification],
   );
 
   return {

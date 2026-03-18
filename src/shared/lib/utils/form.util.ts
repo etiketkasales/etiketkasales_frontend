@@ -79,7 +79,6 @@ class FormUtils {
   }): MessageI | null {
     for (const field of requiredFields) {
       const value = checkData[field as keyof T];
-
       if (FormUtils.checkIfValueEmpty(value, checkOnlyPrimitives)) {
         if (!currentError || currentError.field !== field) {
           return {

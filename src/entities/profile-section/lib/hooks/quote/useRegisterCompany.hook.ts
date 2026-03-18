@@ -1,9 +1,13 @@
 import { useStageFlow } from "~/src/shared/lib";
 import { useChangeUserData } from "../profile";
 import { useValidateQuote } from ".";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 
-import { selectUser } from "~/src/app/store/reducers/user.slice";
-import { useAppSelector } from "~/src/app/store/hooks";
+import {
+  selectUser,
+  setAccountantAsDirector,
+} from "~/src/app/store/reducers/user.slice";
 
 import {
   quoteNextStages,
@@ -12,11 +16,11 @@ import {
 } from "~/src/entities/profile-section/model";
 
 /**
- * Хук для регистрации компании.
- *
- * @return {{changeableUserInfo: IChangeableProfile, onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void, onBooleanChange: (field: keyof IChangeableProfile, value: boolean) => void, onSave: () => void, stage: QuoteStageType, setPrevStage: () => void, loading: boolean, error: MessageI | null}}
+ * Hook for working with registration of a company
+ * @returns {{changeableUserInfo, onInputChange, onBooleanChange, onSave, stage, setPrevStage, loading, error}}
  */
 export const useRegisterCompany = () => {
+  const dispatch = useAppDispatch();
   const { changeableUserInfo } = useAppSelector(selectUser);
   const {
     stage,
@@ -46,6 +50,14 @@ export const useRegisterCompany = () => {
       setError,
     },
   );
+
+  // TODO: добавить проверку на соотвествие, чтобы было меньше ререндера
+  useEffect(() => {
+    const isAccountantDirector = changeableUserInfo.accountant_is_director;
+    if (isAccountantDirector) {
+      dispatch(setAccountantAsDirector());
+    }
+  }, [changeableUserInfo, dispatch]);
 
   return {
     changeableUserInfo,

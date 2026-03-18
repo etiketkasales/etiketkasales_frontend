@@ -32,7 +32,7 @@ export default function QuoteButtons({
     {
       title:
         stageNumber === stagesCount ? "Согласиться и отправить" : "Продолжить",
-      onClick: async () => await onSave(),
+      onClick: onSave,
       type: "yellow",
       forBack: false,
       order: 1,

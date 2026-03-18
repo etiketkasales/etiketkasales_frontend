@@ -64,27 +64,20 @@ export const quoteRequiredFields: (keyof IChangeableProfile)[] = [
   "company_name",
 ];
 
-export const quoteRequisitsRequiredFields: (
-  needAccountant: boolean,
-) => (keyof IChangeableProfile)[] = (needAccountant) => {
-  const baseFields: (keyof IChangeableProfile)[] = [
-    "bank_account",
-    "bank_bik",
-    "correspondent_account",
-    "bank_name",
-    "legal_address",
-    "actual_address",
-    "director_surname",
-    "director_name",
-    "director_patronymic",
-  ];
-  const accountantFields: (keyof IChangeableProfile)[] = [
-    "accountant_surname",
-    "accountant_patronymic",
-    "accountant_surname",
-  ];
-  return needAccountant ? [...baseFields, ...accountantFields] : baseFields;
-};
+export const quoteRequisitsRequiredFields: (keyof IChangeableProfile)[] = [
+  "bank_account",
+  "bank_bik",
+  "correspondent_account",
+  "bank_name",
+  "legal_address",
+  "actual_address",
+  "director_surname",
+  "director_name",
+  "director_patronymic",
+  "accountant_surname",
+  "accountant_name",
+  "accountant_patronymic",
+];
 
 export const quoteStageNumbers: Record<QuoteStageType, number> = {
   about: 1,
@@ -110,9 +103,6 @@ export const quoteStageFieldsMap: Record<
   | ((data: IChangeableProfile) => (keyof IChangeableProfile)[])
 > = {
   about: quoteRequiredFields,
-  requisites: (data: IChangeableProfile) => {
-    const needAccountant = !data.accountant_is_director;
-    return quoteRequisitsRequiredFields(needAccountant);
-  },
+  requisites: quoteRequisitsRequiredFields,
   agreement: [],
 };

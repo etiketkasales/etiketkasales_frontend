@@ -66,6 +66,7 @@ export default function QuoteInput({
           wrapperClassName={classes.input}
           name={`etiketka-${field}`}
           id={`etiketka-${field}`}
+          defaultValue={changeData[field] as string}
         />
       );
   }
