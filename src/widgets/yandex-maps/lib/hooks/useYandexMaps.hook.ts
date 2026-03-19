@@ -1,26 +1,25 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 
-import { useAppDispatch } from "~/src/app/store/hooks";
-import { useUserLocation } from "~/src/shared/lib";
-import { addNotification } from "~/src/app/store/reducers/notifications.slice";
+import { useAppSelector } from "~/src/app/store/hooks";
+import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
 
 import { YMapsReactifyComponents } from "../../model";
 
 export const useYandexMaps = () => {
-  const dispatch = useAppDispatch();
   const [components, setComponents] = useState<YMapsReactifyComponents | null>(
     null,
   );
   const [loaded, setLoaded] = useState<boolean>(false);
   const [zoom, setZoom] = useState<number>(9);
-  const { location, error, isLoading: loadingLocation } = useUserLocation();
+
+  const { userLocation } = useAppSelector(selectNavigation);
 
   const init = useCallback(async () => {
     if (typeof window === "undefined") return;
     if (!(window as any).ymaps3) return;
 
-    const ymaps3 = (window as any).ymaps3;
+    const ymaps3 = await (window as any).ymaps3;
 
     await ymaps3.ready;
     const [ymaps3React] = await Promise.all([
@@ -30,6 +29,9 @@ export const useYandexMaps = () => {
 
     const reactify = ymaps3React.reactify.bindTo(React, ReactDOM);
     const comps = reactify.module(ymaps3);
+    const { YMapClusterer, clusterByGrid } = reactify.module(
+      await ymaps3["@yandex/ymaps3-clusterer"],
+    );
 
     setComponents({
       YMap: comps.YMap,
@@ -38,6 +40,8 @@ export const useYandexMaps = () => {
       YMapMarker: comps.YMapMarker,
       YMapFeature: comps.YMapFeature,
       reactify,
+      YMapClusterer: YMapClusterer,
+      clusterByGrid,
     });
     setLoaded(true);
   }, []);
@@ -58,7 +62,7 @@ export const useYandexMaps = () => {
     init,
     components,
     loaded,
-    location: error ? null : location,
     onMapChange,
+    location: userLocation,
   };
 };

@@ -1,17 +1,10 @@
 "use client";
 import React from "react";
 import { useYandexMaps } from "../lib";
+import type { Feature } from "@yandex/ymaps3-types/packages/clusterer/YMapClusterer";
 
 import classes from "./yandex-maps.module.scss";
-
-const fallbackLocation = {
-  center: [37.588144, 55.733842] as [number, number],
-  zoom: 9,
-};
-
-interface IMarkerBase {
-  coordinates: [number, number];
-}
+import { IMarkerBase, mapsFallbackLocation } from "../model";
 
 interface Props<Marker extends IMarkerBase> {
   wrapperClassName?: string;
@@ -30,15 +23,15 @@ export default function YandexMapsWidget<Marker extends IMarkerBase>({
 }: Props<Marker>) {
   const { components, loaded, location, onMapChange } = useYandexMaps();
 
-  const mapLocation = location ?? fallbackLocation;
+  const mapLocation = location ?? mapsFallbackLocation;
 
   const stableLocation = React.useMemo(() => {
     if (!components) return null;
-    return components.reactify.useDefault(mapLocation);
+    return components.reactify?.useDefault(mapLocation);
   }, [components, mapLocation]);
 
   if (!loaded) {
-    return <p className={`text-neutral-800 text-body xl`}>Загрузка карты…</p>;
+    return null;
   }
 
   if (!components || !stableLocation) {
@@ -49,27 +42,61 @@ export default function YandexMapsWidget<Marker extends IMarkerBase>({
     );
   }
 
-  const { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapMarker } =
-    components;
+  const {
+    YMap,
+    YMapDefaultSchemeLayer,
+    YMapDefaultFeaturesLayer,
+    YMapMarker,
+    YMapClusterer,
+    reactify,
+    clusterByGrid,
+  } = components;
+
+  const features: Feature[] | undefined = markers?.map((marker, index) => ({
+    type: "Feature",
+    id: `${index}`,
+    geometry: {
+      type: "Point",
+      coordinates: marker.coordinates,
+    },
+    properties: marker,
+  }));
+
+  console.log(components);
 
   return (
     <div className={wrapperClassName}>
       <YMap location={stableLocation} onLocationChange={onMapChange}>
         <YMapDefaultSchemeLayer />
         {YMapDefaultFeaturesLayer && <YMapDefaultFeaturesLayer />}
-        {markers &&
-          YMapMarker &&
-          markers.map((marker, index) => (
-            <YMapMarker
-              key={`${marker.coordinates.toString()}-${index}`}
-              coordinates={marker.coordinates}
-              onClick={() => onMarkerClick?.(marker)}
-            >
-              {renderMarkerChildren?.(marker)}
-            </YMapMarker>
-          ))}
-        {YMapMarker && location && (
-          <YMapMarker coordinates={location.center}>
+        {features && YMapClusterer && YMapMarker && (
+          <YMapClusterer
+            method={clusterByGrid?.({ gridSize: 64 })}
+            features={features}
+            marker={(feature) => {
+              const comp = (
+                <YMapMarker
+                  coordinates={feature.geometry.coordinates}
+                  onClick={() => onMarkerClick?.(feature.properties as Marker)}
+                >
+                  {renderMarkerChildren?.(feature.properties as Marker)}
+                </YMapMarker>
+              );
+
+              return reactify.entity(comp)();
+            }}
+            cluster={(coordinates, features) => {
+              const el = (
+                <YMapMarker coordinates={coordinates}>
+                  <div className={classes.cluster}>{features.length}</div>
+                </YMapMarker>
+              );
+              return reactify.entity(el)();
+            }}
+          />
+        )}
+        {/* {YMapMarker && stableLocation && (
+          <YMapMarker coordinates={stableLocation.center}>
             <div
               className={`flex-column gap-1 align-center ${classes.meContainer}`}
             >
@@ -79,7 +106,7 @@ export default function YandexMapsWidget<Marker extends IMarkerBase>({
               </span>
             </div>
           </YMapMarker>
-        )}
+        )} */}
       </YMap>
       {children}
     </div>

@@ -10,17 +10,8 @@ export const useInitialize = () => {
   const dispatch = useAppDispatch();
   useFiltersInit();
   const { handleGetUser } = useUser();
-  const { updateCart } = useCart({ needInitialize: false });
-
-  const handleGetCities = useCallback(async () => {
-    try {
-    } catch (err) {
-      console.error(err);
-    }
-  }, []);
 
   useEffect(() => {
-    handleGetCities();
     let remember = false;
     if (typeof window !== "undefined") {
       remember = localStorage.getItem("needRemember") === "true";
@@ -31,6 +22,5 @@ export const useInitialize = () => {
     } else {
       dispatch(setUser({ isLoggedIn: false }));
     }
-    updateCart();
-  }, [handleGetCities, handleGetUser, updateCart, dispatch]);
+  }, [handleGetUser, dispatch]);
 };

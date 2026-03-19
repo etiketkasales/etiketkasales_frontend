@@ -1,4 +1,6 @@
 "use client";
+import { useUserLocation } from "~/src/shared/lib";
+
 import HeaderWithText from "~/src/entities/header-with-text/ui";
 import OrderSection from "~/src/entities/order/ui";
 import PageWrapper from "~/src/entities/page-wrapper/ui";
@@ -9,6 +11,8 @@ interface Props {
 }
 
 export default function OrderTypedPage({ type }: Props) {
+  useUserLocation();
+
   return (
     <PageWrapper CustomHeader={<HeaderWithText text="Оформление заказа" />}>
       <OrderSection type={type} />

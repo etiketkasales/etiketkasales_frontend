@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { addNotification } from "~/src/app/store/reducers/notifications.slice";
 import {
@@ -30,6 +30,7 @@ export const useOrderPickupPoints = ({ needLoad, onClose, isOpen }: Props) => {
   const [points, setPoints] = useState<IOrderPickupPointResponse[]>([]);
   const [previewPoint, setPreviewPoint] =
     useState<IOrderPickupPointResponse | null>(null);
+  const alreadyLoading = useRef<boolean>(false);
 
   const createNotification = useCallback(
     (msg: string, type?: "error" | "warning") => {
@@ -50,6 +51,8 @@ export const useOrderPickupPoints = ({ needLoad, onClose, isOpen }: Props) => {
       setLoading,
       setError,
       callback: async () => {
+        if (alreadyLoading.current) return;
+        alreadyLoading.current = true;
         if (!deliveryMethod?.code) {
           createNotification("Выберите способ доставки");
           return;
@@ -62,6 +65,7 @@ export const useOrderPickupPoints = ({ needLoad, onClose, isOpen }: Props) => {
         }
         setPoints(res.data);
       },
+      onFinal: () => (alreadyLoading.current = false),
     });
   }, [deliveryMethod?.code, createNotification]);
 

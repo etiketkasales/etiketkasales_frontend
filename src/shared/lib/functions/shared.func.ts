@@ -10,6 +10,7 @@ interface PromiseWrapperProps {
   setErrBool?: Dispatch<SetStateAction<boolean>>;
   needLoad?: boolean;
   fallback?: (err?: string) => void;
+  onFinal?: () => void;
 }
 export async function promiseWrapper({
   setLoading,
@@ -19,6 +20,7 @@ export async function promiseWrapper({
   needLoad = true,
   fallback,
   setErrBool,
+  onFinal
 }: PromiseWrapperProps) {
   try {
     if (needLoad) {
@@ -41,5 +43,6 @@ export async function promiseWrapper({
     throw error;
   } finally {
     setLoading(false);
+    onFinal?.()
   }
 }

@@ -1,0 +1,19 @@
+.container {
+    padding: $space-3;
+    border-radius: 50%;
+    border: 1px solid $yellow-700;
+    background-color: $neutral-100;
+
+    min-width: 25px;
+    min-height: 25px;
+}
+
+.md {
+    min-width: 35px;
+    min-height: 35px;
+}
+
+.lg {
+    min-width: 50px;
+    min-height: 50px;
+}
