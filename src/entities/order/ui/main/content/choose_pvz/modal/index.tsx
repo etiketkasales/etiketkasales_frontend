@@ -36,7 +36,7 @@ export default function DeliveryMethodModal({ isOpen, onClose }: Props) {
           ...p,
         }))}
         onMarkerClick={(m) => onPointClick(m)}
-        renderMarkerChildren={(m) => <OrderPickupPointMarker {...m} />}
+        renderMarkerChildren={(m) => <OrderPickupPointMarker name={m.name} />}
       >
         <OrderPickupPoint choosePoint={onSavePoint} point={previewPoint} />
       </YandexMapsWidget>
