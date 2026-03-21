@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { useCartInit } from ".";
+import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 
 import { selectCart, setCart } from "~/src/app/store/reducers/cart.slice";
 import {
@@ -21,6 +22,7 @@ export const useCart = ({ needInitialize }: Props) => {
   const dispatch = useAppDispatch();
   const { items: itemsInCart } = useAppSelector(selectCart);
   const { itemsToOrder } = useAppSelector(selectOrder);
+  const createNotification = useCreateNotification();
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleSelectItem = useCallback(
@@ -64,6 +66,10 @@ export const useCart = ({ needInitialize }: Props) => {
         dispatch(
           setCart({
             items: res.items,
+            itemsAmount: res.items.reduce(
+              (acc, item) => acc + item.quantity,
+              0,
+            ),
           }),
         );
       },
@@ -85,11 +91,13 @@ export const useCart = ({ needInitialize }: Props) => {
       setLoading,
       callback: async () => {
         if (itemsToOrder.length === 0) return;
-        await multiDeleteProducts(itemsToOrder.map((i) => i.product_id));
+        await multiDeleteProducts(itemsToOrder.map((item) => item.product_id));
         await updateCart();
       },
+      fallback: (err) =>
+        createNotification(err || "Не удалось удалить выбранные товары"),
     });
-  }, [updateCart, itemsToOrder]);
+  }, [updateCart, itemsToOrder, createNotification]);
 
   const sellerItems = useCartInit({ updateCart, needInitialize });
 
