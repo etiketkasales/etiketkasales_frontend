@@ -29,17 +29,24 @@ export default function DeliveryMethodModal({ isOpen, onClose }: Props) {
       titleClassName={classes.title}
     >
       {loading && <Loader radius={20} />}
-      <YandexMapsWidget
-        wrapperClassName={`relative ${classes.map}`}
-        markers={points.map((p) => ({
-          coordinates: [p.longitude, p.latitude],
-          ...p,
-        }))}
-        onMarkerClick={(m) => onPointClick(m)}
-        renderMarkerChildren={(m) => <OrderPickupPointMarker name={m.name} />}
-      >
-        <OrderPickupPoint choosePoint={onSavePoint} point={previewPoint} />
-      </YandexMapsWidget>
+      {isOpen && !loading && (
+        <YandexMapsWidget
+          wrapperClassName={`relative ${classes.map}`}
+          markers={points.map((p, index) => ({
+            ...p,
+            coordinates: [p.longitude, p.latitude],
+            name: p.name,
+            key: p.id || index,
+            description: p.work_hours,
+          }))}
+          onMarkerClick={(m) => onPointClick(m)}
+          renderMarkerChildren={(m) => (
+            <OrderPickupPointMarker {...m} key={m.key} />
+          )}
+        >
+          <OrderPickupPoint choosePoint={onSavePoint} point={previewPoint} />
+        </YandexMapsWidget>
+      )}
     </Modal>
   );
 }

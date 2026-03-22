@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAppDispatch } from "~/src/app/store/hooks";
 import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 
@@ -16,6 +17,7 @@ import { promiseWrapper } from "~/src/shared/lib/functions";
  */
 export const useLogout = () => {
   const dispatch = useAppDispatch();
+  const { push } = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const createNotification = useCreateNotification();
@@ -24,7 +26,8 @@ export const useLogout = () => {
     dispatch(clearUserData());
     dispatch(setNeedRemember(false));
     createNotification("Вы успешно вышли", "success");
-  }, [dispatch, createNotification]);
+    push("/");
+  }, [dispatch, createNotification, push]);
 
   const handleLogout = useCallback(async () => {
     await promiseWrapper({

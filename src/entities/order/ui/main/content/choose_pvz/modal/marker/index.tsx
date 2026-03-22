@@ -1,6 +1,7 @@
 import classes from "./marker.module.scss";
 import Icon from "~/public/order/marker-item.svg";
 import Container from "~/src/shared/ui/container/ui";
+import { IOrderPickupPointResponse } from "~/src/entities/order/model";
 
 interface Props {
   name: string;

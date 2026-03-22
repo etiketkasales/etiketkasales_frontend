@@ -1,43 +1,63 @@
 "use client";
+import { useCallback, useEffect, useRef } from "react";
+import { useAppDispatch } from "~/src/app/store/hooks";
+import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 
-import { useEffect, useState } from "react";
+import { setNavigation } from "~/src/app/store/reducers/navigation.slice";
 
 export type UserLocation = {
   center: [number, number];
   zoom: number;
 };
 
+const MAX_REFETCH_ATTEMPTS = 3;
+
 export const useUserLocation = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [location, setLocation] = useState<UserLocation | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
+  const createNotification = useCreateNotification();
+  const wasLoaded = useRef<boolean>(false);
+  const refetchAttempts = useRef<number>(0);
+
+  const setUserLocation = useCallback(
+    (location: UserLocation) => {
+      wasLoaded.current = true;
+      dispatch(setNavigation({ userLocation: location }));
+    },
+    [dispatch],
+  );
 
   useEffect(() => {
-    setIsLoading(true);
     if (!navigator.geolocation) {
-      setError("Геолокация не поддерживается");
-      setIsLoading(false);
+      createNotification("Геолокация не поддерживается", "error");
       return;
     }
 
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        setLocation({
-          center: [pos.coords.longitude, pos.coords.latitude],
-          zoom: 14,
-        });
-        setIsLoading(false);
+        if (
+          !wasLoaded.current &&
+          refetchAttempts.current <= MAX_REFETCH_ATTEMPTS
+        ) {
+          setUserLocation({
+            center: [pos.coords.longitude, pos.coords.latitude],
+            zoom: 14,
+          });
+        }
+        refetchAttempts.current = 0;
       },
       () => {
-        setError("Доступ к геолокации запрещён");
-        setIsLoading(false);
+        if (refetchAttempts.current > MAX_REFETCH_ATTEMPTS) {
+          createNotification(
+            "Разрешите доступ к геолокации для корректной работы",
+            "error",
+          );
+          refetchAttempts.current++;
+        }
       },
       {
         enableHighAccuracy: true,
         timeout: 10000,
       },
     );
-  }, []);
-
-  return { location, error, isLoading };
+  }, [setUserLocation]);
 };

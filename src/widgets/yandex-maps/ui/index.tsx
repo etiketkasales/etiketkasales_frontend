@@ -1,17 +1,12 @@
 "use client";
-import React from "react";
-import { useYandexMaps } from "../lib";
+import React, { useMemo } from "react";
+import { useYandexMaps, useYMapsFeatures } from "../lib";
 
 import classes from "./yandex-maps.module.scss";
-
-const fallbackLocation = {
-  center: [37.588144, 55.733842] as [number, number],
-  zoom: 9,
-};
-
-interface IMarkerBase {
-  coordinates: [number, number];
-}
+import YMapsCluster from "./cluster";
+import type { Feature } from "@yandex/ymaps3-types/packages/clusterer/YMapClusterer";
+import { LngLat } from "@yandex/ymaps3-types";
+import { IMarkerBase } from "../model";
 
 interface Props<Marker extends IMarkerBase> {
   wrapperClassName?: string;
@@ -28,48 +23,63 @@ export default function YandexMapsWidget<Marker extends IMarkerBase>({
   onMarkerClick,
   renderMarkerChildren,
 }: Props<Marker>) {
-  const { components, loaded, location, onMapChange } = useYandexMaps();
+  const { components, loaded, userLocation, stableLocation } = useYandexMaps();
 
-  const mapLocation = location ?? fallbackLocation;
+  const {
+    YMap,
+    YMapDefaultSchemeLayer,
+    YMapDefaultFeaturesLayer,
+    YMapMarker,
+    YMapClusterer,
+    clusterByGrid,
+  } = components;
 
-  const stableLocation = React.useMemo(() => {
-    if (!components) return null;
-    return components.reactify.useDefault(mapLocation);
-  }, [components, mapLocation]);
+  const features: Feature[] = useYMapsFeatures({ markers });
 
-  if (!loaded) {
-    return <p className={`text-neutral-800 text-body xl`}>Загрузка карты…</p>;
+  const clusterMethod = useMemo(() => {
+    return clusterByGrid?.({ gridSize: 256 });
+  }, [clusterByGrid]);
+
+  const markerRenderer = React.useCallback(
+    (feature: Feature) => (
+      <YMapMarker
+        coordinates={feature.geometry.coordinates}
+        onClick={() => onMarkerClick?.(feature.properties as Marker)}
+      >
+        {renderMarkerChildren?.(feature.properties as Marker)}
+      </YMapMarker>
+    ),
+    [onMarkerClick, renderMarkerChildren, YMapMarker],
+  );
+
+  const clusterRenderer = React.useCallback(
+    (coordinates: LngLat, features: Feature[]) => (
+      <YMapMarker coordinates={coordinates}>
+        <YMapsCluster length={features.length} />
+      </YMapMarker>
+    ),
+    [YMapMarker],
+  );
+
+  if (!components || !stableLocation || !loaded) {
+    return null;
   }
-
-  if (!components || !stableLocation) {
-    return (
-      <p className={`text-neutral-800 text-body xl`}>
-        Не удалось загрузить карту
-      </p>
-    );
-  }
-
-  const { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapMarker } =
-    components;
 
   return (
     <div className={wrapperClassName}>
-      <YMap location={stableLocation} onLocationChange={onMapChange}>
+      <YMap location={stableLocation}>
         <YMapDefaultSchemeLayer />
         {YMapDefaultFeaturesLayer && <YMapDefaultFeaturesLayer />}
-        {markers &&
-          YMapMarker &&
-          markers.map((marker, index) => (
-            <YMapMarker
-              key={`${marker.coordinates.toString()}-${index}`}
-              coordinates={marker.coordinates}
-              onClick={() => onMarkerClick?.(marker)}
-            >
-              {renderMarkerChildren?.(marker)}
-            </YMapMarker>
-          ))}
-        {YMapMarker && location && (
-          <YMapMarker coordinates={location.center}>
+        {features && YMapClusterer && YMapMarker && (
+          <YMapClusterer
+            method={clusterMethod}
+            features={features}
+            marker={markerRenderer as any}
+            cluster={clusterRenderer as any}
+          />
+        )}
+        {YMapMarker && userLocation && (
+          <YMapMarker coordinates={userLocation.center}>
             <div
               className={`flex-column gap-1 align-center ${classes.meContainer}`}
             >
