@@ -10,12 +10,20 @@ export default function YMapsCluster({ length }: Props) {
     <div
       className={classNames(
         classes.container,
-        "text-neutral-1000 heading",
-        length < 5 && `${classes.md} h6`,
-        length >= 5 && `${classes.lg} h4`,
+        length < 5 && classes.md,
+        length >= 5 && classes.lg,
+        "place-center",
       )}
     >
-      {length}
+      <span
+        className={classNames(
+          "text-neutral-1000 heading",
+          length < 5 && "h6",
+          length >= 5 && "h4",
+        )}
+      >
+        {length}
+      </span>
     </div>
   );
 }

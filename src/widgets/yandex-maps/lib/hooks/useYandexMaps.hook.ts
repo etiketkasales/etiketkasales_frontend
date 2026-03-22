@@ -1,19 +1,28 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import ReactDOM from "react-dom";
 
 import { useAppSelector } from "~/src/app/store/hooks";
 import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
 
-import { YMapsReactifyComponents } from "../../model";
+import {
+  mapsFallbackLocation,
+  yMapsComponentsSkeleton,
+  YMapsReactifyComponents,
+} from "../../model";
 
 export const useYandexMaps = () => {
-  const [components, setComponents] = useState<YMapsReactifyComponents | null>(
-    null,
+  const [components, setComponents] = useState<YMapsReactifyComponents>(
+    yMapsComponentsSkeleton,
   );
   const [loaded, setLoaded] = useState<boolean>(false);
-  const [zoom, setZoom] = useState<number>(9);
-
   const { userLocation } = useAppSelector(selectNavigation);
+
+  const mapLocation = userLocation || mapsFallbackLocation;
+
+  const stableLocation = useMemo(() => {
+    if (!components) return null;
+    return components.reactify?.useDefault(mapLocation);
+  }, [components, mapLocation]);
 
   const init = useCallback(async () => {
     if (typeof window === "undefined") return;
@@ -29,9 +38,13 @@ export const useYandexMaps = () => {
 
     const reactify = ymaps3React.reactify.bindTo(React, ReactDOM);
     const comps = reactify.module(ymaps3);
-    const { YMapClusterer, clusterByGrid } = reactify.module(
-      await ymaps3["@yandex/ymaps3-clusterer"],
+
+    ymaps3.import.registerCdn(
+      "https://cdn.jsdelivr.net/npm/{package}",
+      "@yandex/ymaps3-clusterer@latest",
     );
+    const clustererModule = await ymaps3.import("@yandex/ymaps3-clusterer");
+    const { YMapClusterer, clusterByGrid } = reactify.module(clustererModule);
 
     setComponents({
       YMap: comps.YMap,
@@ -46,12 +59,6 @@ export const useYandexMaps = () => {
     setLoaded(true);
   }, []);
 
-  const onMapChange = useCallback((e: any) => {
-    if (e.location?.zoom) {
-      setZoom(e.location.zoom);
-    }
-  }, []);
-
   useEffect(() => {
     if ((window as any).ymaps3) {
       init().catch(console.error);
@@ -62,7 +69,7 @@ export const useYandexMaps = () => {
     init,
     components,
     loaded,
-    onMapChange,
-    location: userLocation,
+    userLocation,
+    stableLocation,
   };
 };

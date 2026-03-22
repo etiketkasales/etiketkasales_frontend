@@ -1,19 +1,26 @@
 .container {
-    padding: $space-3;
-    border-radius: 50%;
-    border: 1px solid $yellow-700;
-    background-color: $neutral-100;
+  border-radius: 50%;
+  outline: $space-0 solid $yellow-500;
 
-    min-width: 25px;
-    min-height: 25px;
+  padding: $space-3;
+  background: $neutral-100;
+  box-shadow: $shadow-300;
+
+  min-width: 25px;
+  min-height: 25px;
+  aspect-ratio: 1;
+
+  transform: translate(-50%, -50%);
 }
 
 .md {
-    min-width: 35px;
-    min-height: 35px;
+  min-width: 35px;
+  min-height: 35px;
+  outline-width: $space-1;
 }
 
 .lg {
-    min-width: 50px;
-    min-height: 50px;
+  min-width: 50px;
+  min-height: 50px;
+  outline-width: $space-6px;
 }

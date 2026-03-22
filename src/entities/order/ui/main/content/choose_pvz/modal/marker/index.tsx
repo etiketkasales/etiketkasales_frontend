@@ -1,6 +1,7 @@
 import classes from "./marker.module.scss";
 import Container from "~/src/shared/ui/container/ui";
 import { IOrderPickupPointResponse } from "~/src/entities/order/model";
+import React from "react";
 
 interface IInfoItem {
   text: string;
@@ -30,7 +31,7 @@ export default function OrderPickupPointMarker({
       <p className="heading h7 text-neutral-1000 nowrap-text">{name}</p>
       <p className={`heading h8 nowrap-text`}>
         {info.map((item, index) => (
-          <>
+          <React.Fragment key={`${item.text}-${index}`}>
             <span
               key={`${item.text}-${index}`}
               className={`text-${item.color}`}
@@ -38,7 +39,7 @@ export default function OrderPickupPointMarker({
               {item.text}
             </span>
             <br />
-          </>
+          </React.Fragment>
         ))}
       </p>
     </Container>

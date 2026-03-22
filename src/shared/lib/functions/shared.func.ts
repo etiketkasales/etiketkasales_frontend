@@ -20,7 +20,7 @@ export async function promiseWrapper({
   needLoad = true,
   fallback,
   setErrBool,
-  onFinal
+  onFinal,
 }: PromiseWrapperProps) {
   try {
     if (needLoad) {
@@ -43,6 +43,6 @@ export async function promiseWrapper({
     throw error;
   } finally {
     setLoading(false);
-    onFinal?.()
+    onFinal?.();
   }
 }
