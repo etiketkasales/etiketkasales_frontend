@@ -7,17 +7,17 @@ import { cartTotalSkeleton } from "~/src/features/cart/model/cart.skeleton";
 
 interface InitialState {
   items: ICartItem[];
-  selectedItems: number[];
   isAllSelected: boolean;
   total: ICartTotal;
+  itemsAmount: number;
   [key: string]: any;
 }
 
 const initialState: InitialState = {
   items: [],
   total: cartTotalSkeleton,
-  selectedItems: [],
   isAllSelected: false,
+  itemsAmount: 0,
 };
 
 export const cartSlice = createSlice({
