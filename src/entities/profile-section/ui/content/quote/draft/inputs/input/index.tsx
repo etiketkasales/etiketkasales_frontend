@@ -5,6 +5,7 @@ import AddressInput from "~/src/entities/address-input/ui";
 import { IQuoteInput } from "~/src/entities/profile-section/model";
 import { IChangeableProfile } from "~/src/features/user/model";
 import { MessageI } from "~/src/shared/model";
+import InnLookup from "./inn-lookup";
 
 interface Props extends IQuoteInput {
   changeData: IChangeableProfile;
@@ -34,21 +35,30 @@ export default function QuoteInput({
     case "string":
     case "number":
       return (
-        <TextInput
-          inputClassName={`text-body l text-neutral-900 ${classes.inputWrapper}`}
-          wrapperClassName={classes.input}
-          value={(changeData[field] as string) ?? ""}
-          onChange={(e) => {
-            if (type === "number") {
-              const numValue = Number(e.target.value);
-              if (isNaN(numValue)) return;
-            }
-            onChange(e.target.value, field);
-          }}
-          placeholder={placeholder}
-          maxLength={maxLength}
-          {...commonStringProps}
-        />
+        <div className="flex-column gap-2">
+          <TextInput
+            inputClassName={`text-body l text-neutral-900 ${classes.inputWrapper}`}
+            wrapperClassName={classes.input}
+            value={(changeData[field] as string) ?? ""}
+            onChange={(e) => {
+              if (type === "number") {
+                const numValue = Number(e.target.value);
+                if (isNaN(numValue)) return;
+              }
+              onChange(e.target.value, field);
+            }}
+            placeholder={placeholder}
+            maxLength={maxLength}
+            {...commonStringProps}
+          />
+
+          {field === "inn" && (
+            <InnLookup
+              innValue={(changeData[field] as string) ?? ""}
+              onChange={onChange}
+            />
+          )}
+        </div>
       );
     case "checkbox":
       return (
