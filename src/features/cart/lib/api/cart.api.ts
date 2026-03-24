@@ -1,6 +1,6 @@
 import { apiClient, tryCatch } from "~/src/shared/lib/api";
 import { IGetData } from "~/src/shared/model";
-import { IGetCart } from "~/src/features/cart/model";
+import { IGetCart, IValidateCart } from "~/src/features/cart/model";
 import {
   normalizeLineQuantity,
   normalizeMinOrderQuantity,
@@ -12,6 +12,13 @@ export const getCart = async () => {
     const response = await apiClient.get<IGetData<IGetCart>>(`/cart/`);
 
     return response.data.data;
+  });
+};
+
+export const deleteCart = async () => {
+  return await tryCatch(async () => {
+    const response = await apiClient.delete(`/cart/`);
+    return response.data;
   });
 };
 
@@ -41,7 +48,7 @@ export const updateProductCount = async (
     if (Number.isNaN(pid)) {
       throw new Error("Некорректный id товара");
     }
-    const response = await apiClient.put(`/cart/by-product/${pid}/`, {
+    const response = await apiClient.put(`/cart/${pid}/`, {
       quantity: qty,
     });
     return response.data;
@@ -54,9 +61,18 @@ export const deleteProductFromCart = async (product_id: number) => {
     if (Number.isNaN(pid)) {
       throw new Error("Некорректный id товара");
     }
-    const response = await apiClient.delete(`/cart/by-product/${pid}/`);
+    const response = await apiClient.delete(`/cart/${pid}/`);
 
     return response.data;
+  });
+};
+
+export const validateCart = async () => {
+  return await tryCatch(async () => {
+    const response =
+      await apiClient.post<IGetData<IValidateCart>>(`/cart/validate/`);
+
+    return response.data.data;
   });
 };
 
