@@ -1,3 +1,17 @@
+.root {
+  position: relative;
+  display: inline-flex;
+  z-index: 2;
+}
+
+// Подложка под попап: закрытие по клику вне, без document listener (нет гонок с React/порталом)
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 99990;
+  background: transparent;
+}
+
 .container {
   --container-size: 56px;
   display: grid;
@@ -13,21 +27,15 @@
   transition:
     transform $transition,
     background-color $transition;
-  z-index: 1;
   cursor: pointer;
+  position: relative;
 
   .icon {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) rotate(-15deg);
-    opacity: 0;
-
-    &.active {
-      opacity: 1;
-      transform: translate(-50%, -50%) rotate(-15deg);
-    }
-
+    opacity: 1;
     max-width: 24px;
     max-height: 24px;
   }
@@ -45,4 +53,75 @@
   &.loading {
     background-color: $yellow-400;
   }
+}
+
+.badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #e53935;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+  transform: rotate(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+}
+
+// Позицию задаём inline (портал + position:fixed), иначе перекрытие ссылками/оверлеями карточки
+.popover {
+  padding: 12px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow:
+    0 4px 24px rgba(15, 23, 42, 0.12),
+    0 0 0 1px rgba(15, 23, 42, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.buyNow {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  text-align: center;
+  border-radius: 10px;
+  background: $neutral-200;
+  color: $neutral-1000;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color $transition;
+
+  @media screen and (any-hover: hover) {
+    &:hover {
+      background: $neutral-300;
+    }
+  }
+}
+
+.stepper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 999px;
+  background: $neutral-200;
+}
+
+.stepperValue {
+  min-width: 28px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: $neutral-1000;
 }

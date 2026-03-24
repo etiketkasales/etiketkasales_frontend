@@ -11,11 +11,13 @@ export const useCartButton = ({ updateInfo }: Props) => {
     async (callback: () => Promise<void>) => {
       await promiseWrapper({
         setLoading,
-        callback: async () => {
-          await callback();
-          await updateInfo?.();
-        },
+        callback,
       });
+      try {
+        await updateInfo?.();
+      } catch (e) {
+        console.error(e);
+      }
     },
     [updateInfo],
   );

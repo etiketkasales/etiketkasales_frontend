@@ -7,13 +7,14 @@ import classes from "./plus-minus.module.scss";
 import Plus from "~/public/cart/plus.svg";
 import Minus from "~/public/cart/minus.svg";
 import Button from "~/src/shared/ui/button";
+import { normalizeLineQuantity } from "~/src/features/cart/lib/utils";
 
 interface Props {
   type: "plus" | "minus";
-  quantity: number;
-  min: number;
-  max: number;
-  itemId: number;
+  quantity: number | string;
+  min: number | string;
+  max: number | string;
+  itemId: number | string;
   updateInfo?: () => Promise<void>;
 }
 
@@ -34,8 +35,18 @@ export default function CartCounterPlusMinus({
   const { handleButtonClick, loading } = useCartButton({ updateInfo });
   const Icon = icons[type];
   const isMinus = type === "minus";
-  const isDisabled =
-    loading || (isMinus && quantity === min) || (!isMinus && quantity === max);
+  const qty = Math.floor(Number(quantity)) || 0;
+  const minN = Math.max(1, Math.floor(Number(min)) || 1);
+  const maxNum =
+    max != null && !(typeof max === "string" && max === "")
+      ? Number(max)
+      : NaN;
+  const atMax =
+    !isMinus &&
+    Number.isFinite(maxNum) &&
+    maxNum > 0 &&
+    qty >= maxNum;
+  const isDisabled = loading || (isMinus && qty <= minN) || atMax;
 
   return (
     <Button
@@ -43,10 +54,12 @@ export default function CartCounterPlusMinus({
       size="0"
       onClick={async () => {
         if (!isDisabled) {
-          await handleButtonClick(
-            async () =>
-              await handleUpdateEtiketka(quantity + (isMinus ? -1 : 1)),
+          const next = normalizeLineQuantity(
+            qty + (isMinus ? -1 : 1),
           );
+          await handleButtonClick(async () => {
+            await handleUpdateEtiketka(next);
+          });
         }
       }}
       className={classNames({

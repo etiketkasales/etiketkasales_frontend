@@ -4,8 +4,14 @@ import JwtUtils from "../utils/jwt.utils";
 
 const BASE_URL = process.env.SERVER_API_URL ?? process.env.NEXT_PUBLIC_API_URL;
 
+if (process.env.NODE_ENV === "development" && !BASE_URL?.trim()) {
+  console.warn(
+    "[api] Задайте NEXT_PUBLIC_API_URL или SERVER_API_URL — иначе запросы идут на origin Next.js и корзина/API ломаются.",
+  );
+}
+
 export const apiClient = axios.create({
-  baseURL: BASE_URL,
+  baseURL: BASE_URL || undefined,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",

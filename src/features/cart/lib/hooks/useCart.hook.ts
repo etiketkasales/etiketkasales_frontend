@@ -65,7 +65,7 @@ export const useCart = ({ needInitialize }: Props) => {
         const res = await getCart();
         dispatch(
           setCart({
-            items: res.items,
+            items: Array.isArray(res?.items) ? res.items : [],
             itemsAmount: res.items.reduce(
               (acc, item) => acc + item.quantity,
               0,
