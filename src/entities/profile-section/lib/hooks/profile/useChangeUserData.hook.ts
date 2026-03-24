@@ -1,7 +1,10 @@
 import React, { useCallback, useRef, useState } from "react";
+import { useStore } from "react-redux";
 import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 import { useAppDispatch } from "~/src/app/store/hooks";
 import { useUser } from "~/src/features/user/lib/hooks/useUser.hook";
+
+import type { RootState } from "~/src/app/store";
 
 import { setUser } from "~/src/app/store/reducers/user.slice";
 import { changePersonalData } from "~/src/entities/profile-section/lib/api";
@@ -42,6 +45,7 @@ export const useChangeUserData = ({
   setError,
 }: Props) => {
   const dispatch = useAppDispatch();
+  const store = useStore<RootState>();
   const { setUserData } = useUser();
   const [loading, setLoading] = useState<boolean>(false);
   const createNotification = useCreateNotification();
@@ -51,16 +55,17 @@ export const useChangeUserData = ({
     (v: string, field: keyof IChangeableProfile) => {
       onInputChangeCustom?.(v, field);
       if (!smthChanged.current) smthChanged.current = true;
+      const current = store.getState().user.changeableUserInfo;
       dispatch(
         setUser({
           changeableUserInfo: {
-            ...userInfo,
+            ...current,
             [field]: v,
           } as IChangeableProfile,
         }),
       );
     },
-    [dispatch, userInfo, onInputChangeCustom],
+    [dispatch, store, onInputChangeCustom],
   );
 
   const onBooleanChange = useCallback(
@@ -87,6 +92,7 @@ export const useChangeUserData = ({
       overrideUserInfo,
       skipSave,
       needChanges,
+      forceSave,
     }: IOnSaveChangesProps) => {
       await promiseWrapper({
         setLoading,
@@ -95,7 +101,7 @@ export const useChangeUserData = ({
           if (!data) return;
           const hasError = validationFunction && !validationFunction();
           if (hasError) return;
-          if ((!smthChanged.current || skipSave) && needChanges) {
+          if ((!smthChanged.current || skipSave) && needChanges && !forceSave) {
             onSaveCallback?.();
             smthChanged.current = false;
             return;

@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import QuoteRejected from "./rejected";
 import QuotePending from "./pending";
 import QuoteDraft from "./draft";
@@ -16,6 +17,12 @@ interface Props {
 export default function ProfileQuote({ moderationStage, rejectReason }: Props) {
   const { push } = useRouter();
 
+  useEffect(() => {
+    if (moderationStage === "approved" || moderationStage === "verified") {
+      push("/profile/seller?active_section=profile");
+    }
+  }, [moderationStage, push]);
+
   switch (moderationStage) {
     default:
       return null;
@@ -26,8 +33,7 @@ export default function ProfileQuote({ moderationStage, rejectReason }: Props) {
       return <QuotePending />;
     case "approved":
     case "verified":
-      push("/profile/seller?active_section=profile");
-      return;
+      return null;
     case "draft":
       return <QuoteDraft />;
   }

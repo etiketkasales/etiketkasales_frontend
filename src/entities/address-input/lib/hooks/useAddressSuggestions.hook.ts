@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDebounce } from "react-use";
 import { useAppDispatch } from "~/src/app/store/hooks";
 import { useAsyncFn } from "~/src/shared/lib";
@@ -15,15 +15,25 @@ interface Props {
 export const useAddressSuggestions = ({ defaultValue }: Props) => {
   const dispatch = useAppDispatch();
   const { loading, promise } = useAsyncFn();
-  const [searchQuery, setSearchQuery] = useState<string>(defaultValue);
+  const normalizedDefault = defaultValue ?? "";
+  const [searchQuery, setSearchQuery] = useState<string>(normalizedDefault);
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const [suggestions, setSuggestions] = useState<IAddressSuggestionResponse[]>(
     [],
   );
   const skipNextRequest = useRef<boolean>(false);
 
-  // Для того, чтобы не значение по умолчанию не менялось от каждого ввода
-  const firstDefaultValue = useRef<string>(defaultValue);
+  const firstDefaultValue = useRef<string>(normalizedDefault);
+  const lastExternalValue = useRef<string>(normalizedDefault);
+
+  useEffect(() => {
+    const next = defaultValue ?? "";
+    if (next !== lastExternalValue.current) {
+      lastExternalValue.current = next;
+      firstDefaultValue.current = next;
+      setSearchQuery(next);
+    }
+  }, [defaultValue]);
 
   const getSuggestions = useCallback(
     async (q: string) => {

@@ -69,4 +69,5 @@ export interface IOnSaveChangesProps {
   overrideUserInfo?: IChangeableProfile;
   skipSave?: boolean;
   needChanges?: boolean;
+  forceSave?: boolean;
 }

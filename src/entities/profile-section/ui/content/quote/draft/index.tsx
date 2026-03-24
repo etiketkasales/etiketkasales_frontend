@@ -1,4 +1,5 @@
 "use client";
+import { useCallback } from "react";
 import { useRegisterCompany } from "~/src/entities/profile-section/lib/hooks";
 
 import classes from "./draft.module.scss";
@@ -12,6 +13,7 @@ import {
   profileTitlesMap,
   quoteStageNumbers,
 } from "~/src/entities/profile-section/model";
+import type { IOnSaveChangesProps } from "~/src/entities/profile-section/model";
 
 export default function QuoteDraft() {
   const {
@@ -24,6 +26,24 @@ export default function QuoteDraft() {
     onSave,
     error,
   } = useRegisterCompany();
+
+  const onSaveQuote = useCallback(
+    async (args: IOnSaveChangesProps) => {
+      if (stage === "agreement") {
+        await onSave({
+          ...args,
+          forceSave: true,
+          overrideUserInfo: {
+            ...changeableUserInfo,
+            agreement_accepted: true,
+          },
+        });
+        return;
+      }
+      await onSave(args);
+    },
+    [stage, changeableUserInfo, onSave],
+  );
 
   const contentSwitcher = () => {
     const commonProps = {
@@ -54,7 +74,7 @@ export default function QuoteDraft() {
       {contentSwitcher()}
       <QuoteButtons
         setPrevStage={setPrevStage}
-        onSave={onSave}
+        onSave={onSaveQuote}
         needBackButton={stage !== "about"}
         stageNumber={quoteStageNumbers[stage]}
         loading={loading}
