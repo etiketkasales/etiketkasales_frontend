@@ -28,15 +28,16 @@ export default function ItemWrapperTop({
           className={classes.image}
         />
       </Link>
-      <CartButton
-        className={classes.button}
-        type="with_icon"
-        itemId={item.id}
-        quantity={item.cart_quantity}
-        minQuantity={item.min_order_quantity}
-        updateInfo={updateInfo}
-        maxQuantity={item.stock_quantity}
-      />
+      <div className={classes.cartAnchor}>
+        <CartButton
+          type="with_icon"
+          itemId={item.id}
+          quantity={item.cart_quantity}
+          minQuantity={item.min_order_quantity}
+          updateInfo={updateInfo}
+          maxQuantity={item.stock_quantity}
+        />
+      </div>
     </div>
   );
 }
