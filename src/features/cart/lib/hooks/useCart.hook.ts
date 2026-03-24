@@ -62,11 +62,17 @@ export const useCart = ({ needInitialize }: Props) => {
     await promiseWrapper({
       setLoading,
       callback: async () => {
-        const res = await getCart();
+        let res = await getCart();
+        let safeItems = Array.isArray(res?.items) ? res.items : [];
+        if (safeItems.length === 0) {
+          await new Promise((resolve) => setTimeout(resolve, 180));
+          res = await getCart();
+          safeItems = Array.isArray(res?.items) ? res.items : [];
+        }
         dispatch(
           setCart({
-            items: Array.isArray(res?.items) ? res.items : [],
-            itemsAmount: res.items.reduce(
+            items: safeItems,
+            itemsAmount: safeItems.reduce(
               (acc, item) => acc + item.quantity,
               0,
             ),

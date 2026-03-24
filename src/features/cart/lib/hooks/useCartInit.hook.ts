@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 
-import { selectUser } from "~/src/app/store/reducers/user.slice";
 import { selectCart, setCart } from "~/src/app/store/reducers/cart.slice";
 import {
   selectOrder,
@@ -19,15 +18,13 @@ export const useCartInit = ({ updateCart, needInitialize }: Props) => {
   const dispatch = useAppDispatch();
   const { items } = useAppSelector(selectCart);
   const { itemsToOrder } = useAppSelector(selectOrder);
-  const { isLoggedIn } = useAppSelector(selectUser);
   const [sellerItems, setSellerItems] = useState<Array<ICartItem[]>>([]);
 
   useEffect(() => {
-    if (!isLoggedIn) return;
     if (items.length !== 0) return;
     if (!needInitialize) return;
-    updateCart();
-  }, [updateCart, isLoggedIn, needInitialize]);
+    void updateCart();
+  }, [updateCart, needInitialize, items.length]);
 
   useEffect(() => {
     dispatch(

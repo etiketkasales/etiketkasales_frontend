@@ -11,8 +11,11 @@ import {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
+import { useAppSelector } from "~/src/app/store/hooks";
+import { selectCart } from "~/src/app/store/reducers/cart.slice";
 import { useCartItems } from "~/src/features/cart/lib/hooks";
 import { useCartButton } from "~/src/entities/cart-button/lib/hooks";
+import { normalizeLineQuantity } from "~/src/features/cart/lib/utils";
 
 import classes from "./with-icon.module.scss";
 import CartFill from "~/public/shared/cart-fill.svg";
@@ -30,16 +33,26 @@ export default function CartButtonWithIcon({
   className,
   updateInfo,
 }: Props) {
-  const min = minQuantity || 1;
-  const max = maxQuantity;
-  const qtyInCart = (() => {
+  const { items } = useAppSelector(selectCart);
+  const min = Math.max(1, Math.floor(Number(minQuantity)) || 1);
+  const maxNum = Math.floor(Number(maxQuantity));
+  const max = Number.isFinite(maxNum) && maxNum > 0 ? maxNum : undefined;
+  const qtyFromProp = (() => {
     const n = Number(quantity);
     if (!Number.isFinite(n) || n <= 0) return 0;
     return Math.floor(n);
   })();
-  const { handleAddEtiketka } = useCartItems({ itemId });
+  const qtyFromStore = (() => {
+    const inStore = items.find((i) => Number(i.product_id) === Number(itemId));
+    const n = Number(inStore?.quantity);
+    if (!Number.isFinite(n) || n <= 0) return 0;
+    return Math.floor(n);
+  })();
+  const qtyInCart = Math.max(qtyFromProp, qtyFromStore);
+  const { handleAddEtiketka, handleUpdateEtiketka } = useCartItems({ itemId });
   const { handleButtonClick, loading } = useCartButton({ updateInfo });
   const [popoverOpen, setPopoverOpen] = useState(false);
+  const [draftQty, setDraftQty] = useState<string>("");
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
   const [popoverStyle, setPopoverStyle] = useState<CSSProperties>({});
@@ -51,6 +64,11 @@ export default function CartButtonWithIcon({
   useEffect(() => {
     if (qtyInCart <= 0) setPopoverOpen(false);
   }, [qtyInCart]);
+
+  useEffect(() => {
+    if (!popoverOpen) return;
+    setDraftQty(String(qtyInCart));
+  }, [popoverOpen, qtyInCart]);
 
   useEffect(() => {
     if (!popoverOpen) return;
@@ -103,6 +121,17 @@ export default function CartButtonWithIcon({
     setPopoverOpen((open) => !open);
   };
 
+  const applyDraftQty = async () => {
+    if (qtyInCart <= 0) return;
+    const parsed = Number(draftQty);
+    let next = normalizeLineQuantity(parsed);
+    if (next < min) next = min;
+    if (typeof max === "number" && next > max) next = max;
+    setDraftQty(String(next));
+    if (next === qtyInCart) return;
+    await handleButtonClick(() => handleUpdateEtiketka(next));
+  };
+
   const badgeText =
     qtyInCart > 99 ? "99+" : qtyInCart > 0 ? String(qtyInCart) : "";
 
@@ -143,7 +172,29 @@ export default function CartButtonWithIcon({
                 itemId={itemId}
                 updateInfo={updateInfo}
               />
-              <span className={classes.stepperValue}>{qtyInCart}</span>
+              <input
+                type="number"
+                min={min}
+                max={max}
+                value={draftQty}
+                inputMode="numeric"
+                pattern="[0-9]*"
+                className={classes.stepperInput}
+                onClick={(e) => e.stopPropagation()}
+                onChange={(e) => {
+                  const digitsOnly = e.target.value.replace(/\D+/g, "");
+                  setDraftQty(digitsOnly);
+                }}
+                onBlur={() => {
+                  void applyDraftQty();
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    void applyDraftQty();
+                  }
+                }}
+              />
               <CartCounterPlusMinus
                 type="plus"
                 quantity={qtyInCart}
