@@ -17,9 +17,12 @@ export type ButtonTypeButtonT =
   | "yellow-border";
 
 interface Props<T extends ElementType>
-  extends React.HTMLAttributes<HTMLButtonElement> {
+  extends Omit<React.HTMLAttributes<HTMLButtonElement>, "onClick" | "type"> {
   typeButton: ButtonTypeButtonT;
-  size?: string; //4-12 6-10 10; в пикселях
+  /** HTML type у нативной кнопки (по умолчанию button, не submit) */
+  /** HTML-атрибут нативной кнопки; по умолчанию `button` (не submit) */
+  type?: "button" | "submit" | "reset";
+  size?: string;
   radius?: number;
   needActiveScale?: boolean;
   className?: string;
@@ -48,6 +51,7 @@ export default function Button<T extends ElementType>({
   ref,
   blank,
   customClickWithHref,
+  type = "button",
   ...rest
 }: Props<T>) {
   const { prefetch, push } = useRouter();
@@ -70,13 +74,17 @@ export default function Button<T extends ElementType>({
 
   const Tag = as || "button";
 
+  const nativeButtonType =
+    Tag === "button" || as === undefined ? type : undefined;
+
   return (
     <Tag
+      type={nativeButtonType}
       onClick={() => {
         if (customClickWithHref) {
           customClickWithHref();
         } else {
-          onClick?.();
+          void Promise.resolve(onClick?.()).catch((e) => console.error(e));
           if (href) {
             push(href);
           }

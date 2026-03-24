@@ -28,6 +28,7 @@ export default function ItemWrapper({ item, className }: Props) {
         item={itemInfo}
         image={itemInfo.images[0]}
         updateInfo={updateInfo}
+        productLink={link}
       />
       <ItemWrapperCaption
         title={itemInfo.name}

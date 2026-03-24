@@ -1,3 +1,4 @@
+import Link from "next/link";
 import classes from "./item-wrapper-top.module.scss";
 import CartButton from "~/src/entities/cart-button/ui";
 import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
@@ -7,18 +8,26 @@ interface Props {
   item: IEtiketka;
   image: string;
   updateInfo: () => Promise<void>;
+  productLink: string;
 }
 
-export default function ItemWrapperTop({ updateInfo, item, image }: Props) {
+export default function ItemWrapperTop({
+  updateInfo,
+  item,
+  image,
+  productLink,
+}: Props) {
   return (
     <div className={`relative ${classes.container}`}>
-      <ImageWrapper
-        src={image ? image : ""}
-        width={222}
-        height={222}
-        alt=""
-        className={classes.image}
-      />
+      <Link href={productLink} className={classes.imageLink} prefetch>
+        <ImageWrapper
+          src={image ? image : ""}
+          width={222}
+          height={222}
+          alt=""
+          className={classes.image}
+        />
+      </Link>
       <CartButton
         className={classes.button}
         type="with_icon"

@@ -5,28 +5,42 @@ export const useClickOutside = <T extends HTMLElement>(
   onClickOutside: () => void,
   ref?: RefObject<T | null>,
   disabled?: boolean,
+  extraRefs?: ReadonlyArray<RefObject<HTMLElement | null> | null | undefined>,
 ) => {
   const defaultRef = useRef<T | null>(null);
 
   useEffect(() => {
     if (disabled) return;
 
-    const handler = (event: MouseEvent | PointerEvent | TouchEvent) => {
-      const target = event.target as Node | null;
+    const isInsideRefs = (event: MouseEvent | PointerEvent | TouchEvent) => {
       const currentRef = defaultRef.current ?? ref?.current;
-      if (!currentRef || !target) return;
-      if (currentRef.contains(target)) return;
-      onClickOutside();
+      if (!currentRef) return false;
+
+      const path =
+        "composedPath" in event && typeof event.composedPath === "function"
+          ? event.composedPath()
+          : [event.target];
+
+      return path.some((node) => {
+        if (!(node instanceof Node)) return false;
+        if (currentRef.contains(node)) return true;
+        return Boolean(
+          extraRefs?.some((er) => er?.current && er.current.contains(node)),
+        );
+      });
     };
 
-    document.addEventListener("pointerdown", handler as EventListener);
-    document.addEventListener("mousedown", handler as EventListener);
+    const handler = (event: MouseEvent | PointerEvent | TouchEvent) => {
+      if (isInsideRefs(event)) return;
+      queueMicrotask(() => onClickOutside());
+    };
+
+    document.addEventListener("click", handler as EventListener);
 
     return () => {
-      document.removeEventListener("pointerdown", handler as EventListener);
-      document.removeEventListener("mousedown", handler as EventListener);
+      document.removeEventListener("click", handler as EventListener);
     };
-  }, [ref, onClickOutside, disabled]);
+  }, [ref, onClickOutside, disabled, extraRefs]);
 
   return defaultRef;
 };
