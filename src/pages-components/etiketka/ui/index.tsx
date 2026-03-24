@@ -21,7 +21,7 @@ export default function EtiketkaPage({ initProductInfo }: Props) {
       TabsButton={
         <EtiketkaTabsButton
           itemId={productInfo.id}
-          quantity={productInfo.cart_quantity}
+          quantity={productInfo.quantity ?? productInfo.cart_quantity}
           min={productInfo.min_order_quantity}
           max={productInfo.stock_quantity}
           updateInfo={updateInfo}

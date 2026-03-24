@@ -1,9 +1,10 @@
 import { useCallback } from "react";
 import { useAppDispatch } from "~/src/app/store/hooks";
-import { setUser } from "~/src/app/store/reducers/user.slice";
-import { useUserCompanies } from "./useUserCompanies.hook";
+import { useCart } from "~/src/features/cart/lib/hooks";
+import { useUserCompanies, useAddresses } from ".";
+
 import { getProfile } from "~/src/features/user/lib/api/user.api";
-import { useAddresses } from "./useAddresses.hook";
+import { setUser } from "~/src/app/store/reducers/user.slice";
 
 import { profileChangeableFields } from "~/src/features/user/model/user.const";
 import { IChangeableProfile, IProfile } from "~/src/features/user/model";
@@ -18,6 +19,7 @@ export const useUser = () => {
   const dispatch = useAppDispatch();
   const { handleGetCompanies } = useUserCompanies();
   const { getAddresses } = useAddresses();
+  const { updateCart } = useCart({ needInitialize: false });
   const setLoading = useCallback(
     (loading: boolean) => {
       dispatch(setUser({ loadingData: loading }));
@@ -53,6 +55,7 @@ export const useUser = () => {
       const res = await getProfile();
       await handleGetCompanies();
       await getAddresses();
+      await updateCart();
       if (res.user) {
         setUserData(res.user);
       } else {

@@ -17,4 +17,5 @@ export const productSkeleton: IEtiketka = {
   cart_quantity: 0,
   min_order_quantity: 0,
   stock_quantity: 0,
+  quantity: 0,
 };

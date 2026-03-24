@@ -1,4 +1,3 @@
-"use client";
 import classes from "./price-cart.module.scss";
 import EtiketkaMainContainer from "~/src/entities/etiketka/ui/container";
 import Price from "~/src/shared/ui/price/ui";
@@ -19,7 +18,7 @@ export default function EtiketkaPriceCart({ item, updateInfo }: Props) {
       <div className="flex-row gap-10px align-center">
         <CartButton
           itemId={item.id}
-          quantity={item.cart_quantity}
+          quantity={item.quantity ?? item.cart_quantity}
           minQuantity={item.min_order_quantity}
           maxQuantity={item.stock_quantity}
           type="with_text"

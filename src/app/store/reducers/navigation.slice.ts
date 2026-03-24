@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { UserLocation } from "~/src/shared/lib";
 
 interface NavigationStateI {
   modalOpen: boolean;
@@ -9,6 +10,7 @@ interface NavigationStateI {
   loaded: boolean;
   cities: string[];
   activeTabsItem: string;
+  userLocation: UserLocation | null;
   [key: string]: any;
 }
 
@@ -21,6 +23,7 @@ const initialState: NavigationStateI = {
   loaded: false,
   activeTabsItem: "",
   cities: [],
+  userLocation: null,
 };
 
 export const navigationSlice = createSlice({
