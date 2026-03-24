@@ -13,12 +13,14 @@
   text-decoration: none;
 }
 
-.button {
+// Нижний правый угол фото: половина кнопки на изображении, половина — в зоне цены (как в макете)
+.cartAnchor {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   right: $space-10px;
-  bottom: -$space-4;
-  cursor: pointer;
+  bottom: 0;
+  transform: translateY(50%);
+  line-height: 0;
 }
 
 .image {
@@ -27,13 +29,3 @@
   aspect-ratio: 1;
 }
 
-@media screen and (any-hover: hover) {
-  .button:hover {
-    rotate: 0deg;
-    filter: brightness(0.95);
-
-    svg {
-      rotate: 0deg;
-    }
-  }
-}
