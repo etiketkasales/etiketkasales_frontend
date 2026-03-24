@@ -13,7 +13,7 @@ interface Props {
   type: "plus" | "minus";
   quantity: number | string;
   min: number | string;
-  max: number | string;
+  max?: number | string;
   itemId: number | string;
   updateInfo?: () => Promise<void>;
 }
