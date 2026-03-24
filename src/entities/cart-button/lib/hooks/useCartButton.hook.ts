@@ -13,11 +13,7 @@ export const useCartButton = ({ updateInfo }: Props) => {
         setLoading,
         callback,
       });
-      try {
-        await updateInfo?.();
-      } catch (e) {
-        console.error(e);
-      }
+      void updateInfo?.();
     },
     [updateInfo],
   );
