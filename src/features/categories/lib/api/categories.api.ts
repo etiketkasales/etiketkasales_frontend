@@ -17,7 +17,17 @@ export const getRandomCategories = async () => {
         },
       },
     );
-    return response.data.data;
+    return (response.data.data ?? []).map((section) => ({
+      ...section,
+      products: (section.products ?? []).map((product) => ({
+        ...product,
+        min_order_quantity: Number(
+          (product as any).min_order_quantity ??
+            (product as any).min_order ??
+            1,
+        ),
+      })),
+    }));
   });
 
   return res;

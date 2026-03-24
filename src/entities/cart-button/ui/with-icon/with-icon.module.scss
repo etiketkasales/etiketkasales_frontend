@@ -125,3 +125,22 @@
   font-size: 15px;
   color: $neutral-1000;
 }
+
+.stepperInput {
+  width: 52px;
+  min-width: 52px;
+  border: none;
+  background: transparent;
+  text-align: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: $neutral-1000;
+  outline: none;
+  appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    margin: 0;
+    appearance: none;
+  }
+}
