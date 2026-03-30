@@ -6,6 +6,7 @@ import Button from "~/src/shared/ui/button";
 interface Props {
   modalStage: number;
   onNext: () => Promise<void>;
+  onSaveDraft: () => Promise<void>;
   onPrev: () => void;
 }
 
@@ -18,6 +19,7 @@ interface IButton {
 export default function NewProductModalButtons({
   modalStage,
   onNext,
+  onSaveDraft,
   onPrev,
 }: Props) {
   const buttons: IButton[] = [
@@ -31,6 +33,13 @@ export default function NewProductModalButtons({
       type: "white",
       onClick: onPrev,
     },
+    {
+      title: "Сохранить черновик",
+      type: "white",
+      onClick: () => {
+        void onSaveDraft();
+      },
+    },
   ];
 
   return (
@@ -40,6 +49,8 @@ export default function NewProductModalButtons({
         {buttons.map((item, index) => {
           const color = `text-${item.type === "yellow" ? "yellow-1000" : "neutral-800"}`;
           if (item.type === "white" && modalStage === 1) return null;
+          if (item.title === "Сохранить черновик" && modalStage !== 2)
+            return null;
           return (
             <Button
               key={`${index}-${item.title}`}

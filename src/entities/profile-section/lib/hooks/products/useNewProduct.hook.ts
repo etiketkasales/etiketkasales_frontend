@@ -74,7 +74,10 @@ export const useNewProduct = ({ onClose, setSellerProducts }: Props) => {
     await promiseWrapper({
       setLoading,
       callback: async () => {
-        await createNewProduct(newProduct);
+        await createNewProduct({
+          ...newProduct,
+          status_code: "pending",
+        });
         await updateSellerProducts();
         createNotification("Товар добавлен", "success");
         setNewProduct(newProductSkeleton);
@@ -85,7 +88,13 @@ export const useNewProduct = ({ onClose, setSellerProducts }: Props) => {
       fallback: (errMessage) =>
         createNotification(errMessage || "Не удалось добавить товар", "error"),
     });
-  }, [onClose, updateSellerProducts, newProduct, createNotification]);
+  }, [
+    newProduct,
+    updateSellerProducts,
+    createNotification,
+    setCurrentImages,
+    onClose,
+  ]);
 
   const onNextBtnClick = useCallback(async () => {
     const hasError = getStageError(modalStage);
@@ -97,6 +106,35 @@ export const useNewProduct = ({ onClose, setSellerProducts }: Props) => {
       setModalStage(2);
     }
   }, [modalStage, onSave, getStageError]);
+
+  const onSaveDraft = useCallback(async () => {
+    await promiseWrapper({
+      setLoading,
+      callback: async () => {
+        await createNewProduct({
+          ...newProduct,
+          status_code: "draft",
+        });
+        await updateSellerProducts();
+        createNotification("Черновик сохранён", "success");
+        setNewProduct(newProductSkeleton);
+        setCurrentImages([]);
+        setModalStage(1);
+        onClose();
+      },
+      fallback: (errMessage) =>
+        createNotification(
+          errMessage || "Не удалось сохранить черновик",
+          "error",
+        ),
+    });
+  }, [
+    onClose,
+    updateSellerProducts,
+    newProduct,
+    createNotification,
+    setCurrentImages,
+  ]);
 
   useEffect(() => {
     if (!error) return;
@@ -110,6 +148,7 @@ export const useNewProduct = ({ onClose, setSellerProducts }: Props) => {
     onFileLoad,
     currentImages,
     onNextBtnClick,
+    onSaveDraft,
     setModalStage,
     modalStage,
     error,
