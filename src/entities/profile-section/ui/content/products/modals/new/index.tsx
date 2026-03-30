@@ -32,6 +32,7 @@ export default function NewSellerProductModal({
     setModalStage,
     error,
     onNextBtnClick,
+    onSaveDraft,
     onDeleteImage,
     setRequiredFilters,
   } = useNewProduct({
@@ -72,6 +73,7 @@ export default function NewSellerProductModal({
       <NewProductModalButtons
         modalStage={modalStage}
         onNext={onNextBtnClick}
+        onSaveDraft={onSaveDraft}
         onPrev={() => setModalStage(1)}
       />
     </Modal>

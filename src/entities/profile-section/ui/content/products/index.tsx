@@ -13,13 +13,16 @@ import {
   ISellerProductsModal,
   modalTitles,
   profileTitlesMap,
+  SellerProductStatusCode,
 } from "~/src/entities/profile-section/model";
-import ProductImagesEditor from "~/src/entities/product-images-editor/ui";
 
 interface Props {}
 
 export default function ProfileProducts({}: Props) {
   const [sellerProducts, setSellerProducts] = useState<ISellerProduct[]>([]);
+  const [statusFilter, setStatusFilter] = useState<
+    "all" | SellerProductStatusCode
+  >("all");
   const { loading, editProductId, setEditProductId } = useSellerProducts({
     needLoad: true,
     setSellerProducts,
@@ -28,17 +31,51 @@ export default function ProfileProducts({}: Props) {
     active: null,
     type: "new",
   });
+  const filteredProducts =
+    statusFilter === "all"
+      ? sellerProducts
+      : sellerProducts.filter((p) => p.status_code === statusFilter);
 
   return (
     <ProfileContentContainer
       title={profileTitlesMap.products}
       className={`flex-column ${classes.container}`}
     >
+      <div className={`flex-row gap-3 ${classes.filters}`}>
+        <button
+          type="button"
+          className={`${classes.filterBtn} ${statusFilter === "all" ? classes.filterBtnActive : ""}`}
+          onClick={() => setStatusFilter("all")}
+        >
+          Все
+        </button>
+        <button
+          type="button"
+          className={`${classes.filterBtn} ${statusFilter === "draft" ? classes.filterBtnActive : ""}`}
+          onClick={() => setStatusFilter("draft")}
+        >
+          Черновики
+        </button>
+        <button
+          type="button"
+          className={`${classes.filterBtn} ${statusFilter === "pending" ? classes.filterBtnActive : ""}`}
+          onClick={() => setStatusFilter("pending")}
+        >
+          На модерации
+        </button>
+        <button
+          type="button"
+          className={`${classes.filterBtn} ${statusFilter === "approved" ? classes.filterBtnActive : ""}`}
+          onClick={() => setStatusFilter("approved")}
+        >
+          Опубликованные
+        </button>
+      </div>
       {loading ? (
         <Loader radius={20} className={classes.loader} />
       ) : (
         <ProfileProductsList
-          products={sellerProducts}
+          products={filteredProducts}
           setModalId={(n) => setEditProductId(n)}
           setModalActive={() =>
             setModal({
