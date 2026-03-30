@@ -38,15 +38,11 @@ export default function CartCounterPlusMinus({
   const qty = Math.floor(Number(quantity)) || 0;
   const minN = Math.max(1, Math.floor(Number(min)) || 1);
   const maxNum =
-    max != null && !(typeof max === "string" && max === "")
-      ? Number(max)
-      : NaN;
+    max != null && !(typeof max === "string" && max === "") ? Number(max) : NaN;
+  const outOfStock = !isMinus && Number.isFinite(maxNum) && maxNum <= 0;
   const atMax =
-    !isMinus &&
-    Number.isFinite(maxNum) &&
-    maxNum > 0 &&
-    qty >= maxNum;
-  const isDisabled = loading || (isMinus && qty <= minN) || atMax;
+    !isMinus && Number.isFinite(maxNum) && maxNum > 0 && qty >= maxNum;
+  const isDisabled = loading || (isMinus && qty <= minN) || outOfStock || atMax;
 
   return (
     <Button
@@ -54,9 +50,7 @@ export default function CartCounterPlusMinus({
       size="0"
       onClick={async () => {
         if (!isDisabled) {
-          const next = normalizeLineQuantity(
-            qty + (isMinus ? -1 : 1),
-          );
+          const next = normalizeLineQuantity(qty + (isMinus ? -1 : 1));
           await handleButtonClick(async () => {
             await handleUpdateEtiketka(next);
           });
