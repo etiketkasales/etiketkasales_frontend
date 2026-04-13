@@ -1,10 +1,12 @@
 "use client";
 import { useMemo } from "react";
+import { useRouter } from "next/navigation";
 
 import classes from "./aside-items.module.scss";
 import ProfileContainer from "~/src/entities/profile-section/ui/container";
 import ProfileAsideItem from "./item";
-import { UserRoleType } from "~/src/features/user/model";
+import { IProfile, UserRoleType } from "~/src/features/user/model";
+import { getEffectiveAdminRole } from "~/src/refine/auth/roles";
 import {
   buyerTabs,
   profileDangerousActions,
@@ -16,6 +18,7 @@ import { ProfileActionType } from "~/src/entities/profile-section/model/profile.
 
 interface Props {
   userRole: UserRoleType | "seller-pending";
+  userInfo: IProfile;
   activeSection: string | null;
   onItemClick: (section: string) => void;
   setModalActive: (type: ProfileActionType) => void;
@@ -23,10 +26,13 @@ interface Props {
 
 export default function ProfileAsideItems({
   userRole,
+  userInfo,
   activeSection,
   onItemClick,
   setModalActive,
 }: Props) {
+  const { push } = useRouter();
+  const showAdmin = Boolean(getEffectiveAdminRole(userInfo));
   const itemsToMap = useMemo(() => {
     switch (userRole) {
       default:
@@ -67,6 +73,14 @@ export default function ProfileAsideItems({
           />
         );
       })}
+      {showAdmin && (
+        <ProfileAsideItem
+          key="admin-panel"
+          title="Админ-панель"
+          onClick={() => push("/admin/dashboard")}
+          isActive={false}
+        />
+      )}
     </ProfileContainer>
   );
 }

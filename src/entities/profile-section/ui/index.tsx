@@ -25,6 +25,7 @@ export default function ProfileSection({
     <div className={`flex-row ${classes.container}`}>
       <ProfileAside
         userRole={userRole}
+        userInfo={userInfo}
         activeSection={activeSection}
         onItemClick={onItemClick}
         setModalActive={setModalActive}

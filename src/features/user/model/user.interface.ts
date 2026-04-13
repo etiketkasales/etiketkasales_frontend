@@ -60,12 +60,21 @@ export interface IProfile extends IChangeableProfile {
   seller_approved_at: string | null; //2025-01-29T10:00:00Z
   agreement_accepted_at: string | null; //2025-01-29T10:00:00Z
   role: UserRoleType;
+  staff_role?: StaffRoleType | null;
   is_active: boolean;
   created_at: string; //2025-01-29T10:00:00Z
   updated_at: string; //2025-01-29T10:00:00Z
 }
 
 export type UserRoleType = "buyer" | "seller";
+
+/** Права в админ-панели (не путать с role buyer/seller на витрине). */
+export type StaffRoleType =
+  | "admin"
+  | "super_admin"
+  | "content_moderator"
+  | "support_agent"
+  | "analyst";
 
 export interface IUserCompanyBase {
   name: string;

@@ -2,11 +2,13 @@
 import classes from "./aside.module.scss";
 import ProfileAsideItems from "./items";
 import ProfileSwitchRole from "./switch-role";
-import { UserRoleType } from "~/src/features/user/model";
+import { IProfile, UserRoleType } from "~/src/features/user/model";
 import { ProfileActionType } from "~/src/entities/profile-section/model";
+import React from "react";
 
 interface Props {
   userRole: UserRoleType | "seller-pending";
+  userInfo: IProfile;
   activeSection: string | null;
   onItemClick: (section: string) => void;
   setModalActive: (type: ProfileActionType) => void;
@@ -14,6 +16,7 @@ interface Props {
 
 export default function ProfileAside({
   userRole,
+  userInfo,
   activeSection,
   onItemClick,
   setModalActive,
@@ -29,6 +32,7 @@ export default function ProfileAside({
     >
       <ProfileAsideItems
         userRole={userRole}
+        userInfo={userInfo}
         activeSection={activeSection}
         onItemClick={onItemClick}
         setModalActive={setModalActive}
