@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 import path from "path";
 
 const nextConfig: NextConfig = {
+  transpilePackages: ["antd", "@ant-design/icons", "@refinedev/antd"],
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,

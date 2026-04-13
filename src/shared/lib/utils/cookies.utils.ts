@@ -1,5 +1,5 @@
 import { jwtDecode } from "jwt-decode";
-import { IJwtToken } from "../../model/shared.interface";
+import { IJwtToken } from "~/src/shared/model";
 
 class CookieUtils {
   private static exceptFunction(callback: () => string | undefined) {
@@ -94,12 +94,11 @@ class CookieUtils {
 
   static deleteCookie(name: string) {
     return this.exceptFunction(() => {
-      if (document) {
-        this.setCookie(name, "", {
-          "max-age": -1,
-        });
-        return undefined;
-      }
+      if (!document) return undefined;
+      const isDev = process.env.NODE_ENV === "development";
+      const secure = !isDev ? "; Secure" : "";
+      document.cookie = `${encodeURIComponent(name)}=; path=/; max-age=0; SameSite=Lax${secure}`;
+      return undefined;
     });
   }
 }
