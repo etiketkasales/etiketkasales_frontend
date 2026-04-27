@@ -34,12 +34,18 @@ export const getRandomCategories = async () => {
 };
 
 export const getCategories = async () => {
-  const res = await tryCatch(async () => {
-    const response = await apiClient.get<IGetData<ICategory[]>>(`/categories/`);
+  return await tryCatch(async () => {
+    const response = await apiClient.get<IGetData<ICategory[]>>(
+      `/categories/`,
+      {
+        params: {
+          for_home: 1,
+        },
+      },
+    );
 
-    return response.data.data;
+    return response.data.data ?? [];
   });
-  return res;
 };
 
 export const getCategoriesTree = async () => {
