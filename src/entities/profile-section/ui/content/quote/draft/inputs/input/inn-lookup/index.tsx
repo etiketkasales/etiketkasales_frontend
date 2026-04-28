@@ -42,8 +42,7 @@ export default function InnLookup({ innValue, onChange }: Props) {
 
     const prevOk = prev.length === 10 || prev.length === 12;
     const nextOk = d.length === 10 || d.length === 12;
-    const shouldClear =
-      (prevOk && !nextOk) || (prevOk && nextOk && prev !== d);
+    const shouldClear = (prevOk && !nextOk) || (prevOk && nextOk && prev !== d);
 
     if (shouldClear) {
       for (const field of INN_LOOKUP_FIELDS) {

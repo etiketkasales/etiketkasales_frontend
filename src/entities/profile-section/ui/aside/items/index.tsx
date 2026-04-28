@@ -79,6 +79,7 @@ export default function ProfileAsideItems({
           title="Админ-панель"
           onClick={() => push("/admin/dashboard")}
           isActive={false}
+          prefetchLink="/admin/dashboard"
         />
       )}
     </ProfileContainer>

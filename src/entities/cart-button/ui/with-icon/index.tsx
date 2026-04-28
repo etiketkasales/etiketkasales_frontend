@@ -83,10 +83,7 @@ export default function CartButtonWithIcon({
     if (!wrapperRef.current) return;
     const r = wrapperRef.current.getBoundingClientRect();
     const w = Math.min(220, Math.floor(window.innerWidth * 0.7));
-    const left = Math.min(
-      Math.max(8, r.right - w),
-      window.innerWidth - w - 8,
-    );
+    const left = Math.min(Math.max(8, r.right - w), window.innerWidth - w - 8);
     setPopoverStyle({
       position: "fixed",
       left,
@@ -228,7 +225,10 @@ export default function CartButtonWithIcon({
       >
         <CartFill className={classes.icon} />
         {qtyInCart > 0 && (
-          <span className={classes.badge} aria-label={`В корзине: ${qtyInCart}`}>
+          <span
+            className={classes.badge}
+            aria-label={`В корзине: ${qtyInCart}`}
+          >
             {badgeText}
           </span>
         )}
