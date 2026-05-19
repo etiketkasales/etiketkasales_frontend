@@ -20,6 +20,7 @@ export const SProfile: IProfile = {
   phone: "",
   role: "buyer",
   staff_role: null,
+  status: "active",
   is_active: true,
   created_at: "",
   avatar: "",

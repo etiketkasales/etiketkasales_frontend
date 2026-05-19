@@ -5,3 +5,10 @@
         gap: $space-6;
     }
 }
+
+.serverErrorBanner {
+    padding: $space-4 $space-5;
+    border-radius: $space-3;
+    border: 1px solid #ffcdd2;
+    background-color: #ffebee;
+}

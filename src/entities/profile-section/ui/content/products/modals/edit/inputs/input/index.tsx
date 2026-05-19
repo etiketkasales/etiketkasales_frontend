@@ -22,7 +22,9 @@ export default function EditProductInput({
   loading,
   error,
 }: Props) {
-  const value = Array.isArray(editData[field]) ? "" : editData[field];
+  const raw = editData[field];
+  const value =
+    typeof raw === "string" ? raw : typeof raw === "number" ? String(raw) : "";
 
   switch (type) {
     default:

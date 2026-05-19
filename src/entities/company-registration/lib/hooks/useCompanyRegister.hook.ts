@@ -37,8 +37,11 @@ export const useCompanyRegister = ({ stage }: Props) => {
   }, [handleHasValidateError]);
 
   const hasErrors = useCallback(() => {
-    return hasEmptyError() || isEmailError();
-  }, [isEmailError, hasEmptyError]);
+    if (hasEmptyError()) return true;
+    // Email проверяем только на шаге personal (на status/name/city ломает «Продолжить»)
+    if (requiredFields.includes("email") && isEmailError()) return true;
+    return false;
+  }, [isEmailError, hasEmptyError, requiredFields]);
 
   const handleChangeData = useCallback(
     (v: string, field: keyof IChangeableProfile) => {

@@ -49,25 +49,37 @@ export const useUser = () => {
     [dispatch, setEditableData],
   );
 
-  const handleGetUser = useCallback(async () => {
-    try {
-      setLoading(true);
-      const res = await getProfile();
-      await handleGetCompanies();
-      await getAddresses();
-      await updateCart();
-      if (res.user) {
-        setUserData(res.user);
-      } else {
+  const handleGetUser = useCallback(
+    async (options?: { skipCart?: boolean }) => {
+      try {
+        setLoading(true);
+        const res = await getProfile();
+        await handleGetCompanies();
+        await getAddresses();
+        if (!options?.skipCart) {
+          await updateCart();
+        }
+        if (res.user) {
+          setUserData(res.user);
+        } else {
+          dispatch(setUser({ isLoggedIn: false }));
+        }
+      } catch (err) {
+        console.error(err);
         dispatch(setUser({ isLoggedIn: false }));
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      console.error(err);
-      dispatch(setUser({ isLoggedIn: false }));
-    } finally {
-      setLoading(false);
-    }
-  }, [dispatch, setLoading, setUserData, getAddresses, handleGetCompanies]);
+    },
+    [
+      dispatch,
+      setLoading,
+      setUserData,
+      getAddresses,
+      handleGetCompanies,
+      updateCart,
+    ],
+  );
 
   return {
     handleGetUser,

@@ -61,6 +61,8 @@ export interface IProfile extends IChangeableProfile {
   agreement_accepted_at: string | null; //2025-01-29T10:00:00Z
   role: UserRoleType;
   staff_role?: StaffRoleType | null;
+  /** Статус аккаунта витрины (active | restricted | inactive | blocked). */
+  status?: string | null;
   is_active: boolean;
   created_at: string; //2025-01-29T10:00:00Z
   updated_at: string; //2025-01-29T10:00:00Z

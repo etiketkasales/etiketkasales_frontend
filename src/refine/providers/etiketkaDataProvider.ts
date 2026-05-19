@@ -1,8 +1,10 @@
 import type {
   BaseRecord,
   CrudFilter,
+  CreateParams,
   DataProvider,
   GetListParams,
+  GetOneParams,
   UpdateParams,
 } from "@refinedev/core";
 import { apiClient } from "~/src/shared/lib/api/client.api";
@@ -36,7 +38,10 @@ function filtersToQuery(
     }
     if (
       f.operator === "contains" &&
-      (resource === "orders" || resource === "users" || resource === "products")
+      (resource === "orders" ||
+        resource === "users" ||
+        resource === "products" ||
+        resource === "actions")
     ) {
       q.search = String(val);
     }
@@ -64,6 +69,8 @@ async function getListInner<T extends BaseRecord>(
       orders?: T[];
       users?: T[];
       products?: T[];
+      actions?: T[];
+      items?: T[];
       pagination: {
         total: number;
         current_page: number;
@@ -88,6 +95,12 @@ async function getListInner<T extends BaseRecord>(
   if (resource === "products" && inner.products) {
     return { data: inner.products, total };
   }
+  if (resource === "actions" && inner.actions) {
+    return { data: inner.actions, total };
+  }
+  if (resource === "cases" && inner.items) {
+    return { data: inner.items, total };
+  }
 
   throw new Error(`Неизвестный ресурс: ${resource}`);
 }
@@ -99,11 +112,40 @@ export const etiketkaDataProvider: DataProvider = {
     return getListInner(params.resource, params);
   },
 
-  getOne: async () => {
-    throw new Error("getOne не поддерживается API");
+  getOne: async <TData extends BaseRecord = BaseRecord>({
+    resource,
+    id,
+  }: GetOneParams) => {
+    if (resource === "products") {
+      const { data } = await apiClient.get<ApiEnvelope<{ product: TData }>>(
+        `/admin/products/${id}`,
+      );
+      if (!data.success || !data.data?.product) {
+        throw new Error(data.message ?? "Товар не найден");
+      }
+      return { data: data.data.product };
+    }
+    throw new Error("getOne не поддерживается для этого ресурса");
   },
 
-  create: async () => {
+  create: async <TData extends BaseRecord = BaseRecord, TVariables = object>({
+    resource,
+    variables,
+  }: CreateParams<TVariables>) => {
+    if (resource === "products") {
+      const { data } = await apiClient.post<ApiEnvelope<{ id: number }>>(
+        `/admin/products`,
+        variables,
+      );
+      if (!data.success) {
+        throw new Error(data.message ?? "Ошибка создания");
+      }
+      const newId = data.data?.id;
+      if (newId == null) {
+        throw new Error("API не вернул id");
+      }
+      return { data: { id: newId, ...(variables as object) } as TData };
+    }
     throw new Error("create не поддерживается");
   },
 

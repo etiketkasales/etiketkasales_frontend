@@ -66,3 +66,26 @@
   font-weight: 500;
 }
 
+.compactBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(236, 253, 245, 0.9);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.compactLink {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  color: #2563eb;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+

@@ -1,10 +1,8 @@
 /**
- * Staff-роли совпадают с PHP (users.staff_role / AdminMiddleware).
- * Фактические права — строки из AdminMiddleware::permissionsMatrix(); список для текущего
- * пользователя приходит в GET /v1/auth/me как `permissions`.
+ * Staff-роли = users.staff_role (бэкенд). Права — строки из App\Config\AdminRbac,
+ * отдаются в GET /v1/auth/me как `permissions`.
  *
- * Маппинг Refine (resource + action) → набор backend-прав см. canRefineAccess — должен
- * соответствовать смыслу checkPermission() на бэке.
+ * Маппинг Refine (resource + action) → право: {@see canRefineAccess}
  */
 
 export type AdminRole =
@@ -12,7 +10,9 @@ export type AdminRole =
   | "super_admin"
   | "content_moderator"
   | "support_agent"
-  | "analyst";
+  | "analyst"
+  | "financier"
+  | "logistic";
 
 export const ADMIN_ROLES: AdminRole[] = [
   "admin",
@@ -20,9 +20,25 @@ export const ADMIN_ROLES: AdminRole[] = [
   "content_moderator",
   "support_agent",
   "analyst",
+  "financier",
+  "logistic",
 ];
 
 /** staff_role или legacy role из ответа /auth/me. */
+/**
+ * Доступ в админ-раздел: есть хотя бы одно право из /auth/me ИЛИ витринная/legacy роль из матрицы staff.
+ * Используйте для гейта /admin и ссылки «Админ-панель» (надёжнее, чем только Redux-профиль без staff_role).
+ */
+export function canAccessAdminPanelFromMe(payload: {
+  user: { role?: string; staff_role?: string | null };
+  permissions: readonly string[];
+}): boolean {
+  if (payload.permissions.length > 0) {
+    return true;
+  }
+  return Boolean(getEffectiveAdminRole(payload.user));
+}
+
 export function getEffectiveAdminRole(user: {
   role?: string;
   staff_role?: string | null;
@@ -39,7 +55,8 @@ export function getEffectiveAdminRole(user: {
 }
 
 /**
- * Доступ к пунктам Refine (меню, CanAccess) по списку прав с бэка.
+ * Доступ Refine (ресурс + действие) по плоскому списку прав с бэка.
+ * Должен совпадать с маршрутами и меню (admin.*).
  */
 export function canRefineAccess(
   permissions: string[],
@@ -48,38 +65,70 @@ export function canRefineAccess(
 ): boolean {
   const p = new Set(permissions);
   const has = (x: string) => p.has(x);
-  const hasAny = (xs: string[]) => xs.some(has);
 
   switch (resource) {
     case "dashboard":
-      return action === "list" && has("view_dashboard");
+      return action === "list" && has("admin.dashboard.view");
     case "orders":
+    case "cases":
       if (action === "list") {
-        return hasAny(["manage_orders", "view_orders"]);
+        return has("admin.orders.view");
       }
       if (action === "edit") {
-        return has("manage_orders");
+        return has("admin.orders.edit");
       }
       return false;
     case "users":
+    case "sellers":
       if (action === "list") {
-        return hasAny(["manage_users", "view_users"]);
+        return has("admin.users.view");
       }
       if (action === "edit") {
-        return has("manage_users");
+        return has("admin.users.edit");
       }
       return false;
     case "products":
       if (action === "list") {
-        return hasAny(["manage_products", "view_products", "moderate_content"]);
+        return has("admin.catalog.products.view");
       }
       if (action === "edit") {
-        return hasAny(["manage_products", "moderate_content"]);
+        return has("admin.catalog.products.edit");
+      }
+      return false;
+    case "moderation-products":
+      if (action === "list") {
+        return has("admin.moderation.view");
+      }
+      if (action === "edit") {
+        return has("admin.moderation.edit");
+      }
+      return false;
+    case "catalog-categories":
+      if (action === "list") {
+        return has("admin.catalog.categories.view");
+      }
+      if (action === "edit") {
+        return has("admin.catalog.categories.edit");
       }
       return false;
     case "permissions":
       if (action === "list" || action === "edit") {
-        return hasAny(["manage_admins", "system_settings"]);
+        return has("admin.system.matrix_view");
+      }
+      return false;
+    case "actions":
+      if (action === "list") {
+        return has("admin.audit.view");
+      }
+      return false;
+    case "finance-sellers":
+      if (action === "list") {
+        return has("admin.finance.view");
+      }
+      return false;
+    case "sellers-quality":
+      if (action === "list") {
+        return has("admin.logistics.view");
       }
       return false;
     default:

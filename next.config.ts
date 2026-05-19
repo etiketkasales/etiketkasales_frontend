@@ -21,22 +21,9 @@ const nextConfig: NextConfig = {
     `,
   },
 
+  // Удалённые картинки идут через ImageWrapper с unoptimized (см. image-wrapper).
   images: {
     loader: "default",
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "api.etiketkasales.ru",
-        port: "",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "etiketkasales.ru",
-        port: "",
-        pathname: "/**",
-      },
-    ],
   },
 
   output: "standalone",

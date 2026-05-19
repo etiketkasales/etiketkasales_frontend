@@ -1,6 +1,9 @@
+import { Fragment } from "react";
+
 import classes from "./about.module.scss";
 import QuoteStageContainer from "../stage-container";
-import QuoteInputs from "../inputs";
+import QuoteInput from "../inputs/input";
+import CompanyPartySuggest from "./company-party-suggest";
 import { IChangeableProfile } from "~/src/features/user/model";
 import { quoteAboutInputs } from "~/src/entities/profile-section/model";
 import { MessageI } from "~/src/shared/model";
@@ -18,12 +21,24 @@ export default function QuoteAbout({
 }: Props) {
   return (
     <QuoteStageContainer title="Об организации" className={classes.container}>
-      <QuoteInputs
-        inputs={quoteAboutInputs}
-        changeData={changeData}
-        onChange={onInputChange}
-        error={error}
-      />
+      <div className="flex-column gap-2">
+        {quoteAboutInputs.map((item, index) => (
+          <Fragment key={`${index}-${item.field}-${item.placeholder}`}>
+            <QuoteInput
+              {...item}
+              changeData={changeData}
+              onChange={onInputChange}
+              error={error}
+            />
+            {item.field === "company_name" ? (
+              <CompanyPartySuggest
+                query={(changeData.company_name as string) ?? ""}
+                onChange={onInputChange}
+              />
+            ) : null}
+          </Fragment>
+        ))}
+      </div>
     </QuoteStageContainer>
   );
 }

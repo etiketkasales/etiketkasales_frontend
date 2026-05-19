@@ -8,7 +8,7 @@ interface Props extends RegCommonPropsI {}
 
 interface InputI {
   label: string;
-  name: "ip" | "ooo";
+  name: "ip" | "ooo" | "sz";
 }
 
 export default function CompanyStatus({
@@ -26,6 +26,10 @@ export default function CompanyStatus({
     {
       label: "ИП",
       name: "ip",
+    },
+    {
+      label: "Самозанятый",
+      name: "sz",
     },
   ];
 
@@ -47,7 +51,8 @@ export default function CompanyStatus({
           return (
             <RadioInput
               key={`${item.name}-${index}`}
-              name={item.name}
+              groupName="company_type"
+              inputId={`company-reg-status-${item.name}`}
               value={item.name}
               label={item.label}
               onChange={() => {

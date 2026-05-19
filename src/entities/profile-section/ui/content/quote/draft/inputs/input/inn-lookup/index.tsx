@@ -17,9 +17,15 @@ const INN_LOOKUP_FIELDS: (keyof IChangeableProfile)[] = [
 interface Props {
   innValue: string;
   onChange: (v: string, field: keyof IChangeableProfile) => void;
+  /** Подсказка: наименование из поля компании — чтобы не дублировать карточку после выбора по названию */
+  companyNameHint?: string | null;
 }
 
-export default function InnLookup({ innValue, onChange }: Props) {
+export default function InnLookup({
+  innValue,
+  onChange,
+  companyNameHint,
+}: Props) {
   const digits = useMemo(
     () => String(innValue ?? "").replace(/\D/g, ""),
     [innValue],
@@ -55,6 +61,22 @@ export default function InnLookup({ innValue, onChange }: Props) {
 
   const { loading, company, error } = useInnLookup(innValue);
 
+  useEffect(() => {
+    if (!company || cardFilled) return;
+    const hint = (companyNameHint || "").trim();
+    if (hint.length < 3) return;
+    const n = (company.name || company.short_name || "").trim();
+    if (!n) return;
+    if (
+      hint === n ||
+      n === hint ||
+      hint.includes(n.slice(0, 20)) ||
+      n.includes(hint.slice(0, 20))
+    ) {
+      setCardFilled(true);
+    }
+  }, [company, companyNameHint, cardFilled]);
+
   const displayTitle =
     company?.short_name?.trim() ||
     company?.name?.trim() ||
@@ -82,9 +104,28 @@ export default function InnLookup({ innValue, onChange }: Props) {
     return null;
   }
 
+  if (cardFilled) {
+    return (
+      <div className={`flex-column gap-2 ${classes.wrap}`}>
+        <div className={classes.compactBar}>
+          <span className="text-body s text-neutral-600">
+            Данные по ИНН из справочника подставлены
+          </span>
+          <button
+            type="button"
+            className={classes.compactLink}
+            onClick={() => setCardFilled(false)}
+          >
+            Показать карточку снова
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={`flex-column gap-2 ${classes.wrap}`}>
-      {loading && (
+      {loading && !cardFilled && (
         <p className={`text-body s text-neutral-500`}>Поиск организации…</p>
       )}
 
@@ -94,13 +135,11 @@ export default function InnLookup({ innValue, onChange }: Props) {
         </div>
       )}
 
-      {!loading && company && (
+      {!loading && company && !cardFilled && (
         <>
-          {!cardFilled && (
-            <p className={`text-body xs ${classes.hintOk}`}>
-              Нажмите на карточку, чтобы заполнить поля формы
-            </p>
-          )}
+          <p className={`text-body xs ${classes.hintOk}`}>
+            Нажмите на карточку, чтобы заполнить поля формы
+          </p>
           <button
             type="button"
             className={`${classes.card} ${classes.cardAsButton}`}

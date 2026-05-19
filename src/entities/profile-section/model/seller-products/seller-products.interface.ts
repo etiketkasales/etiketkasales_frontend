@@ -1,3 +1,13 @@
+/** Видео по URL + PDF-вложения (после итерации 3 /media). */
+export interface IProductMedia {
+  videos: string[];
+  documents: Array<{
+    url: string;
+    original_name?: string;
+    upload_id?: number;
+  }>;
+}
+
 export interface ISellerProductBase {
   name: string;
   description: string;
@@ -21,11 +31,14 @@ export interface ISellerProduct extends ISellerProductBase {
   specifications: {
     [key: string]: boolean | string;
   };
+  media?: IProductMedia;
 }
 
 export interface IEditSellerProduct extends ISellerProductBase {
   status_code: SellerProductStatusCode;
   image_upload_ids: number[];
+  media?: IProductMedia;
+  document_upload_ids?: number[];
 }
 
 export interface IEditSellerProductInput {

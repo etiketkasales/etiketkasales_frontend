@@ -1,7 +1,7 @@
 import { useStageFlow } from "~/src/shared/lib";
 import { useChangeUserData } from "../profile";
 import { useValidateQuote } from ".";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 
 import {
@@ -14,6 +14,7 @@ import {
   quotePrevStages,
   QuoteStageType,
 } from "~/src/entities/profile-section/model";
+import type { IChangeableProfile } from "~/src/features/user/model";
 
 /**
  * Hook for working with registration of a company
@@ -36,6 +37,24 @@ export const useRegisterCompany = () => {
     stage,
     userInfo: changeableUserInfo,
   });
+
+  const clearErrorAndEdit = useCallback(
+    (fn: (v: string, field: keyof IChangeableProfile) => void) =>
+      (v: string, field: keyof IChangeableProfile) => {
+        setError(null);
+        fn(v, field);
+      },
+    [setError],
+  );
+
+  const clearErrorAndEditBool = useCallback(
+    (fn: (v: boolean, field: keyof IChangeableProfile) => void) =>
+      (v: boolean, field: keyof IChangeableProfile) => {
+        setError(null);
+        fn(v, field);
+      },
+    [setError],
+  );
 
   // функции для работы с данными юзера
   const { onInputChange, loading, onSave, onBooleanChange } = useChangeUserData(
@@ -61,8 +80,8 @@ export const useRegisterCompany = () => {
 
   return {
     changeableUserInfo,
-    onInputChange,
-    onBooleanChange,
+    onInputChange: clearErrorAndEdit(onInputChange),
+    onBooleanChange: clearErrorAndEditBool(onBooleanChange),
     onSave,
     stage,
     setPrevStage,
