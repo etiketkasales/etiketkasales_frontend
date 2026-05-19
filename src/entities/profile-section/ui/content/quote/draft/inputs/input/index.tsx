@@ -56,6 +56,7 @@ export default function QuoteInput({
             <InnLookup
               innValue={(changeData[field] as string) ?? ""}
               onChange={onChange}
+              companyNameHint={changeData.company_name}
             />
           )}
         </div>

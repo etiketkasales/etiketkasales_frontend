@@ -87,11 +87,13 @@ export default function AdminPermissionsPage() {
         message="Кто может что делать в админке"
         description={
           <Typography.Paragraph style={{ marginBottom: 0 }}>
-            В системе нет отдельного списка «галочек» на каждого человека:
-            доступ задаётся{" "}
-            <Typography.Text strong>ролью сотрудника</Typography.Text>{" "}
-            (например, модератор, поддержка). Сменить роль пользователю может
-            администратор на вкладке «Users» в колонке «Роль в админке».
+            Доступ задаётся{" "}
+            <Typography.Text strong>ролью сотрудника</Typography.Text> и набором
+            строковых прав (см. матрицу ниже). Назначать staff-роль
+            (`admin.users.staff_manage`) может только супер-администратор;
+            остальные права настраиваются в{" "}
+            <Typography.Text code>AdminRbac</Typography.Text> на бэкенде и в
+            меню <Typography.Text code>adminMenu.ts</Typography.Text> на фронте.
           </Typography.Paragraph>
         }
       />

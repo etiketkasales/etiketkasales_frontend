@@ -102,7 +102,11 @@ export const quoteStageFieldsMap: Record<
   | (keyof IChangeableProfile)[]
   | ((data: IChangeableProfile) => (keyof IChangeableProfile)[])
 > = {
-  about: quoteRequiredFields,
+  /** Для самозанятого КПП не обязателен — совместимо с бэкендом для типа sz */
+  about: (data: IChangeableProfile) =>
+    data.company_type === "sz"
+      ? quoteRequiredFields.filter((f) => f !== "kpp")
+      : quoteRequiredFields,
   requisites: quoteRequisitsRequiredFields,
   agreement: [],
 };

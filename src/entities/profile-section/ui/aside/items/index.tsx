@@ -1,12 +1,18 @@
 "use client";
 import { useMemo } from "react";
 import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 
 import classes from "./aside-items.module.scss";
 import ProfileContainer from "~/src/entities/profile-section/ui/container";
 import ProfileAsideItem from "./item";
 import { IProfile, UserRoleType } from "~/src/features/user/model";
-import { getEffectiveAdminRole } from "~/src/refine/auth/roles";
+import {
+  canAccessAdminPanelFromMe,
+  getEffectiveAdminRole,
+} from "~/src/refine/auth/roles";
+import { getAuthMeCached } from "~/src/refine/auth/authMeCache";
+import { useAppSelector } from "~/src/app/store/hooks";
 import {
   buyerTabs,
   profileDangerousActions,
@@ -32,7 +38,22 @@ export default function ProfileAsideItems({
   setModalActive,
 }: Props) {
   const { push } = useRouter();
-  const showAdmin = Boolean(getEffectiveAdminRole(userInfo));
+  const isLoggedIn = useAppSelector((s) => s.user.isLoggedIn);
+  const { data: authMe } = useQuery({
+    queryKey: ["auth", "me"],
+    queryFn: () => getAuthMeCached(),
+    enabled: isLoggedIn,
+    retry: false,
+  });
+  const showAdmin =
+    (authMe ? canAccessAdminPanelFromMe(authMe) : false) ||
+    canAccessAdminPanelFromMe({
+      user: {
+        role: userInfo.role,
+        staff_role: userInfo.staff_role ?? null,
+      },
+      permissions: [],
+    });
   const itemsToMap = useMemo(() => {
     switch (userRole) {
       default:

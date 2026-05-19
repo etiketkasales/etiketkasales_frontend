@@ -46,6 +46,11 @@ export default function ImageWrapper({
 
   const safeSrc = canLoad ? safeImageSrc(fallbackImage, src) : fallbackImage;
 
+  const remoteAbsolute =
+    typeof safeSrc === "string" && /^https?:\/\//i.test(safeSrc);
+
+  const imgLoading = (priority ? "eager" : loading) as "eager" | "lazy";
+
   return (
     <div
       className={classNames(className, classes.container)}
@@ -54,14 +59,27 @@ export default function ImageWrapper({
       onMouseLeave={onMouseLeave}
       style={style}
     >
-      {!needDummy && (!canLoad || !src) ? null : (
+      {!needDummy && (!canLoad || !src) ? null : remoteAbsolute ? (
+        // Не next/image: без оптимизатора, без remotePatterns, тот же запрос что у обычного <img>
+        <img
+          src={safeSrc}
+          alt={alt}
+          width={width}
+          height={height}
+          className={imgClassName}
+          loading={imgLoading}
+          decoding="async"
+          fetchPriority={priority ? "high" : undefined}
+          {...rest}
+        />
+      ) : (
         <Image
           src={safeSrc}
           width={width}
           height={height}
           alt={alt}
           className={imgClassName}
-          loading={priority ? "eager" : loading}
+          loading={imgLoading}
           priority={priority}
           fill={fill}
           {...rest}

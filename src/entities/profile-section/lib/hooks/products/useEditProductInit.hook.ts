@@ -23,6 +23,8 @@ export const useEditProductInit = ({ initialData }: Props) => {
       status_code: initialData.status_code,
       images: initialData.images,
       image_upload_ids: [],
+      document_upload_ids: [],
+      media: initialData.media ?? { videos: [], documents: [] },
     });
   }, [initialData]);
 

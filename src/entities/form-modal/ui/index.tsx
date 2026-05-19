@@ -85,6 +85,17 @@ export default function FormModal<T>({
         />
       )}
       {children}
+      {error &&
+        (inputs.length === 0 ||
+          !inputs.some((i) => String(i.field) === String(error.field))) && (
+          <p
+            role="alert"
+            className="text-14 second-family regular"
+            style={{ color: "#c62828", marginTop: 4 }}
+          >
+            {error.message}
+          </p>
+        )}
       <Button
         typeButton="yellow"
         size="12"

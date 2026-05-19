@@ -27,7 +27,10 @@ export const useInnLookup = (innRaw: string | null | undefined) => {
       return;
     }
 
-    if (lastRequestedInnRef.current === inn) return;
+    if (lastRequestedInnRef.current === inn) {
+      setLoading(false);
+      return;
+    }
     lastRequestedInnRef.current = inn;
 
     let cancelled = false;
@@ -54,19 +57,18 @@ export const useInnLookup = (innRaw: string | null | undefined) => {
         if (cancelled) return;
         setCompany(null);
         const axMsg =
-          e?.response?.data?.message &&
-          String(e.response.data.message).trim();
+          e?.response?.data?.message && String(e.response.data.message).trim();
         setError(axMsg || e?.message || "Ошибка поиска по ИНН");
       } finally {
-        if (!cancelled) setLoading(false);
+        setLoading(false);
       }
     })();
 
     return () => {
       cancelled = true;
+      setLoading(false);
     };
   }, [inn]);
 
   return { inn, loading, company, error };
 };
-

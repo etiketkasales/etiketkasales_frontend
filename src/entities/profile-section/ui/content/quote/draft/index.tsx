@@ -71,6 +71,14 @@ export default function QuoteDraft() {
       className={`flex-column relative ${classes.container}`}
     >
       {loading && <Loader radius={20} />}
+      {error && (error.field === "global" || !error.field) ? (
+        <div
+          role="alert"
+          className={`flex-column gap-2 ${classes.serverErrorBanner}`}
+        >
+          <span className="text-body m text-neutral-900">{error.message}</span>
+        </div>
+      ) : null}
       {contentSwitcher()}
       <QuoteButtons
         setPrevStage={setPrevStage}
