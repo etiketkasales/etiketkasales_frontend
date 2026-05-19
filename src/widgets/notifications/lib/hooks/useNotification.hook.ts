@@ -21,7 +21,8 @@ export const useNotification = ({ uuid }: Props) => {
     }, 500);
   }, [uuid, dispatch]);
   const { offsetX, handlers, direction, isGrabbing } = useSwipeToDismiss({
-    onDismiss: (_) => onDelete(),
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    onDismissAction: (_) => onDelete(),
   });
 
   useEffect(() => {
