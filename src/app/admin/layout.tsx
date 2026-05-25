@@ -1,13 +1,8 @@
 import { ReactNode } from "react";
-import { AdminGate } from "./admin-gate";
-import AdminRoot from "./admin-root";
+import { AdminLayoutClient } from "./admin-layout-client";
 
-export const dynamic = "force-dynamic";
+import "./admin-zone.scss";
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
-  return (
-    <AdminGate>
-      <AdminRoot>{children}</AdminRoot>
-    </AdminGate>
-  );
+  return <AdminLayoutClient>{children}</AdminLayoutClient>;
 }

@@ -18,7 +18,7 @@ import {
 } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { apiClient } from "~/src/shared/lib/api/client.api";
-import { getAuthMeCached } from "~/src/refine/auth/authMeCache";
+import { useAuthMe } from "~/src/refine/auth/useAuthMe.hook";
 import { parseAxiosApiValidation } from "~/src/shared/lib/functions/shared.func";
 
 type SellerFinanceRow = {
@@ -73,10 +73,7 @@ export default function AdminFinanceSellersPage() {
   const [payoutStatus, setPayoutStatus] = useState<string>("");
   const [payoutNote, setPayoutNote] = useState<string>("");
 
-  const { data: me } = useQuery({
-    queryKey: ["auth", "me"],
-    queryFn: () => getAuthMeCached(),
-  });
+  const { data: me } = useAuthMe();
   const canEditPayout =
     me?.permissions?.includes("admin.finance.edit") ?? false;
 

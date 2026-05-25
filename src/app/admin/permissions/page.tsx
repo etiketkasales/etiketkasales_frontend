@@ -10,7 +10,7 @@ import { Alert, Card, Descriptions, Space, Table, Tag, Typography } from "antd";
 import { useQuery } from "@tanstack/react-query";
 import { apiClient } from "~/src/shared/lib/api/client.api";
 import { ADMIN_ROLES } from "~/src/refine/auth/roles";
-import { getAuthMeCached } from "~/src/refine/auth/authMeCache";
+import { useAuthMe } from "~/src/refine/auth/useAuthMe.hook";
 
 type MatrixResponse = {
   success: boolean;
@@ -18,10 +18,7 @@ type MatrixResponse = {
 };
 
 export default function AdminPermissionsPage() {
-  const { data: me } = useQuery({
-    queryKey: ["auth", "me"],
-    queryFn: () => getAuthMeCached(),
-  });
+  const { data: me } = useAuthMe();
 
   const { data: matrixRes, isLoading } = useQuery({
     queryKey: ["admin", "permissions-matrix"],

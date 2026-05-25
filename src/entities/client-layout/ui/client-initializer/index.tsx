@@ -1,9 +1,11 @@
 "use client";
-import { useInitialize } from "~/src/shared/lib/hooks";
+
+import { useStorefrontInit } from "~/src/shared/lib/hooks/useStorefrontInit.hook";
 import { useClientLayout } from "../../lib/hooks/useClientLayout.hook";
 
 export default function ClientInitializer() {
   useClientLayout();
-  useInitialize();
+  useStorefrontInit();
+
   return null;
 }
