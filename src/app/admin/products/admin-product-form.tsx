@@ -7,7 +7,9 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   App,
   Button,
+  Alert,
   Card,
+  Collapse,
   Form,
   Input,
   InputNumber,
@@ -27,8 +29,21 @@ import {
   approveProduct,
   rejectProduct,
 } from "~/src/features/admin/lib/adminProductModeration";
-import { getCategoriesTree } from "~/src/features/categories/lib/api/categories.api";
-import type { ITreeCategory } from "~/src/features/categories/model";
+import {
+  getAdminCategoriesTree,
+  getAdminCategory,
+  listAdminBrands,
+  listAdminUnits,
+  type AdminCategory,
+} from "~/src/features/admin/lib/adminCategories.api";
+import {
+  mergeSpecificationsPayload,
+  normalizeCategoryAttrsForForm,
+  parseAttributeSchema,
+  schemaKeySet,
+  splitSpecificationsBySchema,
+} from "~/src/features/admin/lib/categoryAttributeSchema";
+import { CategoryAttributeFields } from "~/src/features/admin/ui/CategoryAttributeFields";
 import {
   getNewProductFilters,
   uploadProductDocument,
@@ -46,12 +61,14 @@ const STATUS_OPTIONS = [
   { value: "archived", label: "В архиве" },
 ];
 
-function categoriesToTreeData(nodes: ITreeCategory[]): DataNode[] {
+function adminCategoriesToTreeData(nodes: AdminCategory[]): DataNode[] {
   return nodes.map((n) => ({
     title: n.name,
     value: n.id,
     key: String(n.id),
-    children: n.children?.length ? categoriesToTreeData(n.children) : undefined,
+    children: n.children?.length
+      ? adminCategoriesToTreeData(n.children)
+      : undefined,
   }));
 }
 
@@ -74,6 +91,37 @@ function productImageUrlsToFileList(urls: string[]): UploadFile[] {
     url,
     response: { url, upload_id: 0 } as IFileUploadRes,
   }));
+}
+
+type VariantFormRow = {
+  id?: number;
+  sku?: string;
+  barcode?: string;
+  name?: string;
+  color?: string;
+  size?: string;
+  price?: number | null;
+  stock_quantity?: number;
+};
+
+function mapVariantsFromApi(raw: unknown): VariantFormRow[] {
+  if (!Array.isArray(raw)) {
+    return [];
+  }
+  return raw
+    .filter(
+      (x): x is Record<string, unknown> => x != null && typeof x === "object",
+    )
+    .map((v) => ({
+      id: v.id != null ? Number(v.id) : undefined,
+      sku: v.sku != null ? String(v.sku) : undefined,
+      barcode: v.barcode != null ? String(v.barcode) : undefined,
+      name: v.name != null ? String(v.name) : undefined,
+      color: v.color != null ? String(v.color) : undefined,
+      size: v.size != null ? String(v.size) : undefined,
+      price: v.price != null && v.price !== "" ? Number(v.price) : undefined,
+      stock_quantity: v.stock_quantity != null ? Number(v.stock_quantity) : 0,
+    }));
 }
 
 function productDocumentsToFileList(
@@ -137,18 +185,33 @@ export function AdminProductForm(props: AdminProductFormProps) {
   const [rejectOpen, setRejectOpen] = useState(false);
   const [rejectReason, setRejectReason] = useState("");
 
+  const categoryIdWatch = Form.useWatch("category_id", form) as
+    | number
+    | undefined;
+
   const treeQuery = useQuery({
-    queryKey: ["categories-tree"],
-    queryFn: async () => {
-      const rows = await getCategoriesTree();
-      return rows ?? [];
-    },
+    queryKey: ["admin-categories-tree"],
+    queryFn: getAdminCategoriesTree,
   });
 
   const treeData = useMemo(
-    () => categoriesToTreeData(treeQuery.data ?? []),
+    () => adminCategoriesToTreeData(treeQuery.data ?? []),
     [treeQuery.data],
   );
+
+  const categorySchemaQuery = useQuery({
+    queryKey: ["admin-category-schema", categoryIdWatch],
+    queryFn: () => getAdminCategory(Number(categoryIdWatch)),
+    enabled: Number(categoryIdWatch) > 0,
+    staleTime: 60_000,
+  });
+
+  const schemaFields = useMemo(
+    () => parseAttributeSchema(categorySchemaQuery.data?.attribute_schema),
+    [categorySchemaQuery.data?.attribute_schema],
+  );
+
+  const schemaKeys = useMemo(() => schemaKeySet(schemaFields), [schemaFields]);
 
   const filtersQuery = useQuery({
     queryKey: ["product-create-filters"],
@@ -156,11 +219,48 @@ export function AdminProductForm(props: AdminProductFormProps) {
     staleTime: 5 * 60 * 1000,
   });
 
+  const brandsQuery = useQuery({
+    queryKey: ["admin-brands-select"],
+    queryFn: listAdminBrands,
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const brandOptions = useMemo(() => {
+    const items = brandsQuery.data ?? [];
+    return items
+      .filter((b) => b.is_active === 1 || b.is_active === true)
+      .map((b) => ({ value: b.id, label: b.name }));
+  }, [brandsQuery.data]);
+
+  const unitsQuery = useQuery({
+    queryKey: ["admin-units-select"],
+    queryFn: listAdminUnits,
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const unitOptions = useMemo(() => {
+    const items = unitsQuery.data ?? [];
+    return items
+      .filter((u) => u.is_active === 1 || u.is_active === true)
+      .map((u) => ({
+        value: u.id,
+        label: `${u.name} (${u.short_name})`,
+      }));
+  }, [unitsQuery.data]);
+
+  const unitIdWatch = Form.useWatch("unit_id", form) as number | undefined;
+  const unitShortLabel = useMemo(() => {
+    const id = Number(unitIdWatch);
+    if (!id) return "ед.";
+    const u = unitsQuery.data?.find((x) => x.id === id);
+    return u?.short_name?.trim() || "ед.";
+  }, [unitIdWatch, unitsQuery.data]);
+
   const renderCatalogFilterField = (f: INewProductFilter) => {
     const nameStr = String(f.field);
     const label = CATALOG_FILTER_LABELS[nameStr] ?? nameStr;
     const opts = (f.options ?? [])
-      .filter((o): o is string => o.trim() !== "")
+      .filter((o): o is string => typeof o === "string" && o.trim() !== "")
       .map((o) => ({ value: o, label: o }));
 
     if (f.type === "numeric") {
@@ -211,6 +311,26 @@ export function AdminProductForm(props: AdminProductFormProps) {
 
   const productId = props.mode === "edit" ? props.productId : 0;
 
+  const historyQuery = useQuery({
+    queryKey: ["admin-product-history", productId],
+    queryFn: async () => {
+      const { data } = await apiClient.get<{
+        success: boolean;
+        data?: {
+          items: Array<{
+            id: number;
+            source: string;
+            actor_name?: string;
+            changes: unknown[];
+            created_at: string;
+          }>;
+        };
+      }>(`/admin/products/${productId}/history`);
+      return data.data?.items ?? [];
+    },
+    enabled: props.mode === "edit" && productId > 0,
+  });
+
   const productQuery = useQuery({
     queryKey: ["admin-product", productId],
     queryFn: async () => {
@@ -233,14 +353,6 @@ export function AdminProductForm(props: AdminProductFormProps) {
     }
     const p = productQuery.data;
     const images = Array.isArray(p.images) ? (p.images as string[]) : [];
-    const spec = p.specifications;
-    const specPairs =
-      spec && typeof spec === "object" && !Array.isArray(spec)
-        ? Object.entries(spec as Record<string, unknown>).map(([key, val]) => ({
-            key,
-            value: val == null ? "" : String(val),
-          }))
-        : [];
     const mediaRaw = p.media;
     let videoUrlRows: Array<{ url: string }> = [];
     let documentAttachments: UploadFile[] = [];
@@ -278,13 +390,18 @@ export function AdminProductForm(props: AdminProductFormProps) {
       form: p.form,
       application_area: p.application_area,
       print_technology: p.print_technology,
-      manufacturer: p.manufacturer,
+      brand_id:
+        p.brand_id != null && p.brand_id !== ""
+          ? Number(p.brand_id)
+          : undefined,
+      unit_id:
+        p.unit_id != null && p.unit_id !== "" ? Number(p.unit_id) : undefined,
+      variants: mapVariantsFromApi(p.variants),
       width_mm: p.width_mm,
       height_mm: p.height_mm,
       productImages: productImageUrlsToFileList(images),
       videoUrlRows,
       documentAttachments,
-      specPairs,
       status: p.status,
       is_active: Boolean(
         p.is_active === 1 || p.is_active === true || p.is_active === "1",
@@ -294,6 +411,66 @@ export function AdminProductForm(props: AdminProductFormProps) {
       ),
     });
   }, [form, productQuery.data, props.mode]);
+
+  useEffect(() => {
+    if (props.mode !== "edit" || !productQuery.data) {
+      return;
+    }
+    const spec = productQuery.data.specifications;
+    const specObj =
+      spec && typeof spec === "object" && !Array.isArray(spec)
+        ? (spec as Record<string, unknown>)
+        : {};
+    const { categoryAttrs, freePairs } = splitSpecificationsBySchema(
+      specObj,
+      schemaKeys,
+    );
+    form.setFieldsValue({
+      categoryAttrs: normalizeCategoryAttrsForForm(categoryAttrs, schemaFields),
+      specPairs: freePairs,
+    });
+  }, [form, productQuery.data, props.mode, schemaFields, schemaKeys]);
+
+  useEffect(() => {
+    if (
+      props.mode !== "edit" ||
+      !productQuery.data ||
+      !brandsQuery.data?.length
+    ) {
+      return;
+    }
+    const current = form.getFieldValue("brand_id");
+    if (current != null && current !== "") {
+      return;
+    }
+    const mfr = String(productQuery.data.manufacturer ?? "")
+      .trim()
+      .toLowerCase();
+    if (!mfr) {
+      return;
+    }
+    const found = brandsQuery.data.find(
+      (b) => b.name.trim().toLowerCase() === mfr,
+    );
+    if (found) {
+      form.setFieldsValue({ brand_id: found.id });
+    }
+  }, [brandsQuery.data, form, productQuery.data, props.mode]);
+
+  useEffect(() => {
+    if (props.mode !== "create" || !unitsQuery.data?.length) {
+      return;
+    }
+    const current = form.getFieldValue("unit_id");
+    if (current != null && current !== "") {
+      return;
+    }
+    const def =
+      unitsQuery.data.find((u) => u.slug === "shtuka") ?? unitsQuery.data[0];
+    if (def) {
+      form.setFieldsValue({ unit_id: def.id });
+    }
+  }, [form, props.mode, unitsQuery.data]);
 
   const [saving, setSaving] = useState(false);
 
@@ -317,16 +494,11 @@ export function AdminProductForm(props: AdminProductFormProps) {
       })
       .filter(Boolean);
 
-    const specRows = (values.specPairs ?? []) as Array<{
-      key?: string;
-      value?: string;
-    }>;
-    const specifications: Record<string, string> = {};
-    for (const row of specRows) {
-      const k = String(row?.key ?? "").trim();
-      if (!k) continue;
-      specifications[k] = String(row?.value ?? "").trim();
-    }
+    const specifications = mergeSpecificationsPayload(
+      values.categoryAttrs as Record<string, unknown> | undefined,
+      (values.specPairs ?? []) as Array<{ key?: string; value?: string }>,
+      schemaKeys,
+    );
 
     const videoRows = (values.videoUrlRows ?? []) as Array<{ url?: string }>;
     const videoUrls = videoRows
@@ -368,7 +540,28 @@ export function AdminProductForm(props: AdminProductFormProps) {
       form: values.form || null,
       application_area: values.application_area || null,
       print_technology: values.print_technology || null,
-      manufacturer: values.manufacturer || null,
+      brand_id:
+        values.brand_id != null && values.brand_id !== ""
+          ? Number(values.brand_id)
+          : null,
+      unit_id:
+        values.unit_id != null && values.unit_id !== ""
+          ? Number(values.unit_id)
+          : null,
+      variants: (values.variants as VariantFormRow[] | undefined)?.map(
+        (v, i) => ({
+          id: v.id,
+          sku: v.sku?.trim() || null,
+          barcode: v.barcode?.trim() || null,
+          name: v.name?.trim() || null,
+          color: v.color?.trim() || null,
+          size: v.size?.trim() || null,
+          price: v.price ?? null,
+          stock_quantity: v.stock_quantity ?? 0,
+          sort_order: i,
+          is_active: true,
+        }),
+      ),
       width_mm: values.width_mm ?? null,
       height_mm: values.height_mm ?? null,
       images: imageUrls,
@@ -467,6 +660,15 @@ export function AdminProductForm(props: AdminProductFormProps) {
         )}
       </Space>
 
+      {props.embedded ? (
+        <Alert
+          type="info"
+          showIcon
+          style={{ marginBottom: 12 }}
+          message="Варианты SKU — раскройте блок «Варианты (SKU / штрихкод)» ниже (после цены). История изменений — внизу формы."
+        />
+      ) : null}
+
       <Card
         loading={props.mode === "edit" && productQuery.isLoading}
         title={props.mode === "create" ? "Новый товар" : `Товар #${productId}`}
@@ -487,6 +689,8 @@ export function AdminProductForm(props: AdminProductFormProps) {
                   videoUrlRows: [],
                   documentAttachments: [],
                   specPairs: [],
+                  categoryAttrs: {},
+                  variants: [],
                 }
               : undefined
           }
@@ -518,6 +722,7 @@ export function AdminProductForm(props: AdminProductFormProps) {
               treeData={treeData}
               loading={treeQuery.isLoading}
               placeholder="Категория"
+              onChange={() => form.setFieldsValue({ categoryAttrs: {} })}
               filterTreeNode={(input, node) =>
                 String(node?.title ?? "")
                   .toLowerCase()
@@ -543,10 +748,29 @@ export function AdminProductForm(props: AdminProductFormProps) {
             <Input.TextArea rows={5} />
           </Form.Item>
 
-          <Space wrap>
+          <Space wrap align="start">
+            <Form.Item
+              name="unit_id"
+              label="Единица продажи"
+              rules={[{ required: true, message: "Выберите единицу" }]}
+              extra={
+                <Typography.Link href="/admin/catalog/units">
+                  Справочник единиц
+                </Typography.Link>
+              }
+            >
+              <Select
+                showSearch
+                optionFilterProp="label"
+                placeholder="шт, кг, м²…"
+                loading={unitsQuery.isLoading}
+                options={unitOptions}
+                style={{ minWidth: 220 }}
+              />
+            </Form.Item>
             <Form.Item
               name="price"
-              label="Цена"
+              label={`Цена за ${unitShortLabel}`}
               rules={[{ required: true, message: "Цена" }]}
             >
               <InputNumber min={0} step={0.01} />
@@ -554,21 +778,165 @@ export function AdminProductForm(props: AdminProductFormProps) {
             <Form.Item name="old_price" label="Старая цена">
               <InputNumber min={0} step={0.01} />
             </Form.Item>
-            <Form.Item name="sku" label="SKU">
+            <Form.Item name="sku" label="SKU (основной)">
               <Input style={{ width: 200 }} />
             </Form.Item>
           </Space>
 
+          <Collapse
+            defaultActiveKey={["variants"]}
+            style={{ marginBottom: 16 }}
+            items={[
+              {
+                key: "variants",
+                label: "Варианты (SKU / штрихкод)",
+                children: (
+                  <>
+                    <Typography.Paragraph
+                      type="secondary"
+                      style={{ marginTop: 0 }}
+                    >
+                      Дополнительные позиции: цвет, размер, свой SKU и остаток.
+                      Нужна миграция 055 на API.
+                    </Typography.Paragraph>
+                    <Form.List name="variants">
+                      {(fields, { add, remove }) => (
+                        <>
+                          {fields.length === 0 ? (
+                            <Button
+                              type="dashed"
+                              onClick={() => add()}
+                              icon={<PlusOutlined />}
+                              style={{ marginBottom: 8 }}
+                            >
+                              Добавить первый вариант
+                            </Button>
+                          ) : null}
+                          {fields.map(({ key, name, ...rest }) => (
+                            <Space
+                              key={key}
+                              wrap
+                              align="start"
+                              style={{ display: "flex", marginBottom: 8 }}
+                            >
+                              {props.mode === "edit" ? (
+                                <Form.Item {...rest} name={[name, "id"]} hidden>
+                                  <InputNumber />
+                                </Form.Item>
+                              ) : null}
+                              <Form.Item
+                                {...rest}
+                                name={[name, "sku"]}
+                                label="SKU"
+                              >
+                                <Input
+                                  style={{ width: 130 }}
+                                  placeholder="SKU"
+                                />
+                              </Form.Item>
+                              <Form.Item
+                                {...rest}
+                                name={[name, "barcode"]}
+                                label="Штрихкод"
+                              >
+                                <Input style={{ width: 140 }} />
+                              </Form.Item>
+                              <Form.Item
+                                {...rest}
+                                name={[name, "color"]}
+                                label="Цвет"
+                              >
+                                <Input style={{ width: 100 }} />
+                              </Form.Item>
+                              <Form.Item
+                                {...rest}
+                                name={[name, "size"]}
+                                label="Размер"
+                              >
+                                <Input style={{ width: 100 }} />
+                              </Form.Item>
+                              <Form.Item
+                                {...rest}
+                                name={[name, "price"]}
+                                label="Цена"
+                              >
+                                <InputNumber
+                                  min={0}
+                                  step={0.01}
+                                  style={{ width: 110 }}
+                                />
+                              </Form.Item>
+                              <Form.Item
+                                {...rest}
+                                name={[name, "stock_quantity"]}
+                                label="Остаток"
+                              >
+                                <InputNumber min={0} style={{ width: 90 }} />
+                              </Form.Item>
+                              <Button
+                                type="link"
+                                danger
+                                onClick={() => remove(name)}
+                              >
+                                Удалить
+                              </Button>
+                            </Space>
+                          ))}
+                          {fields.length > 0 ? (
+                            <Form.Item>
+                              <Button
+                                type="dashed"
+                                onClick={() => add()}
+                                icon={<PlusOutlined />}
+                              >
+                                Добавить вариант
+                              </Button>
+                            </Form.Item>
+                          ) : null}
+                        </>
+                      )}
+                    </Form.List>
+                  </>
+                ),
+              },
+            ]}
+          />
+
           <Space wrap>
-            <Form.Item name="stock_quantity" label="Остаток">
+            <Form.Item
+              name="stock_quantity"
+              label={`Остаток, ${unitShortLabel}`}
+            >
               <InputNumber min={0} />
             </Form.Item>
-            <Form.Item name="min_order_quantity" label="Мин. заказ (шт.)">
+            <Form.Item
+              name="min_order_quantity"
+              label={`Мин. заказ, ${unitShortLabel}`}
+            >
               <InputNumber min={1} />
             </Form.Item>
           </Space>
 
           <Typography.Title level={5}>Параметры каталога</Typography.Title>
+          <Form.Item
+            name="brand_id"
+            label="Бренд"
+            extra={
+              <Typography.Link href="/admin/catalog/brands">
+                Справочник брендов
+              </Typography.Link>
+            }
+          >
+            <Select
+              allowClear
+              showSearch
+              optionFilterProp="label"
+              placeholder="Выберите бренд"
+              loading={brandsQuery.isLoading}
+              options={brandOptions}
+              style={{ minWidth: 280 }}
+            />
+          </Form.Item>
           {filtersQuery.isError ? (
             <Typography.Text type="danger">
               Не удалось загрузить списки значений (тип, форма и т.д.). Обновите
@@ -576,7 +944,9 @@ export function AdminProductForm(props: AdminProductFormProps) {
             </Typography.Text>
           ) : null}
           <Space wrap style={{ width: "100%" }}>
-            {(filtersQuery.data ?? []).map(renderCatalogFilterField)}
+            {(filtersQuery.data ?? [])
+              .filter((f) => String(f.field) !== "manufacturer")
+              .map(renderCatalogFilterField)}
           </Space>
 
           <Space wrap>
@@ -732,11 +1102,37 @@ export function AdminProductForm(props: AdminProductFormProps) {
             </Upload>
           </Form.Item>
 
+          {schemaFields.length > 0 ? (
+            <>
+              <Typography.Title level={5}>
+                Поля по шаблону категории
+              </Typography.Title>
+              <Typography.Paragraph type="secondary" style={{ marginTop: 0 }}>
+                Задаются в{" "}
+                <Typography.Link href="/admin/catalog/categories">
+                  категории
+                </Typography.Link>{" "}
+                (JSON «Шаблон полей карточки»). Сохраняются в{" "}
+                <code>specifications</code>.
+              </Typography.Paragraph>
+              <CategoryAttributeFields
+                fields={schemaFields}
+                disabled={!canEdit}
+              />
+            </>
+          ) : categoryIdWatch && !categorySchemaQuery.isLoading ? (
+            <Typography.Paragraph type="secondary">
+              У выбранной категории нет шаблона полей — можно добавить в
+              справочнике категорий или использовать произвольные пары ниже.
+            </Typography.Paragraph>
+          ) : null}
+
           <Typography.Title level={5}>
             Дополнительные характеристики
           </Typography.Title>
           <Typography.Paragraph type="secondary" style={{ marginTop: 0 }}>
-            Пары «название — значение» (например: плотность — 80 г/м²).
+            Произвольные пары «название — значение» (ключи из шаблона категории
+            сюда не дублируйте).
           </Typography.Paragraph>
           <Form.List name="specPairs">
             {(fields, { add, remove }) => (
@@ -769,6 +1165,51 @@ export function AdminProductForm(props: AdminProductFormProps) {
               </>
             )}
           </Form.List>
+
+          {props.mode === "edit" ? (
+            <Collapse
+              style={{ marginBottom: 16 }}
+              items={[
+                {
+                  key: "history",
+                  label: `История изменений (${historyQuery.data?.length ?? 0})`,
+                  children: historyQuery.isLoading ? (
+                    <Typography.Text type="secondary">
+                      Загрузка…
+                    </Typography.Text>
+                  ) : (historyQuery.data?.length ?? 0) === 0 ? (
+                    <Typography.Text type="secondary">
+                      Пока нет записей (нужна миграция 056).
+                    </Typography.Text>
+                  ) : (
+                    <ul style={{ paddingLeft: 20, margin: 0 }}>
+                      {historyQuery.data?.map((h) => (
+                        <li key={h.id} style={{ marginBottom: 8 }}>
+                          <Typography.Text type="secondary">
+                            {h.created_at} · {h.source}
+                            {h.actor_name ? ` · ${h.actor_name}` : ""}
+                          </Typography.Text>
+                          <div>
+                            {(Array.isArray(h.changes) ? h.changes : []).map(
+                              (c, i) => (
+                                <div key={i}>
+                                  <code>{(c as { field?: string }).field}</code>
+                                  :{" "}
+                                  {String((c as { old?: unknown }).old ?? "—")}{" "}
+                                  →{" "}
+                                  {String((c as { new?: unknown }).new ?? "—")}
+                                </div>
+                              ),
+                            )}
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  ),
+                },
+              ]}
+            />
+          ) : null}
 
           <Typography.Title level={5}>Модерация и витрина</Typography.Title>
           <Form.Item name="status" label="Статус модерации">

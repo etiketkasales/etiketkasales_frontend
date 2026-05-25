@@ -42,6 +42,7 @@ type ProductRow = {
   is_active?: number | boolean | string;
   price: number;
   stock_quantity?: number;
+  variants_count?: number;
   created_at: string;
 };
 
@@ -202,6 +203,11 @@ export default function AdminProductsPage() {
           <Link href="/admin/moderation/products">
             <Button>Очередь модерации</Button>
           </Link>
+          {canEdit ? (
+            <Link href="/admin/products/import">
+              <Button>Импорт CSV</Button>
+            </Link>
+          ) : null}
           {(canEdit || canModerate) && selectedIds.length > 0 ? (
             <>
               <Typography.Text type="secondary">
@@ -379,6 +385,17 @@ export default function AdminProductsPage() {
           sorter
         />
         <Table.Column<ProductRow>
+          title="Варианты"
+          width={88}
+          render={(_, row) =>
+            Number(row.variants_count ?? 0) > 0 ? (
+              <Tag color="blue">{row.variants_count}</Tag>
+            ) : (
+              <Typography.Text type="secondary">—</Typography.Text>
+            )
+          }
+        />
+        <Table.Column<ProductRow>
           key="created_at"
           dataIndex="created_at"
           title="Создан"
@@ -387,8 +404,9 @@ export default function AdminProductsPage() {
       </Table>
 
       <Drawer
-        width={920}
-        destroyOnClose
+        width={960}
+        destroyOnHidden
+        styles={{ body: { paddingTop: 8, overflowY: "auto" } }}
         open={drawer.kind !== "closed"}
         onClose={() => setDrawer({ kind: "closed" })}
         title={

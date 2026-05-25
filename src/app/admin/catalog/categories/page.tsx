@@ -99,6 +99,9 @@ export default function AdminCategoriesPage() {
         sort_order: cat.sort_order ?? 0,
         is_active: cat.is_active === 1 || cat.is_active === true,
         slug: cat.slug,
+        attribute_schema_json: cat.attribute_schema
+          ? JSON.stringify(cat.attribute_schema, null, 2)
+          : "",
       });
       setImageFileList(
         cat.image
@@ -126,6 +129,17 @@ export default function AdminCategoriesPage() {
       (imageFileList[0]?.response as { url?: string } | undefined)?.url ??
       null;
 
+    let attribute_schema: unknown = null;
+    const schemaRaw = String(values.attribute_schema_json ?? "").trim();
+    if (schemaRaw) {
+      try {
+        attribute_schema = JSON.parse(schemaRaw);
+      } catch {
+        message.error("Шаблон полей: невалидный JSON");
+        return;
+      }
+    }
+
     const payload = {
       name: String(values.name).trim(),
       description: values.description?.trim() || null,
@@ -133,6 +147,7 @@ export default function AdminCategoriesPage() {
       sort_order: Number(values.sort_order ?? 0),
       is_active: Boolean(values.is_active),
       image: imageUrl,
+      attribute_schema,
     };
 
     setSaving(true);
@@ -303,6 +318,13 @@ export default function AdminCategoriesPage() {
             valuePropName="checked"
           >
             <Switch />
+          </Form.Item>
+          <Form.Item
+            name="attribute_schema_json"
+            label="Шаблон полей карточки (JSON)"
+            extra='Пример: [{"key":"density","label":"Плотность","type":"text","required":false}]'
+          >
+            <Input.TextArea rows={6} placeholder="[]" />
           </Form.Item>
           <Form.Item label="Изображение">
             <Upload

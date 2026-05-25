@@ -48,10 +48,28 @@ export const ADMIN_MENU: AdminMenuEntry[] = [
         permission: "admin.moderation.view",
       },
       {
+        key: "catalog-import",
+        label: "Импорт CSV",
+        path: "/admin/products/import",
+        permission: "admin.catalog.products.view",
+      },
+      {
         key: "catalog-categories",
         label: "Категории",
         path: "/admin/catalog/categories",
         permission: "admin.catalog.categories.view",
+      },
+      {
+        key: "catalog-brands",
+        label: "Бренды",
+        path: "/admin/catalog/brands",
+        permission: "admin.catalog.brands.view",
+      },
+      {
+        key: "catalog-units",
+        label: "Единицы измерения",
+        path: "/admin/catalog/units",
+        permission: "admin.catalog.units.view",
       },
     ],
   },
@@ -66,6 +84,12 @@ export const ADMIN_MENU: AdminMenuEntry[] = [
     label: "Возвраты и обращения",
     path: "/admin/cases",
     permission: "admin.orders.view",
+  },
+  {
+    key: "content",
+    label: "Контент",
+    path: "/admin/content",
+    permission: "admin.content.view",
   },
   {
     key: "actions",

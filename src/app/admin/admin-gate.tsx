@@ -1,24 +1,19 @@
 "use client";
 
 import { ReactNode, useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { Button, Card, Result, Spin, Typography } from "antd";
-import { getAuthMeCached } from "~/src/refine/auth/authMeCache";
+import { useAuthMe } from "~/src/refine/auth/useAuthMe.hook";
 import { canAccessAdminPanelFromMe } from "~/src/refine/auth/roles";
 
 export function AdminGate({ children }: { children: ReactNode }) {
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["auth", "me"],
-    queryFn: () => getAuthMeCached(),
-    retry: false,
-  });
+  const { data, isError, error, hydrated } = useAuthMe();
 
   const allowed = useMemo(
     () => (data ? canAccessAdminPanelFromMe(data) : false),
     [data],
   );
 
-  if (isLoading) {
+  if (!hydrated || !data) {
     return (
       <div
         style={{
@@ -28,7 +23,9 @@ export function AdminGate({ children }: { children: ReactNode }) {
           justifyContent: "center",
         }}
       >
-        <Spin size="large" />
+        <Spin size="large" spinning tip="Загрузка…">
+          <div style={{ minHeight: 120, minWidth: 120 }} />
+        </Spin>
       </div>
     );
   }

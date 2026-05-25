@@ -1,0 +1,33 @@
+/* Админка: компенсация глобального reset (appearance и т.д.) только в зоне /admin */
+body.admin-route {
+  button,
+  input,
+  select,
+  textarea,
+  [type="button"],
+  [type="submit"],
+  [type="reset"],
+  [type="checkbox"],
+  [type="radio"],
+  .ant-btn,
+  .ant-input,
+  .ant-input-affix-wrapper,
+  .ant-select-selector,
+  .ant-picker,
+  .ant-checkbox-input,
+  .ant-radio-input {
+    -webkit-appearance: auto;
+    appearance: auto;
+  }
+}
+
+body.admin-route .page-wrapper {
+  max-width: none;
+  gap: 0;
+}
+
+.etiketka-admin-root {
+  isolation: isolate;
+  min-height: 100vh;
+  width: 100%;
+}
