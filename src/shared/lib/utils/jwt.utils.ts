@@ -1,6 +1,6 @@
 import { jwtDecode } from "jwt-decode";
-import { IJwtExpanded, IJwtToken } from "../../model/shared.interface";
-import { jwtTokenS } from "../../model/shared.skeleton";
+import { IJwtExpanded, IJwtToken } from "~/src/shared/model";
+import { jwtTokenS } from "~/src/shared/model";
 
 class JwtUtils {
   static decodeToken(token: string | undefined): IJwtToken {
@@ -13,16 +13,18 @@ class JwtUtils {
     }
   }
 
+  /** За 2 мин до exp — для UI «скоро истечёт». */
   static checkExpired(exp: number) {
     return Date.now() > exp * 1000 - 2 * 60 * 1000;
   }
 
+  /** Реально истёк — только после exp (не раньше на 2 мин). */
   static isExpiredToken(token: string | undefined): boolean {
     if (!token) return true;
 
     try {
       const decoded = this.decodeToken(token);
-      return this.checkExpired(decoded.exp);
+      return Date.now() >= decoded.exp * 1000;
     } catch (error) {
       console.error(error);
       return true;

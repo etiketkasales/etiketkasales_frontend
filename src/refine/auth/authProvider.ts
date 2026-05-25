@@ -3,6 +3,7 @@
 import type { AuthProvider } from "@refinedev/core";
 import CookieUtils from "~/src/shared/lib/utils/cookies.utils";
 import { getEffectiveAdminRole } from "~/src/refine/auth/roles";
+import { waitForAuthReady } from "~/src/shared/lib/api/authRefreshLock";
 import {
   clearAuthMeCache,
   getAuthMeCached,
@@ -20,6 +21,9 @@ export const authProvider: AuthProvider = {
 
   logout: async () => {
     clearAuthMeCache();
+    if (typeof localStorage !== "undefined") {
+      localStorage.removeItem("etiketka_auth_token_sync");
+    }
     CookieUtils.deleteCookie("auth_token");
     CookieUtils.deleteCookie("refresh_token");
     if (typeof window !== "undefined") {
@@ -29,9 +33,18 @@ export const authProvider: AuthProvider = {
   },
 
   check: async () => {
+    const ready = await waitForAuthReady(10_000);
     const token = CookieUtils.getCookie("auth_token");
-    if (!token) {
+    if (!ready || !token) {
       return { authenticated: false, redirectTo: "/login" };
+    }
+
+    // В /admin права проверяет AdminGate — не редиректим вкладки при гонке refresh.
+    if (
+      typeof window !== "undefined" &&
+      window.location.pathname.startsWith("/admin")
+    ) {
+      return { authenticated: true };
     }
 
     try {

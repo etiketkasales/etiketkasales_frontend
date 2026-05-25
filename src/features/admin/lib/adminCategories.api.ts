@@ -10,6 +10,7 @@ export type AdminCategory = {
   image?: string | null;
   sort_order: number;
   is_active: number | boolean;
+  attribute_schema?: Array<Record<string, unknown>> | null;
   children?: AdminCategory[];
 };
 
@@ -78,6 +79,45 @@ export async function deleteAdminCategory(id: number): Promise<void> {
   if (!data.success) {
     throw new Error(data.message ?? "Ошибка удаления");
   }
+}
+
+export type AdminBrandListItem = {
+  id: number;
+  name: string;
+  slug: string;
+  is_active: number | boolean;
+  sort_order?: number;
+};
+
+export type AdminUnitListItem = {
+  id: number;
+  name: string;
+  short_name: string;
+  slug: string;
+  is_active: number | boolean;
+  sort_order?: number;
+};
+
+export async function listAdminUnits(): Promise<AdminUnitListItem[]> {
+  const { data } = await apiClient.get<{
+    success: boolean;
+    data?: { items?: AdminUnitListItem[] };
+  }>("/admin/units");
+  if (!data.success) {
+    throw new Error("Не удалось загрузить единицы измерения");
+  }
+  return data.data?.items ?? [];
+}
+
+export async function listAdminBrands(): Promise<AdminBrandListItem[]> {
+  const { data } = await apiClient.get<{
+    success: boolean;
+    data?: { items?: AdminBrandListItem[] };
+  }>("/admin/brands");
+  if (!data.success) {
+    throw new Error("Не удалось загрузить бренды");
+  }
+  return data.data?.items ?? [];
 }
 
 export async function uploadCategoryImage(file: File): Promise<string> {

@@ -6,6 +6,7 @@ import ClientLayout from "~/src/entities/client-layout/ui";
 import { StoreProvider } from "~/src/app/store/store-provider";
 import { PublicPathRecorder } from "~/src/app/public-path-recorder";
 import { ProfileRefetchOnLeaveAdmin } from "~/src/app/profile-refetch-on-leave-admin";
+import { AuthRefreshListener } from "~/src/shared/lib/api/authRefreshListener";
 
 export default function ClientRootLayout({
   children,
@@ -18,6 +19,9 @@ export default function ClientRootLayout({
         defaultOptions: {
           queries: {
             staleTime: 60_000,
+            refetchOnWindowFocus: false,
+            refetchOnReconnect: false,
+            refetchOnMount: false,
           },
         },
       }),
@@ -27,6 +31,7 @@ export default function ClientRootLayout({
     <QueryClientProvider client={queryClient}>
       <StoreProvider>
         <PublicPathRecorder />
+        <AuthRefreshListener />
         <ProfileRefetchOnLeaveAdmin />
         <ClientLayout>{children}</ClientLayout>
       </StoreProvider>

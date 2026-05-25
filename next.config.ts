@@ -3,11 +3,18 @@ import path from "path";
 
 const nextConfig: NextConfig = {
   transpilePackages: ["antd", "@ant-design/icons", "@refinedev/antd"],
-  webpack(config) {
+  webpack(config, { dev, isServer }) {
     config.module.rules.push({
       test: /\.svg$/,
       use: ["@svgr/webpack"],
     });
+
+    if (dev && !isServer) {
+      config.watchOptions = {
+        ...config.watchOptions,
+        aggregateTimeout: 600,
+      };
+    }
 
     return config;
   },

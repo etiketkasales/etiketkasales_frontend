@@ -1,17 +1,13 @@
 "use client";
 import { useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
 
 import classes from "./aside-items.module.scss";
 import ProfileContainer from "~/src/entities/profile-section/ui/container";
 import ProfileAsideItem from "./item";
 import { IProfile, UserRoleType } from "~/src/features/user/model";
-import {
-  canAccessAdminPanelFromMe,
-  getEffectiveAdminRole,
-} from "~/src/refine/auth/roles";
-import { getAuthMeCached } from "~/src/refine/auth/authMeCache";
+import { canAccessAdminPanelFromMe } from "~/src/refine/auth/roles";
+import { useAuthMe } from "~/src/refine/auth/useAuthMe.hook";
 import { useAppSelector } from "~/src/app/store/hooks";
 import {
   buyerTabs,
@@ -39,14 +35,11 @@ export default function ProfileAsideItems({
 }: Props) {
   const { push } = useRouter();
   const isLoggedIn = useAppSelector((s) => s.user.isLoggedIn);
-  const { data: authMe } = useQuery({
-    queryKey: ["auth", "me"],
-    queryFn: () => getAuthMeCached(),
-    enabled: isLoggedIn,
-    retry: false,
-  });
+  const { data: authMe, hydrated } = useAuthMe({ enabled: isLoggedIn });
   const showAdmin =
-    (authMe ? canAccessAdminPanelFromMe(authMe) : false) ||
+    (hydrated && isLoggedIn && authMe
+      ? canAccessAdminPanelFromMe(authMe)
+      : false) ||
     canAccessAdminPanelFromMe({
       user: {
         role: userInfo.role,

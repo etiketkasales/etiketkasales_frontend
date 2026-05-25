@@ -1,13 +1,10 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { getAuthMeCached } from "~/src/refine/auth/authMeCache";
+import { useAuthMe } from "~/src/refine/auth/useAuthMe.hook";
 
 export function useAdminPermission(permission: string): boolean {
-  const { data: me } = useQuery({
-    queryKey: ["auth", "me"],
-    queryFn: () => getAuthMeCached(),
-  });
+  const { data: me, hydrated } = useAuthMe();
 
+  if (!hydrated) return false;
   return me?.permissions?.includes(permission) ?? false;
 }

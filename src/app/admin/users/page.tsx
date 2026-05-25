@@ -20,7 +20,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getDefaultFilter, getDefaultSortOrder } from "@refinedev/antd";
 import { apiClient } from "~/src/shared/lib/api/client.api";
 import { ADMIN_ROLES } from "~/src/refine/auth/roles";
-import { getAuthMeCached } from "~/src/refine/auth/authMeCache";
+import { useAuthMe } from "~/src/refine/auth/useAuthMe.hook";
 import { useAdminTable } from "~/src/refine/admin/useAdminTable";
 import { useRefineSearchFilterValue } from "~/src/refine/admin/useRefineSearchFilterValue";
 import {
@@ -109,10 +109,7 @@ function buyerAccountStatusRu(status?: string | null): string {
 
 export default function AdminUsersPage() {
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
-  const { data: me } = useQuery({
-    queryKey: ["auth", "me"],
-    queryFn: () => getAuthMeCached(),
-  });
+  const { data: me } = useAuthMe();
   const canManageStaffRoles =
     me?.permissions?.includes("admin.users.staff_manage") ?? false;
 
@@ -522,7 +519,7 @@ export default function AdminUsersPage() {
         open={Boolean(selectedUserId)}
         onClose={() => setSelectedUserId(null)}
         width={920}
-        destroyOnClose
+        destroyOnHidden
       >
         {profileError ? (
           <Alert

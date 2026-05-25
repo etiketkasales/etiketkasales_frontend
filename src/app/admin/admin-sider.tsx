@@ -11,24 +11,18 @@ import {
   UnorderedListOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-
-import type { MenuProps } from "antd";
 import { Button, Layout, Menu, theme } from "antd";
-import { useQuery } from "@tanstack/react-query";
-import {
-  useIsExistAuthentication,
-  useLink,
-  useLogout,
-  useTranslate,
-} from "@refinedev/core";
-import { ThemedTitle, useThemedLayoutContext } from "@refinedev/antd";
+import type { MenuProps } from "antd";
+import { useLink, useLogout, useTranslate } from "@refinedev/core";
+import { useThemedLayoutContext } from "@refinedev/antd";
+import { ThemedTitle } from "@refinedev/antd";
 import type { RefineThemedLayoutSiderProps } from "@refinedev/ui-types";
 import {
   ADMIN_MENU,
-  type AdminMenuEntry,
   filterAdminMenuByPermissions,
+  type AdminMenuEntry,
 } from "~/src/refine/admin/adminMenu";
-import { getAuthMeCached } from "~/src/refine/auth/authMeCache";
+import { useAuthMe } from "~/src/refine/auth/useAuthMe.hook";
 
 function menuIconForKey(key: string) {
   switch (key) {
@@ -77,31 +71,28 @@ export function AdminSider({ Title }: RefineThemedLayoutSiderProps) {
   const { token } = theme.useToken();
   const Link = useLink();
   const pathname = usePathname() ?? "";
-  const { data: me } = useQuery({
-    queryKey: ["auth", "me"],
-    queryFn: () => getAuthMeCached(),
-  });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const perms = me?.permissions ?? [];
+  const { perms, hydrated } = useAuthMe();
 
   const menuTree = useMemo(
-    () => filterAdminMenuByPermissions(ADMIN_MENU, perms),
-    [perms],
+    () => (hydrated ? filterAdminMenuByPermissions(ADMIN_MENU, perms) : []),
+    [hydrated, perms],
   );
 
   const items: MenuProps["items"] = useMemo(() => {
+    if (!hydrated) return [];
     return toAntdMenuItems(menuTree, Link);
-  }, [menuTree, Link]);
+  }, [menuTree, Link, hydrated]);
 
   const { mutate: mutateLogout } = useLogout();
   const translate = useTranslate();
-  const isExistAuthentication = useIsExistAuthentication();
   const { siderCollapsed, setSiderCollapsed, setMobileSiderOpen } =
     useThemedLayoutContext();
 
   const RenderToTitle = Title ?? ThemedTitle;
+  const collapsed = hydrated ? siderCollapsed : false;
 
   const selectedKeys = useMemo(() => {
+    if (!hydrated) return [] as string[];
     const flat: string[] = [];
     const walk = (nodes: AdminMenuEntry[]) => {
       for (const n of nodes) {
@@ -117,31 +108,28 @@ export function AdminSider({ Title }: RefineThemedLayoutSiderProps) {
       .filter((p) => pathname === p || pathname.startsWith(`${p}/`))
       .sort((a, b) => b.length - a.length)[0];
     return hit ? [hit] : [];
-  }, [pathname, menuTree]);
+  }, [pathname, menuTree, hydrated]);
 
-  const defaultOpenKeys = useMemo(
+  const openKeys = useMemo(
     () =>
+      hydrated &&
       menuTree.some((n) => n.key === "catalog" && (n.children?.length ?? 0) > 0)
         ? ["catalog"]
         : [],
-    [menuTree],
+    [menuTree, hydrated],
   );
 
   const withLogout: MenuProps["items"] = useMemo(
     () => [
       ...(items ?? []),
-      ...(isExistAuthentication
-        ? [
-            {
-              key: "logout",
-              icon: <LogoutOutlined />,
-              label: translate("buttons.logout", "Выйти"),
-              onClick: () => mutateLogout(),
-            },
-          ]
-        : []),
+      {
+        key: "logout",
+        icon: <LogoutOutlined />,
+        label: translate("buttons.logout", "Выйти"),
+        onClick: () => mutateLogout(),
+      },
     ],
-    [items, isExistAuthentication, mutateLogout, translate],
+    [items, mutateLogout, translate],
   );
 
   return (
@@ -151,10 +139,10 @@ export function AdminSider({ Title }: RefineThemedLayoutSiderProps) {
         borderRight: `1px solid ${token.colorBgElevated}`,
       }}
       collapsible
-      collapsed={siderCollapsed}
-      onCollapse={(collapsed, type) => {
+      collapsed={collapsed}
+      onCollapse={(nextCollapsed, type) => {
         if (type === "clickTrigger") {
-          setSiderCollapsed(collapsed);
+          setSiderCollapsed(nextCollapsed);
         }
       }}
       collapsedWidth={80}
@@ -174,22 +162,22 @@ export function AdminSider({ Title }: RefineThemedLayoutSiderProps) {
     >
       <div
         style={{
-          width: siderCollapsed ? "80px" : "260px",
-          padding: siderCollapsed ? "0" : "0 16px",
+          width: collapsed ? "80px" : "260px",
+          padding: collapsed ? "0" : "0 16px",
           display: "flex",
-          justifyContent: siderCollapsed ? "center" : "flex-start",
+          justifyContent: collapsed ? "center" : "flex-start",
           alignItems: "center",
           height: "64px",
           backgroundColor: token.colorBgElevated,
           fontSize: "14px",
         }}
       >
-        <RenderToTitle collapsed={siderCollapsed} />
+        <RenderToTitle collapsed={collapsed} />
       </div>
       <Menu
         mode="inline"
         selectedKeys={selectedKeys}
-        defaultOpenKeys={defaultOpenKeys}
+        openKeys={openKeys}
         style={{
           paddingTop: 8,
           border: "none",
