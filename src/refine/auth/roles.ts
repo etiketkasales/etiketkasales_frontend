@@ -111,6 +111,22 @@ export function canRefineAccess(
         return has("admin.catalog.categories.edit");
       }
       return false;
+    case "catalog-brands":
+      if (action === "list") {
+        return has("admin.catalog.brands.view");
+      }
+      if (action === "edit") {
+        return has("admin.catalog.brands.edit");
+      }
+      return false;
+    case "catalog-units":
+      if (action === "list") {
+        return has("admin.catalog.units.view");
+      }
+      if (action === "edit") {
+        return has("admin.catalog.units.edit");
+      }
+      return false;
     case "permissions":
       if (action === "list" || action === "edit") {
         return has("admin.system.matrix_view");

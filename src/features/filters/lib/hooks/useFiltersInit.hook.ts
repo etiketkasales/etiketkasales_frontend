@@ -5,7 +5,8 @@ import { useFiltersParse } from "./useFiltersParse.hook";
 import { getProductsFilters } from "../api";
 import { setCatalogue } from "~/src/app/store/reducers/catalogue.slice";
 
-export const useFiltersInit = () => {
+export const useFiltersInit = (options?: { enabled?: boolean }) => {
+  const enabled = options?.enabled ?? true;
   const dispatch = useAppDispatch();
   const parseFilters = useFiltersParse();
 
@@ -36,8 +37,9 @@ export const useFiltersInit = () => {
   }, [setParsedFilters]);
 
   useEffect(() => {
+    if (!enabled) return;
     getFilters();
-  }, [getFilters]);
+  }, [getFilters, enabled]);
 
   return {
     getFilters,
