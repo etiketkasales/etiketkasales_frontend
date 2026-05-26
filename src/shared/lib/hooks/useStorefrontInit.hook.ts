@@ -7,7 +7,9 @@ import { setUser } from "~/src/app/store/reducers/user.slice";
 import { useCart } from "~/src/features/cart/lib/hooks/useCart.hook";
 import { useFiltersInit } from "~/src/features/filters/lib/hooks";
 import { useUser } from "~/src/features/user/lib/hooks/useUser.hook";
+import { waitForAuthBootstrap } from "~/src/shared/lib/api/authBootstrap";
 import {
+  hasRefreshToken,
   hasValidAccessToken,
   isAuthRefreshLocked,
   waitForAuthReady,
@@ -31,41 +33,50 @@ export const useStorefrontInit = () => {
   useEffect(() => {
     if (isAdmin) return;
     if (bootstrapped.current) return;
-    bootstrapped.current = true;
 
-    let remember = false;
-    if (typeof window !== "undefined") {
+    let cancelled = false;
+
+    void waitForAuthBootstrap().then(() => {
+      if (cancelled || bootstrapped.current) return;
+      bootstrapped.current = true;
+
+      let remember = false;
       remember = localStorage.getItem("needRemember") === "true";
       dispatch(setUser({ needRemember: remember }));
-    }
 
-    void updateCart();
+      void updateCart();
 
-    if (!remember) {
-      dispatch(setUser({ isLoggedIn: false }));
-      return;
-    }
+      if (!remember) {
+        dispatch(setUser({ isLoggedIn: false }));
+        return;
+      }
 
-    if (hasValidAccessToken()) {
-      void handleGetUser();
-      return;
-    }
+      const loadProfile = () => {
+        void handleGetUser();
+      };
 
-    if (isAuthRefreshLocked()) {
-      void waitForAuthReady(12_000).then((ok) => {
+      if (hasValidAccessToken()) {
+        loadProfile();
+        return;
+      }
+
+      if (!hasRefreshToken()) {
+        dispatch(setUser({ isLoggedIn: false }));
+        return;
+      }
+
+      void waitForAuthReady(20_000).then((ok) => {
+        if (cancelled) return;
         if (ok && hasValidAccessToken()) {
-          void handleGetUser();
+          loadProfile();
+        } else if (!isAuthRefreshLocked() && !hasRefreshToken()) {
+          dispatch(setUser({ isLoggedIn: false }));
         }
       });
-      return;
-    }
-
-    void waitForAuthReady(12_000).then((ok) => {
-      if (ok && hasValidAccessToken()) {
-        void handleGetUser();
-      } else if (!isAuthRefreshLocked()) {
-        dispatch(setUser({ isLoggedIn: false }));
-      }
     });
+
+    return () => {
+      cancelled = true;
+    };
   }, [isAdmin, dispatch, updateCart, handleGetUser]);
 };

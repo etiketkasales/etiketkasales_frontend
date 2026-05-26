@@ -5,6 +5,7 @@ import { apiClient, tryCatch } from "~/src/shared/lib/api";
 
 export * from "./products";
 export * from "./orders";
+export * from "./reviews";
 
 interface IAgreementRes {
   success: boolean;

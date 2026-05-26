@@ -5,6 +5,8 @@ import { useUserCompanies, useAddresses } from ".";
 
 import { getProfile } from "~/src/features/user/lib/api/user.api";
 import { setUser } from "~/src/app/store/reducers/user.slice";
+import { hasRefreshToken } from "~/src/shared/lib/api/authRefreshLock";
+import { withAuthRetry } from "~/src/shared/lib/api/withAuthRetry";
 
 import { profileChangeableFields } from "~/src/features/user/model/user.const";
 import { IChangeableProfile, IProfile } from "~/src/features/user/model";
@@ -53,20 +55,23 @@ export const useUser = () => {
     async (options?: { skipCart?: boolean }) => {
       try {
         setLoading(true);
-        const res = await getProfile();
-        await handleGetCompanies();
-        await getAddresses();
+        const res = await withAuthRetry(() => getProfile());
+        await withAuthRetry(() => handleGetCompanies());
+        await withAuthRetry(() => getAddresses());
         if (!options?.skipCart) {
-          await updateCart();
+          await withAuthRetry(() => updateCart());
         }
         if (res.user) {
+          dispatch(setUser({ isLoggedIn: true }));
           setUserData(res.user);
         } else {
           dispatch(setUser({ isLoggedIn: false }));
         }
       } catch (err) {
         console.error(err);
-        dispatch(setUser({ isLoggedIn: false }));
+        if (!hasRefreshToken()) {
+          dispatch(setUser({ isLoggedIn: false }));
+        }
       } finally {
         setLoading(false);
       }

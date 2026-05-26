@@ -6,7 +6,8 @@ const BASE_URL = process.env.SERVER_API_URL ?? process.env.NEXT_PUBLIC_API_URL;
 
 const LOCK_KEY = "etiketka_auth_refresh_lock";
 const TOKEN_SYNC_KEY = "etiketka_auth_token_sync";
-const LOCK_TTL_MS = 20_000;
+const LOCK_TTL_MS = 45_000;
+const TOKEN_SYNC_TTL_MS = 90_000;
 const AUTH_CHANNEL = "etiketka_auth";
 
 const TAB_ID =
@@ -56,6 +57,15 @@ export function hasValidAccessToken(): boolean {
   return Boolean(token && !JwtUtils.isExpiredToken(token));
 }
 
+export function hasRefreshToken(): boolean {
+  return Boolean(CookieUtils.getCookie("refresh_token"));
+}
+
+export function needsAccessTokenRefresh(): boolean {
+  const token = CookieUtils.getCookie("auth_token");
+  return !token || JwtUtils.isExpiredToken(token);
+}
+
 /** Другая вкладка сейчас делает refresh — не сбрасывать cookies локально. */
 export function isAuthRefreshLocked(): boolean {
   const current = readLock();
@@ -78,6 +88,17 @@ export function broadcastAccessToken(token: string): void {
   if (existing === token) {
     return;
   }
+  try {
+    const raw = localStorage.getItem(TOKEN_SYNC_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw) as { token?: string };
+      if (parsed.token === token) {
+        return;
+      }
+    }
+  } catch {
+    /* ignore */
+  }
   localStorage.setItem(
     TOKEN_SYNC_KEY,
     JSON.stringify({ token, at: Date.now() }),
@@ -89,13 +110,22 @@ export function applySyncedAccessToken(token: string): void {
   CookieUtils.setCookieWithToken("auth_token", token);
 }
 
+/** Токен, записанный другой вкладкой (localStorage). */
+export function readSyncedAccessToken(): string | null {
+  return readSyncedToken();
+}
+
 function readSyncedToken(): string | null {
   if (typeof localStorage === "undefined") return null;
   const raw = localStorage.getItem(TOKEN_SYNC_KEY);
   if (!raw) return null;
   try {
     const parsed = JSON.parse(raw) as { token?: string; at?: number };
-    if (!parsed.token || !parsed.at || Date.now() - parsed.at > LOCK_TTL_MS) {
+    if (
+      !parsed.token ||
+      !parsed.at ||
+      Date.now() - parsed.at > TOKEN_SYNC_TTL_MS
+    ) {
       return null;
     }
     return parsed.token;
@@ -219,6 +249,50 @@ export async function runAuthRefreshOnce(
   throw new Error("Auth refresh timeout (another tab)");
 }
 
+let ensureAccessInFlight: Promise<string | null> | null = null;
+
+/**
+ * Перед API-запросом: подхватить токен из другой вкладки или обновить refresh.
+ */
+export async function ensureAccessToken(): Promise<string | null> {
+  if (hasValidAccessToken()) {
+    return CookieUtils.getCookie("auth_token") ?? null;
+  }
+
+  const synced = readSyncedToken();
+  if (synced) {
+    applySyncedAccessToken(synced);
+    if (hasValidAccessToken()) {
+      return synced;
+    }
+  }
+
+  if (!hasRefreshToken()) {
+    return null;
+  }
+
+  if (ensureAccessInFlight) {
+    return ensureAccessInFlight;
+  }
+
+  ensureAccessInFlight = (async () => {
+    if (isAuthRefreshLocked()) {
+      const ready = await waitForAuthReady(20_000);
+      return ready ? (CookieUtils.getCookie("auth_token") ?? null) : null;
+    }
+    try {
+      return await refreshAccessToken();
+    } catch {
+      const ready = await waitForAuthReady(20_000);
+      return ready ? (CookieUtils.getCookie("auth_token") ?? null) : null;
+    }
+  })().finally(() => {
+    ensureAccessInFlight = null;
+  });
+
+  return ensureAccessInFlight;
+}
+
 /** Один refresh на все вкладки (для axios и /auth/me). */
 export async function refreshAccessToken(): Promise<string> {
   return runAuthRefreshOnce(async () => {
@@ -228,7 +302,7 @@ export async function refreshAccessToken(): Promise<string> {
     }
 
     const res = await axios.post(
-      `${BASE_URL}/auth/refresh/`,
+      `${BASE_URL}auth/refresh/`,
       { refresh_token: refreshToken },
       { withCredentials: true },
     );

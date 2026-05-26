@@ -105,7 +105,6 @@ export const profileModalActions: ProfileActionType[] = [
   "logout",
 ];
 export const profileInDev: ProfileActionType[] = [
-  "reviews",
   "accounting",
   "promotion",
   "statistics",

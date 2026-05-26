@@ -131,7 +131,7 @@ async function fetchMeWithAuthWait(): Promise<AuthMePayload> {
       await refreshAccessToken();
       return await fetchMeOnce();
     } catch {
-      const ready = await waitForAuthReady(10_000);
+      const ready = await waitForAuthReady(20_000);
       if (!ready) {
         throw err;
       }
@@ -162,7 +162,7 @@ export async function getAuthMeCached(): Promise<AuthMePayload> {
   }
 
   if (!hasValidAccessToken()) {
-    const ready = await waitForAuthReady(10_000);
+    const ready = await waitForAuthReady(20_000);
     if (!ready) {
       throw new Error("auth/me: no valid token");
     }
@@ -197,24 +197,30 @@ export function attachCrossTabMeSync(): void {
   }
   crossTabListenerAttached = true;
 
+  let debounceTimer: ReturnType<typeof setTimeout> | null = null;
+
   window.addEventListener("storage", (e) => {
     if (e.key !== ME_STORAGE_KEY || !e.newValue) return;
-    try {
-      const parsed = JSON.parse(e.newValue) as {
-        at?: number;
-        payload?: AuthMePayload;
-      };
-      if (parsed.payload && parsed.at) {
-        const next = { payload: parsed.payload, at: parsed.at };
-        if (cache && payloadsEqual(cache.payload, parsed.payload)) {
-          return;
+    if (debounceTimer) clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      debounceTimer = null;
+      try {
+        const parsed = JSON.parse(e.newValue!) as {
+          at?: number;
+          payload?: AuthMePayload;
+        };
+        if (parsed.payload && parsed.at) {
+          const next = { payload: parsed.payload, at: parsed.at };
+          if (cache && payloadsEqual(cache.payload, parsed.payload)) {
+            return;
+          }
+          cache = next;
+          syncAuthMeToQueries(parsed.payload);
         }
-        cache = next;
-        syncAuthMeToQueries(parsed.payload);
+      } catch {
+        /* ignore */
       }
-    } catch {
-      /* ignore */
-    }
+    }, 200);
   });
 }
 

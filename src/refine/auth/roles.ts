@@ -147,6 +147,14 @@ export function canRefineAccess(
         return has("admin.logistics.view");
       }
       return false;
+    case "reviews":
+      if (action === "list") {
+        return has("admin.reviews.view");
+      }
+      if (action === "edit") {
+        return has("admin.reviews.edit");
+      }
+      return false;
     default:
       return false;
   }

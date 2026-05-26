@@ -1,0 +1,84 @@
+.container {
+    gap: $space-4;
+    align-self: flex-start;
+}
+
+.list {
+    gap: $space-4;
+}
+
+.card {
+    gap: $space-3;
+    padding: $space-4;
+    border-radius: 16px;
+    border: 1px solid $neutral-400;
+    background: $neutral-100;
+}
+
+.meta {
+    flex-wrap: wrap;
+    gap: $space-2;
+}
+
+.badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.badgePending {
+    background: $yellow-200;
+    color: $yellow-1000;
+}
+
+.badgeApproved {
+    background: $green-200;
+    color: $green-900;
+}
+
+.badgeRejected {
+    background: $red-200;
+    color: $red-900;
+}
+
+.badgeHidden {
+    background: $neutral-300;
+    color: $neutral-800;
+}
+
+.stars {
+    gap: 2px;
+}
+
+.starMuted {
+    opacity: 0.35;
+}
+
+.replyBlock {
+    gap: $space-2;
+    padding: $space-3;
+    border-radius: 12px;
+    background: $neutral-200;
+}
+
+.photos {
+    flex-wrap: wrap;
+    gap: $space-2;
+}
+
+.photo {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.productLink {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover {
+        color: $blue-600;
+    }
+}

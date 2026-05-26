@@ -39,6 +39,7 @@ function menuIconForKey(key: string) {
       return <SafetyCertificateOutlined />;
     case "permissions":
     case "actions":
+    case "reviews":
       return <SafetyCertificateOutlined />;
     default:
       return <UnorderedListOutlined />;
