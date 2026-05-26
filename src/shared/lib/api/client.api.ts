@@ -1,7 +1,10 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import {
+  ensureAccessToken,
+  hasRefreshToken,
   hasValidAccessToken,
   isAuthRefreshLocked,
+  needsAccessTokenRefresh,
   refreshAccessToken,
   waitForAuthReady,
 } from "./authRefreshLock";
@@ -51,12 +54,19 @@ declare module "axios" {
   }
 }
 
-// добавление токена к каждому запросу
+// добавление токена к каждому запросу (с ожиданием refresh из другой вкладки)
 apiClient.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
+  async (config: InternalAxiosRequestConfig) => {
     if (config.skipAuth) return config;
 
-    const token = CookieUtils.getCookie("auth_token");
+    let token = CookieUtils.getCookie("auth_token");
+
+    if (needsAccessTokenRefresh() && hasRefreshToken()) {
+      const ensured = await ensureAccessToken();
+      if (ensured) {
+        token = ensured;
+      }
+    }
 
     if (token && !JwtUtils.isExpiredToken(token)) {
       config.headers = config.headers || {};

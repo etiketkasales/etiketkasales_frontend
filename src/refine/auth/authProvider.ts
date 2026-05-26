@@ -33,7 +33,7 @@ export const authProvider: AuthProvider = {
   },
 
   check: async () => {
-    const ready = await waitForAuthReady(10_000);
+    const ready = await waitForAuthReady(20_000);
     const token = CookieUtils.getCookie("auth_token");
     if (!ready || !token) {
       return { authenticated: false, redirectTo: "/login" };

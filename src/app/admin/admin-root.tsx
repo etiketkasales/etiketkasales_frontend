@@ -1,5 +1,7 @@
 "use client";
 
+import "@ant-design/v5-patch-for-react-19";
+
 import { ReactNode } from "react";
 import { Refine } from "@refinedev/core";
 import routerProvider from "@refinedev/nextjs-router";
@@ -88,6 +90,11 @@ export default function AdminRoot({ children }: { children: ReactNode }) {
                 name: "catalog-units",
                 list: "/admin/catalog/units",
                 meta: { label: "Units" },
+              },
+              {
+                name: "reviews",
+                list: "/admin/reviews",
+                meta: { label: "Reviews" },
               },
               /* Справочник матрицы прав
                  { name: "permissions", list: "/admin/permissions", meta: { label: "Права" } }, */

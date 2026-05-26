@@ -6,14 +6,14 @@ import { useAuthMe } from "~/src/refine/auth/useAuthMe.hook";
 import { canAccessAdminPanelFromMe } from "~/src/refine/auth/roles";
 
 export function AdminGate({ children }: { children: ReactNode }) {
-  const { data, isError, error, hydrated } = useAuthMe();
+  const { data, isError, error, hydrated, isPending } = useAuthMe();
 
   const allowed = useMemo(
     () => (data ? canAccessAdminPanelFromMe(data) : false),
     [data],
   );
 
-  if (!hydrated || !data) {
+  if (!hydrated || (isPending && !data)) {
     return (
       <div
         style={{
