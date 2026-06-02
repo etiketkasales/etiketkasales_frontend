@@ -302,7 +302,7 @@ export async function refreshAccessToken(): Promise<string> {
     }
 
     const res = await axios.post(
-      `${BASE_URL}auth/refresh/`,
+      `${BASE_URL}/auth/refresh/`,
       { refresh_token: refreshToken },
       { withCredentials: true },
     );
