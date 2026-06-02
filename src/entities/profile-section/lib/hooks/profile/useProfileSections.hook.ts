@@ -11,6 +11,8 @@ const paramKey = "active_section";
 
 interface Props {
   defaultSection: string;
+  /** Если в URL скрытая вкладка — подменяем на defaultSection. */
+  hiddenSections?: ProfileActionType[];
 }
 
 /**
@@ -18,7 +20,10 @@ interface Props {
  * @param {{ defaultSection: string }} - Object with default section.
  * @returns {{ activeSection: ProfileActionType | null, onItemClick: Function, exitSection: Function, loaded: boolean }} - Object with active section, onItemClick and exitSection functions and loaded flag.
  */
-export const useProfileSections = ({ defaultSection }: Props) => {
+export const useProfileSections = ({
+  defaultSection,
+  hiddenSections = [],
+}: Props) => {
   const { width } = useWindowSize();
   const { loaded } = useAppSelector(selectNavigation);
 
@@ -57,6 +62,11 @@ export const useProfileSections = ({ defaultSection }: Props) => {
 
     if (sectionParam) {
       const activeSectionParam = sectionParam as ProfileActionType;
+      if (hiddenSections.includes(activeSectionParam)) {
+        setActiveSection(defaultSection as ProfileActionType);
+        updateParamLocal(defaultSection);
+        return;
+      }
       setActiveSection(activeSectionParam);
     } else {
       if (width > 1024) {
@@ -65,7 +75,7 @@ export const useProfileSections = ({ defaultSection }: Props) => {
         setActiveSection(null);
       }
     }
-  }, [activeSection, searchParams, defaultSection, width]);
+  }, [searchParams, defaultSection, width, hiddenSections, updateParamLocal]);
 
   return {
     activeSection,

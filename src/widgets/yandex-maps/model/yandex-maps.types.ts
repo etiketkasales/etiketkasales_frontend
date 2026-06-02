@@ -13,9 +13,11 @@ export type YMapsReactifyComponents = {
   YMapDefaultFeaturesLayer: React.ComponentType<{}>;
   YMapFeature: React.ComponentType<any>;
   YMapMarker: React.ComponentType<PropsWithChildren<YMapMarkerProps>>;
-  YMapClusterer: React.ComponentType<PropsWithChildren<YMapClustererProps>>;
+  YMapClusterer: React.ComponentType<
+    PropsWithChildren<YMapClustererProps>
+  > | null;
   reactify: Reactify | null;
-  clusterByGrid: any;
+  clusterByGrid: ((options: { gridSize: number }) => unknown) | null;
 };
 
 declare global {

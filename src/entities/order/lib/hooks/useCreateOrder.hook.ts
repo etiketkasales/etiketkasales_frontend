@@ -1,9 +1,11 @@
 import { useCallback, useState } from "react";
+import { usePathname } from "next/navigation";
 import { selectOrder } from "~/src/app/store/reducers/order.slice";
 import { createOrder, createOrderForCompany } from "../api";
 import { promiseWrapper } from "~/src/shared/lib";
 
 import { useAppSelector } from "~/src/app/store/hooks";
+import { useCart } from "~/src/features/cart/lib/hooks/useCart.hook";
 import { usePayment, useValidateOrder } from ".";
 import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 
@@ -30,6 +32,11 @@ const errorMessage = "Не удалось создать заказ";
  * }}
  */
 export const useCreateOrder = ({ type, stage, setStage }: Props) => {
+  const pathname = usePathname();
+  const checkoutType: OrderType = pathname?.includes("/order/create/company")
+    ? "company"
+    : type;
+
   const {
     receiver,
     receiverCompanyId,
@@ -40,12 +47,13 @@ export const useCreateOrder = ({ type, stage, setStage }: Props) => {
     itemsToOrder,
   } = useAppSelector(selectOrder);
   const [loading, setLoading] = useState<boolean>(false);
-  const { isValidOrder } = useValidateOrder({ type });
+  const { isValidOrder } = useValidateOrder({ type: checkoutType });
   const createNotification = useCreateNotification();
   const { createPaymentForOrder: createPayment } = usePayment({
-    isCompany: type === "company",
+    orderType: checkoutType,
     needLoad: false,
   });
+  const { updateCart } = useCart({ needInitialize: false });
 
   // Создание плашек уведомлений
   const requestCallback = useCallback(
@@ -70,23 +78,30 @@ export const useCreateOrder = ({ type, stage, setStage }: Props) => {
     };
 
     let res: IGetData<ICreatedOrderDto> | null = null;
-    switch (type) {
+    switch (checkoutType) {
       case "person":
         res = await createOrder({
           ...defaultParams,
         });
         return res;
       case "company":
+        if (Number(receiverCompanyId) <= 0) {
+          createNotification(
+            "Выберите организацию для оформления заказа",
+            "error",
+          );
+          return null;
+        }
         res = await createOrderForCompany({
           ...defaultParams,
-          company_id: receiverCompanyId,
+          company_id: Number(receiverCompanyId),
         });
         return res;
       default:
         return res;
     }
   }, [
-    type,
+    checkoutType,
     receiverCompanyId,
     deliveryAddressId,
     deliveryMethod,
@@ -94,6 +109,7 @@ export const useCreateOrder = ({ type, stage, setStage }: Props) => {
     receiver,
     pickupPoint,
     paymentMethod,
+    createNotification,
   ]);
 
   // Создание заказа и платежа
@@ -110,17 +126,29 @@ export const useCreateOrder = ({ type, stage, setStage }: Props) => {
           return;
         }
 
-        requestCallback(true);
+        await updateCart();
 
-        if (res.data && res.data.id) {
-          await createPayment(res.data.id);
+        if (res.data?.id) {
+          const redirected = await createPayment(res.data.id);
+          if (!redirected) {
+            requestCallback(true);
+          }
+          return;
         }
+
+        requestCallback(true);
       },
       fallback: () => {
         requestCallback(false);
       },
     });
-  }, [requestCallback, isValidOrder, createPayment, createOrderByType]);
+  }, [
+    requestCallback,
+    isValidOrder,
+    createPayment,
+    createOrderByType,
+    updateCart,
+  ]);
 
   const onCreateButtonClick = useCallback(async () => {
     if (stage === "confirm") {

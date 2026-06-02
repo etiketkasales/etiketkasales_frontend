@@ -58,3 +58,20 @@
     z-index: $z-very-low;
   }
 }
+
+.empty {
+  padding: $space-4;
+}
+
+.fallback {
+  flex: 1;
+  min-height: 0;
+  gap: $space-3;
+}
+
+.mapLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $neutral-100;
+}

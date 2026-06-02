@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect } from "react";
 import { useAppSelector } from "~/src/app/store/hooks";
 import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
 import { selectUser } from "~/src/app/store/reducers/user.slice";
@@ -27,15 +30,30 @@ export default function OrderContent({ type, stage, setStage }: Props) {
   const { isLoggedIn, userInfo, loadingData } = useAppSelector(selectUser);
   const createNotification = useCreateNotification();
 
+  useEffect(() => {
+    if (!loaded || loadingData) return;
+    if (!isLoggedIn) {
+      createNotification(messages.loggedOut, "warning");
+    } else if (!userInfo.name || !userInfo.surname || !userInfo.email) {
+      createNotification(messages.noData, "warning");
+    }
+  }, [
+    loaded,
+    loadingData,
+    isLoggedIn,
+    userInfo.name,
+    userInfo.surname,
+    userInfo.email,
+    createNotification,
+  ]);
+
   if (!loaded || loadingData) return <OrderContentLoader />;
 
   if (!isLoggedIn) {
-    createNotification(messages.loggedOut, "warning");
     return <OrderLoggedOut />;
   }
 
   if (!userInfo.name || !userInfo.surname || !userInfo.email) {
-    createNotification(messages.noData, "warning");
     return <OrderLoggedOut />;
   }
 

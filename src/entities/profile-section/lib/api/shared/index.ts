@@ -1,4 +1,4 @@
-import { apiClient, tryCatch } from "~/src/shared/lib/api";
+import { apiClient, dedupeRequest, tryCatch } from "~/src/shared/lib/api";
 import { AxiosResponse } from "axios";
 import { IFileUploadRes, IGetData, IGetDataBase } from "~/src/shared/model";
 import { IChangeableProfile, IProfile } from "~/src/features/user/model";
@@ -91,10 +91,12 @@ interface IOrdersResponse extends IGetDataBase {
   orders: IOrder[];
 }
 export const getOrders = async () => {
-  return await tryCatch(async () => {
-    const res = await apiClient.get<IOrdersResponse>(`/users/orders/`);
-    return res.data;
-  });
+  return dedupeRequest("GET /users/orders/", () =>
+    tryCatch(async () => {
+      const res = await apiClient.get<IOrdersResponse>(`/users/orders/`);
+      return res.data;
+    }),
+  );
 };
 
 export const uploadAvatar = async (data: FormData) => {

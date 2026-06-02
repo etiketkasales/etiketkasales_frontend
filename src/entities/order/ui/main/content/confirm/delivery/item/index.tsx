@@ -2,9 +2,11 @@ import classes from "./delivery-item.module.scss";
 import Container from "~/src/shared/ui/container/ui";
 import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
 import ChosenDeliveryText from "./text";
+import { resolveDeliveryIcon } from "~/src/entities/order/lib/utils/deliveryIcon";
 
 interface Props {
   name: string;
+  code: string;
   image: string;
   address: string;
   display: string;
@@ -12,6 +14,7 @@ interface Props {
 
 export default function DeliveryChosenMethodItem({
   name,
+  code,
   image,
   address,
   display,
@@ -24,7 +27,7 @@ export default function DeliveryChosenMethodItem({
       {name ? (
         <>
           <ImageWrapper
-            src={image}
+            src={resolveDeliveryIcon(code, image)}
             needDummy={false}
             width={40}
             height={40}

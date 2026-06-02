@@ -23,6 +23,7 @@ export interface IOrder {
   items: IOrderResponseItem[];
   order_number: string;
   payment_method: string | null;
+  company_id?: number | null;
   preview_image: string;
   receiver_phone: string;
   status: string;

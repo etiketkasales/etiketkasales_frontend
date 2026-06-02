@@ -9,19 +9,30 @@ import {
 } from "~/src/app/store/reducers/order.slice";
 import FormUtils from "~/src/shared/lib/utils/form.util";
 
-import { IOrderReceiver, OrderStageType } from "../../model";
+import { IOrderReceiver, OrderStageType, OrderType } from "../../model";
 
 interface Props {
   stage: OrderStageType;
+  type: OrderType;
+}
+
+function resolveDefaultCompanyId(
+  companies: { id: number; is_default?: boolean }[],
+): number {
+  if (!companies.length) {
+    return 0;
+  }
+
+  const defaultCompany = companies.find((company) => company.is_default);
+  return defaultCompany?.id ?? companies[0]?.id ?? 0;
 }
 
 // Устанавливает получателя в заказе
 // Управляет отключением кнопки для оформления заказа
-export const useOrderInit = ({ stage }: Props) => {
+export const useOrderInit = ({ stage, type }: Props) => {
   const dispatch = useAppDispatch();
   const { userInfo, companies } = useAppSelector(selectUser);
 
-  // --- Инициализация получателя ---
   const initCompanyOrder = useCallback(() => {
     const receiver: IOrderReceiver = {
       receiver_email: userInfo.email || "",
@@ -30,17 +41,23 @@ export const useOrderInit = ({ stage }: Props) => {
       receiver_surname: userInfo.surname || "",
     };
 
-    const defaultCompany = companies.find((company) => company.is_default);
-
-    dispatch(setOrderInfo({ receiverCompanyId: defaultCompany?.id || 0 }));
     dispatch(setOrderReceiverData(receiver));
-  }, [dispatch, userInfo, companies]);
+
+    if (type !== "company") {
+      return;
+    }
+
+    dispatch(
+      setOrderInfo({
+        receiverCompanyId: resolveDefaultCompanyId(companies),
+      }),
+    );
+  }, [dispatch, userInfo, companies, type]);
 
   useEffect(() => {
     initCompanyOrder();
   }, [initCompanyOrder]);
 
-  // --- Валидация стадий ---
   const {
     receiver,
     deliveryMethod,
@@ -51,29 +68,21 @@ export const useOrderInit = ({ stage }: Props) => {
   } = useAppSelector(selectOrder);
 
   const isFirstStageInvalid = useMemo(() => {
-    return [
-      deliveryMethod,
-      deliveryAddressId,
-      pickupPoint.pickup_point_code,
-    ].some((field) => {
-      if (typeof field === "object" && field !== null) {
-        return FormUtils.getFormError({
-          checkData: field,
-          requiredFields: Object.keys(field) as (keyof typeof field)[],
-          checkOnlyPrimitives: true,
-        });
-      }
-      return FormUtils.checkIfValueEmpty(field);
-    });
-  }, [deliveryMethod, deliveryAddressId, pickupPoint.pickup_point_code]);
+    if (!deliveryAddressId) return true;
+    if (!deliveryMethod?.code) return true;
+    if (!pickupPoint.pickup_point_code) return true;
+    return false;
+  }, [deliveryMethod?.code, deliveryAddressId, pickupPoint.pickup_point_code]);
 
   const isConfirmStageInvalid = useMemo(() => {
-    return (
-      Object.values(receiver).some((v) => FormUtils.checkIfValueEmpty(v)) ||
-      !receiverCompanyId ||
-      !paymentMethod
+    const receiverInvalid = Object.values(receiver).some((v) =>
+      FormUtils.checkIfValueEmpty(v),
     );
-  }, [receiver, receiverCompanyId, paymentMethod]);
+    if (receiverInvalid) return true;
+    if (!paymentMethod) return true;
+    if (type === "company" && !receiverCompanyId) return true;
+    return false;
+  }, [receiver, receiverCompanyId, paymentMethod, type]);
 
   useEffect(() => {
     const disabled =

@@ -21,6 +21,7 @@ export default function DeliveryChosenMethod({ setStage }: Props) {
       className={`flex-column ${classes.container}`}
     >
       <DeliveryChosenMethodItem
+        code={deliveryMethod.code}
         image={deliveryMethod.image_url}
         name={deliveryMethod.name}
         address={deliveryMethod.description}

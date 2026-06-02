@@ -1,0 +1,30 @@
+.list {
+  flex: 1;
+  gap: $space-3;
+  overflow-y: auto;
+  min-height: 0;
+  padding: $space-2 0;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-1;
+  width: 100%;
+  padding: $space-3 $space-4;
+  border: 1px solid $neutral-300;
+  border-radius: $space-3;
+  background: $neutral-100;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    border-color: $yellow-500;
+  }
+}
+
+.active {
+  border-color: $yellow-500;
+  background: $yellow-100;
+}
