@@ -30,6 +30,7 @@ export const sellerProfileSectionsHidden: ProfileActionType[] = [
   "seller_orders",
   "addresses",
   "products",
+  "promotion",
   "accounting",
   "statistics",
 ];
@@ -70,10 +71,10 @@ export const sellerTabs: IAsideItem[] = [
   //   title: "Карточки товаров",
   //   action: "products",
   // },
-  {
-    title: "Продвижение товаров",
-    action: "promotion",
-  },
+  // {
+  //   title: "Продвижение товаров",
+  //   action: "promotion",
+  // },
   // {
   //   title: "Бухгалтерия",
   //   action: "accounting",
