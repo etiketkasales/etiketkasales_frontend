@@ -14,6 +14,7 @@ import { UserRoleType } from "~/src/features/user/model";
 import {
   ProfileActionType,
   profileTitlesMap,
+  sellerProfileSectionsHidden,
 } from "~/src/entities/profile-section/model";
 import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 
@@ -27,9 +28,12 @@ export default function ProfileRolePage({ paramsRole }: Props) {
     if (paramsRole === "seller-pending") return "quote";
     return paramsRole === "seller" ? "profile" : "personal";
   }, [paramsRole]);
+  const hiddenSections =
+    paramsRole === "seller" ? sellerProfileSectionsHidden : undefined;
   const { activeSection, onItemClick, exitSection, loaded } =
     useProfileSections({
       defaultSection,
+      hiddenSections,
     });
   const createNotification = useCreateNotification();
   const [modalType, setModalType] = useState<ProfileActionType | null>(null);

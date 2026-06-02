@@ -4,32 +4,35 @@ import {
 } from "~/src/app/store/reducers/order.slice";
 import { promiseWrapper } from "~/src/shared/lib";
 import { createOrderPayment, getPaymentMethodsForOrder } from "../api";
+import { navigateToOrderPayment } from "../navigateToOrderPayment";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 
-import { IPaymentMethodResponse } from "../../model";
+import { IPaymentMethodResponse, OrderType } from "../../model";
 
 interface Props {
-  isCompany: boolean;
+  orderType: OrderType;
   needLoad?: boolean;
 }
 
 const notificationMessages = {
   paymentMethodsError: "Не удалось получить способы оплаты",
   createPaymentError: "Не удалось создать платеж по заказу",
-  createPaymentSuccess: "Платёж успешно создан",
 };
 
-// Получение и отдача способов оплаты
-export const usePayment = ({ isCompany, needLoad = true }: Props) => {
+export const usePayment = ({ orderType, needLoad = true }: Props) => {
   const dispatch = useAppDispatch();
-  const { itemsToOrder } = useAppSelector(selectOrder);
+  const { itemsToOrder, paymentMethod, receiverCompanyId } =
+    useAppSelector(selectOrder);
   const createNotification = useCreateNotification();
   const [loading, setLoading] = useState<boolean>(false);
   const [methods, setMethods] = useState<IPaymentMethodResponse[]>([]);
   const [chosenMethod, setChosenMethod] = useState<string>("");
+
+  const isCompanyCheckout =
+    orderType === "company" && Number(receiverCompanyId) > 0;
 
   const amount = useMemo(
     () =>
@@ -47,32 +50,46 @@ export const usePayment = ({ isCompany, needLoad = true }: Props) => {
 
   const createPaymentForOrder = useCallback(
     async (orderId: number) => {
+      let redirected = false;
+
       await promiseWrapper({
         setLoading,
         callback: async () => {
-          const res = await createOrderPayment(orderId);
-          if (res) {
-            createNotification(
-              notificationMessages.createPaymentSuccess,
-              "success",
-            );
-            window.open(res.payment_url);
+          const res = await createOrderPayment(orderId, {
+            payment_method: paymentMethod || undefined,
+            company_id:
+              paymentMethod === "invoice" && Number(receiverCompanyId) > 0
+                ? Number(receiverCompanyId)
+                : undefined,
+          });
+          if (!res) {
+            throw new Error(notificationMessages.createPaymentError);
+          }
+
+          if (navigateToOrderPayment(res, orderId)) {
+            redirected = true;
           }
         },
-        fallback: () => {
-          createNotification(notificationMessages.createPaymentError, "error");
+        fallback: (msg) => {
+          if (!redirected) {
+            createNotification(
+              msg || notificationMessages.createPaymentError,
+              "error",
+            );
+          }
         },
-        errorMessage: notificationMessages.createPaymentError,
       });
+
+      return redirected;
     },
-    [createNotification],
+    [createNotification, paymentMethod, receiverCompanyId],
   );
 
   const getPaymentMethods = useCallback(async () => {
     await promiseWrapper({
       setLoading,
       callback: async () => {
-        const res = await getPaymentMethodsForOrder(isCompany, amount);
+        const res = await getPaymentMethodsForOrder(isCompanyCheckout, amount);
         if (res && Array.isArray(res)) {
           setMethods(res);
         } else {
@@ -81,11 +98,11 @@ export const usePayment = ({ isCompany, needLoad = true }: Props) => {
       },
       errorMessage: notificationMessages.paymentMethodsError,
     });
-  }, [amount, isCompany, createNotification]);
+  }, [amount, isCompanyCheckout, createNotification]);
 
   useEffect(() => {
     if (!needLoad) return;
-    getPaymentMethods();
+    void getPaymentMethods();
   }, [getPaymentMethods, needLoad]);
 
   return {
@@ -94,5 +111,6 @@ export const usePayment = ({ isCompany, needLoad = true }: Props) => {
     onMethodClick,
     createPaymentForOrder,
     chosenMethod,
+    isCompanyCheckout,
   };
 };

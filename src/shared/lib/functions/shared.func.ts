@@ -107,7 +107,10 @@ export async function promiseWrapper({
     await callback();
   } catch (err) {
     const parsed = parseAxiosApiValidation(err);
-    const msg = errorMessage || parsed.message;
+    const msg =
+      parsed.message && parsed.message !== "Произошла ошибка"
+        ? parsed.message
+        : errorMessage || parsed.message;
     setError?.({
       message: msg,
       type: "error",

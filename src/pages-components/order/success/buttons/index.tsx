@@ -4,27 +4,43 @@ import { useRouter } from "next/navigation";
 import classes from "./buttons.module.scss";
 import Button from "~/src/shared/ui/button";
 
-interface IButton {
-  title: string;
-  type: "yellow" | "gray-border";
-  href: string;
+interface Props {
+  isInvoicePayment?: boolean;
+  orderId?: number | null;
 }
 
-const buttons: IButton[] = [
-  {
-    title: "В личный кабинет",
-    type: "yellow",
-    href: "/profile",
-  },
-  {
-    title: "На главную",
-    type: "gray-border",
-    href: "/",
-  },
-];
+const ordersHref = "/profile/buyer?active_section=orders";
 
-export default function OrderSuccessButtons() {
+export default function OrderSuccessButtons({
+  isInvoicePayment = false,
+}: Props) {
   const { push } = useRouter();
+
+  const buttons = isInvoicePayment
+    ? [
+        {
+          title: "Мои заказы и счёт",
+          type: "yellow" as const,
+          href: ordersHref,
+        },
+        {
+          title: "На главную",
+          type: "gray-border" as const,
+          href: "/",
+        },
+      ]
+    : [
+        {
+          title: "Мои заказы",
+          type: "yellow" as const,
+          href: ordersHref,
+        },
+        {
+          title: "На главную",
+          type: "gray-border" as const,
+          href: "/",
+        },
+      ];
 
   return (
     <div className={`flex gap-3 ${classes.container}`}>

@@ -11,16 +11,23 @@ interface Props {
 }
 
 export default function OrderPurchase({ type }: Props) {
-  const { methods, loading, onMethodClick, chosenMethod } = usePayment({
-    isCompany: type === "company",
-    needLoad: true,
-  });
+  const { methods, loading, onMethodClick, chosenMethod, isCompanyCheckout } =
+    usePayment({
+      orderType: type,
+      needLoad: true,
+    });
 
   return (
     <OrderContainer
       title="Способ оплаты"
       className={`flex-column ${classes.container}`}
     >
+      {type === "company" && !isCompanyCheckout && !loading && (
+        <p className="text-body s text-neutral-700">
+          Выберите организацию в блоке «Получатель», чтобы появилась оплата по
+          счёту.
+        </p>
+      )}
       {(!Array.isArray(methods) || !methods.length) && !loading ? (
         <p className="text-neutral-1000 text-body l">
           Не удалось получить способы оплаты

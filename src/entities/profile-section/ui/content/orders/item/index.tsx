@@ -9,10 +9,14 @@ import { IOrder } from "~/src/entities/profile-section/model";
 interface Props extends IOrder {}
 
 export default function ProfileOrdersItem({
+  id,
   created_at,
   order_number,
   total_amount,
   status,
+  status_code,
+  payment_method,
+  company_id,
   comment,
   preview_image,
   invoice_url,
@@ -24,9 +28,13 @@ export default function ProfileOrdersItem({
       className={classNames(classes.container, "flex")}
     >
       <OrderContent
+        order_id={id}
         created_at={created_at}
         order_number={order_number}
         status={status}
+        status_code={status_code}
+        payment_method={payment_method}
+        company_id={company_id}
         bill_url={invoice_url}
         comment={comment}
       />

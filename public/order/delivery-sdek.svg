@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+  <rect width="40" height="40" rx="8" fill="#00B33C"/>
+  <path d="M8 24.5L14 14H19L16 24.5H8Z" fill="white"/>
+  <path d="M17 14H24L21 24.5H14L17 14Z" fill="white"/>
+  <path d="M22 14H32L26 24.5H19L22 14Z" fill="white"/>
+  <text x="8" y="34" fill="white" font-family="Arial,sans-serif" font-size="7" font-weight="700">CDEK</text>
+</svg>

@@ -22,11 +22,12 @@ export default function UserCompany({
   ogrn,
   onDelete,
   loading,
+  as = "li",
   needDeleteButton = false,
 }: Props) {
   return (
     <Container
-      as="li"
+      as={as}
       bgColor={"neutral-300"}
       className={classNames(classes.container, "flex")}
     >

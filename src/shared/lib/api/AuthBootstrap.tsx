@@ -2,6 +2,7 @@
 
 import { ReactNode, useEffect, useState } from "react";
 import { waitForAuthBootstrap } from "./authBootstrap";
+import Loader from "~/src/shared/ui/loader";
 
 type Props = {
   children: ReactNode;
@@ -29,7 +30,18 @@ export function AuthBootstrap({ children }: Props) {
   }, [ready]);
 
   if (!ready) {
-    return null;
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          display: "grid",
+          placeItems: "center",
+          background: "var(--neutral-100, #f5f5f5)",
+        }}
+      >
+        <Loader radius={28} />
+      </div>
+    );
   }
 
   return <>{children}</>;

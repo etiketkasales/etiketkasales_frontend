@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { useAddresses } from "~/src/features/user/lib/hooks";
 import { addNotification } from "~/src/app/store/reducers/notifications.slice";
@@ -21,9 +21,13 @@ export default function OrderChoosePvz({ isActive }: Props) {
   const { defAddress, loading: addressLoading } = useAddresses();
   const [modal, setModal] = useState<boolean | null>(null);
   const [deliveryModal, setDeliveryModal] = useState<boolean | null>(null);
+  const warnedRef = useRef(false);
 
   useEffect(() => {
+    if (!isActive || warnedRef.current) return;
     if (deliveryMethod.code && defAddress) return;
+
+    warnedRef.current = true;
     dispatch(
       addNotification({
         message: "Выберите адрес доставки и способ получения",
@@ -31,7 +35,7 @@ export default function OrderChoosePvz({ isActive }: Props) {
         field: "global",
       }),
     );
-  }, [dispatch, deliveryMethod.code, defAddress]);
+  }, [dispatch, deliveryMethod.code, defAddress, isActive]);
 
   return (
     <OrderStageWrapper

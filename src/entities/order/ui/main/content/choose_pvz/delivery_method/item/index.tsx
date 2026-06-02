@@ -6,6 +6,7 @@ import DeliveryMethodHeader from "./header";
 import DeliveryMethodText from "./text";
 import DeliveryMethodButton from "./button";
 import { IDeliveryMethodResponse } from "~/src/entities/order/model";
+import { resolveDeliveryIcon } from "~/src/entities/order/lib/utils/deliveryIcon";
 
 interface Props {
   method: IDeliveryMethodResponse;
@@ -24,23 +25,38 @@ export default function DeliveryMethodItem({
   chooseDeliveryMethod,
   openModal,
 }: Props) {
+  const isAvailable = method.online !== false;
+
   return (
     <Container
       bgColor={"neutral-200"}
-      className={classNames(`flex-column pointer`, classes.container)}
+      className={classNames(`flex-column`, classes.container, {
+        pointer: isAvailable,
+        [classes.disabled]: !isAvailable,
+      })}
       onClick={() => {
-        const chosen = chooseDeliveryMethod(method);
-        if (!chosen) return;
-        openModal();
+        if (!isAvailable) return;
+        const needsPvz = chooseDeliveryMethod(method);
+        if (needsPvz) {
+          openModal();
+        }
       }}
     >
-      <DeliveryMethodHeader isActive={isActive} image={method.image_url} />
+      <DeliveryMethodHeader
+        isActive={isActive}
+        image={resolveDeliveryIcon(method.code, method.image_url)}
+      />
       <DeliveryMethodText
         name={method.name}
         address={addressName}
         canChoose={canChoosePvz}
+        isAvailable={isAvailable}
       />
-      <DeliveryMethodButton canChoose={canChoosePvz} onClick={openModal} />
+      {isAvailable ? (
+        <DeliveryMethodButton canChoose={canChoosePvz} onClick={openModal} />
+      ) : (
+        <p className="text-body s text-neutral-700">Скоро</p>
+      )}
     </Container>
   );
 }

@@ -11,7 +11,7 @@ export const yMapsComponentsSkeleton: YMapsReactifyComponents = {
   YMapDefaultFeaturesLayer: () => null,
   YMapFeature: () => null,
   YMapMarker: () => null,
-  YMapClusterer: () => null,
+  YMapClusterer: null,
   reactify: null,
-  clusterByGrid: () => null,
+  clusterByGrid: null,
 };

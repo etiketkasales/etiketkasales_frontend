@@ -10,3 +10,13 @@
     padding: $space-6px $space-10px;
     align-self: flex-start;
 }
+
+.companies {
+    gap: $space-4;
+}
+
+.companyItem {
+    display: flex;
+    align-items: flex-start;
+    gap: $space-4;
+}
