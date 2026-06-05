@@ -1,6 +1,9 @@
 "use client";
 
-import { useCompanyRegister } from "~/src/entities/company-registration/lib/hooks";
+import {
+  useCompanyRegister,
+  useGetAvailableCities,
+} from "~/src/entities/company-registration/lib/hooks";
 
 import CompanyPersonal from "./personal";
 import CompanyStatus from "./status";
@@ -16,6 +19,7 @@ interface Props {
 }
 
 export default function CompanyRegistration({ stage }: Props) {
+  const cityCatalog = useGetAvailableCities(stage === "city");
   const {
     handleChangeData,
     handleButtonClick,
@@ -24,6 +28,7 @@ export default function CompanyRegistration({ stage }: Props) {
     handleChangeStage,
     companyData,
   } = useCompanyRegister({ stage });
+
   const commonProps: RegCommonPropsI = {
     onInputChange: handleChangeData,
     changeStage: handleChangeStage,
@@ -38,7 +43,7 @@ export default function CompanyRegistration({ stage }: Props) {
     ),
     status: <CompanyStatus {...commonProps} />,
     name: <CompanyName {...commonProps} />,
-    city: <CompanyCity {...commonProps} />,
+    city: <CompanyCity {...commonProps} cityCatalog={cityCatalog} />,
   };
 
   return REG_COMPONENTS[stage] || null;

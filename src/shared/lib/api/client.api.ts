@@ -11,6 +11,25 @@ import {
 import CookieUtils from "../utils/cookies.utils";
 import JwtUtils from "../utils/jwt.utils";
 
+export function isAbortLikeError(err: unknown): boolean {
+  if (!err || typeof err !== "object") {
+    return false;
+  }
+
+  const axiosErr = err as AxiosError;
+  if (axios.isCancel(err)) {
+    return true;
+  }
+
+  const code = (axiosErr as AxiosError & { code?: string }).code;
+  if (code === "ERR_CANCELED") {
+    return true;
+  }
+
+  const name = (err as { name?: string }).name;
+  return name === "AbortError" || name === "CanceledError";
+}
+
 const BASE_URL = process.env.SERVER_API_URL ?? process.env.NEXT_PUBLIC_API_URL;
 
 if (process.env.NODE_ENV === "development" && !BASE_URL?.trim()) {
@@ -156,11 +175,14 @@ apiClient.interceptors.response.use(
 
 export const tryCatch = async <T>(
   func: () => Promise<T>,
-  fallback?: (error: any) => void,
-) => {
+  fallback?: (error: unknown) => void,
+): Promise<T | undefined> => {
   try {
     return await func();
   } catch (err) {
+    if (isAbortLikeError(err)) {
+      return undefined;
+    }
     console.error(err);
     fallback?.(err);
     throw err;

@@ -1,5 +1,6 @@
 import { AxiosError } from "axios";
 import { Dispatch, SetStateAction } from "react";
+import { isAbortLikeError } from "~/src/shared/lib/api/client.api";
 import { MessageI } from "~/src/shared/model";
 
 type ApiErrorBody = {
@@ -106,6 +107,10 @@ export async function promiseWrapper({
     }
     await callback();
   } catch (err) {
+    if (isAbortLikeError(err)) {
+      onFinal?.();
+      return;
+    }
     const parsed = parseAxiosApiValidation(err);
     const msg =
       parsed.message && parsed.message !== "Произошла ошибка"

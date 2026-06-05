@@ -61,6 +61,7 @@ export default function ProfileContent({
             userInfo.company_verification_status || userInfo.seller_status
           }
           rejectReason={userInfo.seller_rejection_reason}
+          profileReady={userInfo.id > 0}
         />
       );
   }
