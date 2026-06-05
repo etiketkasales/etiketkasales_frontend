@@ -13,7 +13,7 @@ export const useGetSortOptions = () => {
       setLoading,
       callback: async () => {
         const options = await getCatalogueSortOptions();
-        setSortOptions(options.data || []);
+        setSortOptions(options?.data || []);
       },
     });
   }, []);

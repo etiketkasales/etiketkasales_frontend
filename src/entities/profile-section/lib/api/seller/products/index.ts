@@ -73,7 +73,7 @@ function parseProductImageUploadPayload(
 export const uploadProductImage = async (
   formData: FormData,
 ): Promise<IFileUploadRes> => {
-  return await tryCatch(async () => {
+  const result = await tryCatch(async () => {
     const res = await apiClient.post(`/upload/product-image`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -87,13 +87,17 @@ export const uploadProductImage = async (
 
     return parseProductImageUploadPayload(body as Record<string, unknown>);
   });
+  if (!result) {
+    throw new Error("Не удалось загрузить изображение");
+  }
+  return result;
 };
 
 /** PDF к карточке товара; поле формы — `document`. */
 export const uploadProductDocument = async (
   formData: FormData,
 ): Promise<IFileUploadRes> => {
-  return await tryCatch(async () => {
+  const result = await tryCatch(async () => {
     const res = await apiClient.post(`/upload/product-document`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -107,6 +111,10 @@ export const uploadProductDocument = async (
 
     return parseProductImageUploadPayload(body as Record<string, unknown>);
   });
+  if (!result) {
+    throw new Error("Не удалось загрузить документ");
+  }
+  return result;
 };
 
 export const getNewProductFilters = async () => {

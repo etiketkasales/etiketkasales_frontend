@@ -13,7 +13,9 @@ export const useItemWrapper = ({ initInfo }: Props) => {
   const updateInfo = useCallback(async () => {
     try {
       const res = await getProductById(itemInfo.id);
-      setItemInfo(res);
+      if (res) {
+        setItemInfo(res);
+      }
     } catch (err) {
       console.error(err);
     }

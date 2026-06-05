@@ -27,7 +27,7 @@ export const useCatalogueProducts = () => {
       try {
         setLoading(true);
         const res = await getProductsByFilters(params);
-        if (res.products) {
+        if (res?.products) {
           updateProducts(res.products);
         }
       } catch (err) {

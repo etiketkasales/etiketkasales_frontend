@@ -21,7 +21,7 @@ export const useDeleteShop = () => {
       setLoading,
       callback: async () => {
         const res = await deleteShopProfile();
-        if (res.success) {
+        if (res?.success) {
           setMessage({
             message: res.message || "Магазин удалён",
             type: "success",

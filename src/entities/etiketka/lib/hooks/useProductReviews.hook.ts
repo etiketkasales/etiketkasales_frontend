@@ -19,7 +19,13 @@ export const productReviewsQueryKey = (productId: number) =>
 export const useProductReviews = (productId: number) => {
   return useInfiniteQuery({
     queryKey: productReviewsQueryKey(productId),
-    queryFn: ({ pageParam }) => getProductReviews(productId, pageParam),
+    queryFn: async ({ pageParam }) => {
+      const data = await getProductReviews(productId, pageParam);
+      if (!data) {
+        throw new Error("Не удалось загрузить отзывы");
+      }
+      return data;
+    },
     initialPageParam: 1,
     getNextPageParam: (last) =>
       last.pagination.page < last.pagination.total_pages
