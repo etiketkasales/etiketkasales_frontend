@@ -20,7 +20,9 @@ export const useEtiketka = ({ initProductInfo }: Props) => {
       setLoading,
       callback: async () => {
         const res = await getProductById(productInfo.id);
-        setProductInfo(res);
+        if (res) {
+          setProductInfo(res);
+        }
       },
     });
   }, [productInfo.id]);

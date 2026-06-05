@@ -15,39 +15,63 @@ import {
   waitForAuthReady,
 } from "~/src/shared/lib/api/authRefreshLock";
 
+function isFocusedAuthFlow(pathname: string): boolean {
+  return (
+    pathname.startsWith("/company/registrate") || pathname.startsWith("/login")
+  );
+}
+
 /**
  * Однократная инициализация витрины (не админки).
- * Повторный запуск из-за смены ссылок на колбэки давал «перезагрузку» и сброс isLoggedIn.
  */
 export const useStorefrontInit = () => {
   const dispatch = useAppDispatch();
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
-  const bootstrapped = useRef(false);
+  const isFocusedFlow = isFocusedAuthFlow(pathname);
+  const profileBootstrapped = useRef(false);
+  const cartBootstrapped = useRef(false);
 
-  useFiltersInit({ enabled: !isAdmin });
+  useFiltersInit({ enabled: !isAdmin && !isFocusedFlow });
 
   const { handleGetUser } = useUser();
   const { updateCart } = useCart({ needInitialize: false });
 
   useEffect(() => {
-    if (isAdmin) return;
-    if (bootstrapped.current) return;
+    if (isAdmin || isFocusedFlow || cartBootstrapped.current) {
+      return;
+    }
 
     let cancelled = false;
 
     void waitForAuthBootstrap().then(() => {
-      if (cancelled || bootstrapped.current) return;
-      bootstrapped.current = true;
+      if (cancelled || cartBootstrapped.current) {
+        return;
+      }
+      cartBootstrapped.current = true;
+      void updateCart().catch(() => undefined);
+    });
 
-      let remember = false;
-      remember = localStorage.getItem("needRemember") === "true";
+    return () => {
+      cancelled = true;
+    };
+  }, [isAdmin, isFocusedFlow, updateCart]);
+
+  useEffect(() => {
+    if (isAdmin) return;
+    if (profileBootstrapped.current) return;
+
+    let cancelled = false;
+
+    void waitForAuthBootstrap().then(() => {
+      if (cancelled || profileBootstrapped.current) return;
+      profileBootstrapped.current = true;
+
+      const remember = localStorage.getItem("needRemember") === "true";
       dispatch(setUser({ needRemember: remember }));
 
-      void updateCart();
-
       if (!remember) {
-        dispatch(setUser({ isLoggedIn: false }));
+        dispatch(setUser({ isLoggedIn: false, loadingData: false }));
         return;
       }
 
@@ -61,7 +85,7 @@ export const useStorefrontInit = () => {
       }
 
       if (!hasRefreshToken()) {
-        dispatch(setUser({ isLoggedIn: false }));
+        dispatch(setUser({ isLoggedIn: false, loadingData: false }));
         return;
       }
 
@@ -70,7 +94,7 @@ export const useStorefrontInit = () => {
         if (ok && hasValidAccessToken()) {
           loadProfile();
         } else if (!isAuthRefreshLocked() && !hasRefreshToken()) {
-          dispatch(setUser({ isLoggedIn: false }));
+          dispatch(setUser({ isLoggedIn: false, loadingData: false }));
         }
       });
     });
@@ -78,5 +102,5 @@ export const useStorefrontInit = () => {
     return () => {
       cancelled = true;
     };
-  }, [isAdmin, dispatch, updateCart, handleGetUser]);
+  }, [isAdmin, dispatch, handleGetUser]);
 };

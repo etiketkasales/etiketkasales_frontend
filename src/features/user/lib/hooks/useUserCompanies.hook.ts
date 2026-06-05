@@ -46,7 +46,7 @@ export const useUserCompanies = () => {
     await promiseCallback(
       async () => {
         const res = await getCompanies();
-        setCompanies(res.filter((item) => item.is_active) || []);
+        setCompanies(res?.filter((item) => item.is_active) || []);
       },
       (errMsg) =>
         createNotification(

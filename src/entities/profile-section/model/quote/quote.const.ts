@@ -13,8 +13,8 @@ const numberInput = (
   createNumberInput<IQuoteInput, IChangeableProfile>(f, p, { maxLength });
 
 export const quoteAboutInputs: IQuoteInput[] = [
-  numberInput("inn", "ИНН", 12),
   stringInput("company_name", "Наименование компании"),
+  numberInput("inn", "ИНН", 12),
   numberInput("kpp", "КПП", 9),
   numberInput("ogrn", "ОГРН / ОГРНИП", 13),
   {
@@ -56,12 +56,12 @@ export const quoteAccountantInputs: IQuoteInput[] = [
 ];
 
 export const quoteRequiredFields: (keyof IChangeableProfile)[] = [
+  "company_name",
   "inn",
   "kpp",
   "ogrn",
   "legal_address",
   "actual_address",
-  "company_name",
 ];
 
 export const quoteRequisitsRequiredFields: (keyof IChangeableProfile)[] = [

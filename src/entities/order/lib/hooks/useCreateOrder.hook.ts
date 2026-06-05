@@ -80,9 +80,10 @@ export const useCreateOrder = ({ type, stage, setStage }: Props) => {
     let res: IGetData<ICreatedOrderDto> | null = null;
     switch (checkoutType) {
       case "person":
-        res = await createOrder({
-          ...defaultParams,
-        });
+        res =
+          (await createOrder({
+            ...defaultParams,
+          })) ?? null;
         return res;
       case "company":
         if (Number(receiverCompanyId) <= 0) {
@@ -92,10 +93,11 @@ export const useCreateOrder = ({ type, stage, setStage }: Props) => {
           );
           return null;
         }
-        res = await createOrderForCompany({
-          ...defaultParams,
-          company_id: Number(receiverCompanyId),
-        });
+        res =
+          (await createOrderForCompany({
+            ...defaultParams,
+            company_id: Number(receiverCompanyId),
+          })) ?? null;
         return res;
       default:
         return res;

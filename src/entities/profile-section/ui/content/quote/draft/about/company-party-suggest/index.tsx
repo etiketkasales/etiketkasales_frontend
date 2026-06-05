@@ -22,15 +22,16 @@ interface Props {
   /**
    * Пока query совпадает с этим значением (после trim), поиск не вызывается —
    * чтобы при открытии карточки с уже сохранённым названием не дёргать API.
-   * Без пропа ведёт себя как раньше.
    */
   holdSearchWhileQueryEquals?: string;
+  onUnlockSearch?: () => void;
 }
 
 export default function CompanyPartySuggest({
   query,
   onChange,
   holdSearchWhileQueryEquals,
+  onUnlockSearch,
 }: Props) {
   const q = query.trim();
   const hold = (holdSearchWhileQueryEquals ?? "").trim();
@@ -149,6 +150,7 @@ export default function CompanyPartySuggest({
             className={classes.compactLink}
             onClick={() => {
               setSelectionLocked(false);
+              onUnlockSearch?.();
             }}
           >
             Искать снова

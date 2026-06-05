@@ -23,6 +23,9 @@ export const useChangeAvatar = () => {
       const data = new FormData();
       data.append("avatar", file);
       const res = await uploadAvatar(data);
+      if (!res) {
+        return null;
+      }
       if (res.url) {
         await onSave({
           customMessage: "Аватар изменён",
@@ -35,7 +38,7 @@ export const useChangeAvatar = () => {
       }
       return res;
     },
-    [changeableUserInfo, dispatch, onSave],
+    [changeableUserInfo, onSave],
   );
 
   const { onFileLoad, fileLoading } = useFileLoad({

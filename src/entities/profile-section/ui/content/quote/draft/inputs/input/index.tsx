@@ -12,6 +12,7 @@ interface Props extends IQuoteInput {
   onChange: (v: string, field: keyof IChangeableProfile) => void;
   onBooleanChange?: (v: boolean, field: keyof IChangeableProfile) => void;
   error: MessageI | null;
+  onInnLookupApplied?: (companyName: string) => void;
 }
 
 export default function QuoteInput({
@@ -23,6 +24,7 @@ export default function QuoteInput({
   onBooleanChange,
   error,
   maxLength,
+  onInnLookupApplied,
 }: Props) {
   const commonStringProps = {
     name: `etiketka-${field}`,
@@ -57,6 +59,7 @@ export default function QuoteInput({
               innValue={(changeData[field] as string) ?? ""}
               onChange={onChange}
               companyNameHint={changeData.company_name}
+              onApplied={onInnLookupApplied}
             />
           )}
         </div>

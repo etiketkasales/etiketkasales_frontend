@@ -1,13 +1,54 @@
 "use client";
+
+import { useEffect, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import classNames from "classnames";
-import { useAppDispatch } from "~/src/app/store/hooks";
+import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
+import { selectUser } from "~/src/app/store/reducers/user.slice";
+import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
 import { setForwardHref } from "~/src/app/store/reducers/login.slice";
+import {
+  resolveBusinessEntryHref,
+  shouldSkipForBusinessLanding,
+} from "~/src/features/user/lib/resolveBusinessEntryHref";
 
 import classes from "./for-bussiness.module.scss";
 import Button from "~/src/shared/ui/button";
 
 export default function ForBussinessSection() {
   const dispatch = useAppDispatch();
+  const { push } = useRouter();
+  const { isLoggedIn, userInfo, loadingData } = useAppSelector(selectUser);
+  const { loaded } = useAppSelector(selectNavigation);
+
+  const entryHref = useMemo(() => {
+    if (!loaded || loadingData) {
+      return "/login";
+    }
+
+    return resolveBusinessEntryHref(userInfo, isLoggedIn);
+  }, [isLoggedIn, loaded, loadingData, userInfo]);
+
+  useEffect(() => {
+    if (!loaded || loadingData || !isLoggedIn) {
+      return;
+    }
+
+    if (shouldSkipForBusinessLanding(userInfo, isLoggedIn)) {
+      push(entryHref);
+    }
+  }, [entryHref, isLoggedIn, loaded, loadingData, push, userInfo]);
+
+  const onBecomeSellerClick = () => {
+    if (!isLoggedIn) {
+      dispatch(setForwardHref("/company/registrate/personal"));
+      push("/login");
+      return;
+    }
+
+    push(entryHref);
+  };
+
   return (
     <section
       className={classNames(
@@ -24,14 +65,10 @@ export default function ForBussinessSection() {
         </h2>
       </div>
       <Button
-        as={"a"}
-        href="/login"
-        className={`${classes.link}`}
         typeButton={"white"}
         radius={12}
-        onClick={() => {
-          dispatch(setForwardHref("/company/registrate"));
-        }}
+        className={classes.link}
+        onClick={onBecomeSellerClick}
       >
         <span className="text-18 black semibold second-family">
           Стать продавцом

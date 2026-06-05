@@ -1,20 +1,23 @@
 "use client";
-import { useGetAvailableCities } from "../../lib/hooks";
 
 import FormModal from "~/src/entities/form-modal/ui";
 import { RegCommonPropsI } from "~/src/entities/company-registration/model";
 import { IChangeableProfile } from "~/src/features/user/model";
 import { FormModalInputI } from "~/src/entities/form-modal/model";
+import { useGetAvailableCities } from "../../lib/hooks";
 
-interface Props extends RegCommonPropsI {}
+interface Props extends RegCommonPropsI {
+  cityCatalog: ReturnType<typeof useGetAvailableCities>;
+}
 
 export default function CompanyCity({
   onInputChange,
   companyInfo,
   error,
   buttonClick,
+  cityCatalog,
 }: Props) {
-  const { availableCities, loading, setSearchQuery } = useGetAvailableCities();
+  const { availableCities, loading, setSearchQuery } = cityCatalog;
   const inputs: FormModalInputI<IChangeableProfile>[] = [
     {
       field: "storage_city",

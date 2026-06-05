@@ -133,7 +133,7 @@ export default function EtiketkaReviews({ productId }: Props) {
 
   const firstPage = reviewsQuery.data?.pages[0];
   const summary = firstPage?.summary;
-  const items = reviewsQuery.data?.pages.flatMap((p) => p.items) ?? [];
+  const items = reviewsQuery.data?.pages.flatMap((p) => p?.items ?? []) ?? [];
 
   const onPickPhotos = useCallback(
     async (files: FileList | null) => {

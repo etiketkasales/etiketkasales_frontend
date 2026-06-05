@@ -18,7 +18,9 @@ export const useCategoriesSwiper = () => {
       setErrBool: setError,
       callback: async () => {
         const res = await getCategories();
-        setCategories(res);
+        if (res) {
+          setCategories(res);
+        }
       },
     });
   }, []);

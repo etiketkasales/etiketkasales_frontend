@@ -12,16 +12,23 @@ import {
 interface Props {
   moderationStage: SellerStatusType | CompanyVerificationStatusType;
   rejectReason: string | null;
+  profileReady: boolean;
 }
 
-export default function ProfileQuote({ moderationStage, rejectReason }: Props) {
+export default function ProfileQuote({
+  moderationStage,
+  rejectReason,
+  profileReady,
+}: Props) {
   const { push } = useRouter();
 
   useEffect(() => {
+    if (!profileReady) return;
+
     if (moderationStage === "approved" || moderationStage === "verified") {
       push("/profile/seller?active_section=profile");
     }
-  }, [moderationStage, push]);
+  }, [moderationStage, profileReady, push]);
 
   switch (moderationStage) {
     default:

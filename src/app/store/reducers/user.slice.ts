@@ -26,7 +26,7 @@ const initialState: InitialStateI = {
   changeableUserInfo: SChangeableProfile,
   userId: 0,
   needRemember: true,
-  loadingData: false,
+  loadingData: true,
   isLoggedIn: true,
   loggedOutFromProfile: false,
   addresses: [],

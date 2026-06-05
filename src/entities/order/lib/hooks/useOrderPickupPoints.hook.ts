@@ -59,7 +59,7 @@ export const useOrderPickupPoints = ({ needLoad, onClose, isOpen }: Props) => {
         }
 
         const res = await getPickupPointsData(deliveryMethod.code);
-        if (!res.data || !res.data.length) {
+        if (!res?.data?.length) {
           createNotification("ПВЗ не найдены");
           return;
         }

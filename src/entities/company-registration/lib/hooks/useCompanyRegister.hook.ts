@@ -1,5 +1,4 @@
 import { useCallback, useState } from "react";
-import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { useFormValidate } from "~/src/shared/lib/hooks";
 import { useUser } from "~/src/features/user/lib/hooks";
@@ -21,7 +20,6 @@ interface Props {
 
 export const useCompanyRegister = ({ stage }: Props) => {
   const dispatch = useAppDispatch();
-  const { push } = useRouter();
   const { changeableUserInfo } = useAppSelector(selectUser);
   const [loading, setLoading] = useState<boolean>(false);
   const { setUserData } = useUser();
@@ -39,8 +37,8 @@ export const useCompanyRegister = ({ stage }: Props) => {
   const hasErrors = useCallback(() => {
     if (hasEmptyError()) return true;
     // Email проверяем только на шаге personal (на status/name/city ломает «Продолжить»)
-    if (requiredFields.includes("email") && isEmailError()) return true;
-    return false;
+    return requiredFields.includes("email") && isEmailError();
+
   }, [isEmailError, hasEmptyError, requiredFields]);
 
   const handleChangeData = useCallback(
@@ -83,13 +81,12 @@ export const useCompanyRegister = ({ stage }: Props) => {
       setLoading,
       callback: async () => {
         const res = await changePersonalData(changeableUserInfo);
-        if (res.user) {
+        if (res && res.user) {
           setUserData(res.user);
-          push("/profile/seller-pending?active_section=quote");
         }
       },
     });
-  }, [setUserData, changeableUserInfo, push]);
+  }, [setUserData, changeableUserInfo]);
 
   const handleButtonClick = useCallback(
     async (nextPage?: RegistrationStageT) => {

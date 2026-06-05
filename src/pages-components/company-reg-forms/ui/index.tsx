@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useAppSelector } from "~/src/app/store/hooks";
 import { selectCompany } from "~/src/app/store/reducers/company.slice";
 import { useCheckRegInfo } from "../lib/hooks/useCheckRegInfo.hook";
@@ -10,7 +10,7 @@ import FormPageWrapper from "~/src/shared/ui/form-page/ui";
 import Loader from "~/src/shared/ui/loader";
 
 export default function CompanyRegistrationPage() {
-  const { push, prefetch } = useRouter();
+  const { push, prefetch, replace } = useRouter();
   const { stage, nextStage } = useAppSelector(selectCompany);
   const { needRedirect, loading } = useCheckRegInfo();
 
@@ -28,17 +28,23 @@ export default function CompanyRegistrationPage() {
     }
   }, [stage, push]);
 
-  if (needRedirect) return redirect("/profile/seller-pending");
+  useEffect(() => {
+    if (needRedirect) {
+      replace("/profile/seller-pending?active_section=quote");
+    }
+  }, [needRedirect, replace]);
 
-  if (loading) {
+  if (loading || needRedirect) {
     return <Loader radius={0} />;
-  } else {
-    if (!stage) return null;
-
-    return (
-      <FormPageWrapper needBgSvg>
-        <CompanyRegistration stage={stage} />
-      </FormPageWrapper>
-    );
   }
+
+  if (!stage) {
+    return null;
+  }
+
+  return (
+    <FormPageWrapper needBgSvg>
+      <CompanyRegistration stage={stage} />
+    </FormPageWrapper>
+  );
 }

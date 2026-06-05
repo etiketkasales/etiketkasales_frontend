@@ -61,7 +61,7 @@ export const useUser = () => {
         if (!options?.skipCart) {
           await withAuthRetry(() => updateCart());
         }
-        if (res.user) {
+        if (res?.user) {
           dispatch(setUser({ isLoggedIn: true }));
           setUserData(res.user);
         } else {

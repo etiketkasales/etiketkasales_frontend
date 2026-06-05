@@ -17,6 +17,7 @@ import {
   sellerProfileSectionsHidden,
 } from "~/src/entities/profile-section/model";
 import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
+import Loader from "~/src/shared/ui/loader";
 
 interface Props {
   paramsRole: UserRoleType | "seller-pending";
@@ -37,6 +38,14 @@ export default function ProfileRolePage({ paramsRole }: Props) {
     });
   const createNotification = useCreateNotification();
   const [modalType, setModalType] = useState<ProfileActionType | null>(null);
+
+  if (loadingData) {
+    return (
+      <PageWrapper>
+        <Loader radius={20} />
+      </PageWrapper>
+    );
+  }
 
   if (!isLoggedIn) return redirect("/login");
 
