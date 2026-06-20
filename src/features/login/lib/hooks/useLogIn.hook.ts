@@ -31,7 +31,12 @@ export const useLogIn = ({ isCodePage }: Props) => {
       callback: async () => {
         if (hasPhoneError(phoneNumber)) return;
         const res = await sendCode(formatPhoneForApi(phoneNumber));
-        if (res?.success) sendPhoneEffect(res?.message);
+        if (res?.success) {
+          const hint = res.dev_code
+            ? `${res.message} Код: ${res.dev_code}`
+            : res.message;
+          sendPhoneEffect(hint);
+        }
       },
     });
   }, [phoneNumber, hasPhoneError, sendPhoneEffect]);

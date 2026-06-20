@@ -75,7 +75,7 @@ export interface IGetProductsBySlug {
   products: IEtiketka[];
 }
 
-export type CurrentIndexI = "descr" | "specs" | "seller" | "sertificates";
+export type CurrentIndexI = "descr" | "specs" | "reviews" | "sertificates";
 
 export interface EtiketkaInfoButtonI {
   title: string;

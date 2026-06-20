@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { IChangeableProfile } from "~/src/features/user/model";
 import { MessageI } from "~/src/shared/model";
 import { getSpecificQuoteError } from "../../utils";
@@ -54,18 +54,6 @@ export const useValidateQuote = ({ stage, userInfo }: Props) => {
     validateAndSetError(err);
     return err === null;
   }, [userInfo, validateStage, validateAndSetError]);
-
-  // проверка валидности полей если ошибка уже есть
-  useEffect(() => {
-    if (!error) return;
-    const err = validateStage(userInfo);
-    setError((prev) => {
-      if (prev?.message === err?.message && prev?.field === err?.field) {
-        return prev;
-      }
-      return err;
-    });
-  }, [userInfo, error, validateStage]);
 
   return {
     error,

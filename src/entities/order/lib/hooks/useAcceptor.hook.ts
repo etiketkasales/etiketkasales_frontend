@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "~/src/app/store/hooks";
 import { selectUser } from "~/src/app/store/reducers/user.slice";
-import { addNotification } from "~/src/app/store/reducers/notifications.slice";
 import { useRouter } from "next/navigation";
 import {
   selectOrder,
+  setOrderInfo,
   setOrderReceiverData,
 } from "~/src/app/store/reducers/order.slice";
 
@@ -13,13 +13,6 @@ import { IUserCompany } from "~/src/features/user/model";
 
 /**
  * Хук для изменения акцептора заказа
- * @returns объект со следующими поля:
- *   receiver - акцептор заказа
- *   onInputChange - функция для изменения ключевых полей
- *   canChange - флаг изменения акцептора
- *   setCanChange - функция для установки флага изменения акцептора
- *   chosenCompany - выбранная организация
- *   onButtonClick - функция для перехода на страницу выбора организации
  */
 export const useAcceptor = () => {
   const dispatch = useAppDispatch();
@@ -29,7 +22,6 @@ export const useAcceptor = () => {
   const [canChange, setCanChange] = useState<boolean>(false);
   const [chosenCompany, setChosenCompany] = useState<IUserCompany | null>(null);
 
-  // Стандартная функция для изменения ключевых полей
   const onInputChange = useCallback(
     (v: string, field: keyof IOrderReceiver) => {
       dispatch(setOrderReceiverData({ ...receiver, [field]: v }));
@@ -37,28 +29,45 @@ export const useAcceptor = () => {
     [dispatch, receiver],
   );
 
-  // Переводит на страницу выбора организации
   const onButtonClick = useCallback(() => {
     push("/profile/buyer?active_section=companies");
   }, [push]);
 
-  // Ставит дефолтную организацию из профиля как выбранную
-  useEffect(() => {
-    if (!receiverCompanyId) return;
-    const company =
-      companies.find((company) => company.id === receiverCompanyId) ?? null;
-    if (company) {
-      setChosenCompany(company);
-    } else {
-      dispatch(
-        addNotification({
-          message: "Не нашлось подходящей организации в профиле",
-          type: "error",
-          field: "global",
-        }),
+  const selectCompany = useCallback(
+    (companyId: number) => {
+      dispatch(setOrderInfo({ receiverCompanyId: companyId }));
+    },
+    [dispatch],
+  );
+
+  const activeCompany = useMemo(() => {
+    if (!companies.length) {
+      return null;
+    }
+
+    if (receiverCompanyId) {
+      return (
+        companies.find((company) => company.id === receiverCompanyId) ?? null
       );
     }
-  }, [receiverCompanyId, dispatch, companies]);
+
+    return (
+      companies.find((company) => company.is_default) ?? companies[0] ?? null
+    );
+  }, [companies, receiverCompanyId]);
+
+  useEffect(() => {
+    if (!activeCompany) {
+      setChosenCompany(null);
+      return;
+    }
+
+    setChosenCompany(activeCompany);
+
+    if (receiverCompanyId !== activeCompany.id) {
+      dispatch(setOrderInfo({ receiverCompanyId: activeCompany.id }));
+    }
+  }, [activeCompany, receiverCompanyId, dispatch]);
 
   return {
     receiver,
@@ -66,6 +75,8 @@ export const useAcceptor = () => {
     canChange,
     setCanChange,
     chosenCompany,
+    companies,
+    selectCompany,
     onButtonClick,
   };
 };

@@ -12,3 +12,14 @@
         padding: $space-4;
     }
 }
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-4;
+}
+
+.notice {
+  margin-bottom: $space-2;
+}

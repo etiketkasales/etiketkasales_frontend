@@ -1,10 +1,12 @@
-import { apiClient, tryCatch } from "~/src/shared/lib/api";
+import { apiClient, dedupeRequest, tryCatch } from "~/src/shared/lib/api";
 import { IGetData } from "~/src/shared/model";
 import { IFilters } from "~/src/features/filters/model";
 
 export const getProductsFilters = async () => {
-  return await tryCatch(async () => {
-    const res = await apiClient.get<IGetData<IFilters>>(`/products/filters/`);
-    return res.data.data;
-  });
+  return dedupeRequest("GET /products/filters/", () =>
+    tryCatch(async () => {
+      const res = await apiClient.get<IGetData<IFilters>>(`/products/filters/`);
+      return res.data.data;
+    }),
+  );
 };

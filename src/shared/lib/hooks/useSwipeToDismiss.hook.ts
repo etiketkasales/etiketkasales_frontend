@@ -4,13 +4,13 @@ import { useRef, useState, useCallback } from "react";
 type SwipeDirection = "left" | "right";
 
 type UseSwipeToDismissOptions = {
-  onDismiss: (direction: SwipeDirection) => void;
   distanceThreshold?: number;
+  onDismissAction: (direction: SwipeDirection) => void;
   velocityThreshold?: number;
 };
 
 export function useSwipeToDismiss({
-  onDismiss,
+  onDismissAction,
   distanceThreshold = 120,
   velocityThreshold = 0.5,
 }: UseSwipeToDismissOptions) {
@@ -56,14 +56,14 @@ export function useSwipeToDismiss({
       if (distance >= distanceThreshold || velocity >= velocityThreshold) {
         const direction: SwipeDirection = deltaX > 0 ? "right" : "left";
         setDirection(direction);
-        onDismiss(direction);
+        onDismissAction(direction);
       } else {
         setOffsetX(0);
         setDirection(null);
       }
       setIsGrabbing(false);
     },
-    [distanceThreshold, velocityThreshold, onDismiss],
+    [distanceThreshold, velocityThreshold, onDismissAction],
   );
 
   return {

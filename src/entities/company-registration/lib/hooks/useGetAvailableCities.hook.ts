@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
-import { useAppDispatch } from "~/src/app/store/hooks";
+import { useCallback, useState } from "react";
 import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 
 import { promiseWrapper } from "~/src/shared/lib";
@@ -9,8 +8,7 @@ import { IAvailableCity } from "../../model";
 import { IFormModalSelectOption } from "~/src/entities/form-modal/model";
 import { useDebounce } from "react-use";
 
-export const useGetAvailableCities = () => {
-  const dispatch = useAppDispatch();
+export const useGetAvailableCities = (enabled = true) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [availableCities, setAvailableCities] = useState<
     IFormModalSelectOption[]
@@ -19,34 +17,46 @@ export const useGetAvailableCities = () => {
   const createNotification = useCreateNotification();
 
   const formatCities = useCallback((cities: IAvailableCity[]) => {
-    return cities.map((city) => {
-      return {
-        value: city.slug,
-        label: city.name,
-      };
-    });
+    return cities.map((city) => ({
+      value: city.slug,
+      label: city.name,
+    }));
   }, []);
 
-  const getCities = useCallback(async () => {
-    await promiseWrapper({
-      setLoading,
-      callback: async () => {
-        if (searchQuery.length < 3) return;
-        const res: { cities: IAvailableCity[] } =
-          await getAvailableCities(searchQuery);
+  const fetchCities = useCallback(
+    async (query: string) => {
+      if (!enabled) {
+        return;
+      }
 
-        if (!res.cities) {
-          createNotification("Не удалось получить города", "error");
-          return;
-        }
+      await promiseWrapper({
+        setLoading,
+        callback: async () => {
+          const res: { cities: IAvailableCity[] } | undefined =
+            await getAvailableCities(query);
 
-        const formattedCities = formatCities(res.cities);
-        setAvailableCities(formattedCities);
-      },
-    });
-  }, [dispatch, searchQuery, formatCities]);
+          if (!res?.cities) {
+            createNotification("Не удалось получить города", "error");
+            return;
+          }
 
-  useDebounce(async () => await getCities(), 500, [getCities]);
+          setAvailableCities(formatCities(res.cities));
+        },
+      });
+    },
+    [createNotification, enabled, formatCities],
+  );
+
+  useDebounce(
+    () => {
+      if (!enabled) {
+        return;
+      }
+      void fetchCities(searchQuery);
+    },
+    400,
+    [searchQuery, fetchCities, enabled],
+  );
 
   return {
     availableCities,

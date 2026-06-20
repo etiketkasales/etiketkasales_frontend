@@ -1,15 +1,17 @@
 "use client";
-import React, { useRef } from "react";
+import React from "react";
 
 import classes from "./radio.module.scss";
 
 interface Props {
   onChange: () => void;
   value: string;
-  name: string;
+  /** Общий HTML name для всей группы переключателей */
+  groupName: string;
+  /** Уникальный id инпута (htmlFor лейбла) */
+  inputId: string;
   gap?: string;
   label?: string;
-  defaultChecked?: boolean;
   checked?: boolean;
   className?: string;
   type?: "yellow" | "green";
@@ -21,23 +23,21 @@ export default function RadioInput({
   gap,
   value,
   label,
-  name,
   checked,
   className,
+  groupName,
+  inputId,
   type = "green",
   classNameText = "text-body m text-neutral-700",
 }: Props) {
-  const inputRef = useRef<HTMLInputElement>(null);
-
   return (
     <label
-      htmlFor={name}
+      htmlFor={inputId}
       className={`no-select cursor${label ? " align-center" : ""} flex-row${gap ? ` gap-${gap}` : ""} ${className}`}
-      onClick={() => inputRef.current?.click()}
     >
       <div className={classes.input_wrapper}>
         <input
-          ref={inputRef}
+          id={inputId}
           type="radio"
           value={value}
           className={`${classes.input} ${checked ? classes.checked : ""} ${classes[type]} cursor`}
@@ -45,7 +45,7 @@ export default function RadioInput({
             onChange();
           }}
           checked={checked}
-          name={name}
+          name={groupName}
         />
       </div>
       {label && <span className={classNameText}>{label}</span>}

@@ -17,7 +17,7 @@ export default function EtiketkaInfo({ item }: Props) {
   const [currentIndex, setCurrentIndex] = useState<CurrentIndexI>("descr");
 
   useEffect(() => {
-    setIsInDev(currentIndex === "seller" || currentIndex === "sertificates");
+    setIsInDev(currentIndex === "sertificates");
   }, [currentIndex]);
 
   return (

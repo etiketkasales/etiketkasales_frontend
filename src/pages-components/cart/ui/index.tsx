@@ -41,7 +41,14 @@ export default function CartPage() {
         deleteMarked={deleteMarked}
       />
       {modal !== null && (
-        <AddCompanyModal isOpen={modal} onClose={() => setModal(false)} />
+        <AddCompanyModal
+          isOpen={modal}
+          onClose={() => setModal(false)}
+          onSuccess={() => {
+            setModal(false);
+            window.location.href = "/order/create/company";
+          }}
+        />
       )}
     </PageWrapper>
   );

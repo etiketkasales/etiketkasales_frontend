@@ -1,6 +1,34 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
+import {
+  ensureAccessToken,
+  hasRefreshToken,
+  hasValidAccessToken,
+  isAuthRefreshLocked,
+  needsAccessTokenRefresh,
+  refreshAccessToken,
+  waitForAuthReady,
+} from "./authRefreshLock";
 import CookieUtils from "../utils/cookies.utils";
 import JwtUtils from "../utils/jwt.utils";
+
+export function isAbortLikeError(err: unknown): boolean {
+  if (!err || typeof err !== "object") {
+    return false;
+  }
+
+  const axiosErr = err as AxiosError;
+  if (axios.isCancel(err)) {
+    return true;
+  }
+
+  const code = (axiosErr as AxiosError & { code?: string }).code;
+  if (code === "ERR_CANCELED") {
+    return true;
+  }
+
+  const name = (err as { name?: string }).name;
+  return name === "AbortError" || name === "CanceledError";
+}
 
 const BASE_URL = process.env.SERVER_API_URL ?? process.env.NEXT_PUBLIC_API_URL;
 
@@ -19,13 +47,21 @@ export const apiClient = axios.create({
   withCredentials: true,
 });
 
-let isRefreshing: boolean = false;
-let failedQueue: any[] = [];
+let inTabRefreshing = false;
+let failedQueue: Array<{
+  resolve: (token: string) => void;
+  reject: (err: unknown) => void;
+}> = [];
 
-const processQueue = (error: any, token: string | null = null) => {
+const processQueue = (error: unknown, token: string | null = null) => {
   failedQueue.forEach((prom) => {
-    if (error) prom.reject(error);
-    else prom.resolve(token);
+    if (error) {
+      prom.reject(error);
+    } else if (token) {
+      prom.resolve(token);
+    } else {
+      prom.reject(new Error("Refresh completed without token"));
+    }
   });
   failedQueue = [];
 };
@@ -37,12 +73,19 @@ declare module "axios" {
   }
 }
 
-// добавление токена к каждому запросу
+// добавление токена к каждому запросу (с ожиданием refresh из другой вкладки)
 apiClient.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
+  async (config: InternalAxiosRequestConfig) => {
     if (config.skipAuth) return config;
 
-    const token = CookieUtils.getCookie("auth_token");
+    let token = CookieUtils.getCookie("auth_token");
+
+    if (needsAccessTokenRefresh() && hasRefreshToken()) {
+      const ensured = await ensureAccessToken();
+      if (ensured) {
+        token = ensured;
+      }
+    }
 
     if (token && !JwtUtils.isExpiredToken(token)) {
       config.headers = config.headers || {};
@@ -72,55 +115,57 @@ apiClient.interceptors.response.use(
       !originalRequest._retry &&
       !originalRequest?.skipAuth
     ) {
-      if (isRefreshing) {
-        return new Promise(function (resolve, reject) {
+      if (isAuthRefreshLocked()) {
+        const ready = await waitForAuthReady(15_000);
+        if (ready && hasValidAccessToken()) {
+          const token = CookieUtils.getCookie("auth_token");
+          if (token) {
+            originalRequest.headers = originalRequest.headers || {};
+            originalRequest.headers["Authorization"] = `Bearer ${token}`;
+            return apiClient(originalRequest);
+          }
+        }
+      }
+
+      if (inTabRefreshing) {
+        return new Promise<string>(function (resolve, reject) {
           failedQueue.push({ resolve, reject });
         })
           .then((token) => {
             originalRequest.headers["Authorization"] = `Bearer ${token}`;
             return apiClient(originalRequest);
           })
-          .catch((err) => {
-            return Promise.reject(err);
-          });
+          .catch((err) => Promise.reject(err));
       }
 
       originalRequest._retry = true;
-      isRefreshing = true;
+      inTabRefreshing = true;
 
       try {
-        const refreshToken = CookieUtils.getCookie("refresh_token");
-        if (!refreshToken) throw new Error("Refresh token not found");
+        const newAccessToken = await refreshAccessToken();
+        apiClient.defaults.headers.common["Authorization"] =
+          `Bearer ${newAccessToken}`;
 
-        const res = await axios.post(
-          `${BASE_URL}/auth/refresh/`,
-          {
-            refresh_token: refreshToken,
-          },
-          {
-            withCredentials: true,
-          },
-        );
-
-        const newAccessToken = res.data.access_token;
-        if (newAccessToken) {
-          CookieUtils.setCookieWithToken("auth_token", newAccessToken);
-
-          apiClient.defaults.headers.common["Authorization"] =
-            `Bearer ${newAccessToken}`;
-
-          processQueue(null, newAccessToken);
-        }
-
+        processQueue(null, newAccessToken);
+        originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
         return apiClient(originalRequest);
       } catch (err) {
-        isRefreshing = false;
         processQueue(err, null);
-        CookieUtils.deleteCookie("auth_token");
-        CookieUtils.deleteCookie("refresh_token");
+        const ready = await waitForAuthReady(15_000);
+        if (ready && hasValidAccessToken()) {
+          const token = CookieUtils.getCookie("auth_token");
+          if (token) {
+            originalRequest.headers["Authorization"] = `Bearer ${token}`;
+            return apiClient(originalRequest);
+          }
+        }
+        if (!isAuthRefreshLocked() && !hasValidAccessToken()) {
+          CookieUtils.deleteCookie("auth_token");
+          CookieUtils.deleteCookie("refresh_token");
+        }
         return Promise.reject(err);
       } finally {
-        isRefreshing = false;
+        inTabRefreshing = false;
       }
     }
 
@@ -130,12 +175,14 @@ apiClient.interceptors.response.use(
 
 export const tryCatch = async <T>(
   func: () => Promise<T>,
-  fallback?: (error: any) => void,
-) => {
+  fallback?: (error: unknown) => void,
+): Promise<T | undefined> => {
   try {
-    const res = await func();
-    return res;
+    return await func();
   } catch (err) {
+    if (isAbortLikeError(err)) {
+      return undefined;
+    }
     console.error(err);
     fallback?.(err);
     throw err;

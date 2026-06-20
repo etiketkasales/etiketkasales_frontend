@@ -12,7 +12,7 @@ import {
 import { IUserCompanyBase } from "~/src/features/user/model";
 import { MessageI } from "~/src/shared/model";
 
-export const useAddCompany = (onClose: () => void) => {
+export const useAddCompany = (onClose: () => void, onSuccess?: () => void) => {
   const {
     newData: newCompany,
     onStringInputChange,
@@ -56,9 +56,12 @@ export const useAddCompany = (onClose: () => void) => {
     const specificError = hasSpecificError();
     if (specificError) return;
     await onSave(async () => {
-      await addCompany(newCompany, onClose);
+      await addCompany(newCompany, () => {
+        onClose();
+        onSuccess?.();
+      });
     });
-  }, [addCompany, newCompany, hasSpecificError, onSave, onClose]);
+  }, [addCompany, newCompany, hasSpecificError, onSave, onClose, onSuccess]);
 
   useEffect(() => {
     if (specificError) {

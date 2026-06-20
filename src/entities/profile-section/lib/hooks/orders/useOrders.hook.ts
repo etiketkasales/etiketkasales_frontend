@@ -7,25 +7,30 @@ import { UserRoleType } from "~/src/features/user/model";
 
 interface Props {
   role: UserRoleType;
+  enabled?: boolean;
 }
 
 /**
  * Hook to get orders for given role.
- *
- * @param {Props} Props object that contains role.
- * @returns {Object} An object containing orders, sellerOrders, and loading status.
  */
-export const useOrders = ({ role }: Props) => {
+export const useOrders = ({ role, enabled = true }: Props) => {
   const [orders, setOrders] = useState<IOrder[]>([]);
   const [sellerOrders, setSellerOrders] = useState<ISellerOrder[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const getBuyerOrders = useCallback(async () => {
     await promiseWrapper({
       setLoading,
+      errorMessage: "Не удалось загрузить заказы",
       callback: async () => {
         const res = await getOrders();
-        setOrders(res.orders);
+        setOrders(Array.isArray(res?.orders) ? res.orders : []);
+        setError(null);
+      },
+      fallback: () => {
+        setOrders([]);
+        setError("Не удалось загрузить заказы");
       },
     });
   }, []);
@@ -39,29 +44,34 @@ export const useOrders = ({ role }: Props) => {
     });
   }, []);
 
-  const getRoleOrders = useCallback(async () => {
-    await promiseWrapper({
-      setLoading,
-      callback: async () => {
-        switch (role) {
-          case "buyer":
-            await getBuyerOrders();
-            break;
-          case "seller":
-            await getSellerOrders();
-            break;
-        }
-      },
-    });
-  }, [role, getBuyerOrders, getSellerOrders]);
+  const reload = useCallback(async () => {
+    if (!enabled) {
+      return;
+    }
+
+    switch (role) {
+      case "buyer":
+        await getBuyerOrders();
+        break;
+      case "seller":
+        await getSellerOrders();
+        break;
+    }
+  }, [enabled, role, getBuyerOrders, getSellerOrders]);
 
   useEffect(() => {
-    getRoleOrders();
-  }, [getRoleOrders]);
+    if (!enabled) {
+      return;
+    }
+
+    void reload();
+  }, [enabled, reload]);
 
   return {
     orders,
     sellerOrders,
     loading,
+    error,
+    reload,
   };
 };

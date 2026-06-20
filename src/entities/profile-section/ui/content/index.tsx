@@ -7,6 +7,7 @@ import ProfileCompanies from "./companies";
 import ProfileInDev from "./in-dev";
 import CompanyProfile from "./company-profile";
 import SellerOrders from "./seller-orders";
+import SellerReviews from "./seller-reviews";
 import ProfileProducts from "./products";
 import ProfileQuote from "./quote";
 import ProfileContentFallback from "./fallback";
@@ -45,6 +46,8 @@ export default function ProfileContent({
       return <ProfileOrders />;
     case "seller_orders":
       return <SellerOrders />;
+    case "reviews":
+      return <SellerReviews />;
     case "as_legal":
       return <ProfileCompanies />;
     case "profile":
@@ -58,6 +61,7 @@ export default function ProfileContent({
             userInfo.company_verification_status || userInfo.seller_status
           }
           rejectReason={userInfo.seller_rejection_reason}
+          profileReady={userInfo.id > 0}
         />
       );
   }

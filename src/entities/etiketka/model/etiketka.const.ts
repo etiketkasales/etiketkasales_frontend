@@ -10,8 +10,8 @@ export const etiketkaButtonsC: EtiketkaInfoButtonI[] = [
     action: "specs",
   },
   {
-    title: "Отзывы о продавце",
-    action: "seller",
+    title: "Отзывы",
+    action: "reviews",
   },
   {
     title: "Сертификаты",

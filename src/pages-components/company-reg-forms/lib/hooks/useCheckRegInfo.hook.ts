@@ -8,25 +8,32 @@ import { companyRegFieldsRequired } from "~/src/entities/company-registration/mo
 
 export const useCheckRegInfo = () => {
   const { loaded } = useAppSelector(selectNavigation);
-  const { userInfo, loadingData } = useAppSelector(selectUser);
+  const { userInfo, loadingData, isLoggedIn } = useAppSelector(selectUser);
   const [needRedirect, setNeedRedirect] = useState<boolean>(false);
 
+  const profileReady = !isLoggedIn || userInfo.id > 0;
+
   useEffect(() => {
-    if (userInfo) {
-      const hasErrors = FormUtils.getFormError({
-        requiredFields: companyRegFieldsRequired,
-        checkData: userInfo,
-      });
-      if (hasErrors === null) {
-        setNeedRedirect(true);
-      }
+    if (!loaded || loadingData || !profileReady) {
+      setNeedRedirect(false);
+      return;
     }
 
-    return () => setNeedRedirect(false);
-  }, [userInfo]);
+    if (!isLoggedIn) {
+      setNeedRedirect(false);
+      return;
+    }
+
+    const hasErrors = FormUtils.getFormError({
+      requiredFields: companyRegFieldsRequired,
+      checkData: userInfo,
+    });
+
+    setNeedRedirect(hasErrors === null);
+  }, [userInfo, loadingData, loaded, isLoggedIn, profileReady]);
 
   return {
     needRedirect,
-    loading: !loaded || loadingData,
+    loading: !loaded || loadingData || !profileReady,
   };
 };

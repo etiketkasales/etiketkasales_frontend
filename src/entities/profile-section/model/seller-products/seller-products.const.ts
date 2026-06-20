@@ -11,8 +11,10 @@ export const newProductSkeleton: INewProduct = {
   description: "",
   images: [],
   image_upload_ids: [],
+  document_upload_ids: [],
   price: "",
   status_code: "draft",
+  media: { videos: [], documents: [] },
 };
 
 export const newProductMainInputs: INewProductInput[] = [
@@ -75,9 +77,11 @@ export const editSellerProductSkeleton: IEditSellerProduct = {
   name: "",
   description: "",
   image_upload_ids: [],
+  document_upload_ids: [],
   price: "",
   images: [],
   status_code: "approved",
+  media: { videos: [], documents: [] },
 };
 
 export const sellerProductStatusColors: Record<

@@ -17,18 +17,29 @@ const INN_LOOKUP_FIELDS: (keyof IChangeableProfile)[] = [
 interface Props {
   innValue: string;
   onChange: (v: string, field: keyof IChangeableProfile) => void;
+  /** Подсказка: наименование из поля компании — чтобы не дублировать карточку после выбора по названию */
+  companyNameHint?: string | null;
+  /** После подстановки реквизитов по ИНН — блокируем повторный поиск по названию */
+  onApplied?: (companyName: string) => void;
 }
 
-export default function InnLookup({ innValue, onChange }: Props) {
+export default function InnLookup({
+  innValue,
+  onChange,
+  companyNameHint,
+  onApplied,
+}: Props) {
   const digits = useMemo(
     () => String(innValue ?? "").replace(/\D/g, ""),
     [innValue],
   );
   const prevDigits = useRef<string | undefined>(undefined);
+  const suppressAutoHide = useRef(false);
   const [cardFilled, setCardFilled] = useState(false);
 
   useEffect(() => {
     setCardFilled(false);
+    suppressAutoHide.current = false;
   }, [digits]);
 
   useEffect(() => {
@@ -55,6 +66,31 @@ export default function InnLookup({ innValue, onChange }: Props) {
 
   const { loading, company, error } = useInnLookup(innValue);
 
+  useEffect(() => {
+    if (!company || cardFilled || suppressAutoHide.current) {
+      return;
+    }
+
+    const hint = (companyNameHint || "").trim();
+    if (hint.length < 3) {
+      return;
+    }
+
+    const n = (company.name || company.short_name || "").trim();
+    if (!n) {
+      return;
+    }
+
+    if (
+      hint === n ||
+      n === hint ||
+      hint.includes(n.slice(0, 20)) ||
+      n.includes(hint.slice(0, 20))
+    ) {
+      setCardFilled(true);
+    }
+  }, [company, companyNameHint, cardFilled]);
+
   const displayTitle =
     company?.short_name?.trim() ||
     company?.name?.trim() ||
@@ -63,7 +99,11 @@ export default function InnLookup({ innValue, onChange }: Props) {
   const apply = useCallback(() => {
     if (!company) return;
 
+    suppressAutoHide.current = false;
     setCardFilled(true);
+
+    const resolvedName =
+      company.name?.trim() || company.short_name?.trim() || "";
 
     if (company.name) onChange(company.name, "company_name");
     else if (company.short_name) onChange(company.short_name, "company_name");
@@ -74,12 +114,40 @@ export default function InnLookup({ innValue, onChange }: Props) {
       onChange(company.legal_address, "legal_address");
       onChange(company.legal_address, "actual_address");
     }
-  }, [company, onChange]);
+
+    if (resolvedName) {
+      onApplied?.(resolvedName);
+    }
+  }, [company, onChange, onApplied]);
+
+  const showCardAgain = useCallback(() => {
+    suppressAutoHide.current = true;
+    setCardFilled(false);
+  }, []);
 
   if (!innValue) return null;
 
   if (digits.length !== 10 && digits.length !== 12) {
     return null;
+  }
+
+  if (cardFilled) {
+    return (
+      <div className={`flex-column gap-2 ${classes.wrap}`}>
+        <div className={classes.compactBar}>
+          <span className="text-body s text-neutral-600">
+            Данные по ИНН из справочника подставлены
+          </span>
+          <button
+            type="button"
+            className={classes.compactLink}
+            onClick={showCardAgain}
+          >
+            Показать карточку снова
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -96,11 +164,9 @@ export default function InnLookup({ innValue, onChange }: Props) {
 
       {!loading && company && (
         <>
-          {!cardFilled && (
-            <p className={`text-body xs ${classes.hintOk}`}>
-              Нажмите на карточку, чтобы заполнить поля формы
-            </p>
-          )}
+          <p className={`text-body xs ${classes.hintOk}`}>
+            Нажмите на карточку, чтобы заполнить поля формы
+          </p>
           <button
             type="button"
             className={`${classes.card} ${classes.cardAsButton}`}

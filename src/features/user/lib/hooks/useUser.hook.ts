@@ -5,6 +5,8 @@ import { useUserCompanies, useAddresses } from ".";
 
 import { getProfile } from "~/src/features/user/lib/api/user.api";
 import { setUser } from "~/src/app/store/reducers/user.slice";
+import { hasRefreshToken } from "~/src/shared/lib/api/authRefreshLock";
+import { withAuthRetry } from "~/src/shared/lib/api/withAuthRetry";
 
 import { profileChangeableFields } from "~/src/features/user/model/user.const";
 import { IChangeableProfile, IProfile } from "~/src/features/user/model";
@@ -49,25 +51,40 @@ export const useUser = () => {
     [dispatch, setEditableData],
   );
 
-  const handleGetUser = useCallback(async () => {
-    try {
-      setLoading(true);
-      const res = await getProfile();
-      await handleGetCompanies();
-      await getAddresses();
-      await updateCart();
-      if (res.user) {
-        setUserData(res.user);
-      } else {
-        dispatch(setUser({ isLoggedIn: false }));
+  const handleGetUser = useCallback(
+    async (options?: { skipCart?: boolean }) => {
+      try {
+        setLoading(true);
+        const res = await withAuthRetry(() => getProfile());
+        await withAuthRetry(() => handleGetCompanies());
+        await withAuthRetry(() => getAddresses());
+        if (!options?.skipCart) {
+          await withAuthRetry(() => updateCart());
+        }
+        if (res?.user) {
+          dispatch(setUser({ isLoggedIn: true }));
+          setUserData(res.user);
+        } else {
+          dispatch(setUser({ isLoggedIn: false }));
+        }
+      } catch (err) {
+        console.error(err);
+        if (!hasRefreshToken()) {
+          dispatch(setUser({ isLoggedIn: false }));
+        }
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      console.error(err);
-      dispatch(setUser({ isLoggedIn: false }));
-    } finally {
-      setLoading(false);
-    }
-  }, [dispatch, setLoading, setUserData, getAddresses, handleGetCompanies]);
+    },
+    [
+      dispatch,
+      setLoading,
+      setUserData,
+      getAddresses,
+      handleGetCompanies,
+      updateCart,
+    ],
+  );
 
   return {
     handleGetUser,

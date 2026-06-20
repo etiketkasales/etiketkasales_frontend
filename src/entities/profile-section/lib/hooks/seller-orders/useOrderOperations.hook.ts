@@ -23,10 +23,13 @@ export const useOrderOperations = () => {
   });
 
   const acceptOrder = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async (id: number, _: OrderOperationFormData | null) => {
       await promiseCallback(async () => {
         const newOrder = await acceptSellerOrderById(id);
-        updateOrder(newOrder);
+        if (newOrder) {
+          updateOrder(newOrder);
+        }
       });
     },
     [promiseCallback, updateOrder],
@@ -41,7 +44,9 @@ export const useOrderOperations = () => {
         // TODO: придумать как исправить этот костыль
 
         const newOrder = await rejectSellerOrderById(id, fd.rejectReason);
-        updateOrder(newOrder);
+        if (newOrder) {
+          updateOrder(newOrder);
+        }
       });
     },
     [promiseCallback, updateOrder],
@@ -58,7 +63,9 @@ export const useOrderOperations = () => {
           fd.track_number,
           fd.comment,
         );
-        updateOrder(newOrder);
+        if (newOrder) {
+          updateOrder(newOrder);
+        }
       });
     },
     [promiseCallback, updateOrder],

@@ -45,20 +45,13 @@ interface ICreateOrderParams {
   payment_method: string;
 }
 export const createOrder = async (params: ICreateOrderParams) => {
-  return await tryCatch(
-    async () => {
-      const res = await apiClient.post<IGetData<ICreatedOrderDto>>(
-        `/users/orders/`,
-        {
-          ...params,
-        },
-      );
-      return res.data;
-    },
-    (err) => {
-      throw err;
-    },
-  );
+  return await tryCatch(async () => {
+    const res = await apiClient.post<IGetData<ICreatedOrderDto>>(
+      `/users/orders/`,
+      params,
+    );
+    return res.data;
+  });
 };
 
 interface ICreateOrderForCompanyParams extends ICreateOrderParams {
@@ -72,20 +65,13 @@ interface ICreateOrderForCompanyParams extends ICreateOrderParams {
 export const createOrderForCompany = async (
   params: ICreateOrderForCompanyParams,
 ) => {
-  return await tryCatch(
-    async () => {
-      const res = await apiClient.post<IGetData<ICreatedOrderDto>>(
-        `/orders/create-company/`,
-        {
-          ...params,
-        },
-      );
-      return res.data;
-    },
-    (err) => {
-      throw err;
-    },
-  );
+  return await tryCatch(async () => {
+    const res = await apiClient.post<IGetData<ICreatedOrderDto>>(
+      `/orders/create-company/`,
+      params,
+    );
+    return res.data;
+  });
 };
 
 export const getPickupPointsData = async (
@@ -106,11 +92,33 @@ export const getPickupPointsData = async (
   });
 };
 
-export const createOrderPayment = async (order_id: number) => {
+export const createOrderPayment = async (
+  order_id: number,
+  options?: {
+    payment_method?: string;
+    company_id?: number;
+  },
+) => {
   return await tryCatch(async () => {
+    const body: Record<string, string | number> = {};
+    if (options?.payment_method) {
+      body.payment_method = options.payment_method;
+    }
+    if (options?.company_id) {
+      body.company_id = options.company_id;
+    }
+
     const res = await apiClient.post<IGetData<ICreatePaymentDto>>(
       `/orders/${order_id}/payment/`,
+      Object.keys(body).length > 0 ? body : undefined,
     );
     return res.data.data;
+  });
+};
+
+export const syncOrderPaymentStatus = async (order_id: number) => {
+  return await tryCatch(async () => {
+    const res = await apiClient.get(`/orders/${order_id}/payment/status/`);
+    return res.data;
   });
 };

@@ -7,6 +7,8 @@ interface ICodeBase {
 
 export interface ISendCode extends ICodeBase {
   expires_in?: number;
+  /** Только в режиме разработки API (AUTH_DEV_SMS) */
+  dev_code?: string;
 }
 
 interface IUser {

@@ -10,7 +10,7 @@ import { Alert, Card, Descriptions, Space, Table, Tag, Typography } from "antd";
 import { useQuery } from "@tanstack/react-query";
 import { apiClient } from "~/src/shared/lib/api/client.api";
 import { ADMIN_ROLES } from "~/src/refine/auth/roles";
-import { getAuthMeCached } from "~/src/refine/auth/authMeCache";
+import { useAuthMe } from "~/src/refine/auth/useAuthMe.hook";
 
 type MatrixResponse = {
   success: boolean;
@@ -18,10 +18,7 @@ type MatrixResponse = {
 };
 
 export default function AdminPermissionsPage() {
-  const { data: me } = useQuery({
-    queryKey: ["auth", "me"],
-    queryFn: () => getAuthMeCached(),
-  });
+  const { data: me } = useAuthMe();
 
   const { data: matrixRes, isLoading } = useQuery({
     queryKey: ["admin", "permissions-matrix"],
@@ -87,11 +84,13 @@ export default function AdminPermissionsPage() {
         message="Кто может что делать в админке"
         description={
           <Typography.Paragraph style={{ marginBottom: 0 }}>
-            В системе нет отдельного списка «галочек» на каждого человека:
-            доступ задаётся{" "}
-            <Typography.Text strong>ролью сотрудника</Typography.Text>{" "}
-            (например, модератор, поддержка). Сменить роль пользователю может
-            администратор на вкладке «Users» в колонке «Роль в админке».
+            Доступ задаётся{" "}
+            <Typography.Text strong>ролью сотрудника</Typography.Text> и набором
+            строковых прав (см. матрицу ниже). Назначать staff-роль
+            (`admin.users.staff_manage`) может только супер-администратор;
+            остальные права настраиваются в{" "}
+            <Typography.Text code>AdminRbac</Typography.Text> на бэкенде и в
+            меню <Typography.Text code>adminMenu.ts</Typography.Text> на фронте.
           </Typography.Paragraph>
         }
       />

@@ -16,7 +16,9 @@ export default async function Page({ params }: { params: Promise<IParams> }) {
   let initEtiketka: IEtiketka = productSkeleton;
   try {
     const res = await getProductById(Number(id));
-    initEtiketka = res;
+    if (res) {
+      initEtiketka = res;
+    }
   } catch (err) {
     console.error(err);
   }

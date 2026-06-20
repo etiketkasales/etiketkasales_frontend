@@ -24,15 +24,26 @@ export const buyerTabs: IAsideItem[] = [
   },
 ];
 
+/** Вкладки продавца, временно скрытые */
+export const sellerProfileSectionsHidden: ProfileActionType[] = [
+  "reviews",
+  "seller_orders",
+  "addresses",
+  "products",
+  "promotion",
+  "accounting",
+  "statistics",
+];
+
 export const sellerPendingTabs: IAsideItem[] = [
   {
     title: "Заявка на активацию магазина",
     action: "quote",
   },
-  {
-    title: "Адреса доставки",
-    action: "addresses",
-  },
+  // {
+  //   title: "Адреса доставки",
+  //   action: "addresses",
+  // },
   {
     title: "Выйти",
     action: "logout",
@@ -44,34 +55,34 @@ export const sellerTabs: IAsideItem[] = [
     title: "Профиль магазина",
     action: "profile",
   },
-  {
-    title: "Отзывы",
-    action: "reviews",
-  },
-  {
-    title: "Заказы",
-    action: "seller_orders",
-  },
-  {
-    title: "Адреса доставки",
-    action: "addresses",
-  },
-  {
-    title: "Карточки товаров",
-    action: "products",
-  },
-  {
-    title: "Продвижение товаров",
-    action: "promotion",
-  },
-  {
-    title: "Бухгалтерия",
-    action: "accounting",
-  },
-  {
-    title: "Статистика продаж",
-    action: "statistics",
-  },
+  // {
+  //   title: "Отзывы",
+  //   action: "reviews",
+  // },
+  // {
+  //   title: "Заказы",
+  //   action: "seller_orders",
+  // },
+  // {
+  //   title: "Адреса доставки",
+  //   action: "addresses",
+  // },
+  // {
+  //   title: "Карточки товаров",
+  //   action: "products",
+  // },
+  // {
+  //   title: "Продвижение товаров",
+  //   action: "promotion",
+  // },
+  // {
+  //   title: "Бухгалтерия",
+  //   action: "accounting",
+  // },
+  // {
+  //   title: "Статистика продаж",
+  //   action: "statistics",
+  // },
   {
     title: "Удалить магазин",
     action: "delete",
@@ -105,7 +116,6 @@ export const profileModalActions: ProfileActionType[] = [
   "logout",
 ];
 export const profileInDev: ProfileActionType[] = [
-  "reviews",
   "accounting",
   "promotion",
   "statistics",

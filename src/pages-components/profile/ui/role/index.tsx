@@ -11,10 +11,12 @@ import PageWrapper from "~/src/entities/page-wrapper/ui";
 import ProfileSection from "~/src/entities/profile-section/ui";
 import HeaderWithBack from "~/src/entities/header-with-back/ui";
 import ProfileModal from "./modal";
+import Loader from "~/src/shared/ui/loader";
 import { UserRoleType } from "~/src/features/user/model";
 import {
   ProfileActionType,
   profileTitlesMap,
+  sellerProfileSectionsHidden,
 } from "~/src/entities/profile-section/model";
 
 interface Props {
@@ -27,12 +29,23 @@ export default function ProfileRolePage({ paramsRole }: Props) {
     if (paramsRole === "seller-pending") return "quote";
     return paramsRole === "seller" ? "profile" : "personal";
   }, [paramsRole]);
+  const hiddenSections =
+    paramsRole === "seller" ? sellerProfileSectionsHidden : undefined;
   const { activeSection, onItemClick, exitSection, loaded } =
     useProfileSections({
       defaultSection,
+      hiddenSections,
     });
   const createNotification = useCreateNotification();
   const [modalType, setModalType] = useState<ProfileActionType | null>(null);
+
+  if (loadingData) {
+    return (
+      <PageWrapper>
+        <Loader radius={20} />
+      </PageWrapper>
+    );
+  }
 
   if (!isLoggedIn) return redirect("/login");
 

@@ -16,9 +16,9 @@ export const useOrderSummaryButtons = ({ openModal }: Props) => {
   const { companies } = useAppSelector(selectUser);
 
   const pushToOrder = useCallback(
-    (type: "person" | "company") => {
-      dispatch(setOrderInfo({ type }));
-      push("/order/create");
+    (orderType: "person" | "company") => {
+      dispatch(setOrderInfo({ type: orderType }));
+      push(`/order/create/${orderType}`);
     },
     [push, dispatch],
   );
@@ -26,7 +26,9 @@ export const useOrderSummaryButtons = ({ openModal }: Props) => {
   const onAsCompanyClick = useCallback(() => {
     if (!companies || companies.length === 0) {
       openModal();
-    } else pushToOrder("company");
+      return;
+    }
+    pushToOrder("company");
   }, [companies, openModal, pushToOrder]);
 
   const buttons: IOrderSummaryButton[] = [

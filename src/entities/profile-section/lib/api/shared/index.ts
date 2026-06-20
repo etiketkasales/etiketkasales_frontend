@@ -1,4 +1,4 @@
-import { apiClient, tryCatch } from "~/src/shared/lib/api";
+import { apiClient, dedupeRequest, tryCatch } from "~/src/shared/lib/api";
 import { AxiosResponse } from "axios";
 import { IFileUploadRes, IGetData, IGetDataBase } from "~/src/shared/model";
 import { IChangeableProfile, IProfile } from "~/src/features/user/model";
@@ -47,14 +47,56 @@ export const lookupCompanyByInn = async (
   return res.data;
 };
 
+/** Подсказки организаций по названию (DaData suggest/party). GET .../suggest-party?q= */
+export type CompanyPartySuggestApiResult = IGetDataBase & {
+  data?: ICompanyLookupData[];
+};
+
+export const suggestPartyCompanies = async (
+  q: string,
+): Promise<CompanyPartySuggestApiResult> => {
+  const res = await apiClient.get<CompanyPartySuggestApiResult>(
+    `/users/companies/suggest-party/`,
+    {
+      params: { q: q.trim() },
+      validateStatus: (status) =>
+        (status >= 200 && status < 300) || status === 400,
+    },
+  );
+  return res.data;
+};
+
+export type BankLookupApiResult = IGetDataBase & {
+  data?: {
+    name?: string | null;
+    bic?: string | null;
+    correspondent_account?: string | null;
+  };
+};
+
+/** Банк по БИК (DaData). GET /v1/users/banks/lookup?bik= */
+export const lookupBankByBic = async (
+  bik: string,
+): Promise<BankLookupApiResult> => {
+  const digits = String(bik).replace(/\D/g, "");
+  const res = await apiClient.get<BankLookupApiResult>(`/users/banks/lookup/`, {
+    params: { bik: digits },
+    validateStatus: (status) =>
+      (status >= 200 && status < 300) || status === 400 || status === 404,
+  });
+  return res.data;
+};
+
 interface IOrdersResponse extends IGetDataBase {
   orders: IOrder[];
 }
 export const getOrders = async () => {
-  return await tryCatch(async () => {
-    const res = await apiClient.get<IOrdersResponse>(`/users/orders/`);
-    return res.data;
-  });
+  return dedupeRequest("GET /users/orders/", () =>
+    tryCatch(async () => {
+      const res = await apiClient.get<IOrdersResponse>(`/users/orders/`);
+      return res.data;
+    }),
+  );
 };
 
 export const uploadAvatar = async (data: FormData) => {

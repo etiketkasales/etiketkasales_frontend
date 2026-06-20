@@ -9,7 +9,10 @@ export const dynamic = "force-dynamic";
 export default async function Home() {
   let initialSections: IGetRandomCategories[] = [];
   try {
-    initialSections = await getRandomCategories();
+    const sections = await getRandomCategories();
+    if (sections) {
+      initialSections = sections;
+    }
   } catch (err) {
     console.error(err);
     initialSections = [];

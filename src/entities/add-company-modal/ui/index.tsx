@@ -10,9 +10,10 @@ import AddCompanyButtons from "./buttons";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  onSuccess?: () => void;
 }
 
-export default function AddCompanyModal({ isOpen, onClose }: Props) {
+export default function AddCompanyModal({ isOpen, onClose, onSuccess }: Props) {
   const {
     newCompany,
     onChange,
@@ -22,7 +23,7 @@ export default function AddCompanyModal({ isOpen, onClose }: Props) {
     error,
     specificError,
     loading,
-  } = useAddCompany(onClose);
+  } = useAddCompany(onClose, onSuccess);
 
   return (
     <Modal

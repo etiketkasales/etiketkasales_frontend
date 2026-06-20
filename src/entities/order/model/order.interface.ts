@@ -27,6 +27,7 @@ export interface IDeliveryMethodResponse {
   description: string;
   display: string;
   image_url: string;
+  online?: boolean;
 }
 
 // selected in cart items
@@ -83,8 +84,11 @@ export interface IOrderPickupPointResponse {
 
 // response on creating payment api endpoint
 export interface ICreatePaymentDto {
-  payment_id: string;
+  payment_id?: string;
   payment_method: string;
-  payment_url: string;
+  payment_url?: string;
+  invoice?: boolean;
   amount: number;
+  order_id?: number;
+  redirect_url?: string;
 }
