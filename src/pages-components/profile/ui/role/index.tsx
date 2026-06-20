@@ -1,9 +1,10 @@
 "use client";
 import { useMemo, useState } from "react";
-import { useProfileSections } from "~/src/entities/profile-section/lib/hooks";
+import { redirect } from "next/navigation";
 import { useAppSelector } from "~/src/app/store/hooks";
 import { selectUser } from "~/src/app/store/reducers/user.slice";
-import { redirect } from "next/navigation";
+import { useProfileSections } from "~/src/entities/profile-section/lib/hooks";
+import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 
 import classes from "./role-page.module.scss";
 import PageWrapper from "~/src/entities/page-wrapper/ui";
@@ -15,7 +16,6 @@ import {
   ProfileActionType,
   profileTitlesMap,
 } from "~/src/entities/profile-section/model";
-import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 
 interface Props {
   paramsRole: UserRoleType | "seller-pending";

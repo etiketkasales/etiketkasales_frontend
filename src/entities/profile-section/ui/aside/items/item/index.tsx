@@ -32,6 +32,7 @@ export default function ProfileAsideItem({
           },
         )}
         onClick={onClick}
+        role={"button"}
       >
         <p className="text-body xl text-yellow-1000">{title}</p>
       </Container>
