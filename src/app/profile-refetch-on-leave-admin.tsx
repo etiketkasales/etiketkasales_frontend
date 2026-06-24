@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
-import { useUser } from "~/src/features/user/lib/hooks/useUser.hook";
+import { useUser } from "~/src/features/user/lib/hooks";
 
 /** После /auth/me (админка) Redux может расходиться с /users/profile — обновляем при выходе из /admin. */
 export function ProfileRefetchOnLeaveAdmin() {
