@@ -4,7 +4,7 @@ import SellerOrderInfoContainer from "../info-container";
 import OrderProductsItem from "./item";
 import {
   ISellerOrderProduct,
-  sellerOrderColors,
+  getSellerOrderColor,
   SellerOrderStatusCode,
 } from "~/src/entities/profile-section/model";
 
@@ -14,12 +14,14 @@ interface Props {
 }
 
 export default function SellerOrderProducts({ products, status_code }: Props) {
+  const colors = getSellerOrderColor(status_code);
+
   return (
     <SellerOrderInfoContainer
-      borderColor={sellerOrderColors[status_code].infoBorder}
+      borderColor={colors.infoBorder}
       className={`flex-column gap-3`}
     >
-      <h4 className={`heading h7 text-${sellerOrderColors[status_code].text}`}>
+      <h4 className={`heading h7 text-${colors.text}`}>
         {StringUtils.pluralizeWords(
           ["товар", "товара", "товаров"],
           products.length,

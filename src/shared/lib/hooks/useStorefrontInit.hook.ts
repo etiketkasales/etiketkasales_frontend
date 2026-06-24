@@ -67,13 +67,8 @@ export const useStorefrontInit = () => {
       if (cancelled || profileBootstrapped.current) return;
       profileBootstrapped.current = true;
 
-      const remember = localStorage.getItem("needRemember") === "true";
+      const remember = localStorage.getItem("needRemember") !== "false";
       dispatch(setUser({ needRemember: remember }));
-
-      if (!remember) {
-        dispatch(setUser({ isLoggedIn: false, loadingData: false }));
-        return;
-      }
 
       const loadProfile = () => {
         void handleGetUser();

@@ -5,7 +5,7 @@ import StringUtils from "~/src/shared/lib/utils/string.util";
 import classes from "./heading-info.module.scss";
 import Dot from "~/public/profile/dot.svg";
 import {
-  sellerOrderColors,
+  getSellerOrderColor,
   SellerOrderStatusCode,
 } from "~/src/entities/profile-section/model";
 
@@ -23,7 +23,7 @@ export default function OrderHeadingInfo({
   status_code,
 }: Props) {
   const textColor = useMemo(() => {
-    return `text-${sellerOrderColors[status_code].text}`;
+    return `text-${getSellerOrderColor(status_code).text}`;
   }, [status_code]);
 
   return (

@@ -13,6 +13,10 @@ export interface ISellerOrder {
   track_number: string | null;
   act_file_url: string | null;
   invoice_url: string | null;
+  cdek_uuid?: string | null;
+  cdek_number?: string | null;
+  cdek_status?: string | null;
+  cdek_register_error?: string | null;
 }
 
 export interface ISellerOrderBuyer {

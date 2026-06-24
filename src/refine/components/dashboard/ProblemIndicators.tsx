@@ -14,18 +14,24 @@ import {
 import { ExclamationCircleOutlined, WarningOutlined } from "@ant-design/icons";
 import type { AdminDashboardData } from "~/src/refine/api/dashboard.types";
 
-export function ProblemIndicators({ data }: { data: AdminDashboardData }) {
+type Props = {
+  data: AdminDashboardData;
+  variant?: "admin" | "seller";
+};
+
+export function ProblemIndicators({ data, variant = "admin" }: Props) {
+  const isSeller = variant === "seller" || data.meta.scope === "seller";
   const p = data.problems;
   const bad =
     p.low_rating_reviews.growth_percent > 0 ||
     p.overdue_deliveries.count > 0 ||
-    p.suspicious_orders.count > 0 ||
+    (!isSeller && p.suspicious_orders.count > 0) ||
     p.out_of_stock.approved_active_zero_stock > 0;
 
   return (
     <Row gutter={[16, 16]}>
       <Col xs={24} md={12}>
-        <Badge.Ribbon text="Жалобы" color="volcano">
+        <Badge.Ribbon text="Отзывы" color="volcano">
           <Card size="small">
             <Space direction="vertical">
               <Typography.Text strong>
@@ -63,18 +69,20 @@ export function ProblemIndicators({ data }: { data: AdminDashboardData }) {
           </Card>
         </Badge.Ribbon>
       </Col>
-      <Col xs={24} md={12}>
-        <Card size="small" title="Подозрительные заказы">
-          <Typography.Title level={3} style={{ margin: 0 }}>
-            {p.suspicious_orders.count}
-          </Typography.Title>
-          <Typography.Text type="secondary">
-            {p.suspicious_orders.note}
-          </Typography.Text>
-        </Card>
-      </Col>
-      <Col xs={24} md={12}>
-        <Card size="small" title="Out of stock">
+      {!isSeller && (
+        <Col xs={24} md={12}>
+          <Card size="small" title="Подозрительные заказы">
+            <Typography.Title level={3} style={{ margin: 0 }}>
+              {p.suspicious_orders.count}
+            </Typography.Title>
+            <Typography.Text type="secondary">
+              {p.suspicious_orders.note}
+            </Typography.Text>
+          </Card>
+        </Col>
+      )}
+      <Col xs={24} md={isSeller ? 24 : 12}>
+        <Card size="small" title="Нет на складе">
           <Typography.Text>
             Всего:{" "}
             <Tag color="magenta">
@@ -98,8 +106,12 @@ export function ProblemIndicators({ data }: { data: AdminDashboardData }) {
           <Alert
             type="warning"
             showIcon
-            message="Проблемные зоны требуют внимания"
-            description="Проверьте заказы/пользователей и выполните быстрые действия."
+            message="Есть показатели, требующие внимания"
+            description={
+              isSeller
+                ? "Проверьте заказы, остатки и отзывы по вашим товарам."
+                : "Проверьте заказы/пользователей и выполните быстрые действия."
+            }
           />
         </Col>
       )}

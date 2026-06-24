@@ -59,8 +59,9 @@ export function AdminGate({ children }: { children: ReactNode }) {
             Нет доступа к админ-панели
           </Typography.Title>
           <Typography.Paragraph type="secondary">
-            У этой учётной записи нет staff-роли и прав администратора. Если вам
-            выдали доступ — обновите страницу или выйдите и войдите снова.
+            У этой учётной записи нет staff-роли и прав администратора. Аккаунты
+            продавцов не имеют доступа в админ-панель — используйте кабинет
+            продавца на сайте.
           </Typography.Paragraph>
           <Button type="primary" href="/">
             На главную

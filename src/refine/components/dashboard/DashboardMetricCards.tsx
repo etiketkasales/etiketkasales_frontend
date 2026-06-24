@@ -4,12 +4,24 @@ import { Card, Col, Row, Statistic } from "antd";
 import type { AdminDashboardData } from "~/src/refine/api/dashboard.types";
 import { formatRub } from "~/src/shared/lib/format-currency";
 
-export function DashboardMetricCards({ data }: { data: AdminDashboardData }) {
+type Props = {
+  data: AdminDashboardData;
+  variant?: "admin" | "seller";
+};
+
+export function DashboardMetricCards({ data, variant = "admin" }: Props) {
+  const isSeller = variant === "seller" || data.meta.scope === "seller";
+  const products = data.products_summary as Record<string, number> | undefined;
+  const moderation = data.moderation as Record<string, number> | undefined;
+
   return (
     <Row gutter={[16, 16]}>
       <Col xs={24} sm={12} lg={6}>
         <Card size="small">
-          <Statistic title="GMV" value={formatRub(data.financial.gmv)} />
+          <Statistic
+            title={isSeller ? "Продажи (GMV)" : "GMV"}
+            value={formatRub(data.financial.gmv)}
+          />
         </Card>
       </Col>
       <Col xs={24} sm={12} lg={6}>
@@ -23,7 +35,7 @@ export function DashboardMetricCards({ data }: { data: AdminDashboardData }) {
       <Col xs={24} sm={12} lg={6}>
         <Card size="small">
           <Statistic
-            title="Выручка (комиссия)"
+            title={isSeller ? "К выплате" : "Выручка (комиссия)"}
             value={formatRub(data.financial.marketplace_revenue)}
           />
         </Card>
@@ -55,16 +67,47 @@ export function DashboardMetricCards({ data }: { data: AdminDashboardData }) {
           <Statistic title="Отмены" value={data.orders.cancelled} />
         </Card>
       </Col>
-      <Col xs={24} sm={12} lg={6}>
-        <Card size="small">
-          <Statistic title="Новые продавцы" value={data.users.new_sellers} />
-        </Card>
-      </Col>
-      <Col xs={24} sm={12} lg={6}>
-        <Card size="small">
-          <Statistic title="Новые покупатели" value={data.users.new_buyers} />
-        </Card>
-      </Col>
+      {isSeller ? (
+        <>
+          <Col xs={24} sm={12} lg={6}>
+            <Card size="small">
+              <Statistic
+                title="Товаров одобрено"
+                value={Number(products?.approved ?? 0)}
+              />
+            </Card>
+          </Col>
+          <Col xs={24} sm={12} lg={6}>
+            <Card size="small">
+              <Statistic
+                title="На модерации"
+                value={Number(
+                  moderation?.total_pending ?? products?.pending ?? 0,
+                )}
+              />
+            </Card>
+          </Col>
+        </>
+      ) : (
+        <>
+          <Col xs={24} sm={12} lg={6}>
+            <Card size="small">
+              <Statistic
+                title="Новые продавцы"
+                value={data.users.new_sellers}
+              />
+            </Card>
+          </Col>
+          <Col xs={24} sm={12} lg={6}>
+            <Card size="small">
+              <Statistic
+                title="Новые покупатели"
+                value={data.users.new_buyers}
+              />
+            </Card>
+          </Col>
+        </>
+      )}
     </Row>
   );
 }

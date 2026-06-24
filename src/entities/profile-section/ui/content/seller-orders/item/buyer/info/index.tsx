@@ -5,7 +5,7 @@ import StringUtils from "~/src/shared/lib/utils/string.util";
 import classes from "./buyer-info.module.scss";
 import {
   ISellerOrderBuyer,
-  sellerOrderColors,
+  getSellerOrderColor,
   SellerOrderStatusCode,
 } from "~/src/entities/profile-section/model";
 
@@ -19,14 +19,15 @@ export default function BuyerInfo({
   address,
   status_code,
 }: Props) {
+  const colors = getSellerOrderColor(status_code);
   const itemProps = useMemo(() => {
     return {
-      className: `${classes.item} text-body l text-${sellerOrderColors[status_code].text}`,
+      className: `${classes.item} text-body l text-${colors.text}`,
       style: {
-        "--color": sellerOrderColors[status_code].textHex,
+        "--color": colors.textHex,
       } as React.CSSProperties,
     };
-  }, [status_code]);
+  }, [colors.text, colors.textHex]);
   return (
     <ul className={`flex-column gap-1`}>
       {name && phone && (

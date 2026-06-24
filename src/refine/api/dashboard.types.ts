@@ -40,6 +40,12 @@ export interface AdminDashboardData {
     gmv: number;
     orders_count: number;
   }>;
+  top_products?: Array<{
+    id: number;
+    name: string;
+    revenue: number;
+    orders_count: number;
+  }>;
   problems: {
     low_rating_reviews: {
       current_period: number;
@@ -74,6 +80,8 @@ export interface AdminDashboardData {
     disputes: string;
     qualifying_orders_without_items?: number;
     top_lists_note?: string;
+    scope?: "admin" | "seller";
+    seller_id?: number;
   };
   products_summary: Record<string, unknown>;
   moderation: Record<string, unknown>;

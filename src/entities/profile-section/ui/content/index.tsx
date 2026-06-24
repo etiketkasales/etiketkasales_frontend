@@ -9,6 +9,7 @@ import CompanyProfile from "./company-profile";
 import SellerOrders from "./seller-orders";
 import SellerReviews from "./seller-reviews";
 import ProfileProducts from "./products";
+import SellerStatistics from "./seller-statistics";
 import ProfileQuote from "./quote";
 import ProfileContentFallback from "./fallback";
 import { ProfileActionType } from "~/src/entities/profile-section/model";
@@ -54,6 +55,8 @@ export default function ProfileContent({
       return <CompanyProfile userInfo={userInfo} />;
     case "products":
       return <ProfileProducts />;
+    case "statistics":
+      return <SellerStatistics />;
     case "quote":
       return (
         <ProfileQuote

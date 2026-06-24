@@ -33,6 +33,8 @@ export interface IOrder {
   created_at: string; //2025-01-07T12:00:00Z
   updated_at: string; //2025-01-07T12:00:00Z
   invoice_url?: string;
+  track_number?: string | null;
+  tracking_url?: string | null;
 }
 
 export type BuyerSectionType =
