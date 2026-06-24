@@ -4,10 +4,7 @@ import { useAppDispatch } from "~/src/app/store/hooks";
 import { useCreateNotification } from "~/src/widgets/notifications/lib/hooks";
 
 import { logout } from "../api/login.api";
-import {
-  clearUserData,
-  setNeedRemember,
-} from "~/src/app/store/reducers/user.slice";
+import { clearUserData } from "~/src/app/store/reducers/user.slice";
 import { promiseWrapper } from "~/src/shared/lib/functions";
 
 /**
@@ -17,17 +14,16 @@ import { promiseWrapper } from "~/src/shared/lib/functions";
  */
 export const useLogout = () => {
   const dispatch = useAppDispatch();
-  const { push } = useRouter();
+  const { replace } = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const createNotification = useCreateNotification();
 
   const handleClearUserData = useCallback(() => {
+    replace("/");
     dispatch(clearUserData());
-    dispatch(setNeedRemember(false));
     createNotification("Вы успешно вышли", "success");
-    push("/");
-  }, [dispatch, createNotification, push]);
+  }, [dispatch, createNotification, replace]);
 
   const handleLogout = useCallback(async () => {
     await promiseWrapper({

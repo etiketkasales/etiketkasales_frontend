@@ -8,6 +8,7 @@ import FormUtils from "~/src/shared/lib/utils/form.util";
 
 import {
   OrderOperationFormMap,
+  orderOperationRequiredFields,
   SellerOrderOperationType,
 } from "~/src/entities/profile-section/model";
 import { MessageI } from "~/src/shared/model";
@@ -59,13 +60,14 @@ export const useOrderOperation = <T extends SellerOrderOperationType>({
 
   const isValidForm = useCallback((): boolean => {
     const fd = formData;
-    const keys = Object.keys(fd || {});
-    if (!keys.length) return true;
+    const requiredFields = orderOperationRequiredFields[
+      type
+    ] as (keyof typeof fd)[];
 
     const newError = FormUtils.getFormError({
       currentError: error,
       checkData: fd,
-      requiredFields: Object.keys(fd || {}) as (keyof typeof fd)[],
+      requiredFields,
     });
 
     if (newError) {
@@ -73,9 +75,14 @@ export const useOrderOperation = <T extends SellerOrderOperationType>({
       return false;
     }
 
+    if (requiredFields.length === 0) {
+      setError(null);
+      return true;
+    }
+
     setError(null);
     return true;
-  }, [formData, error, createNotification]);
+  }, [formData, error, type]);
 
   const onSubmit = useCallback(async () => {
     const callback = orderOperationsMap[type];

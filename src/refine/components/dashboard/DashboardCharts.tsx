@@ -16,7 +16,14 @@ import {
   YAxis,
 } from "recharts";
 
-export function DashboardCharts({ data }: { data: AdminDashboardData }) {
+type Props = {
+  data: AdminDashboardData;
+  variant?: "admin" | "seller";
+};
+
+export function DashboardCharts({ data, variant = "admin" }: Props) {
+  const isSeller = variant === "seller" || data.meta.scope === "seller";
+
   const lineData = data.charts.gmv_and_orders.map((p) => ({
     name: p.bucket,
     gmv: p.gmv,
@@ -28,6 +35,11 @@ export function DashboardCharts({ data }: { data: AdminDashboardData }) {
     revenue: c.revenue,
   }));
 
+  const topProducts = (data.top_products ?? []).map((p) => ({
+    name: p.name.length > 14 ? `${p.name.slice(0, 12)}...` : p.name,
+    revenue: p.revenue,
+  }));
+
   const sellers = data.top_sellers.map((s) => ({
     name: s.name?.length ? s.name.slice(0, 12) : `#${s.id}`,
     gmv: s.gmv,
@@ -35,8 +47,13 @@ export function DashboardCharts({ data }: { data: AdminDashboardData }) {
 
   return (
     <Row gutter={[16, 16]}>
-      <Col xs={24} lg={14}>
-        <Card title="Динамика GMV и заказов" size="small">
+      <Col xs={24} lg={isSeller ? 24 : 14}>
+        <Card
+          title={
+            isSeller ? "Динамика продаж и заказов" : "Динамика GMV и заказов"
+          }
+          size="small"
+        >
           <div style={{ width: "100%", height: 320 }}>
             <ResponsiveContainer>
               <LineChart data={lineData}>
@@ -58,7 +75,7 @@ export function DashboardCharts({ data }: { data: AdminDashboardData }) {
                   yAxisId="left"
                   type="monotone"
                   dataKey="gmv"
-                  name="GMV"
+                  name={isSeller ? "Продажи" : "GMV"}
                   stroke="#1677ff"
                   dot={false}
                 />
@@ -75,45 +92,101 @@ export function DashboardCharts({ data }: { data: AdminDashboardData }) {
           </div>
         </Card>
       </Col>
-      <Col xs={24} lg={10}>
-        <Card title="Топ категорий" size="small">
-          <div style={{ width: "100%", height: 320 }}>
-            <ResponsiveContainer>
-              <BarChart
-                data={categories}
-                layout="vertical"
-                margin={{ left: 8 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" />
-                <YAxis
-                  type="category"
-                  dataKey="name"
-                  width={110}
-                  tick={{ fontSize: 10 }}
-                />
-                <Tooltip formatter={(v: number) => formatRub(v)} />
-                <Bar dataKey="revenue" fill="#722ed1" name="Выручка" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </Card>
-      </Col>
-      <Col span={24}>
-        <Card title="Топ продавцов" size="small">
-          <div style={{ width: "100%", height: 300 }}>
-            <ResponsiveContainer>
-              <BarChart data={sellers}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" tick={{ fontSize: 10 }} />
-                <YAxis />
-                <Tooltip formatter={(v: number) => formatRub(v)} />
-                <Bar dataKey="gmv" fill="#fa8c16" name="GMV" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </Card>
-      </Col>
+      {!isSeller && (
+        <Col xs={24} lg={10}>
+          <Card title="Топ категорий" size="small">
+            <div style={{ width: "100%", height: 320 }}>
+              <ResponsiveContainer>
+                <BarChart
+                  data={categories}
+                  layout="vertical"
+                  margin={{ left: 8 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" />
+                  <YAxis
+                    type="category"
+                    dataKey="name"
+                    width={110}
+                    tick={{ fontSize: 10 }}
+                  />
+                  <Tooltip formatter={(v: number) => formatRub(v)} />
+                  <Bar dataKey="revenue" fill="#722ed1" name="Выручка" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </Card>
+        </Col>
+      )}
+      {isSeller && categories.length > 0 && (
+        <Col xs={24} lg={12}>
+          <Card title="Продажи по категориям" size="small">
+            <div style={{ width: "100%", height: 320 }}>
+              <ResponsiveContainer>
+                <BarChart
+                  data={categories}
+                  layout="vertical"
+                  margin={{ left: 8 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" />
+                  <YAxis
+                    type="category"
+                    dataKey="name"
+                    width={110}
+                    tick={{ fontSize: 10 }}
+                  />
+                  <Tooltip formatter={(v: number) => formatRub(v)} />
+                  <Bar dataKey="revenue" fill="#722ed1" name="Выручка" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </Card>
+        </Col>
+      )}
+      {isSeller && topProducts.length > 0 && (
+        <Col xs={24} lg={12}>
+          <Card title="Топ товаров" size="small">
+            <div style={{ width: "100%", height: 320 }}>
+              <ResponsiveContainer>
+                <BarChart
+                  data={topProducts}
+                  layout="vertical"
+                  margin={{ left: 8 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" />
+                  <YAxis
+                    type="category"
+                    dataKey="name"
+                    width={110}
+                    tick={{ fontSize: 10 }}
+                  />
+                  <Tooltip formatter={(v: number) => formatRub(v)} />
+                  <Bar dataKey="revenue" fill="#fa8c16" name="Выручка" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </Card>
+        </Col>
+      )}
+      {!isSeller && sellers.length > 0 && (
+        <Col span={24}>
+          <Card title="Топ продавцов" size="small">
+            <div style={{ width: "100%", height: 300 }}>
+              <ResponsiveContainer>
+                <BarChart data={sellers}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" tick={{ fontSize: 10 }} />
+                  <YAxis />
+                  <Tooltip formatter={(v: number) => formatRub(v)} />
+                  <Bar dataKey="gmv" fill="#fa8c16" name="GMV" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </Card>
+        </Col>
+      )}
     </Row>
   );
 }

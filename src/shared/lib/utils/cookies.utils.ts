@@ -72,9 +72,12 @@ class CookieUtils {
           path: "/",
           Secure: !isDev,
           SameSite: "lax",
-          "Max-Age": maxAge,
           ...options,
         };
+
+        if (maxAge !== undefined) {
+          options["Max-Age"] = maxAge;
+        }
 
         let updatedCookie =
           encodeURIComponent(name) + "=" + encodeURIComponent(token);

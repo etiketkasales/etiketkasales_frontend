@@ -2,7 +2,7 @@ import classes from "./item.module.scss";
 import ImageWrapper from "~/src/shared/ui/image-wrapper/ui";
 import {
   ISellerOrderProduct,
-  sellerOrderColors,
+  getSellerOrderColor,
   SellerOrderStatusCode,
 } from "~/src/entities/profile-section/model";
 
@@ -11,6 +11,8 @@ interface Props extends ISellerOrderProduct {
 }
 
 export default function OrderProductsItem({ image, name, status_code }: Props) {
+  const colors = getSellerOrderColor(status_code);
+
   return (
     <div className="flex-row gap-3 align-center">
       <ImageWrapper
@@ -20,9 +22,7 @@ export default function OrderProductsItem({ image, name, status_code }: Props) {
         alt=""
         className={classes.image}
       />
-      <p className={`text-body l text-${sellerOrderColors[status_code].text}`}>
-        {name}
-      </p>
+      <p className={`text-body l text-${colors.text}`}>{name}</p>
     </div>
   );
 }

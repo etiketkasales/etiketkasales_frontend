@@ -70,3 +70,41 @@ export const rejectSellerOrderById = async (id: number, reason: string) => {
     return res.data.order;
   });
 };
+
+export const syncSellerOrderCdek = async (id: number) => {
+  return await tryCatch(async () => {
+    const res = await apiClient.post<{
+      success: boolean;
+      message?: string;
+      verification?: {
+        exists_in_cdek?: boolean;
+        is_valid?: boolean;
+        has_real_waybill?: boolean;
+        register_error?: string | null;
+      };
+      cdek: {
+        uuid?: string | null;
+        cdek_number?: string | null;
+        status?: string | null;
+        register_error?: string | null;
+        tracking_number?: string | null;
+        exists_in_cdek?: boolean;
+        is_valid?: boolean;
+        has_real_waybill?: boolean;
+      };
+      order: ISellerOrder;
+    }>(`/seller/orders/${id}/cdek/sync/`);
+    return res.data;
+  });
+};
+
+export const verifySellerOrderCdek = async (id: number) => {
+  return await tryCatch(async () => {
+    const res = await apiClient.get<{
+      success: boolean;
+      verification?: Record<string, unknown>;
+      cdek: Record<string, unknown>;
+    }>(`/seller/orders/${id}/cdek/verify/`);
+    return res.data;
+  });
+};

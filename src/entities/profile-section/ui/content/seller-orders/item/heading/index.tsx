@@ -4,7 +4,7 @@ import StringUtils from "~/src/shared/lib/utils/string.util";
 import classes from "./order-heading.module.scss";
 import OrderHeadingInfo from "./info";
 import {
-  sellerOrderColors,
+  getSellerOrderColor,
   SellerOrderStatusCode,
 } from "~/src/entities/profile-section/model";
 
@@ -25,6 +25,8 @@ export default function SellerOrderHeading({
   status_code,
   readiness_message,
 }: Props) {
+  const colors = getSellerOrderColor(status_code);
+
   return (
     <div className={classNames("flex", classes.container)}>
       <OrderHeadingInfo
@@ -42,7 +44,7 @@ export default function SellerOrderHeading({
         {readiness_message && (
           <p className="heading h8 text-red-600">{readiness_message}</p>
         )}
-        <p className={`heading h6 text-${sellerOrderColors[status_code].text}`}>
+        <p className={`heading h6 text-${colors.text}`}>
           {StringUtils.formatPrice(total_amount)} ₽
         </p>
       </div>

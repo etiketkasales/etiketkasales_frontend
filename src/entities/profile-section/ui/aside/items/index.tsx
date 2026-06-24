@@ -10,13 +10,19 @@ import { canAccessAdminPanelFromMe } from "~/src/refine/auth/roles";
 import { useAuthMe } from "~/src/refine/auth/useAuthMe.hook";
 import { useAppSelector } from "~/src/app/store/hooks";
 import {
+  buyerFooterTabs,
   buyerTabs,
   profileDangerousActions,
   profileModalActions,
+  sellerFooterTabs,
+  sellerPendingFooterTabs,
   sellerPendingTabs,
   sellerTabs,
 } from "~/src/entities/profile-section/model/profile.const";
-import { ProfileActionType } from "~/src/entities/profile-section/model/profile.interface";
+import {
+  IAsideItem,
+  ProfileActionType,
+} from "~/src/entities/profile-section/model/profile.interface";
 
 interface Props {
   userRole: UserRoleType | "seller-pending";
@@ -24,6 +30,34 @@ interface Props {
   activeSection: string | null;
   onItemClick: (section: string) => void;
   setModalActive: (type: ProfileActionType) => void;
+}
+
+function renderAsideItem(
+  item: IAsideItem,
+  activeSection: string | null,
+  onItemClick: (section: string) => void,
+  setModalActive: (type: ProfileActionType) => void,
+) {
+  const action = item.action;
+  const isActive = action === activeSection;
+  const isDangerous = profileDangerousActions.includes(action);
+  const isModal = profileModalActions.includes(action);
+
+  return (
+    <ProfileAsideItem
+      key={action}
+      onClick={() => {
+        if (isModal) {
+          setModalActive(action);
+        } else {
+          onItemClick(action);
+        }
+      }}
+      isActive={isActive}
+      isDangerous={isDangerous}
+      title={item.title}
+    />
+  );
 }
 
 export default function ProfileAsideItems({
@@ -37,26 +71,31 @@ export default function ProfileAsideItems({
   const isLoggedIn = useAppSelector((s) => s.user.isLoggedIn);
   const { data: authMe, hydrated } = useAuthMe({ enabled: isLoggedIn });
   const showAdmin =
-    (hydrated && isLoggedIn && authMe
+    userRole !== "seller" &&
+    ((hydrated && isLoggedIn && authMe
       ? canAccessAdminPanelFromMe(authMe)
       : false) ||
-    canAccessAdminPanelFromMe({
-      user: {
-        role: userInfo.role,
-        staff_role: userInfo.staff_role ?? null,
-      },
-      permissions: [],
-    });
-  const itemsToMap = useMemo(() => {
+      canAccessAdminPanelFromMe({
+        user: {
+          role: userInfo.role,
+          staff_role: userInfo.staff_role ?? null,
+        },
+        permissions: [],
+      }));
+
+  const { mainTabs, footerTabs } = useMemo(() => {
     switch (userRole) {
       default:
-        return [];
+        return { mainTabs: [] as IAsideItem[], footerTabs: [] as IAsideItem[] };
       case "buyer":
-        return buyerTabs;
+        return { mainTabs: buyerTabs, footerTabs: buyerFooterTabs };
       case "seller":
-        return sellerTabs;
+        return { mainTabs: sellerTabs, footerTabs: sellerFooterTabs };
       case "seller-pending":
-        return sellerPendingTabs;
+        return {
+          mainTabs: sellerPendingTabs,
+          footerTabs: sellerPendingFooterTabs,
+        };
     }
   }, [userRole]);
 
@@ -65,35 +104,25 @@ export default function ProfileAsideItems({
       className={`flex-column ${classes.container}`}
       bgColor="neutral-100"
     >
-      {itemsToMap.map((item, index) => {
-        const action = item.action;
-        const onClickDefault = () => onItemClick(action);
-        const isActive = action === activeSection;
-        const isDangerous = profileDangerousActions.includes(action);
-        const isModal = profileModalActions.includes(action);
-        return (
-          <ProfileAsideItem
-            key={index + action}
-            onClick={() => {
-              if (isModal) {
-                setModalActive(item.action);
-              } else {
-                onClickDefault();
-              }
-            }}
-            isActive={isActive}
-            isDangerous={isDangerous}
-            title={item.title}
-          />
-        );
-      })}
-      {showAdmin && (
-        <ProfileAsideItem
-          key="admin-panel"
-          title="Админ-панель"
-          onClick={() => push("/admin/dashboard")}
-          isActive={false}
-        />
+      <div className={`flex-column ${classes.main}`}>
+        {mainTabs.map((item) =>
+          renderAsideItem(item, activeSection, onItemClick, setModalActive),
+        )}
+      </div>
+      {(showAdmin || footerTabs.length > 0) && (
+        <div className={`flex-column ${classes.footer}`}>
+          {showAdmin && (
+            <ProfileAsideItem
+              key="admin-panel"
+              title="Админ-панель"
+              onClick={() => push("/admin/dashboard")}
+              isActive={false}
+            />
+          )}
+          {footerTabs.map((item) =>
+            renderAsideItem(item, activeSection, onItemClick, setModalActive),
+          )}
+        </div>
       )}
     </ProfileContainer>
   );

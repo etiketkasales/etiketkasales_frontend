@@ -20,6 +20,8 @@ export default function ProfileOrdersItem({
   comment,
   preview_image,
   invoice_url,
+  track_number,
+  tracking_url,
 }: Props) {
   return (
     <Container
@@ -37,6 +39,8 @@ export default function ProfileOrdersItem({
         company_id={company_id}
         bill_url={invoice_url}
         comment={comment}
+        track_number={track_number}
+        tracking_url={tracking_url}
       />
       <OrderExtra total_amount={total_amount} previewImage={preview_image} />
     </Container>

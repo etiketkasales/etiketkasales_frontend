@@ -13,7 +13,7 @@ import SellerOrderDelivery from "./delivery";
 import {
   ISellerOrder,
   OrderModalType,
-  sellerOrderColors,
+  getSellerOrderColor,
 } from "~/src/entities/profile-section/model";
 import OrderModalSwitcher from "./modals";
 import SellerOrderNeedConfirmButton from "./button/need_confirm";
@@ -37,17 +37,19 @@ export default function SellerOrder({
   delivery_method,
   readiness_message,
   message,
+  cdek_register_error,
 }: Props) {
   const [modalType, setModalType] = useState<OrderModalType | null>(null);
+  const colors = getSellerOrderColor(status_code);
 
   return (
     <Container
       as="li"
-      bgColor={sellerOrderColors[status_code].bg}
+      bgColor={colors.bg}
       className={classNames(classes.container, "flex-column")}
       style={
         {
-          "--border-color": sellerOrderColors[status_code].border,
+          "--border-color": colors.border,
         } as React.CSSProperties
       }
     >
@@ -70,6 +72,12 @@ export default function SellerOrder({
         <OrderTrackNumber number={track_number} status_code={status_code} />
       )}
       {message && <OrderMessage message={message} status_code={status_code} />}
+      {cdek_register_error && status_code === "processing" && (
+        <OrderMessage
+          message={`СДЭК: ${cdek_register_error}`}
+          status_code={status_code}
+        />
+      )}
       {Array.isArray(products) && products.length > 0 && (
         <SellerOrderProducts products={products} status_code={status_code} />
       )}
@@ -95,6 +103,7 @@ export default function SellerOrder({
       <OrderModalSwitcher
         modalType={modalType}
         orderId={id}
+        initialTrackNumber={track_number}
         onClose={() => setModalType("")}
       />
     </Container>

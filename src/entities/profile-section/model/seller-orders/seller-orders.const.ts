@@ -2,7 +2,6 @@ import {
   IOrderModalInput,
   ISellerOrder,
   ISendOrderForm,
-  OrderOperationConfig,
   OrderOperationFormData,
   SellerOrderOperationType,
   SellerOrderStatusCode,
@@ -112,6 +111,28 @@ export const sellerOrderColors: Record<
   cancelled: defaultColor,
   in_transit: defaultColor,
   pending_payment: defaultColor,
+};
+
+export function getSellerOrderColor(
+  statusCode: string | null | undefined,
+): ISellerOrderColor {
+  if (
+    statusCode &&
+    Object.prototype.hasOwnProperty.call(sellerOrderColors, statusCode)
+  ) {
+    return sellerOrderColors[statusCode as SellerOrderStatusCode];
+  }
+
+  return defaultColor;
+}
+
+export const orderOperationRequiredFields: Record<
+  SellerOrderOperationType,
+  string[]
+> = {
+  accept: [],
+  reject: ["rejectReason"],
+  send: ["track_number"],
 };
 
 export const orderOperationDataMap: Record<

@@ -18,74 +18,74 @@ export const buyerTabs: IAsideItem[] = [
     title: "Покупать как юр. лицо",
     action: "as_legal",
   },
+];
+
+export const buyerFooterTabs: IAsideItem[] = [
   {
     title: "Выйти",
     action: "logout",
   },
 ];
 
-/** Вкладки продавца, временно скрытые */
-export const sellerProfileSectionsHidden: ProfileActionType[] = [
-  "reviews",
-  "seller_orders",
-  "addresses",
-  "products",
-  "promotion",
-  "accounting",
-  "statistics",
-];
+/** Скрытые секции продавца (пусто — все вкладки видны). */
+export const sellerProfileSectionsHidden: ProfileActionType[] = [];
 
 export const sellerPendingTabs: IAsideItem[] = [
   {
     title: "Заявка на активацию магазина",
     action: "quote",
   },
-  // {
-  //   title: "Адреса доставки",
-  //   action: "addresses",
-  // },
   {
-    title: "Выйти",
-    action: "logout",
+    title: "Адреса доставки",
+    action: "addresses",
   },
 ];
 
+export const sellerPendingFooterTabs: IAsideItem[] = buyerFooterTabs;
+
 export const sellerTabs: IAsideItem[] = [
+  {
+    title: "Статистика продаж",
+    action: "statistics",
+  },
   {
     title: "Профиль магазина",
     action: "profile",
   },
-  // {
-  //   title: "Отзывы",
-  //   action: "reviews",
-  // },
-  // {
-  //   title: "Заказы",
-  //   action: "seller_orders",
-  // },
-  // {
-  //   title: "Адреса доставки",
-  //   action: "addresses",
-  // },
-  // {
-  //   title: "Карточки товаров",
-  //   action: "products",
-  // },
-  // {
-  //   title: "Продвижение товаров",
-  //   action: "promotion",
-  // },
-  // {
-  //   title: "Бухгалтерия",
-  //   action: "accounting",
-  // },
-  // {
-  //   title: "Статистика продаж",
-  //   action: "statistics",
-  // },
+  {
+    title: "Отзывы",
+    action: "reviews",
+  },
+  {
+    title: "Заказы",
+    action: "seller_orders",
+  },
+  {
+    title: "Адреса доставки",
+    action: "addresses",
+  },
+  {
+    title: "Карточки товаров",
+    action: "products",
+  },
+  {
+    title: "Продвижение товаров",
+    action: "promotion",
+  },
+  {
+    title: "Бухгалтерия",
+    action: "accounting",
+  },
+];
+
+export const sellerFooterTabs: IAsideItem[] = [
   {
     title: "Удалить магазин",
     action: "delete",
+  },
+  {
+    title: "Выйти",
+    action: "logout",
   },
 ];
 
@@ -115,11 +115,7 @@ export const profileModalActions: ProfileActionType[] = [
   "delete",
   "logout",
 ];
-export const profileInDev: ProfileActionType[] = [
-  "accounting",
-  "promotion",
-  "statistics",
-];
+export const profileInDev: ProfileActionType[] = ["accounting", "promotion"];
 
 const stringInput = (
   field: keyof IChangeableProfile,

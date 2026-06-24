@@ -33,6 +33,9 @@ export function canAccessAdminPanelFromMe(payload: {
   user: { role?: string; staff_role?: string | null };
   permissions: readonly string[];
 }): boolean {
+  if ((payload.user.role ?? "") === "seller") {
+    return false;
+  }
   if (payload.permissions.length > 0) {
     return true;
   }

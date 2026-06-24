@@ -1,7 +1,7 @@
 import classes from "./delivery.module.scss";
 import SellerOrderInfoContainer from "../info-container";
 import {
-  sellerOrderColors,
+  getSellerOrderColor,
   SellerOrderStatusCode,
 } from "~/src/entities/profile-section/model";
 
@@ -15,19 +15,19 @@ export default function SellerOrderDelivery({
   delivery_method,
   status_code,
 }: Props) {
+  const colors = getSellerOrderColor(status_code);
+
   return (
     <SellerOrderInfoContainer
       className={`flex-column ${classes.container}`}
-      borderColor={sellerOrderColors[status_code].infoBorder}
+      borderColor={colors.infoBorder}
     >
-      <h4 className={`heading h7 text-${sellerOrderColors[status_code].text}`}>
-        Служба доставки
-      </h4>
+      <h4 className={`heading h7 text-${colors.text}`}>Служба доставки</h4>
       <p
-        className={`${classes.item} text-body l text-${sellerOrderColors[status_code].text}`}
+        className={`${classes.item} text-body l text-${colors.text}`}
         style={
           {
-            "--color": sellerOrderColors[status_code].textHex,
+            "--color": colors.textHex,
           } as React.CSSProperties
         }
       >

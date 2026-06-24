@@ -27,13 +27,30 @@ export const sendCode = async (phone: string) => {
 export const setCookies = ({
   access,
   refresh,
+  remember = true,
 }: {
   access: string;
   refresh: string;
+  remember?: boolean;
 }) => {
-  CookieUtils.setCookieWithToken("auth_token", access, 86400);
-  CookieUtils.setCookieWithToken("refresh_token", refresh, 2592000);
+  if (remember) {
+    CookieUtils.setCookieWithToken("auth_token", access, 86400);
+    CookieUtils.setCookieWithToken("refresh_token", refresh, 2592000);
+    return;
+  }
+
+  // Без «Запомнить меня» — session-cookies: переживают reload, но не закрытие браузера.
+  CookieUtils.setCookieWithToken("auth_token", access);
+  CookieUtils.setCookieWithToken("refresh_token", refresh);
 };
+
+function readRememberPreference(): boolean {
+  if (typeof window === "undefined") {
+    return true;
+  }
+
+  return localStorage.getItem("needRemember") !== "false";
+}
 
 export const verifyCode = async (phone: string, code: string) => {
   try {
@@ -48,6 +65,7 @@ export const verifyCode = async (phone: string, code: string) => {
     setCookies({
       refresh: res.data.refresh_token,
       access: res.data.access_token,
+      remember: readRememberPreference(),
     });
 
     return res.data;
@@ -70,6 +88,7 @@ export const loginByPassword = async (phone: string, password: string) => {
     setCookies({
       refresh: res.data.refresh_token,
       access: res.data.access_token,
+      remember: readRememberPreference(),
     });
     return res.data.user || res.data;
   } catch (err) {

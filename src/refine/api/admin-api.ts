@@ -20,6 +20,20 @@ export async function fetchAdminDashboard(params: {
   return data.data;
 }
 
+export async function fetchSellerDashboard(params: {
+  period: AdminDashboardPeriod;
+  chart_bucket: AdminChartBucket;
+}): Promise<AdminDashboardData> {
+  const { data } = await apiClient.get<AdminDashboardResponse>(
+    "/seller/dashboard",
+    { params },
+  );
+  if (!data.success || !data.data) {
+    throw new Error(data.message ?? "Не удалось загрузить статистику");
+  }
+  return data.data;
+}
+
 export async function adminBlockUser(userId: number, blockedReason: string) {
   const { data } = await apiClient.put<{ success: boolean; message?: string }>(
     `/admin/users/${userId}`,

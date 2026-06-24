@@ -1,9 +1,9 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useProfileSections } from "~/src/entities/profile-section/lib/hooks";
 import { useAppSelector } from "~/src/app/store/hooks";
 import { selectUser } from "~/src/app/store/reducers/user.slice";
-import { redirect } from "next/navigation";
 
 import classes from "./role-page.module.scss";
 import PageWrapper from "~/src/entities/page-wrapper/ui";
@@ -24,10 +24,11 @@ interface Props {
 }
 
 export default function ProfileRolePage({ paramsRole }: Props) {
+  const router = useRouter();
   const { userInfo, isLoggedIn, loadingData } = useAppSelector(selectUser);
   const defaultSection = useMemo(() => {
     if (paramsRole === "seller-pending") return "quote";
-    return paramsRole === "seller" ? "profile" : "personal";
+    return paramsRole === "seller" ? "statistics" : "personal";
   }, [paramsRole]);
   const hiddenSections =
     paramsRole === "seller" ? sellerProfileSectionsHidden : undefined;
@@ -39,25 +40,47 @@ export default function ProfileRolePage({ paramsRole }: Props) {
   const createNotification = useCreateNotification();
   const [modalType, setModalType] = useState<ProfileActionType | null>(null);
 
-  if (loadingData) {
+  const pendingRedirect =
+    !loadingData &&
+    (!isLoggedIn ||
+      (paramsRole !== userInfo.role && paramsRole !== "seller-pending"));
+
+  useEffect(() => {
+    if (loadingData) {
+      return;
+    }
+
+    if (!isLoggedIn) {
+      router.replace("/login");
+      return;
+    }
+
+    if (paramsRole === userInfo.role || paramsRole === "seller-pending") {
+      return;
+    }
+
+    if (!userInfo.role) {
+      createNotification("Не удалось определить роль пользователя", "error");
+      router.replace("/login");
+      return;
+    }
+
+    router.replace("/profile");
+  }, [
+    loadingData,
+    isLoggedIn,
+    paramsRole,
+    userInfo.role,
+    router,
+    createNotification,
+  ]);
+
+  if (loadingData || pendingRedirect) {
     return (
       <PageWrapper>
         <Loader radius={20} />
       </PageWrapper>
     );
-  }
-
-  if (!isLoggedIn) return redirect("/login");
-
-  if (paramsRole !== userInfo.role) {
-    if (!userInfo.role) {
-      createNotification("Не удалось определить роль пользователя", "error");
-      return redirect("/login");
-    }
-
-    if (paramsRole !== "seller-pending") {
-      return redirect("/profile");
-    }
   }
 
   return (

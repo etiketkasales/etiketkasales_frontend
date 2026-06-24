@@ -16,6 +16,8 @@ interface Props {
   company_id?: number | null;
   comment: string;
   bill_url?: string | null;
+  track_number?: string | null;
+  tracking_url?: string | null;
 }
 
 function canRetryPayment(
@@ -39,6 +41,8 @@ export default function OrderContent({
   company_id,
   bill_url,
   comment,
+  track_number,
+  tracking_url,
 }: Props) {
   const [invoiceConfirmed, setInvoiceConfirmed] = useState(false);
   const invoiceIssued =
@@ -54,7 +58,12 @@ export default function OrderContent({
   return (
     <div className={`flex-column ${classes.container}`}>
       <OrderInfo created_at={created_at} order_number={order_number} />
-      <OrderStatus status={status} comment={comment} />
+      <OrderStatus
+        status={status}
+        comment={comment}
+        track_number={track_number}
+        tracking_url={tracking_url}
+      />
       {(showPayButton || showInvoicePayButton) && (
         <OrderPayUrl
           orderId={order_id}
