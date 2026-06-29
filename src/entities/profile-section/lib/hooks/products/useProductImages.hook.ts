@@ -7,6 +7,7 @@ import {
 } from "react";
 import { useFileLoad } from "~/src/shared/lib";
 import { uploadProductImage } from "~/src/entities/profile-section/lib/api";
+import { resolveUploadMediaUrl } from "~/src/shared/lib/utils/media-url.util";
 
 import { IProductCurrentImage } from "~/src/entities/profile-section/model";
 
@@ -32,7 +33,7 @@ export const useProductImages = <ProductType extends IImage>({
     (images: IProductCurrentImage[]) => {
       setProduct((p) => ({
         ...p,
-        images: images.map((i) => i.url),
+        images: images.map((i) => resolveUploadMediaUrl(i.url)),
         image_upload_ids: images
           .filter((i) => i.upload_id)
           .map((i) => i.upload_id as number),
@@ -56,7 +57,7 @@ export const useProductImages = <ProductType extends IImage>({
             ...prev,
             {
               upload_id: res.upload_id,
-              url: res.url,
+              url: resolveUploadMediaUrl(res.url),
               fileBinary,
             },
           ];
@@ -92,7 +93,9 @@ export const useProductImages = <ProductType extends IImage>({
   useEffect(() => {
     if (currentImages.length) return;
     setCurrentImages(
-      initialImages ? initialImages.map((url) => ({ url })) : [],
+      initialImages
+        ? initialImages.map((url) => ({ url: resolveUploadMediaUrl(url) }))
+        : [],
     );
   }, [initialImages, currentImages.length]);
 

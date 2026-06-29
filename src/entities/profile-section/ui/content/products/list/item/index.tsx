@@ -2,6 +2,7 @@ import classes from "./product.module.scss";
 import ProfileProductTop from "./top";
 import ProfileProductBottom from "./bottom";
 import { ISellerProduct } from "~/src/entities/profile-section/model";
+import { pickProductImageUrl } from "~/src/shared/lib/utils/media-url.util";
 
 interface Props extends ISellerProduct {
   openProductModal: (id: number) => void;
@@ -19,7 +20,7 @@ export default function ProfileProduct({
   return (
     <li className={`flex-column ${classes.container}`}>
       <ProfileProductTop
-        image={image || images[images.length - 1]}
+        image={image || pickProductImageUrl(images)}
         onButtonClick={() => {
           openProductModal(id);
           setModalActive();

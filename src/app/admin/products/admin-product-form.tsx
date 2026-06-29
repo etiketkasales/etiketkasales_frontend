@@ -51,6 +51,7 @@ import {
 } from "~/src/entities/profile-section/lib/api";
 import type { INewProductFilter } from "~/src/entities/profile-section/model";
 import { parseAxiosApiValidation } from "~/src/shared/lib/functions/shared.func";
+import { normalizeProductImagesForApi } from "~/src/shared/lib/utils/media-url.util";
 import type { IFileUploadRes } from "~/src/shared/model";
 
 const STATUS_OPTIONS = [
@@ -260,7 +261,7 @@ export function AdminProductForm(props: AdminProductFormProps) {
     const nameStr = String(f.field);
     const label = CATALOG_FILTER_LABELS[nameStr] ?? nameStr;
     const opts = (f.options ?? [])
-      .filter((o): o is string => typeof o === "string" && o.trim() !== "")
+      .filter((o): o is string => o.trim() !== "")
       .map((o) => ({ value: o, label: o }));
 
     if (f.type === "numeric") {
@@ -564,7 +565,7 @@ export function AdminProductForm(props: AdminProductFormProps) {
       ),
       width_mm: values.width_mm ?? null,
       height_mm: values.height_mm ?? null,
-      images: imageUrls,
+      images: normalizeProductImagesForApi(imageUrls),
       media: { videos: videoUrls, documents },
       specifications,
       status: values.status,

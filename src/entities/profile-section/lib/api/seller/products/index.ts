@@ -6,6 +6,7 @@ import {
   ISellerProduct,
 } from "~/src/entities/profile-section/model";
 import { apiClient, tryCatch } from "~/src/shared/lib/api";
+import { normalizeProductImagesForApi } from "~/src/shared/lib/utils/media-url.util";
 import { IFileUploadRes, IGetData } from "~/src/shared/model";
 
 function parseProductImageUploadPayload(
@@ -149,6 +150,7 @@ export const createNewProduct = async (data: INewProduct) => {
   return await tryCatch(async () => {
     const res = await apiClient.post(`/products/`, {
       ...data,
+      images: normalizeProductImagesForApi(data.images ?? []),
     });
 
     return res.data;
@@ -162,6 +164,7 @@ export const editSellerProduct = async (
   return await tryCatch(async () => {
     const res = await apiClient.put(`/products/${id}`, {
       ...data,
+      images: normalizeProductImagesForApi(data.images ?? []),
     });
     return res.data;
   });
