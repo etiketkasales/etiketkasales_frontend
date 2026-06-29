@@ -9,6 +9,7 @@ import CheckboxInput from "~/src/shared/ui/inputs/checkbox";
 import CartSellerItemInfo from "./info";
 import SellerItemButtons from "./extra";
 import { ICartItem } from "~/src/features/cart/model";
+import { pickProductImageUrl } from "~/src/shared/lib/utils/media-url.util";
 
 interface Props {
   item: ICartItem;
@@ -47,7 +48,7 @@ export default function CartSellerItem({ item, selectItem }: Props) {
           className={classes.checkbox}
         />
         <CartSellerItemInfo
-          image={item.images[0]}
+          image={pickProductImageUrl(item.images)}
           price={item.price}
           old_price={item.old_price}
           slug={item.slug}

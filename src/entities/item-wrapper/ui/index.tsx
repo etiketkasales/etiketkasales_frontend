@@ -7,6 +7,7 @@ import ItemWrapperTop from "./top";
 import ItemWrapperCaption from "./caption";
 import LinkContainer from "~/src/shared/ui/link-container/ui";
 import { IEtiketka } from "~/src/entities/etiketka/model";
+import { pickProductImageUrl } from "~/src/shared/lib/utils/media-url.util";
 
 interface Props {
   item: IEtiketka;
@@ -26,7 +27,7 @@ export default function ItemWrapper({ item, className }: Props) {
     >
       <ItemWrapperTop
         item={itemInfo}
-        image={itemInfo.images[0]}
+        image={pickProductImageUrl(itemInfo.images)}
         updateInfo={updateInfo}
         productLink={link}
       />
