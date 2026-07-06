@@ -904,12 +904,14 @@ export function AdminProductForm(props: AdminProductFormProps) {
           />
 
           <Space wrap>
+            {/* Поле остатка временно скрыто — остаток задаётся отдельно / по умолчанию 0 при создании
             <Form.Item
               name="stock_quantity"
               label={`Остаток, ${unitShortLabel}`}
             >
               <InputNumber min={0} />
             </Form.Item>
+            */}
             <Form.Item
               name="min_order_quantity"
               label={`Мин. заказ, ${unitShortLabel}`}
