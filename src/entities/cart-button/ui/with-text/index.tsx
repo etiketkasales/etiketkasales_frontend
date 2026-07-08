@@ -17,8 +17,8 @@ export default function CartButtonWithText({
   const { handleButtonClick, loading } = useCartButton({ updateInfo });
 
   const min = Math.max(1, Math.floor(Number(minQuantity)) || 1);
-  const maxNum = Math.floor(Number(maxQuantity));
-  const disabledDueToStock = Number.isFinite(maxNum) && maxNum < min;
+  // const maxNum = Math.floor(Number(maxQuantity));
+  // const disabledDueToStock = Number.isFinite(maxNum) && maxNum < min;
 
   return (
     <Button
@@ -29,7 +29,7 @@ export default function CartButtonWithText({
         await handleButtonClick(() => handleAddEtiketka(min))
       }
       className={className}
-      disabled={loading || disabledDueToStock}
+      disabled={loading}
     >
       <span className="text-yellow-1000 heading h7">В корзину</span>
     </Button>

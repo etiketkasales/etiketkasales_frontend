@@ -39,10 +39,10 @@ export default function CartCounterPlusMinus({
   const minN = Math.max(1, Math.floor(Number(min)) || 1);
   const maxNum =
     max != null && !(typeof max === "string" && max === "") ? Number(max) : NaN;
-  const outOfStock = !isMinus && Number.isFinite(maxNum) && maxNum <= 0;
+  // const outOfStock = !isMinus && Number.isFinite(maxNum) && maxNum <= 0;
   const atMax =
     !isMinus && Number.isFinite(maxNum) && maxNum > 0 && qty >= maxNum;
-  const isDisabled = loading || (isMinus && qty <= minN) || outOfStock || atMax;
+  const isDisabled = loading || (isMinus && qty <= minN) || atMax;
 
   return (
     <Button
