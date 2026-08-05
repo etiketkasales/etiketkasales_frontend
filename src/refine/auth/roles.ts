@@ -158,6 +158,14 @@ export function canRefineAccess(
         return has("admin.reviews.edit");
       }
       return false;
+    case "banners":
+      if (action === "list") {
+        return has("admin.marketing.view");
+      }
+      if (action === "edit" || action === "create" || action === "delete") {
+        return has("admin.marketing.edit");
+      }
+      return false;
     default:
       return false;
   }

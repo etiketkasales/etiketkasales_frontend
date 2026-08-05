@@ -35,8 +35,8 @@ export default function AdvsSwiper({
       )}
       {...advsSwiperConfig}
     >
-      {slides.map((item, index) => (
-        <SwiperSlide key={index + item.link}>
+      {slides.map((item) => (
+        <SwiperSlide key={item.id}>
           <AdvsSlide {...item} />
         </SwiperSlide>
       ))}

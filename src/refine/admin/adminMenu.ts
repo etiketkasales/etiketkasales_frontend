@@ -92,6 +92,12 @@ export const ADMIN_MENU: AdminMenuEntry[] = [
     permission: "admin.content.view",
   },
   {
+    key: "banners",
+    label: "Баннеры",
+    path: "/admin/banners",
+    permission: "admin.marketing.view",
+  },
+  {
     key: "reviews",
     label: "Отзывы",
     path: "/admin/reviews",
