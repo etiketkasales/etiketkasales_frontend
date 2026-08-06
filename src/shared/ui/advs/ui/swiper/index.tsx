@@ -1,3 +1,5 @@
+"use client";
+
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -20,10 +22,14 @@ interface Props {
 
 export default function AdvsBanner({ className }: Props) {
   const { loaded } = useAppSelector(selectNavigation);
-  const { advs, loading } = useAdvs();
+  const { advs, loading } = useAdvs("HOME_HERO");
   const { swiperRef, handleSlideChange, goTo, currentSlide } = useSwiperSlides({
     slidesCount: advs.length,
   });
+
+  if (!loading && loaded && advs.length === 0) {
+    return null;
+  }
 
   return (
     <section className="wrapper">
@@ -38,11 +44,13 @@ export default function AdvsBanner({ className }: Props) {
               swiperRef={swiperRef}
               handleSlideChange={handleSlideChange}
             />
-            <AddsBannerPagination
-              currentSlide={currentSlide}
-              goTo={goTo}
-              slidesCount={advs.length}
-            />
+            {advs.length > 1 ? (
+              <AddsBannerPagination
+                currentSlide={currentSlide}
+                goTo={goTo}
+                slidesCount={advs.length}
+              />
+            ) : null}
             <InfoPlain className={classes.infoPlain} />
           </>
         )}

@@ -1,40 +1,49 @@
 import { useCallback, useEffect, useState } from "react";
-import { selectNavigation } from "~/src/app/store/reducers/navigation.slice";
-import { useAppSelector } from "~/src/app/store/hooks";
-import { promiseWrapper } from "~/src/shared/lib/functions/shared.func";
-
+import {
+  fetchActiveBanners,
+  type BannerPlacement,
+  type PublicBanner,
+} from "~/src/shared/ui/advs/lib/api/banners.api";
 import { IAdv } from "~/src/shared/ui/advs/model/advs.interface";
-import { advsSkeleton } from "~/src/shared/ui/advs/model/advs.skeleton";
 
-export const useAdvs = () => {
-  const { loaded } = useAppSelector(selectNavigation);
-  const [advs, setAdvs] = useState<IAdv[]>(advsSkeleton);
-  const [loading, setLoading] = useState<boolean>(false);
+function mapBanner(b: PublicBanner): IAdv {
+  return {
+    id: String(b.id),
+    link: b.targetUrl?.trim() || "",
+    image_url: b.desktopImageUrl,
+    mobile_image_url: b.mobileImageUrl,
+    alt: b.altText?.trim() || "Рекламный баннер",
+  };
+}
 
-  const clearAdvs = useCallback(() => {
-    setAdvs(advsSkeleton);
-  }, []);
+export const useAdvs = (placement: BannerPlacement) => {
+  const [advs, setAdvs] = useState<IAdv[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  const handleGetAdvs = useCallback(
-    async (needLoad?: boolean) => {
-      await promiseWrapper({
-        setLoading,
-        needLoad,
-        callback: async () => {
-          clearAdvs();
-        },
-      });
-    },
-    [clearAdvs],
-  );
+  const handleGetAdvs = useCallback(async () => {
+    setLoading(true);
+    setError(false);
+    try {
+      const data = await fetchActiveBanners([placement]);
+      setAdvs((data[placement] ?? []).map(mapBanner));
+    } catch (e) {
+      console.error(e);
+      setAdvs([]);
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  }, [placement]);
 
   useEffect(() => {
-    handleGetAdvs();
+    void handleGetAdvs();
   }, [handleGetAdvs]);
 
   return {
     advs,
-    loading: !loaded || loading,
+    loading,
+    error,
     handleGetAdvs,
   };
 };
