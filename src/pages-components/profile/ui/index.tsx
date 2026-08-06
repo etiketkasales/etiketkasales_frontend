@@ -30,7 +30,9 @@ export default function ProfilePage() {
       return;
     }
 
-    router.replace(`/profile/${userInfo.role ?? "buyer"}`);
+    // Витрина только buyer/seller; legacy role=admin/super_admin → профиль покупателя.
+    const storefrontRole = userInfo.role === "seller" ? "seller" : "buyer";
+    router.replace(`/profile/${storefrontRole}`);
   }, [loadingData, loaded, isLoggedIn, userInfo, router]);
 
   return <Loader radius={20} />;

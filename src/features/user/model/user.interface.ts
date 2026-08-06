@@ -76,7 +76,9 @@ export type StaffRoleType =
   | "super_admin"
   | "content_moderator"
   | "support_agent"
-  | "analyst";
+  | "analyst"
+  | "financier"
+  | "logistic";
 
 export interface IUserCompanyBase {
   name: string;

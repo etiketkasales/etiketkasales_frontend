@@ -33,24 +33,26 @@ export function canAccessAdminPanelFromMe(payload: {
   user: { role?: string; staff_role?: string | null };
   permissions: readonly string[];
 }): boolean {
-  if ((payload.user.role ?? "") === "seller") {
+  // Витринная роль seller — без доступа в админку, даже если в БД ошибочно стоит staff_role.
+  if ((payload.user.role ?? "").trim() === "seller") {
     return false;
   }
-  if (payload.permissions.length > 0) {
+  // Staff-роль (в т.ч. super_admin) достаточна для входа в оболочку админки.
+  if (getEffectiveAdminRole(payload.user)) {
     return true;
   }
-  return Boolean(getEffectiveAdminRole(payload.user));
+  return (payload.permissions?.length ?? 0) > 0;
 }
 
 export function getEffectiveAdminRole(user: {
   role?: string;
   staff_role?: string | null;
 }): string {
-  const s = user.staff_role;
+  const s = (user.staff_role ?? "").trim();
   if (s && ADMIN_ROLES.includes(s as AdminRole)) {
     return s;
   }
-  const r = user.role ?? "";
+  const r = (user.role ?? "").trim();
   if (ADMIN_ROLES.includes(r as AdminRole)) {
     return r;
   }
