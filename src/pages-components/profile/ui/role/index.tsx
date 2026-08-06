@@ -43,7 +43,8 @@ export default function ProfileRolePage({ paramsRole }: Props) {
   const pendingRedirect =
     !loadingData &&
     (!isLoggedIn ||
-      (paramsRole !== userInfo.role && paramsRole !== "seller-pending"));
+      (paramsRole !== "seller-pending" &&
+        paramsRole !== (userInfo.role === "seller" ? "seller" : "buyer")));
 
   useEffect(() => {
     if (loadingData) {
@@ -55,7 +56,9 @@ export default function ProfileRolePage({ paramsRole }: Props) {
       return;
     }
 
-    if (paramsRole === userInfo.role || paramsRole === "seller-pending") {
+    const storefrontRole = userInfo.role === "seller" ? "seller" : "buyer";
+
+    if (paramsRole === storefrontRole || paramsRole === "seller-pending") {
       return;
     }
 
