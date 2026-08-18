@@ -22,23 +22,23 @@ export const policy: FooterLinkListI = {
   ],
 };
 
-export const greeting: FooterLinkListI = {
-  title: "Знакомство с нами",
-  links: [
-    {
-      title: "О Этикеткасейлс",
-      link: "/",
-    },
-    {
-      title: "Другие продукты",
-      link: "/",
-    },
-    {
-      title: "Вакансии",
-      link: "/",
-    },
-  ],
-};
+// export const greeting: FooterLinkListI = {
+//   title: "Знакомство с нами",
+//   links: [
+//     {
+//       title: "О Этикеткасейлс",
+//       link: "/",
+//     },
+//     {
+//       title: "Другие продукты",
+//       link: "/",
+//     },
+//     {
+//       title: "Вакансии",
+//       link: "/",
+//     },
+//   ],
+// };
 
 export const help: FooterLinkListI = {
   title: "Помощь",
@@ -47,10 +47,10 @@ export const help: FooterLinkListI = {
       title: "Часто задаваемые вопросы",
       link: "/faq",
     },
-    {
-      title: "Партнерская программа",
-      link: "/",
-    },
+    // {
+    //   title: "Партнерская программа",
+    //   link: "/",
+    // },
     {
       title: "Стать продавцом",
       link: "/for-bussiness",
@@ -59,5 +59,5 @@ export const help: FooterLinkListI = {
 };
 
 export const footerInfo: FooterInfo = {
-  list: [policy, greeting, help],
+  list: [policy, help],
 };
